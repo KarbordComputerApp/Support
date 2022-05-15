@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title id="titlePage">@ViewBag.Title</title>
+    <link rel="icon" href="~/Content/img/loading.png" type="image/x-icon" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/materialize.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/js/jquery ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/js/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+    <link href="~/Content/css/stimulsoft.viewer.office2013.whiteblue.css" rel="stylesheet" />
+    <link href="~/Content/css/stimulsoft.designer.office2013.whiteblue.css" rel="stylesheet" />
+</head>
+<body class="light rtlSite" ondragstart="return false;" ondrop="return false;">
+    <div class="row" style="padding:15px">
+        <img src="~/Content/img/LogoMin.png" height="100" width="100" />
+
+        <div style="margin-top: 30px;margin-right: 15px;">
+            <p style="font-size: 16px;">سرويس خدمات آنلاين شرکت مهندس کاربرد کامپیوتر</p>
+            <div style="border-top: 2px solid #eb8121;width: 365px"></div>
+        </div>
+
+
+        <div class="col-md" style="margin-top: 30px;margin-right: 15px;">
+            <div class="row" style="float: left;">
+                <a href="@Url.Action("Index","Home")" style="font-size: 16px;" >بازگشت به صفحه اصلی</a>
+                <img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
+                <a href="#">
+                    <img src="~/Content/img/icons/active.png" style="height: 30px;" />
+                </a>
+                <img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
+                <a href="#">
+                    <img src="~/Content/img/icons/user.png" style="height: 30px;" />
+                </a>
+                <!--<img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
+                <a href="@Url.Action("Login","Home")">
+                    <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
+                </a>-->
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin: 20px 100px 0 100px;">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        sessionStorage.versionTitle = '@(Support.Controllers.Unit.UnitPublic.titleVer)';
+        sessionStorage.urlHome = '@Url.Action("Index", "AFISanad")';
+    </script>
+
+    <script src="~/Content/js/app.min.js"></script>
+    <script src="~/Content/js/admin.js"></script>
+    <script src="~/Content/js/knockout-3.5.0.js"></script>
+    <script src="~/Content/js/sweet2.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/PublicAFI.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/jalaali.js"></script>
+    <script src="~/Content/js/stimulsoft.reports.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/stimulsoft.viewer.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/stimulsoft.designer.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/num2persian-min.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    @RenderSection("scripts", false)
+
+
+
+</body>
+</html>

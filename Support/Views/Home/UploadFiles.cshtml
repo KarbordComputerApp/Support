@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "UploadFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input id="upload" type="file" style="display:none" data-bind="event: {change: $root.fileUpload}" />
+<a id="AddNewFile" class="btn btn-warning B_Main">انتخاب فایل</a>
+<textarea id="comm" rows="10" class="form-control no-resize auto-growth string autocomplete" style="text-align:justify" placeholder="توضیحات"></textarea>
+<a id="SendFiles" class="btn btn-warning B_Main">ارسال</a>
+
+
+
+@section scripts{
+    <script src="~/Scripts/UploadFiles.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}

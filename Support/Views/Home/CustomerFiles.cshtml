@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "CustomerFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-hover table-striped tableFixList">
+    <tbody data-bind="foreach: CustomerFilesList" data-dismiss="modal" style="cursor: default;">
+        <tr data-bind="click: $parent.Download">
+            <td data-bind="text: Description"></td>
+            <td data-bind="text: LockNumber"></td>
+            <td data-bind="text: GeneralFiles"></td>
+        </tr>
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="~/Scripts/CustomerFiles.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
+
+
