@@ -18,7 +18,7 @@
                 localStorage.setItem("lockNumber", lockNumber);
                 window.location.href = localStorage.getItem("urlIndex");
             }
-            else {
+            else { 
                 return showNotification('شماره قفل یا کلمه عبور اشتباه است', 0);
             }
         });
