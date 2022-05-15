@@ -6,7 +6,7 @@
         if (lockNumber === "" || lockNumber === null) {
             return showNotification('نام کاربری را وارد کنید', 0);
         }
-        LoginUri = server + '/api/Data/Login/';
+        LoginUri = server + '/api/Data/Login/'; 
 
         var LoginObject = {
             LockNumber: lockNumber,
