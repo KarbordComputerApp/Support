@@ -7,9 +7,17 @@
 <table class="table table-hover table-striped tableFixList">
     <tbody data-bind="foreach: CustomerFilesList" data-dismiss="modal" style="cursor: default;">
         <tr data-bind="click: $parent.Download">
-            <td data-bind="text: Description"></td>
-            <td data-bind="text: LockNumber"></td>
-            <td data-bind="text: GeneralFiles"></td>
+            <td>
+                <div style="border:1px solid black;padding: 10px;border-radius: 10px;">
+                    <p>فقط دوبار امکان دانلود وجود دارد</p>
+                    <p data-bind="text: 'نام فایل :' + GeneralFiles"></p>
+                    <p data-bind="text: 'توضیحات :' + Description"></p>
+                    <p data-bind="text: 'تاریخ :' + SubmitDate"></p>
+                    <a data-bind="click: $parent.Download" class="btn btn-warning B_Main">دریافت فایل</a>
+                </div>
+            </td>
+
+
         </tr>
     </tbody>
 </table>

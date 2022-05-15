@@ -3,13 +3,22 @@
     ViewBag.Title = "FinancialDocuments";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<center>
+    <p>مشتري گرامي ضمن تشكر از شما بواسطه ورود به پورتال ، لطفا" در صورت تاييدپيش نويس قرارداد، صفحه اول آن را چاپ گرفته به همراه مهر و امضاء به شماره 88754454-021(10 خط) فاكس نماييد.</p>
+</center>
 
-<table class="table table-hover table-striped tableFixList">
+<table>
     <tbody data-bind="foreach: FinancialList" data-dismiss="modal" style="cursor: default;">
-        <tr data-bind="click: $parent.Download">
-            <td data-bind="text: Description"></td>
-            <td data-bind="text: LockNumber"></td>
-            <td data-bind="text: Title"></td>
+        <tr>
+            <td>
+                <div style="border:1px solid black;padding: 10px;border-radius: 10px;">
+                    <p>فقط دوبار امکان دانلود وجود دارد</p>
+                    <p data-bind="text: 'عنوان :' + Title"></p>
+                    <p data-bind="text: 'توضیحات :' + Description"></p>
+                    <p data-bind="text: 'تاریخ :' + SubmitDate"></p>
+                    <a data-bind="click: $parent.Download" class="btn btn-warning B_Main">دریافت فایل</a>
+                </div>
+            </td>
         </tr>
     </tbody>
 </table>

@@ -233,6 +233,7 @@
     <Content Include="Content\img\bookmark.png" />
     <Content Include="Content\img\bookmark_un.png" />
     <Content Include="Content\img\docsels.png" />
+    <Content Include="Content\img\download.jpg" />
     <Content Include="Content\img\email.png" />
     <Content Include="Content\img\Error.jpg" />
     <Content Include="Content\img\Home\Desktop.jpg" />
@@ -788,6 +789,7 @@
     <Content Include="Views\Home\UploadFiles.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Home\Tiket.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
