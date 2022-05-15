@@ -13,7 +13,7 @@ $("input.int").keydown(function (e) {
 
     }
     else {
-        if (e.shiftKey) {
+        if (e.shiftKey) { 
             // SHIFT + TAB
             if (!((e.keyCode == 9) ||
                 // SHIFT + LEFT ARROW KEY
