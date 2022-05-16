@@ -3,73 +3,112 @@
 }
 
 <div class="row">
-    <div class="col-md-8">
+
+    <div class="col-md" style="border: 1px solid #999999;border-radius: 25px;padding: 20px; margin-right: 20px; margin-left:20px">
+        <div style="height: 100px; border-radius:100%; background-color:white;width: 100px;position: absolute;top: -50px;right: 30px;">
+            <img src="~/Content/img/White Icons/user@2x.png" style="height: 80px;margin-right: 10px;margin-top: 10px;" />
+        </div>
+
+        <p style="font-size: 16px; color:white;margin-top: 45px;">کسری کیانفر خوش آمدید</p>
+        <div style="border-top: 2px solid #eb8121;"></div>
+        <p style="font-size: 14px; color:white;margin-top: 11px;">اطلاعیه:</p>
+
+        <div style=" background-color: #a81010;padding: 5px 20px 5px 20px;border-radius: 25px;margin-bottom: 5px;">
+            <p style="font-size: 12px; color:white;margin-top: 11px;">قابلیت نصب آسان فعال گردید</p>
+        </div>
+
+        <div style=" background-color: #128d35;padding: 5px 20px 5px 20px;border-radius: 25px;">
+            <p style="font-size: 12px; color:white;margin-top: 11px;">همین حالا 20 درصد تخفیف بگیرید</p>
+        </div>
+    </div>
+    <div class="col-md-9">
+
         <div class="row">
+
             <div class="col-md P_Main">
-                <center>
-                    <img src="~/Content/img/icons/download.png" style="padding: 20px;" width="100" />
-                    <p style="font-size: 20px;">دریافت فایل</p>
-                    <p style="height: 40px;">دراین قسمت شما میتوانید فایل های مربوط به بروز رسانی برنامه هایتان را دریافت کنید</p>
-                    <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
-                    <a class="btn btn-warning B_Main" href="@Url.Action("CustomerFiles","Home")" id="t_CustomerFiles">تعداد فایل های موجود : 0</a>
-                </center>
+                <a href="@Url.Action("CustomerFiles","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;" class="btn btn-warning B_Main">
+                    <center><p style="color:black;font-size: 20px;margin-top: 55px;">دریافت فایل</p> <!-- <p id="t_CustomerFiles"></p>--></center>
+                </a>
+                <center><p style="height: 40px;margin-top: 100px;">دراین قسمت شما میتوانید فایل های مربوط به بروز رسانی برنامه هایتان را دریافت کنید</p></center>
             </div>
             <div class="col-md P_Main">
-                <center>
-                    <img src="~/Content/img/icons/upload.png" style="padding: 20px;" width="100" />
-                    <p style="font-size: 20px;">ارسال فایل</p>
-                    <p style="height: 40px;">با استفاده از این قسمت می توانید فایل هایی از قبیل نسخه های پشتیبان خود را برای ما ارسال کنید </p>
-                    <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
-                    <a class="btn btn-warning B_Main" href="@Url.Action("UploadFiles","Home")">ارسال فایل به کاربرد کامپیوتر</a>
-                </center>
+                <a href="@Url.Action("UploadFiles","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;" class="btn btn-warning B_Main">
+                    <center><p style="color:black;font-size: 20px;margin-top: 55px;">ارسال فایل</p></center>
+                </a>
+                <center><p style="height: 40px;margin-top: 100px;">با استفاده از این قسمت می توانید فایل هایی از قبیل نسخه های پشتیبان خود را برای ما ارسال کنید</p></center>
             </div>
-            <div class="col P_Main">
-                <center>
-                    <img src="~/Content/img/icons/file.png" style="padding: 20px;" width="100" />
-                    <p style="font-size: 20px;">اسناد فروش</p>
-                    <p style="height: 40px;">اسناد تنظیم شده از طرف شرکت برای شما در این بخش قرار می گیرد</p>
-                    <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
-                    <a class="btn btn-warning B_Main" href="@Url.Action("FinancialDocuments","Home")">برای ادامه کلیک کنید</a>
-                </center>
-            </div>
-            <div class="w-100"></div>
-            <div class="col P_Main">
-                <center>
-                    <img src="~/Content/img/icons/question.png" style="padding: 20px;" width="100" />
-                    <p style="font-size: 20px;">سوالات متداول</p>
-                    <p style="height: 40px;">بدون نیاز به تماس با شرکت جواب سوالات متدوال خود را بیابید</p>
-                    <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
-                    <a class="btn btn-warning B_Main" href="@Url.Action("FAQ","Home")">برای ادامه کلیک کنید</a>
-                </center>
-            </div>
-            <div class="col P_Main">
-                <center>
-                    <img src="~/Content/img/icons/team-viewer.png" style="padding: 20px;" width="100" />
-                    <p style="font-size: 20px;">تیکت پشتیبانی</p>
-                    <p style="height: 40px;">ارتباط با شرکت از طریق تیکت پشتیبانی</p>
-                    <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
-                    <a class="btn btn-warning B_Main" href="@Url.Action("Tiket","Home")">برای ادامه کلیک کنید</a>
-                </center>
+            <div class="col-md P_Main">
+                <a href="@Url.Action("FinancialDocuments","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;" class="btn btn-warning B_Main">
+                    <center><p style="color:black;font-size: 20px;margin-top: 55px;">اسناد و مستندات</p></center>
+                </a>
+                <center><p style="height: 40px;margin-top: 100px;">اسناد تنظیم شده از طرف شرکت برای شما در این بخش قرار می گیرد</p></center>
             </div>
 
+
+
+            <div class="w-100" style="margin-top:80px"></div>
+
+            <div class="col-md P_Main">
+                <a href="@Url.Action("FAQ","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;" class="btn btn-warning B_Main">
+                    <center><p style="color:black;font-size: 20px;margin-top: 55px;">سوالات متداول</p></center>
+                </a>
+                <center><p style="height: 40px;margin-top: 100px;">بدون نیاز به تماس با شرکت جواب سوالات متدوال خود را بیابید</p></center>
+            </div>
+            <div class="col-md P_Main">
+                <a href="@Url.Action("Tiket","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;" class="btn btn-warning B_Main">
+                    <center><p style="color:black;font-size: 20px;margin-top: 55px;">تیکت پشتیبانی</p></center>
+                </a>
+                <center><p style="height: 40px;margin-top: 100px;">ارتباط با شرکت از طریق تیکت پشتیبانی</p></center>
+            </div>
+            <div class="col-md P_Main">
+                <a href="@Url.Action("index","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;" class="btn btn-warning B_Main">
+                    <center><p style="color:black;font-size: 20px;margin-top: 55px;">پرداخت انلاین حساب</p></center>
+                </a>
+                <center><p style="height: 40px;margin-top: 100px;">پرداخت انلاین حساب</p></center>
+            </div>
+
+
+            <!-- <div class="col-md P_Main">
+        <center>
+            <img src="~/Content/img/icons/upload.png" style="padding: 20px;" width="100" />
+            <p style="font-size: 20px;">ارسال فایل</p>
+            <p style="height: 40px;">با استفاده از این قسمت می توانید فایل هایی از قبیل نسخه های پشتیبان خود را برای ما ارسال کنید </p>
+            <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
+            <a class="btn btn-warning B_Main" href="@Url.Action("UploadFiles","Home")">ارسال فایل به کاربرد کامپیوتر</a>
+        </center>
+    </div>
+    <div class="col P_Main">
+        <center>
+            <img src="~/Content/img/icons/file.png" style="padding: 20px;" width="100" />
+            <p style="font-size: 20px;">اسناد فروش</p>
+            <p style="height: 40px;">اسناد تنظیم شده از طرف شرکت برای شما در این بخش قرار می گیرد</p>
+            <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
+            <a class="btn btn-warning B_Main" href="@Url.Action("FinancialDocuments","Home")">برای ادامه کلیک کنید</a>
+        </center>
+    </div>
+    <div class="w-100"></div>
+    <div class="col P_Main">
+        <center>
+            <img src="~/Content/img/icons/question.png" style="padding: 20px;" width="100" />
+            <p style="font-size: 20px;">سوالات متداول</p>
+            <p style="height: 40px;">بدون نیاز به تماس با شرکت جواب سوالات متدوال خود را بیابید</p>
+            <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
+            <a class="btn btn-warning B_Main" href="@Url.Action("FAQ","Home")">برای ادامه کلیک کنید</a>
+        </center>
+    </div>
+    <div class="col P_Main">
+        <center>
+            <img src="~/Content/img/icons/team-viewer.png" style="padding: 20px;" width="100" />
+            <p style="font-size: 20px;">تیکت پشتیبانی</p>
+            <p style="height: 40px;">ارتباط با شرکت از طریق تیکت پشتیبانی</p>
+            <div style="border-top: 2px solid #eb8121;margin: 0px 10px 0px 10px;"></div>
+            <a class="btn btn-warning B_Main" href="@Url.Action("Tiket","Home")">برای ادامه کلیک کنید</a>
+        </center>
+    </div>-->
             <!--<div class="col P_Main"></div>-->
         </div>
     </div>
-    <div class="col-md" style="border: 1px solid #999999;border-radius: 25px;padding: 20px; margin-right: 20px;">
-        <p style="font-size: 20px;">قابلیت جدید:</p>
-        <div style="border-top: 2px solid #eb8121;"></div>
 
-        <div class="row" style="margin-top: 15px;">
-            <div class="DotText"></div>
-            <p class="col-md" style="font-size: 13px;">با وارد کردن پست الکترونیک خود از وجود فایل بروزرسانی برای دریافت مطلع شوید</p>
-        </div>
-
-        <div class="row" style="margin-top: 15px;">
-            <div class="DotText"></div>
-            <p class="col-md" style="font-size: 13px;">بازیابی کلمه عبور در صورت فراموش کردن بوسیله پست الکترونیک</p>
-        </div>
-
-    </div>
 </div>
 
 @section scripts{

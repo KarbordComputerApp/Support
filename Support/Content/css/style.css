@@ -22072,6 +22072,7 @@ html.ie11 .bs-searchbox .form-control {
     background-color: #dcdcdc;
     border-radius: 20px;
     margin:3px;
+    min-height:150px;
 }
 
 .DotText {
@@ -22081,4 +22082,12 @@ html.ie11 .bs-searchbox .form-control {
     border-radius: 100%;
     border: 2px solid black;
     margin-left: 5px;
+}
+
+
+body, html {
+    background-color: #082b44 !important;
+    background-repeat: no-repeat;
+    background-blend-mode: soft-light;
+    background-size: cover;
 }

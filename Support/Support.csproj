@@ -691,6 +691,15 @@
     <Content Include="Content\img\user.png" />
     <Content Include="Content\img\view.svg" />
     <Content Include="Content\img\Warning.jpg" />
+    <Content Include="Content\img\White Icons\active%402x.png" />
+    <Content Include="Content\img\White Icons\active.png" />
+    <Content Include="Content\img\White Icons\power-off%402x.png" />
+    <Content Include="Content\img\White Icons\power-off.png" />
+    <Content Include="Content\img\White Icons\Slogan%402x.png" />
+    <Content Include="Content\img\White Icons\Slogan.png" />
+    <Content Include="Content\img\White Icons\Slogan2x.png" />
+    <Content Include="Content\img\White Icons\user%402x.png" />
+    <Content Include="Content\img\White Icons\user.png" />
     <Content Include="Content\js\admin.js" />
     <Content Include="Content\js\advanced-form-elements.js" />
     <Content Include="Content\js\app.min.js" />
