@@ -16,30 +16,28 @@
 </head>
 <body class="light rtlSite" ondragstart="return false;" ondrop="return false;">
     <div class="row" style="padding:15px;margin: 0px 100px 0 100px;">
-        <img src="~/Content/img/White Icons/Slogan2x.png" height="100" width="100" />
-
+        <img src="~/Content/img/LogoTop.png" height="100" width="100" />
         <div style="margin-top: 30px;margin-right: 15px;">
-            <p style="font-size: 16px;color:#dcdcdc">داشبورد من</p>
+            <p id="Index_TextLogo" style="font-size: 16px;color:#082b44">داشبورد من</p>
             <div style="border-top: 2px solid #eb8121;width: 365px"></div>
         </div>
 
 
         <div class="col-md" style="margin-top: 30px;margin-right: 15px;">
             <div class="row" style="float: left;">
-                <a href="@Url.Action("Index","Home")" style="font-size: 16px; color:#dcdcdc" >بازگشت به صفحه اصلی</a>
-                <img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
+                <a id="Index_TextBack" href="@Url.Action("Index","Home")" style="font-size: 16px; color:#082b44">بازگشت به صفحه اصلی</a>
+                <img id="Index_Pic_line1" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
                 <a href="#">
-                    <img src="~/Content/img/White Icons/active@2x.png" style="height: 30px;" />
+                    <img id="Index_Pic_Alarm" src="~/Content/img/Icon_Blue/Alarm.png" style="height: 30px;" />
                 </a>
-                <img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
+                <img id="Index_Pic_line2" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
                 <a href="@Url.Action("ChangePassword","Home")">
-                    
-                    <img src="~/Content/img/White Icons/user@2x.png" style="height: 30px;" />
+                    <img id="Index_User" src="~/Content/img/Icon_Blue/User.png" style="height: 30px;" />
                 </a>
                 <!--<img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
-                <a href="@Url.Action("Login","Home")">
-                    <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
-                </a>-->
+    <a href="@Url.Action("Login","Home")">
+        <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
+    </a>-->
             </div>
         </div>
 

@@ -4260,7 +4260,7 @@
 
 
 body, html {
-    background-color: #f1f2f7;
+   /* background-color: #f1f2f7;*/
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     -webkit-transition: all 0.5s;
@@ -22085,9 +22085,11 @@ html.ie11 .bs-searchbox .form-control {
 }
 
 
+/*
 body, html {
     background-color: #082b44 !important;
     background-repeat: no-repeat;
     background-blend-mode: soft-light;
     background-size: cover;
 }
+    */

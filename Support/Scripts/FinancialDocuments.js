@@ -4,6 +4,9 @@
     var FinancialDownloadlUri = server + '/api/Data/FinancialDocumentsDownload/'; // آدرس دانلود
     self.FinancialList = ko.observableArray([]); // ليست فاکتور
 
+    $("#Index_TextLogo").text('اسناد و مستندات');
+
+
     function getFinancialList() {
         var FinancialDocumentsObject = {
             LockNumber: lockNumber
