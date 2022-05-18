@@ -225,6 +225,7 @@
     <Content Include="Content\fonts\Vazir-FD-WOL.ttf" />
     <Content Include="Content\fonts\Vazir-FD-WOL.woff" />
     <Content Include="Content\fonts\Vazir-FD-WOLReport.ttf" />
+    <Content Include="Content\img\download.svg" />
     <Content Include="Content\img\icons\contract.png" />
     <Content Include="Content\img\icons\download.png" />
     <Content Include="Content\img\icons\file.png" />
@@ -234,15 +235,23 @@
     <Content Include="Content\img\icons\team-viewer.png" />
     <Content Include="Content\img\icons\upload.png" />
     <Content Include="Content\img\Icon_Blue\Alarm.png" />
+    <Content Include="Content\img\Icon_Blue\Download.png" />
     <Content Include="Content\img\Icon_Blue\Line.png" />
+    <Content Include="Content\img\Icon_Blue\Pardakht.png" />
     <Content Include="Content\img\Icon_Blue\Power.png" />
+    <Content Include="Content\img\Icon_Blue\Print.png" />
     <Content Include="Content\img\Icon_Blue\User.png" />
     <Content Include="Content\img\Icon_White\Alarm.png" />
+    <Content Include="Content\img\Icon_White\Download.png" />
+    <Content Include="Content\img\Icon_White\Pardakht.png" />
     <Content Include="Content\img\Icon_White\Power.png" />
+    <Content Include="Content\img\Icon_White\Print.png" />
     <Content Include="Content\img\Icon_White\User.png" />
     <Content Include="Content\img\Logo.png" />
     <Content Include="Content\img\LogoTop.png" />
     <Content Include="Content\img\LogoMin.png" />
+    <Content Include="Content\img\pardakht.svg" />
+    <Content Include="Content\img\print.svg" />
     <Content Include="Content\img\svg\1.png" />
     <Content Include="Content\img\svg\2.png" />
     <Content Include="Content\img\svg\analytics-graph-bar.1.svg" />
@@ -605,6 +614,9 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ChangePassword.js" />
+    <Content Include="Scripts\User.js" />
+    <Content Include="Scripts\RecoveryPassword.js" />
     <Content Include="Scripts\Tiket.js" />
     <Content Include="Scripts\CustomerFiles.js" />
     <Content Include="Scripts\FAQ.js" />
@@ -658,6 +670,8 @@
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Home\Tiket.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Home\RecoveryPassword.cshtml" />
+    <Content Include="Views\Home\User.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

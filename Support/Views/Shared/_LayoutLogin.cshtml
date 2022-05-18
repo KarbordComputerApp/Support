@@ -40,10 +40,53 @@
         </div>
     </aside>
 
-    @RenderBody()
+
+
+    <div class="row">
+        <div class="col-lg-6 PanelLeftLogin d-none d-lg-block">
+            <div class="row" style="text-align:center;">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                </div>
+
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    <img id="LogoLogin" src="~/Content/img/Logo.png" style="padding: 35% 20% 0% 20%; max-width:100%" />
+
+                    <div style="padding: 35% 20% 0% 20%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 " id="datalogin">
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-2 col-xs-2">
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8">
+
+                    @RenderBody();
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="text-align:center;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <p style="color: #fefefe;" data-bind="text:'کلیه حقوق مادی و معنوی این سایت متعلق به شرکت مهندسی کاربرد کامپیوتر میباشد'">
+
+            </p>
+        </div>
+    </div>
+
+
+
+
     <script type="text/javascript">
         sessionStorage.ver = @(Support.Controllers.Unit.UnitPublic.titleVerNumber);
         localStorage.setItem("urlIndex", '@Url.Action("Index", "Home")');
+        localStorage.setItem("urlRecoveryPassword", '@Url.Action("RecoveryPassword", "Home")');
         localStorage.setItem("urlLogin", '@Url.Action("Login", "Home")');
     </script>
     <script src="~/Content/js/app.min.js"></script>
@@ -52,9 +95,8 @@
     <script src="~/Content/js/sweet2.js"></script>
     <script src="~/Scripts/app.js"></script>
     <script src="~/Scripts/PublicAFI.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
-    <script src="~/Scripts/Login.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
     <script src="/Content/js/form.min.js"></script>
-
+    @RenderSection("scripts", false)
 </body>
 </html>
 

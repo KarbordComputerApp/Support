@@ -19,20 +19,14 @@
 
 
     self.Download = function (item) {
-
-
-            var a = document.createElement("a");
-            //var file = new Blob([content], { type: contentType });
+        var a = document.createElement("a");
         a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id;
-           // a.download = fileName;
-            a.click();
-
-
-
+        a.click();
+        setTimeout(function () {
+            getFinancialList();
+        }, 2000);
+        //window.location.reload(true);
     }
-
-
-
 }; 
 
 

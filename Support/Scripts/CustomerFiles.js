@@ -3,6 +3,8 @@
     var CustomerFilesUri = server + '/api/Data/CustomerFiles/'; // آدرس فایل
     self.CustomerFilesList = ko.observableArray([]); // ليست فایل
 
+    $("#Index_TextLogo").text('دریافت فایل');
+
     function getCustomerFilesList() {
         var CustomerFilesObject = {
             LockNumber: lockNumber

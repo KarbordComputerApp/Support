@@ -4,7 +4,7 @@
         lockNumber = $("#user").val();
         pass = $("#pass").val();
         if (lockNumber === "" || lockNumber === null) {
-            return showNotification('نام کاربری را وارد کنید', 0);
+            return showNotification('شماره قفل را وارد کنید', 0);
         }
         LoginUri = server + '/api/Data/Login/'; 
 
@@ -22,12 +22,20 @@
                 return showNotification('شماره قفل یا کلمه عبور اشتباه است', 0);
             }
         });
-
-
-
-
-       
     }
+
+    self.RecoveryPassword = function LoginUser() {
+        lockNumber = $("#user").val();
+       
+        if (lockNumber === "" || lockNumber === null) {
+            return showNotification('شماره قفل را وارد کنید', 0);
+        }
+       
+        window.location.href = localStorage.getItem("urlRecoveryPassword");
+
+    }
+
+    
 };
 
 

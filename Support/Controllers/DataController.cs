@@ -56,7 +56,7 @@ namespace Support.Controllers
         [Route("api/Data/FinancialDocuments/")]
         public async Task<IHttpActionResult> PostFinancialDocuments(FinancialDocumentsObject FinancialDocumentsObject)
         {
-            string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} and (Download <= 2 or Download is null)", FinancialDocumentsObject.LockNumber);
+            string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} and (Download < 2 or Download is null)  order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
             var list = db.Database.SqlQuery<FinancialDocuments>(sql).ToList();
             return Ok(list);
         }
@@ -73,9 +73,9 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
-            string sql = string.Format(@"select * from CustomerFiles where LockNumber = {0} and Disabled = 1", CustomerFilesObject.LockNumber);
+            string sql = string.Format(@"select * from CustomerFiles where LockNumber = {0} and Disabled = 1  order by UploadDate desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
-            return Ok(list);
+            return Ok(list); 
         }
 
 
@@ -124,7 +124,7 @@ namespace Support.Controllers
 
             string sql = string.Format(@"update FinancialDocuments set ReadStatus = 1 , Download = isnull(Download,0) + 1 where id = {0} select 1", idFinancial);
             var list = db.Database.SqlQuery<int>(sql).Single();
-            db.SaveChangesAsync();
+            db.SaveChanges();
 
             response.Content = new ByteArrayContent(bytes);
             response.Content.Headers.ContentLength = bytes.LongLength;

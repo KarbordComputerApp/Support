@@ -1,6 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
     var UploadFilesUri = server + '/api/Data/UploadFile/'; // آدرس فایل
+    $("#Index_TextLogo").text('ارسال فایل');
 
 
     $("#AddNewFile").on('click', function (e) {

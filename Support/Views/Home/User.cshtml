@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .form-control {
+        direction: rtl;
+        background-color: #f1f2f7;
+        margin-bottom:20px;
+        margin-top:10px;
+    }
+</style>
+
+
+<div class="col-md-3">
+    <p style="font-size: 20px;text-align-last: right; color:#082b44">اطلاعات شرکت</p>
+
+    <div style="border: 1px solid #082b44;margin-top: 12px; margin-bottom: 30px;"></div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-7">
+        <div style="background-color:white;padding: 10px;border-radius: 10px;">
+            <div class="row">
+                <div class="col-md-5">
+                    <p style="margin-bottom:0px">شخصیت</p>
+                    <div class="form-line focused fix">
+                        <input id="aaa" class="form-control" placeholder="حقیقی/حقوقی" />
+                    </div>
+                    <p style="margin-bottom:0px">نام و نام خانوادگی</p>
+                    <div class="form-line focused fix">
+                        <input id="aaa" class="form-control" placeholder="نام و نام خانوادگی خود را کامل وارد کنید" />
+                    </div>
+                    <p style="margin-bottom:0px">نام شرکت/ مدیر عامل</p>
+                    <div class="form-line focused fix">
+                        <input id="aaa" class="form-control" placeholder="نام شرکت/ مدیر عامل خود را کامل وارد کنید" />
+                    </div>
+                    <p style="margin-bottom:0px">کد اقتصادی</p>
+                    <div class="form-line focused fix">
+                        <input id="aaa" class="form-control" placeholder="کد اقتصادی خود را کامل وارد کنید" />
+                    </div>
+                    <p style="margin-bottom:0px">شناسه ملی شرکت</p>
+                    <div class="form-line focused fix">
+                        <input id="aaa" class="form-control" placeholder="شناسه ملی شرکت خود را کامل وارد کنید" />
+                    </div>
+                    <p style="margin-bottom:0px">کد ملی</p>
+                    <div class="form-line focused fix">
+                        <input id="aaa" class="form-control" placeholder="کد ملی خود را کامل وارد کنید" />
+                    </div>
+                </div>
+                <div class="col-md-1"> </div>
+                    <div class="col-md-5">
+                        <p style="margin-bottom:0px">زمینه فعالیت</p>
+                        <div class="form-line focused fix">
+                            <input id="aaa" class="form-control" placeholder="زمینه فعالیت خود را کامل وارد کنید" />
+                        </div>
+                        <p style="margin-bottom:0px">آدرس</p>
+                        <div class="form-line focused fix">
+                            <input id="aaa" class="form-control" placeholder="آدرس خود را کامل وارد کنید" />
+                        </div>
+                        <p style="margin-bottom:0px">کد پستی</p>
+                        <div class="form-line focused fix">
+                            <input id="aaa" class="form-control" placeholder="کد پستی خود را کامل وارد کنید" />
+                        </div>
+                        <p style="margin-bottom:0px">تلفن ثابت</p>
+                        <div class="form-line focused fix">
+                            <input id="aaa" class="form-control" placeholder="تلفن ثابت خود را کامل وارد کنید" />
+                        </div>
+                        <p style="margin-bottom:0px">موبایل</p>
+                        <div class="form-line focused fix">
+                            <input id="aaa" class="form-control" placeholder="موبایل خود را کامل وارد کنید" />
+                        </div>
+                        <p style="margin-bottom:0px">پست الکترونیکی</p>
+                        <div class="form-line focused fix">
+                            <input id="aaa" class="form-control" placeholder="پست الکترونیکی خود را کامل وارد کنید" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+</div>
+@section scripts{
+    <script src="~/Scripts/User.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}

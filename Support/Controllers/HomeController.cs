@@ -42,11 +42,21 @@ namespace Support.Controllers
             return View();
         }
 
-                public ActionResult ChangePassword()
+        public ActionResult ChangePassword()
         {
             return View();
         }
 
+        public ActionResult RecoveryPassword()
+        {
+            return View();
+        }
+
+
+        public ActionResult User()
+        {
+            return View();
+        }
 
 
 
