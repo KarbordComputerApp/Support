@@ -141,7 +141,9 @@
             Desc: $("#comm").val()
         }
         ajaxFunction(FinalUploadFilesUri, 'POST', FinalUploadFileObject, true).done(function (data) {
-           
+            $("#comm").val('');
+            return showNotification('بارگذاری با موفقیت انجام شد', 1);
+
         });
 
 
