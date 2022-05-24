@@ -9,6 +9,9 @@
 
     var CustomerFilesCountUri = server + '/api/Data/CustomerFilesCount/'; // آدرس فایل
 
+
+    $('#FullName').text(fullName + ' خوش آمدید');
+
     function getCustomerFilesCount() {
         var CustomerFilesObject = {
             LockNumber: lockNumber

@@ -5,9 +5,13 @@
 }
 
 <div style="background-color:white;border-radius: 25px;padding: 20px; margin-bottom:20px">
-    <p style="margin-bottom:0px">جستجو</p>
     <div class="row">
-        <input data-bind="value: filter , valueUpdate: 'afterkeydown'" class="form-control col-md-4" placeholder="عبارت را وارد کنید">
+        <div class="col-md-4">
+            <p style="margin-bottom:0px">جستجوی کامل</p>
+            <div class="row">
+                <input data-bind="value: filter , valueUpdate: 'afterkeydown'" class="form-control" placeholder="عبارت را وارد کنید">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -36,7 +40,7 @@
                 <div class="panel-heading" role="tab" id="headingOne" style="border-radius: 15px;">
                     <h4 class="panel-title">
                         <a data-bind="attr: { 'data-target': '#AAA' + Id }" role="button" data-toggle="collapse" data-parent="#accordionExample1" aria-expanded="true" style="color:black">
-                            <span data-bind="text: Description"></span>
+                            <span style="background-color:#ff980033" data-bind="text: Description"></span>
                         </a>
                     </h4>
                 </div>

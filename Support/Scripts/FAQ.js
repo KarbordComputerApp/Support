@@ -22,7 +22,8 @@
         } else {
             tempData = ko.utils.arrayFilter(self.FAGList(), function (item) {
                 result =
-                    (item.Description == null ? '' : item.Description.toString().search(filter) >= 0)
+                    (item.Description == null ? '' : item.Description.toString().search(filter) >= 0) ||
+                (item.Body == null ? '' : item.Body.toString().search(filter) >= 0)
                 return result;
             })
             return tempData;

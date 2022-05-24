@@ -8,6 +8,12 @@ var serverAccount = 'http://127.0.0.1:902/api/';
 var AccountUri = serverAccount + 'Account/'; // آدرس حساب
 
 var lockNumber = localStorage.getItem("lockNumber");
+var firstName = localStorage.getItem("FirstName");
+var lastName = localStorage.getItem("LastName");
+var fullName = firstName + ' ' + lastName; 
+
+
+
 
 function ajaxFunction(uri, method, data, sync, error) {
     return $.ajax({
