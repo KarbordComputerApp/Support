@@ -29,25 +29,56 @@
             <textarea id="comm" rows="20" class="form-control no-resize auto-growth string autocomplete" style="text-align:justify;border-radius: 30px;padding: 10px;" placeholder="توضیحات فایل ارسالی خود را در این قسمت وارد نمایید"></textarea>
         </div>
         <div class="col-md">
-            <input id="upload" type="file" style="display:none" data-bind="event: {change: $root.fileUpload}" />
+            <input id="upload1" type="file" style="display:none" data-bind="event: {change: $root.fileUpload1}" />
+            <input id="upload2" type="file" style="display:none" data-bind="event: {change: $root.fileUpload2}" />
+            <input id="upload3" type="file" style="display:none" data-bind="event: {change: $root.fileUpload3}" />
 
-            <a id="AddNewFile" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;">انتخاب فایل</a>
-            <br />
-            <a id="AddNewFile" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;">انتخاب فایل</a>
-            <br /> <a id="AddNewFile" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;">انتخاب فایل</a>
-            <br />
-            <br />
-            <br />
-            <br />
-            <a id="SendFiles" class="btn btn-warning B_Main col-md-12" style="border-radius: 25px;background-color: #082b44 !important;">بار گذاری در پنل ارسال</a>
+            <table>
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td style="width:100px">
+                            <a id="AddNewFile1" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
+                        </td>
+                        <td id="NameFile1" style="direction: ltr;text-align: center;"></td>
+                        <td style="width:100px">
+                            <a id="DelFile1" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile1}">حذف</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:100px">
+                            <a id="AddNewFile2" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
+                        </td>
+                        <td id="NameFile2" style="direction: ltr;text-align: center;"></td>
+                        <td style="width:100px">
+                            <a id="DelFile2" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile2}" >حذف</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:100px">
+                            <a id="AddNewFile3" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
+                        </td>
+                        <td id="NameFile3" style="direction: ltr;text-align: center;"></td>
+                        <td style="width:100px">
+                            <a id="DelFile3" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile3}">حذف</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+
+
+            <a id="SendFiles" class="btn btn-warning B_Main col-md-12" style="border-radius: 25px;background-color: #082b44 !important;">بارگذاری در پنل ارسال</a>
         </div>
 
     </div>
 
 
-        
-       
-    </div>
+
+
+</div>
 
 
 @section scripts{

@@ -1,36 +1,34 @@
 ﻿var ViewModel = function () {
     var self = this;
-    var FinancialUri = server + '/api/Data/FinancialDocuments/'; // آدرس فاکتور
-    var FinancialDownloadlUri = server + '/api/Data/FinancialDocumentsDownload/'; // آدرس دانلود
-    self.FinancialList = ko.observableArray([]); // ليست فاکتور
+    var FAGUri = server + '/api/Data/FAG/';
+    self.FAGList = ko.observableArray([]); // ليست فاکتور
+    self.filter = ko.observable("");
 
-    function getFinancialList() {
-        var FinancialDocumentsObject = {
-            LockNumber: lockNumber
-        }
-        ajaxFunction(FinancialUri, 'POST', FinancialDocumentsObject, true).done(function (data) {
-            self.FinancialList(data == null ? [] : data);
+    $("#Index_TextLogo").text('سوالات متداول');
+
+    function getFAGList() {
+        ajaxFunction(FAGUri, 'GET', true).done(function (data) {
+            self.FAGList(data == null ? [] : data);
         });
-    }
-    getFinancialList();
-
-
-    self.Download = function (item) {
-
-
-            var a = document.createElement("a");
-            //var file = new Blob([content], { type: contentType });
-        a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id;
-           // a.download = fileName;
-            a.click();
-
-
 
     }
+    getFAGList();
 
-
-
-}; 
+    
+    self.FilterFag = ko.computed(function () {
+        var filter = self.filter();
+        if (!filter) {
+            return self.FAGList();
+        } else {
+            tempData = ko.utils.arrayFilter(self.FAGList(), function (item) {
+                result =
+                    (item.Description == null ? '' : item.Description.toString().search(filter) >= 0)
+                return result;
+            })
+            return tempData;
+        }
+    })
+};
 
 
 ko.applyBindings(new ViewModel());

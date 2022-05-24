@@ -21598,6 +21598,7 @@ span.badge {
         }
 
     .panel-group .panel .panel-heading {
+        background-color: #eb8121;
         padding: 0;
         -webkit-border-radius: 0;
         -moz-border-radius: 0;

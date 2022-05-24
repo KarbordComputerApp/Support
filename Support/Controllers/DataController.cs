@@ -47,6 +47,18 @@ namespace Support.Controllers
         }
 
 
+
+
+        [Route("api/Data/FAG/")]
+        public async Task<IHttpActionResult> GetFAG()
+        {
+            string sql = string.Format(@"select * from FAQs");
+            var list = db.Database.SqlQuery<FAQs>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
         public class FinancialDocumentsObject
         {
             public int LockNumber { get; set; }
@@ -75,7 +87,7 @@ namespace Support.Controllers
         {
             string sql = string.Format(@"select * from CustomerFiles where LockNumber = {0} and Disabled = 1  order by UploadDate desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
-            return Ok(list); 
+            return Ok(list);
         }
 
 
@@ -158,9 +170,9 @@ namespace Support.Controllers
 
             byte[] bytes = File.ReadAllBytes(files[0].ToString());
 
-           // string sql = string.Format(@"update FinancialDocuments set ReadStatus = 1 , Download = isnull(Download,0) + 1 where id = {0} select 1", idCustomerFiles);
-           // var list = db.Database.SqlQuery<int>(sql).Single();
-           // db.SaveChangesAsync();
+            // string sql = string.Format(@"update FinancialDocuments set ReadStatus = 1 , Download = isnull(Download,0) + 1 where id = {0} select 1", idCustomerFiles);
+            // var list = db.Database.SqlQuery<int>(sql).Single();
+            // db.SaveChangesAsync();
 
             response.Content = new ByteArrayContent(bytes);
             response.Content.Headers.ContentLength = bytes.LongLength;
@@ -178,6 +190,8 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> UploadFile()
         {
             string path = GetPath(3);
+            var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
+            var lockNumber = System.Web.HttpContext.Current.Request["LockNumber"];
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -186,23 +200,59 @@ namespace Support.Controllers
             if (!Directory.Exists(pathtemp))
                 Directory.CreateDirectory(pathtemp);
 
-            var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
-            var lockNumber = System.Web.HttpContext.Current.Request["LockNumber"];
-
-            //var req = HttpContext.Current.Request;
-            //var file = req.Files[req.Files.Keys.Get(0)];
+            pathtemp = path + "\\TempDirectory\\" + lockNumber;
+            if (!Directory.Exists(pathtemp))
+                Directory.CreateDirectory(pathtemp);
 
 
-
+          
             int lenght = Atch.ContentLength;
             byte[] filebyte = new byte[lenght];
             Atch.InputStream.Read(filebyte, 0, lenght);
-            File.WriteAllBytes(pathtemp + "\\" + lockNumber + "___" + Atch.FileName, filebyte);
+            File.WriteAllBytes(pathtemp + "\\" + Atch.FileName, filebyte);
+            return Ok("Ok");
+        }
 
 
-            
-            return Ok("000");
-        }      
+
+        public class FinalUploadFileObject
+        {
+            public int LockNumber { get; set; }
+
+            public string Desc { get; set; }
+
+        }
+
+        [Route("api/Data/FinalUploadFile/")]
+        public async Task<IHttpActionResult> FinalUploadFile(FinalUploadFileObject FinalUploadFileObject)
+         {
+            string path = GetPath(3);
+            string date = CustomPersianCalendar.ToPersianDate(DateTime.Now).Replace('/', '-');
+            string ticket = string.Format("{0:yyyyMMddHHmmssfff}", CustomPersianCalendar.GetCurrentIRNow(false));
+
+            string pathFile = path + "\\" + date;
+             if (!Directory.Exists(pathFile))
+                 Directory.CreateDirectory(pathFile);
+
+            string fullPath = string.Format("{0}\\{1}_{2}", pathFile, ticket, FinalUploadFileObject.LockNumber.ToString());
+            if (!Directory.Exists(fullPath))
+                Directory.CreateDirectory(fullPath);
+
+           string pathtemp = path + "\\TempDirectory\\" + FinalUploadFileObject.LockNumber.ToString();
+
+            if (Directory.Exists(pathtemp))
+            {
+                foreach (var file in new DirectoryInfo(pathtemp).GetFiles())
+                {
+                    file.MoveTo($@"{fullPath}\{file.Name}");
+                }
+            }
+
+            File.WriteAllText(string.Format("{0}\\{1}.txt", fullPath, FinalUploadFileObject.LockNumber), FinalUploadFileObject.Desc, System.Text.Encoding.UTF8);
+
+            return Ok("Ok");
+
+        }
 
 
 

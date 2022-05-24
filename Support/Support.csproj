@@ -143,6 +143,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Unit\CustomPersianCalendar.cs" />
     <Compile Include="Controllers\Unit\IniFile.cs" />
     <Compile Include="Controllers\Unit\UnitDatabase.cs" />
     <Compile Include="Controllers\Unit\UnitPublic.cs" />
