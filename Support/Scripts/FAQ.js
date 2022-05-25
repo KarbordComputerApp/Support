@@ -1,7 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
     var FAGUri = server + '/api/Data/FAG/';
-    self.FAGList = ko.observableArray([]); // ليست فاکتور
+    self.FAGList = ko.observableArray([]);
     self.filter = ko.observable("");
 
     $("#Index_TextLogo").text('سوالات متداول');

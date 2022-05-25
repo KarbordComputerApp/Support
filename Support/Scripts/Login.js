@@ -38,6 +38,21 @@
 
     }
 
+    $('#user').keyup(function (e) {
+        if (e.which == 13) {
+            $('#pass').focus()
+        }
+    })
+
+    $('#pass').keyup(function (e) {
+        if (e.which == 13) {
+            self.LoginUser();
+        }
+    })
+
+
+
+
     
 };
 
