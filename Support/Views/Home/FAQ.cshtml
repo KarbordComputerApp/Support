@@ -39,9 +39,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne" style="border-radius: 15px;">
                     <h4 class="panel-title">
-                        <a data-bind="attr: { 'data-target': '#AAA' + Id }" role="button" data-toggle="collapse" data-parent="#accordionExample1" aria-expanded="true" style="color:black">
-                            <span style="background-color:#ff980033" data-bind="text: Description"></span>
+                        <a data-bind="attr: { 'data-target': '#AAA' + Id }" role="button" data-toggle="collapse" data-parent="#accordionExample1" aria-expanded="true" style="color:black;background-color:#eb81213b">
+                            <span data-bind="text: Description"></span>
+                            <span style="float: left;font-size: 25px;">+</span>
                         </a>
+                        
                     </h4>
                 </div>
                 <div data-bind="attr: { 'id': 'AAA' + Id }" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
