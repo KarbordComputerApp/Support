@@ -80,7 +80,7 @@ namespace Support.Controllers
         [Route("api/Data/FinancialDocuments/")]
         public async Task<IHttpActionResult> PostFinancialDocuments(FinancialDocumentsObject FinancialDocumentsObject)
         {
-            string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} and (Download < 2 or Download is null)  order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
+            string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} /*and (Download < 2 or Download is null)*/  order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
             var list = db.Database.SqlQuery<FinancialDocuments>(sql).ToList();
             return Ok(list);
         }
@@ -97,7 +97,7 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
-            string sql = string.Format(@"select * from CustomerFiles where LockNumber = {0} and Disabled = 1  order by UploadDate desc", CustomerFilesObject.LockNumber);
+            string sql = string.Format(@"select * from CustomerFiles where LockNumber = {0} and Disabled = 0  order by UploadDate desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
             return Ok(list);
         }
@@ -106,7 +106,7 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFilesCount/")]
         public async Task<IHttpActionResult> PostCustomerFilesCount(CustomerFilesObject CustomerFilesObject)
         {
-            string sql = string.Format(@"select count(id) from CustomerFiles where LockNumber = {0} and Disabled = 1", CustomerFilesObject.LockNumber);
+            string sql = string.Format(@"select count(id) from CustomerFiles where LockNumber = {0} and Disabled = 0", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<int>(sql).ToList();
             return Ok(list);
         }
