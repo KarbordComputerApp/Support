@@ -25,6 +25,8 @@
     $('#Index_TextLogo').css("color", "#dcdcdc");
     $('#Index_TextBack').css("color", "#dcdcdc");
 
+    $('#Index_TextBack').hide();
+
     $('#Index_Pic_Alarm').attr('src', '/Content/img/Icon_White/Alarm.png');
     $('#Index_User').attr('src', '/Content/img/Icon_White/User.png');
 
