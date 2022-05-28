@@ -25,14 +25,14 @@
     }
 </style>
 <center>
-    <p style="font-size: 20px;margin-bottom: 50px;">مشتري گرامي ضمن تشكر از شما بواسطه ورود به پورتال ، لطفا" در صورت تاييدپيش نويس قرارداد، صفحه اول آن را چاپ گرفته به همراه مهر و امضاء به شماره 88754454-021(10 خط) فاكس نماييد.</p>
+    <p style="font-size: 20px;margin-bottom: 50px;">کاربر گرامی با تشکر از شما  برای ورود و استفاده از وب سایت پشتیبانی، برای دریافت بروز رسانی نرم افزار مورد نظر بر روی گزینه مورد نظر کلیک و نسخه به روز رسانی را دریافت کنید.</p>
 </center>
 
 <table>
     <thead>
         <tr>
             <th style="border-radius: 0 20px 20px 0;max-width: 0px;">ردیف</th>
-            <th>نام فایل</th>
+            <th>شرح فایل</th>
             <th>توضیحات</th>
             <th style="border-radius: 20px 0 0 20px;width: 200px;">عملیات</th>
         </tr>
@@ -41,7 +41,7 @@
     <tbody data-bind="foreach: CustomerFilesList" data-dismiss="modal" style="cursor: default;">
         <tr>
             <td style="border-radius: 0 30px 30px 0;">
-                <p data-bind="text: 1"></p>
+                <p data-bind="text: $index() + 1"></p>
             </td>
             <td data-bind="text: FileName"></td>
             <td data-bind="text: Description"></td>
