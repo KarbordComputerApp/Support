@@ -80,7 +80,6 @@
 
 
     $("#SendFiles").on('click', function (e) {
-
         if (file1 != null) {
             f = document.getElementById("upload1");
             fileFullName = f.files[0].name;
@@ -96,6 +95,10 @@
                 $("#NameFile1").text('');
                 $("#DelFile1").hide();
             });
+        }
+
+        if ($("#NameFile1").text() != '') {
+            return showNotification('خطا در ارسال فایل 1 ', 0);
         }
 
         if (file2 != null) {
@@ -115,6 +118,10 @@
             })
         }
 
+        if ($("#NameFile2").text() != '') {
+            return showNotification('خطا در ارسال فایل 2 ', 0);
+        }
+
         if (file3 != null) {
             f = document.getElementById("upload3");
             fileFullName = f.files[0].name;
@@ -132,7 +139,9 @@
             })
         }
 
-
+        if ($("#NameFile3").text() != '') {
+            return showNotification('خطا در ارسال فایل 3 ', 0);
+        }
 
 
 
@@ -142,7 +151,15 @@
         }
         ajaxFunction(FinalUploadFilesUri, 'POST', FinalUploadFileObject, true).done(function (data) {
             $("#comm").val('');
-            return showNotification('بارگذاری با موفقیت انجام شد', 1);
+
+            if ($("#NameFile1").text() == '' && $("#NameFile2").text() == '' && $("#NameFile3").text() == '') {
+                return showNotification('بارگذاری با موفقیت انجام شد', 1);
+            }
+
+            
+
+
+            
 
         });
 
