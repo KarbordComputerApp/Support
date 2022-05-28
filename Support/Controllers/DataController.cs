@@ -180,7 +180,10 @@ namespace Support.Controllers
 
             string fullFileName = MergePaths(path, list.FilePath);
 
-            string[] files = Directory.GetFiles(path, list.FilePath);
+            FileInfo f = new FileInfo(fullFileName);
+            string fullname = f.DirectoryName;
+
+            string[] files = Directory.GetFiles(fullname, f.Name);
 
 
             if (!File.Exists(files[0]))
