@@ -2,6 +2,7 @@
     var self = this;
     var CustomerFilesUri = server + '/api/Data/CustomerFiles/'; // آدرس فایل
     self.CustomerFilesList = ko.observableArray([]); // ليست فایل
+    var CustomerDownloadlUri = server + '/api/Data/CustomerDocumentsDownload/'; // آدرس دانلود
 
     $("#Index_TextLogo").text('دریافت فایل');
 
@@ -17,7 +18,12 @@
 
 
     self.Download = function (item) {
-        a = item
+        var a = document.createElement("a");
+        a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id;
+        a.click();
+        //setTimeout(function () {
+        //    getFinancialList();
+        //}, 2000);
     }
 
 

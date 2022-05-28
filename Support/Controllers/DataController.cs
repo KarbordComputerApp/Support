@@ -159,6 +159,49 @@ namespace Support.Controllers
         }
 
 
+        public static string MergePaths(string part1, string part2)
+        {
+            return part1.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar + part2.TrimStart(Path.DirectorySeparatorChar);
+        }
+
+        [HttpGet]
+        [Route("api/Data/CustomerDocumentsDownload/{lockNo}/{idCustomer}")]
+
+        public HttpResponseMessage CustomerDocumentsDownload(int lockNo, long idCustomer)
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+
+            string path = GetPath(2);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string sql = string.Format(@"select * from CustomerFiles where id = {0}", idCustomer);
+            var list = db.Database.SqlQuery<CustomerFiles>(sql).Single();
+
+            string fullFileName = MergePaths(path, list.FilePath);
+
+            string[] files = Directory.GetFiles(path, list.FilePath);
+
+
+            if (!File.Exists(files[0]))
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
+                throw new HttpResponseException(response);
+            }
+
+
+            byte[] bytes = File.ReadAllBytes(files[0].ToString());
+
+            response.Content = new ByteArrayContent(bytes);
+            response.Content.Headers.ContentLength = bytes.LongLength;
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = files[0];
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
+            return response;
+        }
+
+
         [HttpGet]
         [Route("api/Data/CustomerFiles/{lockNo}/{idCustomerFiles}")]
         public HttpResponseMessage CustomerFiles(int lockNo, long idCustomerFiles)
