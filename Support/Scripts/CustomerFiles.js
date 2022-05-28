@@ -26,6 +26,11 @@
         //}, 2000);
     }
 
+    self.ReplaceSpec = function (item) {
+        return item.replace(/<\/?[^>]+(>|$)/g, "");
+    }
+
+
 
 
 }; 
