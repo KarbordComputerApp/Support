@@ -12,9 +12,13 @@
 
     $("#Index_TextLogo").text('ارسال فایل');
 
-    $("#DelFile1").hide();
-    $("#DelFile2").hide();
-    $("#DelFile3").hide();
+    //$('#DelFile1').attr('disabled', 'disabled');
+    //$('#DelFile2').attr('disabled', 'disabled');
+    //$('#DelFile3').attr('disabled', 'disabled');
+
+    //$("#DelFile1").hide();
+    //$("#DelFile2").hide();
+    //$("#DelFile3").hide();
 
 
     $("#AddNewFile1").on('click', function (e) {
@@ -36,14 +40,14 @@
         file1 = e.target.files[0];
         var name = file1.name;
         $("#NameFile1").text(name);
-        $("#DelFile1").show();
+        //$('#DelFile1').removeAttr('disabled');
     }
 
 
     this.DelFile1 = function (data, e) {
         file1 = null;
         $("#NameFile1").text(tempText);
-        $("#DelFile1").hide();
+        //$('#DelFile1').attr('disabled', 'disabled');
     }
 
 
@@ -53,26 +57,26 @@
         file2 = e.target.files[0];
         var name = file2.name;
         $("#NameFile2").text(name);
-        $("#DelFile2").show();
+       // $("#DelFile2").show();
     }
 
     this.DelFile2 = function (data, e) {
         file2 = null;
         $("#NameFile2").text(tempText);
-        $("#DelFile2").hide();
+        //$("#DelFile2").hide();
     }
 
     this.fileUpload3 = function (data, e) {
         file3 = e.target.files[0];
         var name = file3.name;
         $("#NameFile3").text(name);
-        $("#DelFile3").show();
+       // $("#DelFile3").show();
     }
 
     this.DelFile3 = function (data, e) {
         file3 = null;
         $("#NameFile3").text(tempText);
-        $("#DelFile3").hide();
+        //$("#DelFile3").hide();
     }
 
 
@@ -94,7 +98,7 @@
             ajaxFunctionUpload(UploadFilesUri, formData, false).done(function (response) {
                 file1 = null;
                 $("#NameFile1").text(tempText);
-                $("#DelFile1").hide();
+                //$("#DelFile1").hide();
             });
         }
 
@@ -115,7 +119,7 @@
             ajaxFunctionUpload(UploadFilesUri, formData, false).done(function (response) {
                 file2 = null;
                 $("#NameFile2").text(tempText);
-                $("#DelFile2").hide();
+               // $("#DelFile2").hide();
             })
         }
 
@@ -136,7 +140,7 @@
             ajaxFunctionUpload(UploadFilesUri, formData, false).done(function (response) {
                 file3 = null;
                 $("#NameFile3").text(tempText);
-                $("#DelFile3").hide();
+                //$("#DelFile3").hide();
             })
         }
 
