@@ -244,6 +244,7 @@
     <Content Include="Content\img\Icon_Blue\Print.png" />
     <Content Include="Content\img\Icon_Blue\User.png" />
     <Content Include="Content\img\Icon_White\Alarm.png" />
+    <Content Include="Content\img\Icon_White\delete.png" />
     <Content Include="Content\img\Icon_White\Download.png" />
     <Content Include="Content\img\Icon_White\Pardakht.png" />
     <Content Include="Content\img\Icon_White\Power.png" />
