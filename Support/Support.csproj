@@ -236,6 +236,7 @@
     <Content Include="Content\img\icons\team-viewer.png" />
     <Content Include="Content\img\icons\upload.png" />
     <Content Include="Content\img\Icon_Blue\Alarm.png" />
+    <Content Include="Content\img\Icon_Blue\delete.png" />
     <Content Include="Content\img\Icon_Blue\Download.png" />
     <Content Include="Content\img\Icon_Blue\Line.png" />
     <Content Include="Content\img\Icon_Blue\Pardakht.png" />

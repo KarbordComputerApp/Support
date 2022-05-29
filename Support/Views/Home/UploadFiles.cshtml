@@ -11,6 +11,12 @@
         background-blend-mode: soft-light;
         background-size: cover;
     }
+
+    td, th {
+        padding: 5px 5px;
+        display: table-cell;
+        vertical-align: middle;
+    }
 </style>
 
 <p style="font-size:16px">حجم فایل های ارسالی نباید بیشتر از 10 مگابایت باشد</p>
@@ -40,27 +46,45 @@
                         <td style="width:100px">
                             <a id="AddNewFile1" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
                         </td>
-                        <td id="NameFile1" style="direction: ltr;text-align: center;"></td>
+                        <td  style="direction: ltr;text-align: center;">
+                            <div style="border:1px solid #082b44;border-radius: 25px;">
+                                <p id="NameFile1" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
+                            </div>
+                        </td>
                         <td style="width:100px">
-                            <a id="DelFile1" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile1}">حذف</a>
+                            <a id="DelFile1" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile1}">
+                                <img src="~/Content/img/Icon_Blue/delete.png" width="26" />
+                            </a>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:100px">
                             <a id="AddNewFile2" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
                         </td>
-                        <td id="NameFile2" style="direction: ltr;text-align: center;"></td>
+                        <td style="direction: ltr;text-align: center;">
+                            <div style="border:1px solid #082b44;border-radius: 25px;">
+                                <p id="NameFile2" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
+                            </div>
+                        </td>
                         <td style="width:100px">
-                            <a id="DelFile2" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile2}" >حذف</a>
+                            <a id="DelFile2" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile2}">
+                                <img src="~/Content/img/Icon_Blue/delete.png" width="26" />
+                            </a>
                         </td>
                     </tr>
                     <tr>
                         <td style="width:100px">
                             <a id="AddNewFile3" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
                         </td>
-                        <td id="NameFile3" style="direction: ltr;text-align: center;"></td>
+                        <td style="direction: ltr;text-align: center;">
+                            <div style="border:1px solid #082b44;border-radius: 25px;">
+                                <p id="NameFile3" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
+                            </div>
+                        </td>
                         <td style="width:100px">
-                            <a id="DelFile3" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile3}">حذف</a>
+                            <a id="DelFile3" style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile3}">
+                                <img src="~/Content/img/Icon_Blue/delete.png" width="26" />
+                            </a>
                         </td>
                     </tr>
 
@@ -70,7 +94,7 @@
 
 
 
-            <a id="SendFiles" class="btn btn-warning B_Main col-md-12" style="border-radius: 25px;background-color: #082b44 !important;margin-top: 115px;">بارگذاری در پنل ارسال</a>
+            <a id="SendFiles" class="btn btn-warning B_Main col-md-12" style="border-radius: 25px;background-color: #082b44 !important;margin-top: 165px;margin-bottom: 0px;">بارگذاری در پنل ارسال</a>
         </div>
 
     </div>

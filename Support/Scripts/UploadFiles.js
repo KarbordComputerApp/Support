@@ -8,6 +8,7 @@
     var UploadFilesUri = server + '/api/Data/UploadFile/'; // آدرس فایل
     var FinalUploadFilesUri = server + '/api/Data/FinalUploadFile/'; // آدرس فایل
 
+    tempText = 'فایل ارسالی را انتخاب کنید';
 
     $("#Index_TextLogo").text('ارسال فایل');
 
@@ -41,7 +42,7 @@
 
     this.DelFile1 = function (data, e) {
         file1 = null;
-        $("#NameFile1").text('');
+        $("#NameFile1").text(tempText);
         $("#DelFile1").hide();
     }
 
@@ -57,7 +58,7 @@
 
     this.DelFile2 = function (data, e) {
         file2 = null;
-        $("#NameFile2").text('');
+        $("#NameFile2").text(tempText);
         $("#DelFile2").hide();
     }
 
@@ -70,7 +71,7 @@
 
     this.DelFile3 = function (data, e) {
         file3 = null;
-        $("#NameFile3").text('');
+        $("#NameFile3").text(tempText);
         $("#DelFile3").hide();
     }
 
@@ -92,12 +93,12 @@
             formData.append("LockNumber", lockNumber);
             ajaxFunctionUpload(UploadFilesUri, formData, false).done(function (response) {
                 file1 = null;
-                $("#NameFile1").text('');
+                $("#NameFile1").text(tempText);
                 $("#DelFile1").hide();
             });
         }
 
-        if ($("#NameFile1").text() != '') {
+        if ($("#NameFile1").text() != tempText) {
             return showNotification('خطا در ارسال فایل 1 ', 0);
         }
 
@@ -113,12 +114,12 @@
             formData.append("LockNumber", lockNumber);
             ajaxFunctionUpload(UploadFilesUri, formData, false).done(function (response) {
                 file2 = null;
-                $("#NameFile2").text('');
+                $("#NameFile2").text(tempText);
                 $("#DelFile2").hide();
             })
         }
 
-        if ($("#NameFile2").text() != '') {
+        if ($("#NameFile2").text() != tempText) {
             return showNotification('خطا در ارسال فایل 2 ', 0);
         }
 
@@ -134,12 +135,12 @@
             formData.append("LockNumber", lockNumber);
             ajaxFunctionUpload(UploadFilesUri, formData, false).done(function (response) {
                 file3 = null;
-                $("#NameFile3").text('');
+                $("#NameFile3").text(tempText);
                 $("#DelFile3").hide();
             })
         }
 
-        if ($("#NameFile3").text() != '') {
+        if ($("#NameFile3").text() != tempText) {
             return showNotification('خطا در ارسال فایل 3 ', 0);
         }
 
@@ -152,7 +153,7 @@
         ajaxFunction(FinalUploadFilesUri, 'POST', FinalUploadFileObject, true).done(function (data) {
             $("#comm").val('');
 
-            if ($("#NameFile1").text() == '' && $("#NameFile2").text() == '' && $("#NameFile3").text() == '') {
+            if ($("#NameFile1").text() == tempText && $("#NameFile2").text() == tempText && $("#NameFile3").text() == tempText) {
                 return showNotification('بارگذاری با موفقیت انجام شد', 1);
             }
 
