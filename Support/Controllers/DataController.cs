@@ -61,7 +61,7 @@ namespace Support.Controllers
         [Route("api/Data/AceMessages/")]
         public async Task<IHttpActionResult> GetAceMessages()
         {
-            string sql = string.Format(@"select * from AceMessages where Type = 100 and Active = 1 and Expired = 0");
+            string sql = string.Format(@"select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0  order by id");
             var list = db.Database.SqlQuery<AceMessages>(sql).ToList();
             return Ok(list);
         }

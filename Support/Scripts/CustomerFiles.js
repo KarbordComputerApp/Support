@@ -30,6 +30,16 @@
         return item.replace(/<\/?[^>]+(>|$)/g, "");
     }
 
+    self.ReplaceDate = function (item) {
+        date = item.substring(0, 10);
+        date = date.replaceAll('-', '/'); 
+        return convertDate(date);
+    }
+
+    self.ReplaceTime = function (item) {
+        return item.substring(11, 100);
+    }
+
 
 
 

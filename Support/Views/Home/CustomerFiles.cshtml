@@ -61,6 +61,8 @@
             <th style="border-radius: 0 20px 20px 0;max-width: 100px;">ردیف</th>
             <th>شرح فایل</th>
             <th>توضیحات</th>
+            <th>تاریخ</th>
+            <th>ساعت</th>
             <th style="border-radius: 20px 0 0 20px;width: 200px;">عملیات</th>
         </tr>
     </thead>
@@ -72,6 +74,8 @@
             </td>
             <td data-bind="text: FileName"></td>
             <td data-bind="text: $parent.ReplaceSpec(Description)"></td>
+            <td data-bind="text: $parent.ReplaceDate(UploadDate)"></td>
+            <td data-bind="text: $parent.ReplaceTime(UploadDate)"></td>
             <td style="border-radius: 30px 0 0 30px;">
                 <a data-bind="click: $parent.Download">
                     <img src="~/Content/img/Icon_Blue/Download.png" width="40" />

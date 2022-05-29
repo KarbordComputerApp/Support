@@ -618,6 +618,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ChangePassword.js" />
+    <Content Include="Scripts\shamsi.js" />
     <Content Include="Scripts\User.js" />
     <Content Include="Scripts\RecoveryPassword.js" />
     <Content Include="Scripts\Tiket.js" />
