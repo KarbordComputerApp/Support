@@ -32,6 +32,11 @@
 
     var CustomerFilesCountUri = server + '/api/Data/CustomerFilesCount/'; // آدرس فایل
 
+    $('#B_Tiket').attr('disabled', 'disabled');
+    if (lockNumber == '10000') {
+        $('#B_Tiket').removeAttr('disabled', 'disabled');
+    }
+    
 
     $('#FullName').text(fullName + ' خوش آمدید');
 

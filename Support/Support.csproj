@@ -235,13 +235,17 @@
     <Content Include="Content\img\icons\question.png" />
     <Content Include="Content\img\icons\team-viewer.png" />
     <Content Include="Content\img\icons\upload.png" />
+    <Content Include="Content\img\Icon_Blue\add.png" />
     <Content Include="Content\img\Icon_Blue\Alarm.png" />
+    <Content Include="Content\img\Icon_Blue\attach.png" />
     <Content Include="Content\img\Icon_Blue\delete.png" />
     <Content Include="Content\img\Icon_Blue\Download.png" />
+    <Content Include="Content\img\Icon_Blue\edit.png" />
     <Content Include="Content\img\Icon_Blue\Line.png" />
     <Content Include="Content\img\Icon_Blue\Pardakht.png" />
     <Content Include="Content\img\Icon_Blue\Power.png" />
     <Content Include="Content\img\Icon_Blue\Print.png" />
+    <Content Include="Content\img\Icon_Blue\refresh.png" />
     <Content Include="Content\img\Icon_Blue\User.png" />
     <Content Include="Content\img\Icon_White\Alarm.png" />
     <Content Include="Content\img\Icon_White\delete.png" />

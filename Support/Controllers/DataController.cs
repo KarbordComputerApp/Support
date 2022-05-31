@@ -135,6 +135,7 @@ namespace Support.Controllers
 
             string[] files = Directory.GetFiles(path, string.Format("{0}_*", idFinancial));
 
+            FileInfo f = new FileInfo(files[0]);
 
             if (!File.Exists(files[0]))
             {
@@ -153,7 +154,7 @@ namespace Support.Controllers
             response.Content = new ByteArrayContent(bytes);
             response.Content.Headers.ContentLength = bytes.LongLength;
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = files[0];
+            response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
             return response;
         }
@@ -199,7 +200,7 @@ namespace Support.Controllers
             response.Content = new ByteArrayContent(bytes);
             response.Content.Headers.ContentLength = bytes.LongLength;
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = files[0];
+            response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
             return response;
         }
@@ -216,7 +217,7 @@ namespace Support.Controllers
                 Directory.CreateDirectory(path);
 
             string[] files = Directory.GetFiles(path, string.Format("{0}_*", idCustomerFiles));
-
+            FileInfo f = new FileInfo(files[0]);
 
             if (!File.Exists(files[0]))
             {
@@ -235,7 +236,7 @@ namespace Support.Controllers
             response.Content = new ByteArrayContent(bytes);
             response.Content.Headers.ContentLength = bytes.LongLength;
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = files[0];
+            response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
             return response;
         }

@@ -371,29 +371,6 @@
             }
             ajaxFunction(ErjSaveTicketUri + aceTiket + '/' + salTiket + '/' + groupTiket + '/', 'POST', ErjSaveTicket_HI).done(function (data) {
                 serialNumber = data;
-
-                /* var zip = new JSZip();
-
-
-                 zip.file('temp' + fileType, fileAttach);
-                 zip.generateAsync({ type: "Blob", compression: "DEFLATE" }).then(function (content) {
-
-                     var file = new File([content], fileFullName[i], { type: "zip" });
-                     var formData = new FormData();
-                     formData.append("SerialNumber", serialNumber);
-                     formData.append("ProgName", "ERJ1");
-                     formData.append("ModeCode", 102);
-                     formData.append("BandNo", 0);
-                     formData.append("Code", "");
-                     formData.append("Comm", "مدرک پیوست - " + DateNow + " - " + fileName);
-                     formData.append("FName", fileFullName);
-                     formData.append("Atch", file);
-
-                     ajaxFunctionUpload(ErjDocAttach_SaveUri + ace + '/' + sal + '/' + group, formData, false).done(function (response) {
-                         getErjDocXK();
-                     })
-                 });*/
-
             });
 
             for (var i = 1; i <= counterAttach; i++) {
@@ -434,7 +411,7 @@
             formData.append("FName", fileFullName);
             formData.append("Atch", file);
 
-            ajaxFunctionUpload(ErjDocAttach_SaveUri + aceTiket + '/' + salTiket + '/' + groupTiket, formData, false).done(function (response) {
+            ajaxFunctionUploadTiket(ErjDocAttach_SaveUri + aceTiket + '/' + salTiket + '/' + groupTiket, formData, false).done(function (response) {
 
             })
         });
@@ -455,91 +432,7 @@
 
 
 
-    pageSizeDocAttach = localStorage.getItem('pageSizeDocAttach') == null ? 10 : localStorage.getItem('pageSizeDocAttach');
-    self.pageSizeDocAttach = ko.observable(pageSizeDocAttach);
-    self.currentPageIndexKhdt = ko.observable(0);
-
-    self.currentPageIndexDocAttach = ko.observable(0);
-    self.filterDocAttach0 = ko.observable("");
-
-    self.filterDocAttachList = ko.computed(function () {
-
-        self.currentPageIndexDocAttach(0);
-        var filter0 = self.filterDocAttach0();
-
-        if (!filter0) {
-            return self.DocAttachList();
-        } else {
-            tempData = ko.utils.arrayFilter(self.DocAttachList(), function (item) {
-                result =
-                    (item.Comm == null ? '' : item.Comm.toString().search(filter0) >= 0)
-                return result;
-            })
-            return tempData;
-        }
-    });
-
-
-
-    self.currentPageDocAttach = ko.computed(function () {
-        var pageSizeDocAttach = parseInt(self.pageSizeDocAttach(), 10),
-            startIndex = pageSizeDocAttach * self.currentPageIndexDocAttach(),
-            endIndex = startIndex + pageSizeDocAttach;
-        localStorage.setItem('pageSizeDocAttach', pageSizeDocAttach);
-        return self.filterDocAttachList().slice(startIndex, endIndex);
-    });
-
-    self.nextPageDocAttach = function () {
-        if (((self.currentPageIndexDocAttach() + 1) * self.pageSizeDocAttach()) < self.filterDocAttachList().length) {
-            self.currentPageIndexDocAttach(self.currentPageIndexDocAttach() + 1);
-        }
-    };
-
-    self.previousPageDocAttach = function () {
-        if (self.currentPageIndexDocAttach() > 0) {
-            self.currentPageIndexDocAttach(self.currentPageIndexDocAttach() - 1);
-        }
-    };
-
-    self.firstPageDocAttach = function () {
-        self.currentPageIndexDocAttach(0);
-    };
-
-
-    self.lastPageDocAttach = function () {
-        countDocAttach = parseInt(self.filterDocAttachList().length / self.pageSizeDocAttach(), 10);
-        if ((self.filterDocAttachList().length % self.pageSizeDocAttach()) == 0)
-            self.currentPageIndexDocAttach(countDocAttach - 1);
-        else
-            self.currentPageIndexDocAttach(countDocAttach);
-    };
-
-
-    self.iconTypeComm = ko.observable("");
-
-    self.sortTableDocAttach = function (viewModel, e) {
-        var orderProp = $(e.target).attr("data-column")
-        if (orderProp == null)
-            return null
-        self.currentColumn(orderProp);
-        self.DocAttachList.sort(function (left, right) {
-            leftVal = FixSortName(left[orderProp]);
-            rightVal = FixSortName(right[orderProp]);
-            if (self.sortType == "ascending") {
-                return leftVal < rightVal ? 1 : -1;
-            }
-            else {
-                return leftVal > rightVal ? 1 : -1;
-            }
-        });
-        self.sortType = (self.sortType == "ascending") ? "descending" : "ascending";
-
-        self.iconTypeCode('');
-        self.iconTypeName('');
-        if (orderProp == 'Comm') self.iconTypeNameComm((self.sortType == "ascending") ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down");
-    };
-
-
+ 
 
 
     $('#refreshDocAttach').click(function () {
@@ -621,7 +514,7 @@
 
                 $('#bodyDocAttach').append(
                     '<tr>' +
-                    '<td>' + "مدرک پیوست - " + DateNow + " - " + fileName + '</td>' +
+                    '<td style="font-size: 14px;" >' + "مدرک پیوست - " + DateNow + " - " + fileName + '</td>' +
                     '</tr>'
                 );
 
@@ -735,7 +628,7 @@
                     formData.append("FName", fileFullName);
                     formData.append("Atch", file);
 
-                    ajaxFunctionUpload(ErjDocAttach_SaveUri + aceTiket + '/' + salTiket + '/' + groupTiket, formData, true).done(function (response) {
+                    ajaxFunctionUploadTiket(ErjDocAttach_SaveUri + aceTiket + '/' + salTiket + '/' + groupTiket, formData, true).done(function (response) {
                         getDocAttachList(serialNumber);
                     })
                 });

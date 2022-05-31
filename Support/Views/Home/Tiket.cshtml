@@ -3,6 +3,110 @@
     ViewBag.Title = "لیست تیکت های پشتیبانی";
 }
 
+<style>
+    th {
+        padding: 10px 10px;
+        background-color: #082b44;
+        color: #f1f2f7;
+        text-align: center;
+        border: 1px solid #f1f2f7;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 25px 10px;
+        background-color: #dcdcdc;
+        color: #082b44;
+        text-align: center;
+        border: 1px solid #f1f2f7;
+        font-size: 18px;
+        border-top: solid 5px #f1f2f7;
+    }
+</style>
+
+
+<center>
+    <p style="font-size: 20px;margin-bottom: 50px;">برای گرفتن نوبت ومطرح کردن مشکل بوجود آمده با واحد پشتیبانی</p>
+</center>
+
+<div style="text-align: left;padding: 10px;">
+    <a id="refreshErjDocXK" class="">
+        <img src="~/Content/img/Icon_Blue/refresh.png" width="30" style="margin-left: 10px;" />
+
+    </a>
+    <a id="AddNewErjDocXK" data-bind="click: $root.AddNewDocH" class="dropdown-toggle" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modal-ErjDocXK"> 
+    <img src="~/Content/img/Icon_Blue/add.png" width="30" />
+    </a>
+
+</div>
+
+<table>
+    <!-- <thead>
+         <tr>
+             <th style="border-radius: 0 20px 20px 0;max-width: 100px;">ردیف</th>
+             <th>شرح فایل</th>
+             <th>توضیحات</th>
+             <th>تاریخ</th>
+             <th style="border-radius: 20px 0 0 20px;width: 200px;">عملیات</th>
+         </tr>
+     </thead>-->
+    <thead style="cursor: pointer;">
+        <tr data-bind="click: sortTableErjDocXK">
+            <th>ردیف</th>
+            <th data-column="DocNo">
+                <span data-column="DocNo">شماره</span>
+                <span data-bind="attr: { class: currentColumn() == 'DocNo' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                    <i data-bind="attr: { class: iconTypeDocNo }" data-column="DocNo" class=""></i>
+                </span>
+            </th>
+            <th data-column="DocDate">
+                <span data-column="DocDate">تاریخ</span>
+                <span data-bind="attr: { class: currentColumn() == 'DocDate' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                    <i data-bind="attr: { class: iconTypeDocDate }" data-column="DocDate" class=""></i>
+                </span>
+            </th>
+            <th data-column="Status">
+                <span data-column="Status">وضعیت</span>
+                <span data-bind="attr: { class: currentColumn() == 'Status' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                    <i data-bind="attr: { class: iconTypeStatus }" data-column="Status" class=""></i>
+                </span>
+            </th>
+            <th data-column="Text">
+                <span data-column="Text">توضیحات</span>
+                <span data-bind="attr: { class: currentColumn() == 'Text' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                    <i data-bind="attr: { class: iconTypeText }" data-column="Text" class=""></i>
+                </span>
+            </th>
+            <th data-column="Motaghazi">
+                <span data-column="Motaghazi">متقاضی</span>
+                <span data-bind="attr: { class: currentColumn() == 'Motaghazi' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                    <i data-bind="attr: { class: iconTypeMotaghazi }" data-column="Motaghazi" class=""></i>
+                </span>
+            </th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+
+    <tbody data-bind="foreach: currentPageErjDocXK" data-dismiss="modal" style="cursor: default;">
+        <tr>
+            <td data-bind="text: $root.radif($index())" style="background-color: #d9d9d9;"></td>
+            <td data-bind="text: DocNo"></td>
+            <td data-bind="text: DocDate"></td>
+            <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
+            <td data-bind="text: Text" style="width:40%"></td>
+            <td data-bind="text: Motaghazi"></td>
+            <td>
+                <!--<a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">-->
+                <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">
+                    <img src="~/Content/img/Icon_Blue/attach.png" width="30" />
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!--
+
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -10,9 +114,7 @@
                 <div class="form-inline focused">
                     <strong style="margin-left: 5px; margin-right: 5px;font-size: 15px;">لیست تیکت های پشتیبانی</strong>
                     <div class="row header-dropdown m-r--5">
-                        <!-- <a id="SettingColumn" class="">
-                             <img src="~/Content/img/sanad/list-add.png" width="20" height="20" style="margin-left: 10px;" class="dropdown-toggle" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modal-SettingColumn" />
-                         </a>-->
+
                         <a id="refreshErjDocXK" class="">
                             <img src="~/Content/img/list/streamline-icon-synchronize-arrows-1@48x48.png" width="20" height="20" style="margin-left: 10px;" />
                         </a>
@@ -98,13 +200,13 @@
                 </div>
 
 
-           
+
             </div>
         </div>
     </div>
 </div>
 
-
+-->
 <div class="modal fade" id="modal-SettingColumn" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -154,7 +256,7 @@
 
 
 <div class="modal fade" id="modal-ErjDocXK" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-    <div class="modal-dialog modal-entesab" style="width:980px">
+    <div class="modal-dialog modal-entesab" style="max-width:980px">
         <div class="modal-content">
             <div class="modal-header" style="padding-bottom: 0px;">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -164,7 +266,7 @@
                 <h4 class="modal-title">ثبت تیکت جدید</h4>
                 <div>
                     <a id="attachFile" class="dropdown-toggle" style="margin-left: 10px;">
-                        <img src="/Content/img/list/attach_file.png" width="20" height="20">
+                        <img src="~/Content/img/Icon_Blue/attach.png" width="20" height="20">
                     </a>
                 </div>
             </div>
@@ -172,9 +274,9 @@
             <div class="modal-body">
                 <div class="form-group" style="margin-bottom: 0.5rem;">
                     <div class="cardErj">
-                        <div class="header" style="background-color: #f5d3b4;">
+                        <div class="header" style="background-color: #082b44;padding: 10px;margin: 10px;">
                             <div class="row form-inline modal-header" style="padding:0px;">
-                                <h6>متن تیکت</h6>
+                                <center> <h6 style="color:white">متن تیکت</h6></center>
                             </div>
                         </div>
                         <div class="body" style="padding:10px;">
@@ -199,7 +301,7 @@
                     </div>
 
                     <div class="col-md pull-left">
-                        <button type="button" id="saveErjDocXK" class="btn btn-primary  pull-left"><i class="fa fa-sign-in fa-lg fa-fw"></i>ارسال</button>
+                        <a id="saveErjDocXK" class="btn btn-warning B_Main col-md-6" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left">ارسال تیکت</a>
                     </div>
                 </div>
             </div>
@@ -221,13 +323,12 @@
 
                 <div>
                     <a id="refreshDocAttach">
-                        <img src="~/Content/img/list/streamline-icon-synchronize-arrows-1@48x48.png" width="20" height="20" style="margin-left: 10px;" />
+                        <img src="~/Content/img/Icon_Blue/refresh.png" width="20" height="20" style="margin-left: 10px;" />
                     </a>
-
 
                     <input id="upload" type="file" style="display:none" data-bind="event: {change: $root.fileUpload}" />
                     <a id="AddNewDocAttach">
-                        <img src="/Content/img/list/streamline-icon-add-circle-alternate@48x48.png" width="20" height="20">
+                        <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
                     </a>
 
                 </div>
@@ -242,75 +343,29 @@
                 <div style="height:400px;overflow:auto;border: 1px #ddd solid;">
                     <table class="table table-hover table-striped tableFixList">
                         <thead style="cursor: pointer;">
-                            <tr data-bind="click: sortTableDocAttach">
+                            <tr>
                                 <th style="width: 10px;">ردیف</th>
-                                <th data-column="Comm" style="text-align: center;">
+                                <th style="text-align: center;">
                                     شرح
-                                    <span data-bind="attr: { class: currentColumn() == 'Comm' ? 'isVisible' : 'isHidden' }">
-                                        <i data-bind="attr: { class: iconTypeComm }"></i>
-                                    </span>
                                 </th>
                                 <th style="width:1px;"></th>
                             </tr>
                         </thead>
-                        <tbody data-bind="foreach: currentPageDocAttach" style="cursor: default;">
+                        <tbody data-bind="foreach: DocAttachList" style="cursor: default;">
                             <tr>
-                                <td data-bind="text: BandNo" style="background-color: #d9d9d9;"></td>
-                                <td data-bind="text: Comm"></td>
+                                <td data-bind="text: $index() + 1" style="background-color: #d9d9d9;font-size: 14px;"></td>
+                                <td data-bind="text: Comm" style="font-size: 14px;"></td>
                                 <td>
                                     <a data-bind="click: $root.selectDocAttach">
-                                        <img src="/Content/img/list/download.png" width="20" height="20" style="margin-left:10px" />
+                                        <img src="~/Content/img/Icon_Blue/Download.png" width="28"  style="margin-left:10px" />
                                     </a>
                                 </td>
                             </tr>
                         </tbody>
-                        <tfoot>
-                            <tr style="background-color: #efb68399">
-                                <td>جستجو</td>
-                                <td style="padding: 0px 3px;"><input data-bind="value: filterDocAttach0, valueUpdate: 'afterkeydown'" type="text" class="form-control " style="height: 2.4rem;" /> </td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-inline">
-                            <label>نمایش</label>
-                            <div class="form-group" style="text-align: center; width: 50px;  margin: 5px;">
-                                <select id="pageSizeSelector" class="selectorange" data-bind="value: pageSizeDocAttach">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                    <option value="60">60</option>
-                                    <option value="70">70</option>
-                                    <option value="80">80</option>
-                                    <option value="90">90</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                            <label>رکورد در هر صفحه</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="text-align: left; margin-top: 10px;">
-                        <a data-bind="click: firstPageDocAttach">
-                            <img src="~/Content/img/list/streamline-icon-navigation-first.png" width="14" height="14" />
-                        </a>
-                        <a data-bind="click: previousPageDocAttach">
-                            <img src="~/Content/img/list/streamline-icon-navigation-back.png" width="14" height="14" style="margin: 0px 5px 0px 5px;" />
-                        </a>
-                        <b data-bind="text: currentPageIndexDocAttach() + 1" style="margin: 0px 5px 0px 5px; color: #ec8121;"></b>
-                        <a data-bind="click: nextPageDocAttach">
-                            <img src="~/Content/img/list/streamline-icon-navigation-next.png" width="14" height="14" style="margin: 0px 5px 0px 5px;" />
-                        </a>
-                        <a data-bind="click: lastPageDocAttach">
-                            <img src="~/Content/img/list/streamline-icon-navigation-last.png" width="14" height="14" />
-                        </a>
-                    </div>
-                </div>
+             
 
 
 
@@ -331,12 +386,12 @@
                 <h4 class="modal-title">پیوست</h4>
                 <div>
                     <a id="DelAllAttach" style="margin-left: 10px;">
-                        <img src="~/Content/img/list/streamline-icon-bin-2@48x48.png" width="20" height="20">
+                        <img src="~/Content/img/Icon_Blue/delete.png" width="20" height="20">
                     </a>
 
                     <input id="AddFiles" type="file" style="display:none" data-bind="event: {change: $root.AddFile}" />
                     <a id="AddAttachs">
-                        <img src="/Content/img/list/streamline-icon-add-circle-alternate@48x48.png" width="20" height="20">
+                        <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
                     </a>
                 </div>
             </div>

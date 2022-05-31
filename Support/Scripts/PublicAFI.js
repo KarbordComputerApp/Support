@@ -104,6 +104,59 @@ function ajaxFunctionUpload(uri, data, sync) {
 }
 
 
+
+function ajaxFunctionUploadTiket(uri, data, sync) {
+
+    return $.ajax({
+        url: uri,
+        type: 'POST',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+
+        async: sync == null ? false : sync,
+        beforeSend: function () {
+            if (sync == true) {
+                $('#loadingsite').attr('class', 'page-proccess-wrapper');
+                $('#loadingsite').css('display', 'block');
+            }
+        },
+
+        headers: {
+            'userName': 'Tiket',
+            'password': 'Tiket',
+            'userKarbord': sessionStorage.userName,
+        },
+        success: function (fileName) {
+        },
+        complete: function () {
+            var n = uri.search("ChangeDatabase");
+            if (sync == true && n == -1) {
+                $('#loadingsite').css('display', 'none');
+                $('#loadingsite').attr('class', 'page-loader-wrapper');
+            }
+        },
+        xhr: function () {
+            var fileXhr = $.ajaxSettings.xhr();
+            if (fileXhr.upload) {
+                $("progress").show();
+                fileXhr.upload.addEventListener("progress", function (e) {
+                    if (e.lengthComputable) {
+                        $("#fileProgress").attr({
+                            value: e.loaded,
+                            max: e.total
+                        });
+                    }
+                }, false);
+            }
+            return fileXhr;
+        }
+    });
+}
+
+
+
 function ajaxFunctionAccount(uri, method, sync, data) {
     return $.ajax({
         type: method,
@@ -130,6 +183,38 @@ function ajaxFunctionAccount(uri, method, sync, data) {
         showNotification('اشکال در دریافت اطلاعات از سرور . لطفا عملیات را دوباره انجام دهید' + '</br>' + textStatus + ' : ' + errorThrown, 3);
     });
 }
+
+
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
+    }
+}
+
+
+function base64ToArrayBuffer(base64) {
+    var binaryString = window.atob(base64);
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+    for (var i = 0; i < binaryLen; i++) {
+        var ascii = binaryString.charCodeAt(i);
+        bytes[i] = ascii;
+    }
+    return bytes;
+}
+
+function saveByteArray(reportName, byte) {
+    var blob = new Blob([byte], { type: 'octet/stream' });
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    var fileName = reportName;
+    link.download = fileName;
+    link.click();
+};
 
 
 
