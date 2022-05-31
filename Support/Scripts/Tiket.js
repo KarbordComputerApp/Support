@@ -17,11 +17,11 @@
                 localStorage.setItem("groupTiket", data.ERJ_Group);
                 localStorage.setItem("ApiAddressTiket", serverAddress);
 
-                ajaxFunctionAccount(AccountUri + lock, 'GET').done(function (data) {
+                /*ajaxFunctionAccount(AccountUri + lock, 'GET').done(function (data) {
                     if (data === 0) {
                         return showNotification(' اطلاعات قفل یافت نشد ', 0);
                     }
-                });
+                });*/
             }
         });
     }
