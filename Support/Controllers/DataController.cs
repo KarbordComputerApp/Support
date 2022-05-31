@@ -113,8 +113,6 @@ namespace Support.Controllers
 
 
 
-
-
         public string GetPath(int IdConfig)
         {
             string sql = string.Format(@"select value from Configs where id = {0}", IdConfig.ToString());
