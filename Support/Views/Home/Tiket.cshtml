@@ -52,50 +52,35 @@
      </thead>-->
     <thead style="cursor: pointer;">
         <tr data-bind="click: sortTableErjDocXK">
-            <th>ردیف</th>
-            <th data-column="DocNo">
-                <span data-column="DocNo">شماره</span>
-                <span data-bind="attr: { class: currentColumn() == 'DocNo' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                    <i data-bind="attr: { class: iconTypeDocNo }" data-column="DocNo" class=""></i>
-                </span>
+            <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
+            <th>
+                <span>شماره</span>
             </th>
-            <th data-column="DocDate">
-                <span data-column="DocDate">تاریخ</span>
-                <span data-bind="attr: { class: currentColumn() == 'DocDate' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                    <i data-bind="attr: { class: iconTypeDocDate }" data-column="DocDate" class=""></i>
-                </span>
+            <th>
+                <span>تاریخ</span>
             </th>
-            <th data-column="Status">
-                <span data-column="Status">وضعیت</span>
-                <span data-bind="attr: { class: currentColumn() == 'Status' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                    <i data-bind="attr: { class: iconTypeStatus }" data-column="Status" class=""></i>
-                </span>
+            <th>
+                <span>وضعیت</span>
             </th>
-            <th data-column="Text">
-                <span data-column="Text">توضیحات</span>
-                <span data-bind="attr: { class: currentColumn() == 'Text' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                    <i data-bind="attr: { class: iconTypeText }" data-column="Text" class=""></i>
-                </span>
+            <th>
+                <span>توضیحات</span>
             </th>
-            <th data-column="Motaghazi">
-                <span data-column="Motaghazi">متقاضی</span>
-                <span data-bind="attr: { class: currentColumn() == 'Motaghazi' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                    <i data-bind="attr: { class: iconTypeMotaghazi }" data-column="Motaghazi" class=""></i>
-                </span>
+            <th>
+                <span>متقاضی</span>
             </th>
-            <th>عملیات</th>
+            <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
         </tr>
     </thead>
 
     <tbody data-bind="foreach: currentPageErjDocXK" data-dismiss="modal" style="cursor: default;">
         <tr>
-            <td data-bind="text: $root.radif($index())" style="background-color: #d9d9d9;"></td>
+            <td data-bind="text: $root.radif($index())" style="border-radius: 0 30px 30px 0;"></td>
             <td data-bind="text: DocNo"></td>
             <td data-bind="text: DocDate"></td>
             <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
             <td data-bind="text: Text" style="width:40%"></td>
             <td data-bind="text: Motaghazi"></td>
-            <td>
+            <td style="border-radius: 30px 0 0 30px;">
                 <!--<a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">-->
                 <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">
                     <img src="~/Content/img/Icon_Blue/attach.png" width="30" />
