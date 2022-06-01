@@ -97,10 +97,12 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
-            string sql = string.Format(@"select * from CustomerFiles where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , UploadDate desc", CustomerFilesObject.LockNumber);
+            string sql = string.Format(@"select * from CustomerFiles where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
             return Ok(list);
         }
+
+
 
 
         [Route("api/Data/CustomerFilesCount/")]
