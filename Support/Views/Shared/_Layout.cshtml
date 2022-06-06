@@ -7,22 +7,25 @@
     <title id="titlePage">@ViewBag.Title</title>
     <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/css/materialize.min.css" rel="stylesheet" />
-    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)" rel="stylesheet" />
     <link href="~/Content/js/jquery ui/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/js/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
     <link href="~/Content/css/stimulsoft.viewer.office2013.whiteblue.css" rel="stylesheet" />
     <link href="~/Content/css/stimulsoft.designer.office2013.whiteblue.css" rel="stylesheet" />
 </head>
 <body class="light rtlSite" ondragstart="return false;" ondrop="return false;">
-    <div class="row" style="padding:15px;margin: 0px 100px 0 100px;">
-        <img src="~/Content/img/LogoTop.png" height="100" width="100" />
-        <div style="margin-top: 30px;margin-right: 15px;">
-            <p id="Index_TextLogo" style="font-size: 16px;color:#082b44">داشبورد من</p>
-            <div style="border-top: 2px solid #eb8121;width: 365px"></div>
+    <div class="row continerHead">
+        <img src="~/Content/img/LogoTop.png" class="logoTop" height="100" width="100" />
+        <div class="col">
+
+            <div class="TilteTop">
+                <p id="Index_TextLogo" style="font-size: 16px;color:#082b44">داشبورد من</p>
+                <div style="border-top: 2px solid #eb8121;width: 200px"></div>
+            </div>
         </div>
 
 
-        <div class="col-md" style="margin-top: 30px;margin-right: 15px;">
+        <div class="col LeftButtomMenu">
             <div class="row" style="float: left;">
                 <a id="Index_TextBack" href="@Url.Action("Index","Home")" style="font-size: 16px; color:#082b44">بازگشت به صفحه اصلی</a>
                 <img id="Index_Pic_line1" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
@@ -32,13 +35,13 @@
                 <img id="Index_Pic_line2" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
 
                 <!--<a href="@Url.Action("User","Home")">
-                    <img id="Index_User" src="~/Content/img/Icon_Blue/User.png" style="height: 30px;" />
-                </a>-->
+                <img id="Index_User" src="~/Content/img/Icon_Blue/User.png" style="height: 30px;" />
+            </a>-->
 
 
 
 
-                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" style="margin-left: 50px;" aria-expanded="false">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                     <img id="Index_User" src="~/Content/img/Icon_Blue/User.png" width="30" height="30">
                 </a>
                 <ul class="dropdown-menu pullDown" style="margin-left: 10px; width:250px;border-radius: 20px;top:50px">
@@ -68,15 +71,15 @@
 
 
                 <!--<img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
-                <a href="@Url.Action("Login","Home")">
-                    <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
-                </a>-->
+            <a href="@Url.Action("Login","Home")">
+                <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
+            </a>-->
             </div>
         </div>
 
     </div>
 
-    <div style="margin: 50px 100px 0 100px;">
+    <div class="continerMain">
         <div class="container-fluid">
             @RenderBody()
         </div>

@@ -52,7 +52,10 @@ namespace Support.Controllers
         [Route("api/Data/FAG/")]
         public async Task<IHttpActionResult> GetFAG()
         {
-            string sql = string.Format(@"select * from FAQs");
+            string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId  from FAQs
+                                         union all
+                                         select id,Title,Description,Body,SortId from FAQs
+                                         order by title , SortId");
             var list = db.Database.SqlQuery<FAQs>(sql).ToList();
             return Ok(list);
         }
@@ -68,7 +71,7 @@ namespace Support.Controllers
 
 
 
-        
+
 
 
         public class FinancialDocumentsObject
@@ -264,7 +267,7 @@ namespace Support.Controllers
                 Directory.CreateDirectory(pathtemp);
 
 
-          
+
             int lenght = Atch.ContentLength;
             byte[] filebyte = new byte[lenght];
             Atch.InputStream.Read(filebyte, 0, lenght);
@@ -284,20 +287,20 @@ namespace Support.Controllers
 
         [Route("api/Data/FinalUploadFile/")]
         public async Task<IHttpActionResult> FinalUploadFile(FinalUploadFileObject FinalUploadFileObject)
-         {
+        {
             string path = GetPath(3);
             string date = CustomPersianCalendar.ToPersianDate(DateTime.Now).Replace('/', '-');
             string ticket = string.Format("{0:yyyyMMddHHmmssfff}", CustomPersianCalendar.GetCurrentIRNow(false));
 
             string pathFile = path + "\\" + date;
-             if (!Directory.Exists(pathFile))
-                 Directory.CreateDirectory(pathFile);
+            if (!Directory.Exists(pathFile))
+                Directory.CreateDirectory(pathFile);
 
             string fullPath = string.Format("{0}\\{1}_{2}", pathFile, ticket, FinalUploadFileObject.LockNumber.ToString());
             if (!Directory.Exists(fullPath))
                 Directory.CreateDirectory(fullPath);
 
-           string pathtemp = path + "\\TempDirectory\\" + FinalUploadFileObject.LockNumber.ToString();
+            string pathtemp = path + "\\TempDirectory\\" + FinalUploadFileObject.LockNumber.ToString();
 
             if (Directory.Exists(pathtemp))
             {
