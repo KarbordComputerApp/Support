@@ -12,6 +12,19 @@
                 <input data-bind="value: filter , valueUpdate: 'afterkeydown'" class="form-control" placeholder="عبارت را وارد کنید">
             </div>
         </div>
+
+       <!-- <div class="col-md-3">
+            <p style="margin-bottom:0px">دسته بندی</p>
+            <div class="row">
+                <select  class="form-control" style="height: 37px;">
+                    <option>aaaa</option>
+                    <option>aaaa</option>
+                    <option>aaaa</option>
+                </select>
+            </div>
+        </div>
+           -->
+
     </div>
 </div>
 
@@ -40,7 +53,8 @@
                 <div class="panel-heading" role="tab" id="headingOne" style="border-radius: 15px;">
                     <h4 class="panel-title">
                         <a data-bind="attr: { 'data-target': '#AAA' + Id }" role="button" data-toggle="collapse" data-parent="#accordionExample1" aria-expanded="true" style="color:black;background-color:#082b44">
-                            <span data-bind="text: Description" style="color:white"></span>
+                            <span data-bind="text:Title + ' :' " style="color:#ffd9d9"></span>
+                            <span data-bind="text:Description" style="color:white"></span>
                             <span style="float: left;font-size: 25px;color:white">+</span>
                         </a>
 

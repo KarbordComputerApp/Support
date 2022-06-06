@@ -4,11 +4,14 @@
     self.FAGList = ko.observableArray([]);
     self.filter = ko.observable("");
 
+    var Gru;
+
     $("#Index_TextLogo").text('سوالات متداول');
 
     function getFAGList() {
         ajaxFunction(FAGUri, 'GET', true).done(function (data) {
             self.FAGList(data == null ? [] : data);
+            //Gru = [...new Set(data.map(item => item.Title))];
         });
 
     }
