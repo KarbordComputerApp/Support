@@ -21,9 +21,9 @@
         var a = document.createElement("a");
         a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id;
         a.click();
-        //setTimeout(function () {
-        //    getFinancialList();
-        //}, 2000);
+        setTimeout(function () {
+            getCustomerFilesList();
+        }, 2000);
     }
 
     self.ReplaceSpec = function (item) {

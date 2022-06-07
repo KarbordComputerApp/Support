@@ -100,7 +100,8 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
-            string sql = string.Format(@"select * from CustomerFiles where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", CustomerFilesObject.LockNumber);
+            string sql = string.Format(@"select *,(select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload 
+                                         from CustomerFiles as c where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
             return Ok(list);
         }
@@ -179,7 +180,7 @@ namespace Support.Controllers
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            string sql = string.Format(@"select * from CustomerFiles where id = {0}", idCustomer);
+            string sql = string.Format(@"select *, 0 as CountDownload from CustomerFiles where id = {0}", idCustomer);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).Single();
 
             string fullFileName = MergePaths(path, list.FilePath);
@@ -205,6 +206,11 @@ namespace Support.Controllers
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
             response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
+
+            sql = string.Format(@"INSERT INTO CustomerFileDownloadInfos (FileId,IP,DownloadTime) VALUES ({0},'',getdate()) select 1", idCustomer);
+            var list1 = db.Database.SqlQuery<int>(sql).Single();
+            db.SaveChanges();
+
             return response;
         }
 

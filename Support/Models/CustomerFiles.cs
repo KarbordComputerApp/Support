@@ -26,5 +26,7 @@ namespace Support.Models
         public string GeneralFiles { get; set; }
 
         public bool Disabled { get; set; }
+
+        public int? CountDownload { get; set; }
     }
 }
