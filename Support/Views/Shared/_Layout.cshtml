@@ -35,8 +35,8 @@
                 <img id="Index_Pic_line2" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
 
                 <!--<a href="@Url.Action("User","Home")">
-                <img id="Index_User" src="~/Content/img/Icon_Blue/User.png" style="height: 30px;" />
-            </a>-->
+                    <img id="Index_User" src="~/Content/img/Icon_Blue/User.png" style="height: 30px;" />
+                </a>-->
 
 
 
@@ -71,9 +71,9 @@
 
 
                 <!--<img src="~/Content/img/icons/Line 11.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
-            <a href="@Url.Action("Login","Home")">
-                <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
-            </a>-->
+                <a href="@Url.Action("Login","Home")">
+                    <img src="~/Content/img/icons/power-off.png" style="height: 30px;" />
+                </a>-->
             </div>
         </div>
 
@@ -83,6 +83,31 @@
         <div class="container-fluid">
             @RenderBody()
         </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade" id="modal-Report" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" dir="ltr" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <div style="height:500px;overflow:auto;border: 1px #ddd solid;">
+                    </div>
+                </div>
+                <div style="padding: 0px; margin: 10px;">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="designerContent"></div>
+        <div id="viewerContent"></div>
     </div>
 
 

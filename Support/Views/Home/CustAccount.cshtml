@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "گردش حساب مشتری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container-fluid th {
+        padding: 10px 10px;
+        background-color: #082b44;
+        color: #f1f2f7;
+        text-align: center;
+        border: 1px solid #f1f2f7;
+        font-size: 14px;
+    }
+
+    .container-fluid td {
+        padding: 25px 10px;
+        background-color: #dcdcdc;
+        color: #082b44;
+        text-align: center;
+        border: 1px solid #f1f2f7;
+        font-size: 18px;
+        border-top: solid 5px #f1f2f7;
+    }
+
+
+
+
+</style>
+
+
+
+
+
+<center>
+    <p style="font-size: 20px;margin-bottom: 10px;">گردش حساب مشتری</p>
+</center>
+
+<div style="text-align: left;padding: 10px;">
+    <a id="refreshCustAccount" class="">
+        <img src="~/Content/img/Icon_Blue/refresh.png" width="30" style="margin-left: 10px;" />
+
+    </a>
+</div>
+
+<table>
+    <thead style="cursor: pointer;">
+        <tr>
+            <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
+            <th>
+                <span>شماره</span>
+            </th>
+            <th>
+                <span>تاریخ</span>
+            </th>
+            <th>
+                <span>ملاحظات</span>
+            </th>
+            <th>
+                <span>قابل پرداخت</span>
+            </th>
+            <th>
+                <span>وضعیت پرداخت</span>
+            </th>
+            <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
+        </tr>
+    </thead>
+
+    <tbody data-bind="foreach: CustAccountList" style="cursor: default;">
+        <tr>
+            <td data-bind="text: $index()+1" style="border-radius: 0 30px 30px 0;"></td>
+            <td data-bind="text: DocNo"></td>
+            <td data-bind="text: DocDate"></td>
+            <td data-bind="text: Spec"></td>
+            <td data-bind="text: NumberToNumberString(TotalValue)"></td>
+            <td data-bind="text: Tasviye, style: {color: TasviyeCode == 0 ? null : TasviyeCode == 1 ? 'blue' : TasviyeCode == 2 ? 'green' : 'red'}" style="direction: ltr;color: rgb(0, 0, 0);"></td>
+            <td data-bind="visible: TasviyeCode < 2 || DownloadCount != '2'" style="border-radius: 30px 0 0 30px;">
+
+                <a data-bind="click: $root.ShowLinkPardakht, visible: TasviyeCode < 2 "  title="پرداخت آنلاین">
+                    <img src="~/Content/img/Icon_Blue/cash.png" width="30">
+                </a>
+                <a data-bind="click: $root.ChapFactor, visible: DownloadCount != '2'" title="چاپ فاکتور">
+                    <img src="~/Content/img/Icon_Blue/Print.png" width="30">
+                </a>
+
+               
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/CustAccount.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
+
+
+
+
+

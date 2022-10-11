@@ -58,7 +58,10 @@ namespace Support.Controllers
             return View();
         }
 
-
+        public ActionResult CustAccount()
+        {
+            return View();
+        }
 
     }
 }

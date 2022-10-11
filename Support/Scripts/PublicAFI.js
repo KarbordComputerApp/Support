@@ -10,8 +10,15 @@ var AccountUri = serverAccount + 'Account/'; // آدرس حساب
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
 var lastName = localStorage.getItem("LastName");
+var userType = localStorage.getItem("UserType");
 var fullName = firstName + ' ' + lastName; 
 
+$("#B_CustAccount").attr('disabled', 'disabled');
+
+
+if (userType == '1') {
+    $('#B_CustAccount').removeAttr('disabled');
+}
 
 
 
@@ -285,3 +292,145 @@ $("#Close").click(function () {
 
 
 
+
+var viewer = null;
+var designer = null;
+var options = null;
+var report = null;
+var dataSet = null;
+
+function createViewer() {
+    Stimulsoft.Base.Localization.StiLocalization.addLocalizationFile("/Content/Report/Lang/fa.xml", true, "persion (fa)");
+    Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("/Content/fonts/BZiba.ttf", "Karbord_Ziba");
+    Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("/Content/fonts/BZAR.ttf", "Karbord_ZAR");
+    Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("/Content/fonts/BYEKAN.ttf", "Karbord_YEKAN");
+    Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("/Content/fonts/BTITRBD.ttf", "Karbord_TITRBD");
+    Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("/Content/fonts/BNAZANIN.ttf", "Karbord_NAZANIN");
+
+    options = new Stimulsoft.Viewer.StiViewerOptions();
+    viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
+
+    options.appearance.showSystemFonts = false;
+    options.height = "100%";
+    options.appearance.fullScreenMode = true;
+    options.appearance.scrollbarsMode = true;
+    options.toolbar.showSaveButton = true;
+
+    if (lockNumber == 10011 || lockNumber == 10071||lockNumber == 10000 ) {
+        options.toolbar.showDesignButton = true;
+        $('#DesignPrint').attr('style', 'display: unset');
+    } else {
+        options.toolbar.showDesignButton = false;
+        $('#DesignPrint').attr('style', 'display: none');
+    }
+
+
+    options.toolbar.showFullScreenButton = false;
+    options.toolbar.printDestination = Stimulsoft.Viewer.StiPrintDestination.Direct;
+    options.appearance.htmlRenderMode = Stimulsoft.Report.Export.StiHtmlExportMode.Table;
+    options.toolbar.zoom = 100;
+    options.toolbar.showCloseButton = true;
+
+    report = new Stimulsoft.Report.StiReport();
+    viewer.onDesignReport = function (e) {
+        createDesigner();
+    };
+    viewer.renderHtml("viewerContent");
+
+    var userButton = viewer.jsObject.SmallButton("userButton", "خروج");
+
+    userButton.action = function () {
+        $("#modal-Report").modal('hide');
+    }
+
+    var toolbarTable = viewer.jsObject.controls.toolbar.firstChild.firstChild;
+    var buttonsTable = toolbarTable.rows[0].firstChild.firstChild;
+    var userButtonCell = buttonsTable.rows[0].insertCell(0);
+    userButtonCell.className = "stiJsViewerClearAllStyles";
+    userButtonCell.appendChild(userButton);
+}
+
+var DataReport;
+function createDesigner() {
+    viewer.visible = false;
+    designer = null;
+    var options = new Stimulsoft.Designer.StiDesignerOptions();
+    options.appearance.fullScreenMode = true;
+    options.appearance.htmlRenderMode = Stimulsoft.Report.Export.StiHtmlExportMode.Table;
+
+    designer = new Stimulsoft.Designer.StiDesigner(options, "StiDesigner", false);
+    designer.renderHtml("designerContent");
+
+    designer.onExit = function (e) {
+        this.visible = false;
+        viewer.visible = false;
+        $("#modal-Report").modal('hide');
+    }
+
+    /*designer.onSaveReport = function (e) {
+        var jsonStr = e.report.saveToJsonString();
+       // SavePrintForm(sessionStorage.ModePrint, e.fileName, jsonStr);
+    }
+
+    designer.onSaveAsReport = function (e) {
+        var jsonStr = e.report.saveToJsonString();
+        var name = e.fileName;
+        resTestSavePrintForm = "";
+        //SavePrintForm(sessionStorage.ModePrint, e.fileName, jsonStr);
+    };*/
+
+    //report._reportFile = printName == null ? 'فرم چاپ' : printName;
+    designer.report = report;
+    designer.visible = true;
+
+}
+
+
+
+
+function setReport(reportObject, addressMrt, variablesObject) {
+    DataReport = reportObject;
+    if (DataReport.length == 0 || DataReport == null || DataReport == "") {
+        return showNotification('فاکتور بدون بند', 0);
+    }
+
+    var dStart = new Date();
+    var secondsStart = dStart.getTime();
+
+    report = new Stimulsoft.Report.StiReport();
+    report.loadFile(addressMrt);
+
+    report.dictionary.databases.clear();
+    dataSet = new Stimulsoft.System.Data.DataSet("Database");
+    DataReport = '{"Data":' + JSON.stringify(DataReport) + '}';
+
+    dataSet.readJson(DataReport);
+    report.regData(dataSet.dataSetName, "", dataSet);
+
+    variablesDataSet = new Stimulsoft.System.Data.DataSet("variables");
+    variablesReport = '{"variables":[{' + variablesObject + '}]}';
+    variablesDataSet.readJson(variablesReport);
+    report.regData(variablesDataSet.dataSetName, "", variablesDataSet);
+
+
+
+
+    // titlesDataSet = new Stimulsoft.System.Data.DataSet("Titles");
+    // titlesReport = '{"Titles":[{' + titlesObject + '}]}';
+    // titlesDataSet.readJson(titlesReport);
+    // report.regData(titlesDataSet.dataSetName, "", titlesDataSet);
+
+
+    report.dictionary.synchronize();
+
+    viewer.report = report;
+    //report.render();
+
+    viewer.visible = true;
+    $('#modal-Report').modal('show');
+
+    viewer.onExit = function (e) {
+        this.visible = false;
+    }
+
+}

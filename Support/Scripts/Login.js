@@ -19,6 +19,8 @@
                 localStorage.setItem("FirstName", data[0].FirstName);
                 localStorage.setItem("LastName", data[0].LastName);
                 localStorage.setItem("Email", data[0].Email);
+                localStorage.setItem("UserType", data[0].UserType);
+
                 window.location.href = localStorage.getItem("urlIndex");
             }
             else { 
