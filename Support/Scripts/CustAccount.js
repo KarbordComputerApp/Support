@@ -33,7 +33,9 @@
     var FDocP_CustAcountUri = serverAddress + '/api/Web_Data/FDocP_CustAcount/'; // آدرس چاپ فاکتور   
     var SalePaymentUri = serverAddress + '/api/Shaparak/SalePayment'; // آدرس پرداخت  
     var PaymentConfirmUri = serverAddress + '/api/Shaparak/PaymentConfirm'; // آدرس تایید پرداخت  
-    var CustAccountSaveUri = serverAddress + "/api/Web_Data/CustAccountSave/"; // آدرس ذخیره لینک پرداخت  
+    var CustAccountSaveUri = serverAddress + "/api/Web_Data/CustAccountSave/"; // آدرس ذخیره لینک پرداخت 
+    var DocAttachUri = serverAddress + '/api/Web_Data/DocAttach/'; // آدرس لیست پیوست 
+    var DownloadAttachUri = serverAddress + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
 
 
 
@@ -51,7 +53,7 @@
         }
     }
 
-       
+
     getDateServer(serverAddress);
 
     function getCustAccount() {
@@ -84,6 +86,8 @@
             }
         })
     })
+
+
 
 
     self.ShowLinkPardakht = function (list) {
@@ -130,6 +134,42 @@
             else {
                 return showNotification(dataLink.Message, 0)
             }
+        });
+
+    }
+
+
+
+    self.ResidPardakht = function (list) {
+        var DocAttachObject = {
+            ModeCode: 2,
+            Prog: 'FCT5',
+            SerialNumber: list.SerialNumber
+        }
+
+        ajaxFunction(DocAttachUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount, 'POST', DocAttachObject).done(function (data) {
+            item = null;
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Comm == "رسید")
+                        item = data[i];
+                }
+                if (item != null) {
+                    var fileName = item.FName.split(".");
+                    var DownloadAttachObject = {
+                        SerialNumber: item.SerialNumber,
+                        BandNo: item.BandNo
+                    }
+                    ajaxFunction(DownloadAttachUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount, 'POST', DownloadAttachObject, true).done(function (data) {
+                        var sampleArr = base64ToArrayBuffer(data[0].Atch);
+                        saveByteArray(fileName[0] + ".zip", sampleArr);
+                    });
+                }
+            }
+
+            if (item == null)
+                return showNotification(' اطلاعات رسید یافت نشد ', 0);
+
         });
 
     }

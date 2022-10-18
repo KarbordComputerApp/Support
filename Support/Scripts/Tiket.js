@@ -122,6 +122,7 @@
     function getDocAttachList(serial) {
         var DocAttachObject = {
             ModeCode: 102,
+            Prog: 'ERJ1',
             SerialNumber: serial
         }
         ajaxFunction(DocAttachUri + aceTiket + '/' + salTiket + '/' + groupTiket, 'POST', DocAttachObject).done(function (data) {
