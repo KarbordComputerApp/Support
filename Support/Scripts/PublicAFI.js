@@ -13,6 +13,14 @@ var lastName = localStorage.getItem("LastName");
 var userType = localStorage.getItem("UserType");
 var fullName = firstName + ' ' + lastName; 
 
+
+var ticketUser = 'Ticket';
+var ticketPass = '@!B912';
+
+var custAccountUser = 'CustAccount';
+var custAccountPass = '@!B913';
+
+
 $("#B_CustAccount").attr('disabled', 'disabled');
 
 
@@ -40,8 +48,8 @@ function ajaxFunction(uri, method, data, sync, error) {
         timeout: 300000,
         //onLoading: showLoad(),
         headers: {
-            'userName': 'Tiket',
-            'password': 'Tiket',
+            'userName': ticketUser,
+            'password': ticketPass,
             'userKarbord': sessionStorage.userName,
         },
         complete: function () {
@@ -131,8 +139,8 @@ function ajaxFunctionUploadTiket(uri, data, sync) {
         },
 
         headers: {
-            'userName': 'Tiket',
-            'password': 'Tiket',
+            'userName': ticketUser,
+            'password': ticketPass,
             'userKarbord': sessionStorage.userName,
         },
         success: function (fileName) {

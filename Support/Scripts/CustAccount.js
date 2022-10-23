@@ -10,7 +10,7 @@
 
 
     function getAccountDataCustAccount(lock) {
-        ajaxFunctionAccount(AccountUri + 'linkpardakht' + '/' + 'linkpardakht', 'GET').done(function (data) {
+        ajaxFunctionAccount(AccountUri + custAccountUser + '/' + custAccountPass, 'GET').done(function (data) {
             if (data === 0) {
                 return showNotification(' اطلاعات لینک پرداخت یافت نشد ', 0);
             }

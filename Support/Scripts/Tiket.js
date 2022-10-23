@@ -6,7 +6,7 @@
     var groupTiket;
 
     function getAccountDataTiket(lock) {
-        ajaxFunctionAccount(AccountUri + 'tiket' + '/' + 'tiket', 'GET').done(function (data) {
+        ajaxFunctionAccount(AccountUri + ticketUser + '/' + ticketPass, 'GET').done(function (data) {
             if (data === 0) {
                 return showNotification(' اطلاعات تیکت یافت نشد ', 0);
             }
