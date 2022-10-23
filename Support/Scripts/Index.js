@@ -51,6 +51,18 @@
     getCustomerFilesCount();
 
 
+   /* $("#p_information").show();
+    $("#LastPadding").hide();
+
+    if (window.matchMedia('(max-width: 767px)').matches) {
+        $("#LastPadding").show();
+        $("#p_information").hide();
+        $("#p_CustomerFiles").hide();
+        $("#p_UploadFiles").hide();
+        $("#p_FinancialDocuments").hide();
+        $("#p_FAQ").hide();
+
+    }*/
 
 
 

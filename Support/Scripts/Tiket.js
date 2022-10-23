@@ -35,7 +35,7 @@
 
     var RprtColsUri = serverTiket + '/api/Web_Data/RprtCols/'; // آدرس مشخصات ستون ها 
     var DocAttachUri = serverTiket + '/api/Web_Data/DocAttach/'; // آدرس لیست پیوست 
-    var DownloadAttachUri = serverTiket + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
+    //var DownloadAttachUri = serverTiket + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
     var ErjSaveTicketUri = serverTiket + '/api/Web_Data/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
 
     var ErjDocAttach_SaveUri = serverTiket + '/api/FileUpload/UploadFile/'; // ذخیره پیوست
@@ -67,7 +67,7 @@
 
     getDateServer(serverTiket);
 
-   
+
     //Get ErjDocXK 
     function getErjDocXK() {
         var ErjDocXKObject = {
@@ -121,11 +121,16 @@
     //Get DocAttach List
     function getDocAttachList(serial) {
         var DocAttachObject = {
-            ModeCode: 102,
-            Prog: 'ERJ1',
-            SerialNumber: serial
+            ProgName: 'ERJ1',
+            Group: groupTiket,
+            Year: salTiket,
+            ModeCode: '102',
+            SerialNumber: serial,
+            BandNo: 0,
+            ByData: 0
         }
-        ajaxFunction(DocAttachUri + aceTiket + '/' + salTiket + '/' + groupTiket, 'POST', DocAttachObject).done(function (data) {
+
+        ajaxFunction(DocAttachUri, 'POST', DocAttachObject).done(function (data) {
             self.DocAttachList(data);
         });
     }
@@ -433,7 +438,7 @@
 
 
 
- 
+
 
 
     $('#refreshDocAttach').click(function () {
@@ -538,13 +543,19 @@
     self.selectDocAttach = function (item) {
 
         var fileName = item.FName.split(".");
-        var DownloadAttachObject = {
-            SerialNumber: item.SerialNumber,
-            BandNo: item.BandNo
-        }
 
-        ajaxFunction(DownloadAttachUri + aceTiket + '/' + salTiket + '/' + groupTiket, 'POST', DownloadAttachObject, true).done(function (data) {
-            var sampleArr = base64ToArrayBuffer(data);
+
+        var DownloadAttachObject = {
+            ProgName: 'Erj1',
+            Group: groupTiket,
+            Year: salTiket,
+            ModeCode: '102',
+            SerialNumber: item.SerialNumber,
+            BandNo: item.BandNo,
+            ByData: 1
+        }
+        ajaxFunction(DocAttachUri, 'POST', DownloadAttachObject).done(function (data) {
+            var sampleArr = base64ToArrayBuffer(data[0].Atch);
             saveByteArray(fileName[0] + ".zip", sampleArr);
         });
     }
@@ -726,6 +737,15 @@
         return KeyPressSearch(e);
     }
     self.sortTableErjDocXK();
+
+
+    setInterval(RefreshTiket, 60000);
+
+    function RefreshTiket() {
+        getErjDocXK();
+        self.sortTableErjDocXK();
+    }
+
 };
 
 ko.applyBindings(new ViewModel());

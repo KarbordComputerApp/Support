@@ -35,7 +35,7 @@
     var PaymentConfirmUri = serverAddress + '/api/Shaparak/PaymentConfirm'; // آدرس تایید پرداخت  
     var CustAccountSaveUri = serverAddress + "/api/Web_Data/CustAccountSave/"; // آدرس ذخیره لینک پرداخت 
     var DocAttachUri = serverAddress + '/api/Web_Data/DocAttach/'; // آدرس لیست پیوست 
-    var DownloadAttachUri = serverAddress + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
+    //var DownloadAttachUri = serverAddress + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
 
 
 
@@ -108,7 +108,7 @@
                 uriPay = dataLink.location;
 
                 var CustAccountSaveObject = {
-                    'Year': list.DocDate.substring(0, 4),
+                    'Year': list.Year,//DocDate.substring(0, 4),
                     'SerialNumber': list.SerialNumber,
                     'OnlineParLink': uriPay,
                     'DownloadCount': null,
@@ -141,13 +141,18 @@
 
 
     self.ResidPardakht = function (list) {
+
         var DocAttachObject = {
-            ModeCode: 2,
-            Prog: 'FCT5',
-            SerialNumber: list.SerialNumber
+            ProgName: 'FCT5',
+            Group: groupCustAccount,
+            Year: list.Year,
+            ModeCode: '2',
+            SerialNumber: list.SerialNumber,
+            BandNo: 0,
+            ByData: 0
         }
 
-        ajaxFunction(DocAttachUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount, 'POST', DocAttachObject).done(function (data) {
+        ajaxFunction(DocAttachUri, 'POST', DocAttachObject).done(function (data) {
             item = null;
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
@@ -156,11 +161,17 @@
                 }
                 if (item != null) {
                     var fileName = item.FName.split(".");
+
                     var DownloadAttachObject = {
+                        ProgName: 'FCT5',
+                        Group: groupCustAccount,
+                        Year: list.Year,
+                        ModeCode: '2',
                         SerialNumber: item.SerialNumber,
-                        BandNo: item.BandNo
+                        BandNo: item.BandNo,
+                        ByData: 1
                     }
-                    ajaxFunction(DownloadAttachUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount, 'POST', DownloadAttachObject, true).done(function (data) {
+                    ajaxFunction(DocAttachUri, 'POST', DownloadAttachObject).done(function (data) {
                         var sampleArr = base64ToArrayBuffer(data[0].Atch);
                         saveByteArray(fileName[0] + ".zip", sampleArr);
                     });
@@ -209,7 +220,7 @@
                 setReport(self.FDocP_CustAcountList(), '/Content/Report/SFCT.json?10', printVariable);
 
                 var CustAccountSaveObject = {
-                    'Year': list.DocDate.substring(0, 4),
+                    'Year': list.Year,//list.DocDate.substring(0, 4),
                     'SerialNumber': list.SerialNumber,
                     'OnlineParLink': null,
                     'DownloadCount': count,

@@ -38,64 +38,65 @@
             <input id="upload1" type="file" style="display:none" data-bind="event: {change: $root.fileUpload1}" />
             <input id="upload2" type="file" style="display:none" data-bind="event: {change: $root.fileUpload2}" />
             <input id="upload3" type="file" style="display:none" data-bind="event: {change: $root.fileUpload3}" />
+            <div class="table-responsive">
+                <table class="table">
 
-            <table>
-                <thead></thead>
-                <tbody>
-                    <tr>
-                        <td style="width:100px">
-                            <a id="AddNewFile1" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
-                        </td>
-                        <td  style="direction: ltr;text-align: center;">
-                            <div style="border:1px solid #082b44;border-radius: 25px;">
-                                <p id="NameFile1" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
-                            </div>
-                        </td>
-                        <td style="width:0px">
-                            <a  style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile1}">
-                                <img id="DelFile1" src="~/Content/img/Icon_Blue/delete.png" width="26" />
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:100px">
-                            <a id="AddNewFile2" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
-                        </td>
-                        <td style="direction: ltr;text-align: center;">
-                            <div style="border:1px solid #082b44;border-radius: 25px;">
-                                <p id="NameFile2" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
-                            </div>
-                        </td>
-                        <td style="width:0px">
-                            <a  style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile2}">
-                                <img id="DelFile2" src="~/Content/img/Icon_Blue/delete.png" width="26" />
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:100px">
-                            <a id="AddNewFile3" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
-                        </td>
-                        <td style="direction: ltr;text-align: center;">
-                            <div style="border:1px solid #082b44;border-radius: 25px;">
-                                <p id="NameFile3" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
-                            </div>
-                        </td>
-                        <td style="width:0px">
-                            <a  style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile3}">
-                                <img id="DelFile3" src="~/Content/img/Icon_Blue/delete.png" width="26" />
-                            </a>
-                        </td>
-                    </tr>
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td style="width:100px">
+                                    <a id="AddNewFile1" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
+                                </td>
+                                <td style="direction: ltr;text-align: center;">
+                                    <div style="border:1px solid #082b44;border-radius: 25px;">
+                                        <p id="NameFile1" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
+                                    </div>
+                                </td>
+                                <td style="width:0px">
+                                    <a style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile1}">
+                                        <img id="DelFile1" src="~/Content/img/Icon_Blue/delete.png" width="26" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:100px">
+                                    <a id="AddNewFile2" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
+                                </td>
+                                <td style="direction: ltr;text-align: center;">
+                                    <div style="border:1px solid #082b44;border-radius: 25px;">
+                                        <p id="NameFile2" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
+                                    </div>
+                                </td>
+                                <td style="width:0px">
+                                    <a style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile2}">
+                                        <img id="DelFile2" src="~/Content/img/Icon_Blue/delete.png" width="26" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:100px">
+                                    <a id="AddNewFile3" class="btn btn-warning B_Main" style="border-radius: 25px;background-color: #128d35 !important;margin: 0px;">انتخاب فایل</a>
+                                </td>
+                                <td style="direction: ltr;text-align: center;">
+                                    <div style="border:1px solid #082b44;border-radius: 25px;">
+                                        <p id="NameFile3" style="padding:10px;margin-bottom: 0px;">فایل ارسالی را انتخاب کنید</p>
+                                    </div>
+                                </td>
+                                <td style="width:0px">
+                                    <a style="color:red;cursor: pointer;" data-bind="event: {click: $root.DelFile3}">
+                                        <img id="DelFile3" src="~/Content/img/Icon_Blue/delete.png" width="26" />
+                                    </a>
+                                </td>
+                            </tr>
 
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+
+                </div>
 
 
-
-
-            <a id="SendFiles" class="btn btn-warning B_Main col-md-12" style="border-radius: 25px;background-color: #082b44 !important;margin-top: 165px;margin-bottom: 0px;">بارگذاری در پنل ارسال</a>
-        </div>
+                    <a id="SendFiles" class="btn btn-warning B_Main col-md-12" style="border-radius: 25px;background-color: #082b44 !important;margin-top: 165px;margin-bottom: 0px;">بارگذاری در پنل ارسال</a>
+            </div>
 
     </div>
 

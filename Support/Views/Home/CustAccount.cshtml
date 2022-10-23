@@ -44,65 +44,66 @@
     </a>
 </div>
 
-<table>
-    <thead style="cursor: pointer;">
-        <tr>
-            <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
-            <th>
-                <span>شماره</span>
-            </th>
-            <th>
-                <span>تاریخ</span>
-            </th>
-            <th>
-                <span>ملاحظات</span>
-            </th>
-            <th>
-                <span>قابل پرداخت</span>
-            </th>
-            <th>
-                <span>وضعیت پرداخت</span>
-            </th>
-            <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
-        </tr>
-    </thead>
+<div class="table-responsive">
+    <table class="table">
+        <thead style="cursor: pointer;">
+            <tr>
+                <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
+                <th>
+                    <span>شماره</span>
+                </th>
+                <th>
+                    <span>تاریخ</span>
+                </th>
+                <th>
+                    <span>ملاحظات</span>
+                </th>
+                <th>
+                    <span>قابل پرداخت</span>
+                </th>
+                <th>
+                    <span>وضعیت پرداخت</span>
+                </th>
+                <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
+            </tr>
+        </thead>
 
-    <tbody data-bind="foreach: CustAccountList" style="cursor: default;">
-        <tr>
-            <td data-bind="text: $index()+1" style="border-radius: 0 30px 30px 0;"></td>
-            <td data-bind="text: DocNo"></td>
-            <td data-bind="text: DocDate"></td>
-            <td data-bind="text: Spec"></td>
-            <td data-bind="text: NumberToNumberString(TotalValue)"></td>
-            <td data-bind="text: Tasviye, style: {color: TasviyeCode == 0 ? null : TasviyeCode == 1 ? 'blue' : TasviyeCode == 2 ? 'green' : 'red'}" style="direction: ltr;color: rgb(0, 0, 0);"></td>
-            <td style="border-radius: 30px 0 0 30px;">
-                <a data-bind="click: $root.ShowLinkPardakht, visible: TasviyeCode < 2 " title="پرداخت آنلاین">
-                    <img src="~/Content/img/Icon_Blue/cash.png" width="30">
-                </a>
-                <a data-bind="click: $root.ResidPardakht, visible: Tasviye == 'پرداخت شده'" title="دریافت رسید">
-                    <img src="~/Content/img/Icon_Blue/Download.png" width="30">
-                </a>
-                <a data-bind="click: $root.ChapFactor, visible: DownloadCount != '2'" title="چاپ فاکتور">
-                    <img src="~/Content/img/Icon_Blue/Print.png" width="30">
-                </a>
+        <tbody data-bind="foreach: CustAccountList" style="cursor: default;">
+            <tr>
+                <td data-bind="text: $index()+1" style="border-radius: 0 30px 30px 0;"></td>
+                <td data-bind="text: DocNo"></td>
+                <td data-bind="text: DocDate"></td>
+                <td data-bind="text: Spec"></td>
+                <td data-bind="text: NumberToNumberString(TotalValue)"></td>
+                <td data-bind="text: Tasviye, style: {color: TasviyeCode == 0 ? null : TasviyeCode == 1 ? 'blue' : TasviyeCode == 2 ? 'green' : 'red'}" style="direction: ltr;color: rgb(0, 0, 0);"></td>
+                <td style="border-radius: 30px 0 0 30px;">
+                    <a data-bind="click: $root.ShowLinkPardakht, visible: TasviyeCode < 2 " title="پرداخت آنلاین">
+                        <img src="~/Content/img/Icon_Blue/cash.png" width="30">
+                    </a>
+                    <a data-bind="click: $root.ResidPardakht, visible: Tasviye == 'پرداخت شده'" title="دریافت رسید">
+                        <img src="~/Content/img/Icon_Blue/Download.png" width="30">
+                    </a>
+                    <a data-bind="click: $root.ChapFactor, visible: DownloadCount != '2'" title="چاپ فاکتور">
+                        <img src="~/Content/img/Icon_Blue/Print.png" width="30">
+                    </a>
 
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
-
-
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 
 
 
 
-@section scripts{
-    <script src="~/Scripts/CustAccount.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
-}
+
+
+
+    @section scripts{
+        <script src="~/Scripts/CustAccount.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    }
 
 
 

@@ -22151,8 +22151,20 @@ body, html {
 
 }
 
-@media (max-width: 500px) {
+#LastPadding {
+    display: none;
+}
+
+@media (max-width: 760px) {
     #Index_TextBack {
         display: none;
     }
+    .notApp {
+        display: none;
+    }
+
+    #LastPadding {
+        display: block;
+    }
+
 }
