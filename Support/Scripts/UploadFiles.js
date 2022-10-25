@@ -5,6 +5,10 @@
     var file2;
     var file3;
 
+    if (lockNumber == null) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
+
     var UploadFilesUri = server + '/api/Data/UploadFile/'; // آدرس فایل
     var FinalUploadFilesUri = server + '/api/Data/FinalUploadFile/'; // آدرس فایل
 

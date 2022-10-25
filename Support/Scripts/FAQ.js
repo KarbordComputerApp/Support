@@ -5,6 +5,10 @@
     self.filter = ko.observable("");
     self.filterGru = ko.observable("");
 
+    if (lockNumber == null) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
+
     var Gru;
 
     $("#Index_TextLogo").text('سوالات متداول');

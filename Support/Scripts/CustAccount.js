@@ -7,7 +7,9 @@
     var loginAccount = "NRlhOcngQl7BwNOhU104";
 
 
-
+    if (lockNumber == null) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
 
     function getAccountDataCustAccount(lock) {
         ajaxFunctionAccount(AccountUri + custAccountUser + '/' + custAccountPass, 'GET').done(function (data) {

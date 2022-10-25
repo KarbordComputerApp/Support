@@ -5,6 +5,10 @@
     var salTiket = "0000";
     var groupTiket;
 
+    if (lockNumber == null) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
+
     function getAccountDataTiket(lock) {
         ajaxFunctionAccount(AccountUri + ticketUser + '/' + ticketPass, 'GET').done(function (data) {
             if (data === 0) {

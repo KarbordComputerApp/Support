@@ -27,10 +27,10 @@
 
         <div class="col LeftButtomMenu">
             <div class="row" style="float: left;">
-                <a id="Index_TextBack" href="@Url.Action("Index","Home")" style="font-size: 16px; color:#082b44">بازگشت به صفحه اصلی</a>
-                <img id="Index_Pic_line1" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
-                <a>
-                    <img id="Index_Pic_Alarm" src="~/Content/img/Icon_Blue/Alarm.png" style="height: 30px;" />
+                <!--<img id="Index_Pic_line1" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />-->
+                
+                <a href="@Url.Action("Index","Home")" id="Index_TextBack">
+                    <img id="Index_Home"  src="~/Content/img/Icon_Blue/Home.png" style="height: 30px;" />
                 </a>
                 <img id="Index_Pic_line2" src="~/Content/img/Icon_Blue/Line.png" style="height: 30px;padding: 5px 8px 5px 8px;" />
 
@@ -56,7 +56,8 @@
                                         <a href="@Url.Action("ChangePassword","Home")" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;border-radius: 10px;margin-bottom: 10px;color: #082b44;">تغییر کلمه عبور</a>
                                     </div>
                                     <div class="col-sm-12">
-                                        <a href="@Url.Action("Login","Home")" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;border-radius: 10px;margin-bottom: 10px;color: #082b44;">خروج</a>
+                                        <!--<a href="@Url.Action("Login","Home")" id="LogOut" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;border-radius: 10px;margin-bottom: 10px;color: #082b44;">خروج</a>
+                                       --> <a id="LogOut" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;border-radius: 10px;margin-bottom: 10px;color: #082b44;">خروج</a>
                                     </div>
                                 </div>
                             </li>

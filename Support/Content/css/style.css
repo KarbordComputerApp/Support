@@ -22156,9 +22156,6 @@ body, html {
 }
 
 @media (max-width: 760px) {
-    #Index_TextBack {
-        display: none;
-    }
     .notApp {
         display: none;
     }

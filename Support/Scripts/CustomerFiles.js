@@ -4,6 +4,10 @@
     self.CustomerFilesList = ko.observableArray([]); // ليست فایل
     var CustomerDownloadlUri = server + '/api/Data/CustomerDocumentsDownload/'; // آدرس دانلود
 
+    if (lockNumber == null) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
+
     $("#Index_TextLogo").text('دریافت فایل');
 
     function getCustomerFilesList() {

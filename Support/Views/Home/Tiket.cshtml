@@ -53,7 +53,7 @@
         <thead style="cursor: pointer;">
             <tr data-bind="click: sortTableErjDocXK">
                 <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
-                <th>
+                <th class="notApp">
                     <span>شناسه پیگیری</span>
                 </th>
                 <th>
@@ -65,21 +65,21 @@
                 <th>
                     <span>توضیحات</span>
                 </th>
-                <th>
+                <th class="notApp">
                     <span>متقاضی</span>
                 </th>
-                <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
+                <th style="border-radius: 20px 0 0 20px;">عملیات</th>
             </tr>
         </thead>
 
         <tbody data-bind="foreach: currentPageErjDocXK" data-dismiss="modal" style="cursor: default;">
             <tr>
                 <td data-bind="text: $root.radif($index())" style="border-radius: 0 30px 30px 0;"></td>
-                <td data-bind="text: DocNo"></td>
+                <td data-bind="text: DocNo" class="notApp"></td>
                 <td data-bind="text: DocDate"></td>
                 <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
                 <td data-bind="text: Text" style="width:40%"></td>
-                <td data-bind="text: Motaghazi"></td>
+                <td data-bind="text: Motaghazi"class="notApp" ></td>
                 <td style="border-radius: 30px 0 0 30px;">
                     <!--<a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">-->
                     <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">

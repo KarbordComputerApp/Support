@@ -326,6 +326,7 @@
     <Content Include="Content\img\Icon_Blue\delete.png" />
     <Content Include="Content\img\Icon_Blue\Download.png" />
     <Content Include="Content\img\Icon_Blue\edit.png" />
+    <Content Include="Content\img\Icon_Blue\Home.png" />
     <Content Include="Content\img\Icon_Blue\Line.png" />
     <Content Include="Content\img\Icon_Blue\Pardakht.png" />
     <Content Include="Content\img\Icon_Blue\Power.png" />
@@ -335,6 +336,7 @@
     <Content Include="Content\img\Icon_White\Alarm.png" />
     <Content Include="Content\img\Icon_White\delete.png" />
     <Content Include="Content\img\Icon_White\Download.png" />
+    <Content Include="Content\img\Icon_White\Home.png" />
     <Content Include="Content\img\Icon_White\Pardakht.png" />
     <Content Include="Content\img\Icon_White\Power.png" />
     <Content Include="Content\img\Icon_White\Print.png" />

@@ -442,3 +442,15 @@ function setReport(reportObject, addressMrt, variablesObject) {
     }
 
 }
+
+$("#LogOut").click(function () {
+
+    localStorage.removeItem("lockNumber");
+    localStorage.removeItem("FirstName");
+    localStorage.removeItem("LastName");
+    localStorage.removeItem("Email");
+    localStorage.removeItem("UserType");
+
+    window.location.href = localStorage.getItem("urlLogin");
+
+});

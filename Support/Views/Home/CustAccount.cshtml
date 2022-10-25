@@ -49,13 +49,13 @@
         <thead style="cursor: pointer;">
             <tr>
                 <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
-                <th>
+                <th class="notApp">
                     <span>شماره</span>
                 </th>
                 <th>
                     <span>تاریخ</span>
                 </th>
-                <th>
+                <th class="notApp">
                     <span>ملاحظات</span>
                 </th>
                 <th>
@@ -71,9 +71,9 @@
         <tbody data-bind="foreach: CustAccountList" style="cursor: default;">
             <tr>
                 <td data-bind="text: $index()+1" style="border-radius: 0 30px 30px 0;"></td>
-                <td data-bind="text: DocNo"></td>
+                <td data-bind="text: DocNo" class="notApp"></td>
                 <td data-bind="text: DocDate"></td>
-                <td data-bind="text: Spec"></td>
+                <td data-bind="text: Spec" class="notApp"></td>
                 <td data-bind="text: NumberToNumberString(TotalValue)"></td>
                 <td data-bind="text: Tasviye, style: {color: TasviyeCode == 0 ? null : TasviyeCode == 1 ? 'blue' : TasviyeCode == 2 ? 'green' : 'red'}" style="direction: ltr;color: rgb(0, 0, 0);"></td>
                 <td style="border-radius: 30px 0 0 30px;">

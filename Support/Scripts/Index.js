@@ -1,6 +1,8 @@
 ﻿var ViewModel = function () {
     var self = this;
-
+    if (lockNumber == null) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
     
     var AceMessagesUri = server + '/api/Data/AceMessages/';
     self.AceMessagesList = ko.observableArray([]);
@@ -27,7 +29,7 @@
 
     $('#Index_TextBack').hide();
 
-    $('#Index_Pic_Alarm').attr('src', '/Content/img/Icon_White/Alarm.png');
+    $('#Index_Home').attr('src', '/Content/img/Icon_White/Home.png');
     $('#Index_User').attr('src', '/Content/img/Icon_White/User.png');
 
     var CustomerFilesCountUri = server + '/api/Data/CustomerFilesCount/'; // آدرس فایل
