@@ -13,7 +13,7 @@
             Pass : pass
         }
 
-        ajaxFunction(LoginUri, 'POST', LoginObject).done(function (data) {
+        ajaxFunction(LoginUri, 'POST', LoginObject,false).done(function (data) {
             if (data.length > 0) {
                 localStorage.setItem("lockNumber", lockNumber);
                 localStorage.setItem("FirstName", data[0].FirstName);
@@ -21,7 +21,23 @@
                 localStorage.setItem("Email", data[0].Email);
                 localStorage.setItem("UserType", data[0].UserType);
 
-                window.location.href = localStorage.getItem("urlIndex");
+
+                var LockNumbersObject = {
+                    LockNumber: lockNumber
+                }
+
+                LockNumbersUri = server + '/api/Data/LockNumbers/'; 
+                ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject,false).done(function (dataLock) {
+                    if (dataLock.length > 0) {
+                        localStorage.setItem("CompanyName", dataLock[0].CompanyName);
+
+                        window.location.href = localStorage.getItem("urlIndex");  
+                    }
+                })
+
+
+
+                
             }
             else { 
                 return showNotification('شماره قفل یا کلمه عبور اشتباه است', 0);

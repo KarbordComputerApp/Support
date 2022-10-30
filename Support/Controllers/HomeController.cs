@@ -37,10 +37,10 @@ namespace Support.Controllers
         {
             return View();
         }
-        public ActionResult Tiket()
+       /* public ActionResult Tiket()
         {
             return View();
-        }
+        }*/
 
         public ActionResult ChangePassword()
         {
@@ -62,6 +62,22 @@ namespace Support.Controllers
         {
             return View();
         }
+
+
+        //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQQQ
+
+        public ActionResult Tiket(string LockNumber, string Pass)
+        {
+            ViewBag.LockNumber = "";
+            if (Pass == "ADf5243hh2059dghQQQ")
+            {
+                ViewBag.LockNumber = LockNumber;
+            }
+            
+            return View();
+        }
+
+        
 
     }
 }

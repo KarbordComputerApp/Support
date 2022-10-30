@@ -12,6 +12,7 @@ var firstName = localStorage.getItem("FirstName");
 var lastName = localStorage.getItem("LastName");
 var userType = localStorage.getItem("UserType");
 var fullName = firstName + ' ' + lastName; 
+var companyName = localStorage.getItem("CompanyName");
 
 
 var ticketUser = 'Ticket';

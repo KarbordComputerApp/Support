@@ -19,6 +19,7 @@ namespace Support.Controllers
 {
     public class DataController : ApiController
     {
+
         SupportModel db = new SupportModel();
 
         public static string EncodePassword(string originalPassword)
@@ -46,6 +47,31 @@ namespace Support.Controllers
             return Ok(list);
         }
 
+
+        public class LockNumbersObject
+        {
+            public int LockNumber { get; set; }
+
+        }
+
+        public class LockNumbers
+        {
+            public int LockNumber { get; set; }
+
+            public string CompanyName { get; set; }
+
+            public Int16? UserCountLimit { get; set; }
+
+            public byte Status { get; set; }
+        }
+
+        [Route("api/Data/LockNumbers/")]
+        public async Task<IHttpActionResult> PostLockNumbers(LockNumbersObject LockNumbersObject)
+        {
+            string sql = string.Format(@"select LockNumber,CompanyName,UserCountLimit,Status from LockNumbers where (LockNumber = {0})", LockNumbersObject.LockNumber);
+            var list = db.Database.SqlQuery<LockNumbers>(sql).ToList();
+            return Ok(list);
+        }
 
 
 
@@ -83,7 +109,7 @@ namespace Support.Controllers
         [Route("api/Data/FinancialDocuments/")]
         public async Task<IHttpActionResult> PostFinancialDocuments(FinancialDocumentsObject FinancialDocumentsObject)
         {
-            string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} /*and (Download < 2 or Download is null)*/  order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
+            string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
             var list = db.Database.SqlQuery<FinancialDocuments>(sql).ToList();
             return Ok(list);
         }
@@ -320,6 +346,132 @@ namespace Support.Controllers
 
             return Ok("Ok");
 
+        }
+
+
+
+        public partial class Message
+        {
+            public long id { get; set; }
+
+            public string lockNumber { get; set; }
+
+            public string expireDate { get; set; }
+
+            public string title { get; set; }
+
+            public string body { get; set; }
+
+            public bool? active { get; set; }
+        }
+
+        // GET: api/Data/Messages
+        [Route("api/Data/Messages/{lockNumber}")]
+        public async Task<IHttpActionResult> GetWeb_Messages(string lockNumber)
+        {
+            string sql = string.Format("SELECT * FROM [dbo].[Message] where active = 1 and (lockNumber is null  or lockNumber = '{0}' or lockNumber = '')", lockNumber);
+            var list = db.Database.SqlQuery<Message>(sql).ToList(); // db.Access.First(c => c.UserName == userName && c.Password == password);
+            return Ok(list);
+        }
+
+
+
+
+
+
+
+
+        public class MailBox
+        {
+            public long id { get; set; }
+
+            public byte mode { get; set; }
+
+            public string readst { get; set; }
+
+            public string lockNumber { get; set; }
+
+            public string date { get; set; }
+
+            public string title { get; set; }
+
+            public string body { get; set; }
+
+            public string namefile { get; set; }
+
+        }
+
+        public class MailBoxObject
+        {
+            public string LockNumber { get; set; }
+
+            public byte Mode { get; set; }
+
+            public string UserCode { get; set; }
+
+        }
+
+
+        // GET: api/Data/MailBox
+        [Route("api/Data/MailBox/")]
+        public async Task<IHttpActionResult> PostWeb_MailBox(MailBoxObject MailBoxObject)
+        {
+            string sql = string.Format(@"declare @mode tinyint = {0} 
+                                         select* from MailBox where lockNumber = '{1}' and 
+                                                                ((@mode = 0 and (mode = 1 or mode = 2)) or mode = @mode)
+                                         order by date , id", MailBoxObject.Mode, MailBoxObject.LockNumber);
+
+            var list = db.Database.SqlQuery<MailBox>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
+        public class InsertMailBoxObject
+        {
+
+            public byte Mode { get; set; }
+
+            public string LockNumber { get; set; }
+
+            public string Date { get; set; }
+
+            public string Title { get; set; }
+
+            public string Body { get; set; }
+
+            public string NameFile { get; set; }
+
+            public string UserCode { get; set; }
+
+        }
+
+
+        // Post: api/Data/MailBox
+        [Route("api/Data/InsertMailBox/")]
+        public async Task<IHttpActionResult> PostWeb_InsertMailBox(InsertMailBoxObject InsertMailBoxObject)
+        {
+            string sql = string.Format("INSERT INTO MailBox (mode,locknumber,date,title,body,namefile)VALUES({0},'{1}','{2}','{3}','{4}','{5}')",
+                                      InsertMailBoxObject.Mode,
+                                      InsertMailBoxObject.LockNumber,
+                                      InsertMailBoxObject.Date,
+                                      InsertMailBoxObject.Title,
+                                      InsertMailBoxObject.Body,
+                                      InsertMailBoxObject.NameFile);
+            var list = db.Database.SqlQuery<MailBox>(sql).ToList();
+            await db.SaveChangesAsync();
+            return Ok(list);
+        }
+
+
+        // get: api/Data/DeleteMailBox
+        [Route("api/Data/DeleteMailBox/{lockNumber}/{id}")]
+        public async Task<IHttpActionResult> GetWeb_DeleteMailBox(string lockNumber, long id)
+        {
+            string sql = string.Format("update MailBox set mode = 3 WHERE id = {0} and lockNumber = '{1}' and  mode = 1 select 0", id, lockNumber);
+            var list = db.Database.SqlQuery<int>(sql).ToList();
+            await db.SaveChangesAsync();
+            return Ok(list);
         }
 
 

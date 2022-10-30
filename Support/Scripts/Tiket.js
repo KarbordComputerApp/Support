@@ -5,7 +5,17 @@
     var salTiket = "0000";
     var groupTiket;
 
-    if (lockNumber == null) {
+
+
+    var LockInput = $("#LockInput").data("value");
+    var PassInput = $("#PassInput").data("value");
+
+    if (LockInput != '') {
+        lockNumber = LockInput;
+    }
+
+
+    if (lockNumber == null ) {
         window.location.href = localStorage.getItem("urlLogin");
     }
 

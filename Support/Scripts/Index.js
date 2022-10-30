@@ -40,7 +40,7 @@
     //}
     
 
-    $('#FullName').text(fullName + ' خوش آمدید');
+    $('#FullName').text(companyName);
 
     function getCustomerFilesCount() {
         var CustomerFilesObject = {
