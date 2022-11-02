@@ -11427,7 +11427,7 @@ table .checkbox [type="checkbox"] + label {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     border-radius: 0;
-    margin-top: -35px !important;
+    margin-top: 0px !important;
     margin-right: -15px;
     -webkit-box-shadow: 0 5px 15px 2px rgba(64, 70, 74, 0.2) !important;
     box-shadow: 0 5px 15px 2px rgba(64, 70, 74, 0.2) !important;

@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "صندوق پستی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container-fluid th {
+        padding: 10px 10px;
+        background-color: #082b44;
+        color: #f1f2f7;
+        text-align: center;
+        border: 1px solid #f1f2f7;
+        font-size: 14px;
+    }
+
+    .container-fluid td {
+        padding: 25px 10px;
+        background-color: #dcdcdc;
+        color: #082b44;
+        text-align: center;
+        border: 1px solid #f1f2f7;
+        font-size: 18px;
+        border-top: solid 5px #f1f2f7;
+    }
+</style>
+
+
+<center>
+    <p style="font-size: 20px;margin-bottom: 10px;">صندوق پستی</p>
+</center>
+
+
+<div style="text-align: left;padding: 10px;">
+    <a id="refreshBox" class="">
+        <img src="~/Content/img/Icon_Blue/refresh.png" width="30" style="margin-left: 10px;" />
+    </a>
+    <a id="AddNewBox" class="">
+        <img src="~/Content/img/Icon_Blue/add.png" width="30" style="margin-left: 10px;" />
+    </a>
+</div>
+
+<!--
+<div class="row form-inline ">
+    <div class="col-sm-2">
+        <div class="form-inline" style="margin-left: 5px; margin-right: 5px;">
+            <div class="form-group">
+                <select id="BoxMode">
+                    <option value="0" selected>ارسالی - دریافتی</option>
+                    <option value="1">ارسالی</option>
+                    <option value="2">دریافتی</option>
+                    <option value="3">حذف شده ها</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead style="cursor: pointer;">
+            <tr>
+                <th style="border-radius: 0 20px 20px 0; max-width: 100px;">ردیف</th>
+                <th>
+                    نوع
+                </th>
+                <th>
+                    تاریخ
+                </th>
+                <th>
+                    عنوان
+                </th>
+                <th>
+                    متن
+                </th>
+                <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: currentPageBox" style="cursor: default;">
+            <tr data-bind="click: $parent.selectBox">
+                <td data-bind="text: $root.radif($index())" style="border-radius: 0 30px 30px 0;"></td>
+                <td data-bind="text: mode == '1' ? 'ارسالی' : mode == '2' ? 'دریافتی':'حذف شده' "></td>  <!--به دلیل فارسی بودن متن برعکس افتاده-->
+
+                <td data-bind="text: date"></td>
+                <td data-bind="text: title" class="ellipsis"></td>
+                <td data-bind="text: body" class="ellipsis"></td>
+
+                <td style="border-radius: 30px 0 0 30px;">
+                    <a data-bind="click: $root.ViewBox">
+                        <img src="~/Content/img/Icon_Blue/edit.png" width="24"  style="margin-left:10px">
+                    </a>
+                    <a data-bind="click: $root.ViewBoxAttach , visible: namefile != '' && namefile != null ">
+                        <img src="~/Content/img/Icon_Blue/attach.png" width="30" style="margin-left:10px">
+                    </a>
+                   
+                    <!--<a data-bind="click: $root.DeleteBox , visible: mode == 1">
+                        <img src="~/Content/img/Icon_Blue/delete.png" width="18" height="18" style="margin-left:10px">
+                    </a>-->
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="modal fade" id="modal-Box" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+    <div class="modal-dialog modal-entesab" style="max-width:980px">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-bottom: 0px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+
+                <h4 class="modal-title">جدید</h4>
+                
+                <a></a>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                    <div>
+                        <div class="header" style="background-color: #082b44;padding: 10px;margin: 10px;">
+                            <div class="row form-inline modal-header" style="padding:0px;">
+                                متن
+                            </div>
+                        </div>
+                        <div class="body" style="padding:10px;">
+
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line fix">
+                                        <input id="titleBox" class="form-control">
+                                        <label class="form-label active">عنوان</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0.5rem;">
+                                <div class="form-line">
+                                    <textarea rows="25" id="bodyBox" class="form-control no-resize auto-growth string"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="panel_Action">
+                <div class="row  form-inline ">
+                    <div class="col-md-12 row">
+                        <input id="upload" type="file" data-bind="event: {change: $root.fileUpload}" class="col-md" />
+                        <div class="col-md-4 pull-left">
+                            <button type="button" id="saveBox" class="btn btn-warning B_Main col-md-6" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left">ارسال</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/MailBox.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
+

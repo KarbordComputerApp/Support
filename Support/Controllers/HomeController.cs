@@ -63,6 +63,10 @@ namespace Support.Controllers
             return View();
         }
 
+        public ActionResult MailBox()
+        {
+            return View();
+        }
 
         //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQQQ
 

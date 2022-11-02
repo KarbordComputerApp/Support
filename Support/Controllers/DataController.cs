@@ -417,7 +417,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostWeb_MailBox(MailBoxObject MailBoxObject)
         {
             string sql = string.Format(@"declare @mode tinyint = {0} 
-                                         select* from MailBox where lockNumber = '{1}' and 
+                                         select * from MailBox where lockNumber = '{1}' and 
                                                                 ((@mode = 0 and (mode = 1 or mode = 2)) or mode = @mode)
                                          order by date , id", MailBoxObject.Mode, MailBoxObject.LockNumber);
 
@@ -451,7 +451,7 @@ namespace Support.Controllers
         [Route("api/Data/InsertMailBox/")]
         public async Task<IHttpActionResult> PostWeb_InsertMailBox(InsertMailBoxObject InsertMailBoxObject)
         {
-            string sql = string.Format("INSERT INTO MailBox (mode,locknumber,date,title,body,namefile)VALUES({0},'{1}','{2}','{3}','{4}','{5}')",
+            string sql = string.Format("INSERT INTO MailBox (mode,locknumber,date,title,body,namefile)VALUES({0},N'{1}',N'{2}',N'{3}',N'{4}',N'{5}')",
                                       InsertMailBoxObject.Mode,
                                       InsertMailBoxObject.LockNumber,
                                       InsertMailBoxObject.Date,
@@ -474,6 +474,93 @@ namespace Support.Controllers
             return Ok(list);
         }
 
+
+
+
+
+        [Route("api/Data/UploadFileMailBox/{LockNumber}")]
+        public async Task<IHttpActionResult> UploadFileMailBox(string LockNumber)
+        {
+            var folder = "C://App//Upload//" + LockNumber + "//";
+            //var folder = "C://Test//App//Upload//" + LockNumber + "//";
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            //var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
+            //var req = HttpContext.Current.Request;
+            //var file = req.Files[req.Files.Keys.Get(0)];
+
+            var httpRequest = HttpContext.Current.Request.Files[0];
+            var name = httpRequest.FileName.Split('.');
+            string tempName = name[0] + "-" + DateTime.Now.ToString("yyMMddHHmmss") + "." + name[1];
+            var filePath = folder + tempName;
+            httpRequest.SaveAs(filePath);
+            tempName = name[0] + "-" + DateTime.Now.ToString("yyMMddHHmmss") + "--" + name[1];
+            return Ok(tempName);
+        }
+
+
+
+        /*        public class FileDownload
+                {
+                    public string LockNumber { get; set; }
+
+                    public string FileName { get; set; }
+
+                }
+                */
+
+
+        [HttpGet]
+        [Route("api/Data/DownloadFileMailBox/{LockNumber}/{FileName}")]
+        public HttpResponseMessage DownloadMailBox(string LockNumber, string FileName)
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            FileName = FileName.Replace("--", ".");
+            string filePath = "C://App//Upload//" + LockNumber + "//" + FileName;
+
+            if (!File.Exists(filePath))
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = string.Format("File not found: {0} .", FileName);
+                throw new HttpResponseException(response);
+            }
+
+
+            byte[] bytes = File.ReadAllBytes(filePath);
+
+            //Set the Response Content.
+            response.Content = new ByteArrayContent(bytes);
+
+            //Set the Response Content Length.
+            response.Content.Headers.ContentLength = bytes.LongLength;
+
+            //Set the Content Disposition Header Value and FileName.
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = FileName;
+
+            //Set the File Content Type.
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(FileName));
+            return response;
+        }
+
+
+        [HttpGet]
+        [Route("api/Data/DeleteFileMailBox/{LockNumber}/{FileName}")]
+        public async Task<IHttpActionResult> DeleteFileMailBox(string LockNumber, string FileName)
+        {
+            FileName = FileName.Replace("--", ".");
+
+            string fullPath = "C://App//Upload//" + LockNumber + "//" + FileName;
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+            return Ok("Ok");
+        }
 
 
     }

@@ -29,8 +29,8 @@
                 LockNumbersUri = server + '/api/Data/LockNumbers/'; 
                 ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject,false).done(function (dataLock) {
                     if (dataLock.length > 0) {
-                        localStorage.setItem("CompanyName", dataLock[0].CompanyName);
-
+                        cName = dataLock[0].CompanyName.split("-");
+                        localStorage.setItem("CompanyName", cName[0]);
                         window.location.href = localStorage.getItem("urlIndex");  
                     }
                 })

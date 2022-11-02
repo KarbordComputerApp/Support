@@ -74,7 +74,7 @@
 
         Swal.fire({
             title: 'تایید به روز رسانی',
-            text: "لیست گردش حساب به روز رسانی شود ؟",
+            text: "لیست صورتحساب من به روز رسانی شود ؟",
             type: 'info',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',

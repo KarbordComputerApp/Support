@@ -710,6 +710,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\MailBox.js" />
     <Content Include="Scripts\ChangePassword.js" />
     <Content Include="Scripts\shamsi.js" />
     <Content Include="Scripts\CustAccount.js" />
@@ -763,6 +764,7 @@
     <Content Include="Views\Home\RecoveryPassword.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Home\CustAccount.cshtml" />
+    <Content Include="Views\Home\MailBox.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
