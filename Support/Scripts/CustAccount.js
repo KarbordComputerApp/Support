@@ -5,7 +5,7 @@
     var salCustAccount = "0000";
     var groupCustAccount;
     var loginAccount = "NRlhOcngQl7BwNOhU104";
-
+    $("#Index_TextLogo").text('صورتحساب من');
 
     if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");

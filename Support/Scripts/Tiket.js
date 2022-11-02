@@ -5,7 +5,7 @@
     var salTiket = "0000";
     var groupTiket;
 
-
+    $("#Index_TextLogo").text('تیکت پشتیبانی');
 
     var LockInput = $("#LockInput").data("value");
     var PassInput = $("#PassInput").data("value");

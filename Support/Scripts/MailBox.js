@@ -1,6 +1,8 @@
 ﻿var ViewModel = function () {
     var self = this;
-   
+
+    $("#Index_TextLogo").text('صندوق پستی');
+
     self.BoxList = ko.observableArray([]); // لیست صندوق پستی ها  
 
 
