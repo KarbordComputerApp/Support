@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "صندوق پستی";
+    ViewBag.Title = "ارتباط با بخش فروش";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -27,7 +27,7 @@
 
 
 <center>
-    <p style="font-size: 20px;margin-bottom: 10px;">صندوق پستی</p>
+    <p style="font-size: 20px;margin-bottom: 10px;">ارتباط با بخش فروش</p>
 </center>
 
 
@@ -71,7 +71,7 @@
                 <th>
                     عنوان
                 </th>
-                <th>
+                <th class="notApp">
                     متن
                 </th>
                 <th style="border-radius: 20px 0 0 20px; width: 200px;">عملیات</th>
@@ -84,7 +84,7 @@
 
                 <td data-bind="text: date"></td>
                 <td data-bind="text: title" class="ellipsis"></td>
-                <td data-bind="text: body" class="ellipsis"></td>
+                <td data-bind="text: body" class="ellipsis notApp"></td>
 
                 <td style="border-radius: 30px 0 0 30px;">
                     <a data-bind="click: $root.ViewBox">

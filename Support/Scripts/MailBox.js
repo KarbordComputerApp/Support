@@ -1,17 +1,17 @@
 ﻿var ViewModel = function () {
     var self = this;
 
-    $("#Index_TextLogo").text('صندوق پستی');
+    $("#Index_TextLogo").text('ارتباط با بخش فروش');
 
-    self.BoxList = ko.observableArray([]); // لیست صندوق پستی ها  
+    self.BoxList = ko.observableArray([]); // لیست ارتباط با بخش فروش ها  
 
 
-    var BoxUri = server + '/api/Data/MailBox/'; // آدرس صندوق پستی ها
+    var BoxUri = server + '/api/Data/MailBox/'; // آدرس ارتباط با بخش فروش ها
     var DownloadUri = server + '/api/Data/DownloadFileMailBox/'; // دانلود 
-    var AddBoxUri = server + '/api/Data/InsertMailBox/'; // افزودن صندوق پستی 
-    var UploadUri = server + '/api/Data/UploadFileMailBox/'; // افزودن صندوق پستی 
-    var DeleteFileUri = server + '/api/Data/DeleteFileMailBox/'; // حذف پیوست صندوق پستی 
-    var DeleteBoxUri = server + '/api/Data/DeleteMailBox/'; // حذف  صندوق پستی 
+    var AddBoxUri = server + '/api/Data/InsertMailBox/'; // افزودن ارتباط با بخش فروش 
+    var UploadUri = server + '/api/Data/UploadFileMailBox/'; // افزودن ارتباط با بخش فروش 
+    var DeleteFileUri = server + '/api/Data/DeleteFileMailBox/'; // حذف پیوست ارتباط با بخش فروش 
+    var DeleteBoxUri = server + '/api/Data/DeleteMailBox/'; // حذف  ارتباط با بخش فروش 
 
     DateNow = new Date().toLocaleDateString('fa-IR');
 
@@ -154,7 +154,7 @@
 
         Swal.fire({
             title:  'تایید به روز رسانی',
-            text: "لیست صندوق پستی به روز رسانی شود ؟",
+            text: "لیست ارتباط با بخش فروش به روز رسانی شود ؟",
             type: 'info',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -196,7 +196,7 @@
     self.DeleteBox = function (item) {
         Swal.fire({
             title: 'تایید حذف',
-            text: "آیا صندوق پستی انتخابی حذف شود ؟",
+            text: "آیا ارتباط با بخش فروش انتخابی حذف شود ؟",
             type: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -213,7 +213,7 @@
 
                 ajaxFunction(DeleteBoxUri + '/' + lockNumber + '/' + item.id, 'GET', true).done(function (data) {
                     getBoxList();
-                    showNotification('صندوق پستی حذف شد', 1);
+                    showNotification('ارتباط با بخش فروش حذف شد', 1);
                 });
             }
 
@@ -291,7 +291,7 @@
         ajaxFunction(AddBoxUri, 'POST', InsertBoxObject).done(function (data) {
             $('#modal-Box').modal('hide');
             getBoxList();
-            showNotification('صندوق پستی ارسال شد', 1);
+            showNotification('ارتباط با بخش فروش ارسال شد', 1);
         });
 
 
