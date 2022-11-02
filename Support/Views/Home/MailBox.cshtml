@@ -80,7 +80,7 @@
         <tbody data-bind="foreach: currentPageBox" style="cursor: default;">
             <tr data-bind="click: $parent.selectBox">
                 <td data-bind="text: $root.radif($index())" style="border-radius: 0 30px 30px 0;"></td>
-                <td data-bind="text: mode == '1' ? 'ارسالی' : mode == '2' ? 'دریافتی':'حذف شده' "></td>  <!--به دلیل فارسی بودن متن برعکس افتاده-->
+                <td data-bind="text: mode == '1' ? 'ارسالی' : mode == '2' ? 'دریافتی':'حذف شده' , style: {color: mode == '1' ? 'green' : 'blue'} "></td>  <!--به دلیل فارسی بودن متن برعکس افتاده-->
 
                 <td data-bind="text: date"></td>
                 <td data-bind="text: title" class="ellipsis"></td>
@@ -123,7 +123,7 @@
                     <div>
                         <div class="header" style="background-color: #082b44;padding: 10px;margin: 10px;">
                             <div class="row form-inline modal-header" style="padding:0px;">
-                                متن
+                                <h6 style="color:white">متن</h6>  
                             </div>
                         </div>
                         <div class="body" style="padding:10px;">

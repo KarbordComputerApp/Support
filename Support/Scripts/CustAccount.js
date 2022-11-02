@@ -5,7 +5,7 @@
     var salCustAccount = "0000";
     var groupCustAccount;
     var loginAccount = "NRlhOcngQl7BwNOhU104";
-    $("#Index_TextLogo").text('صورتحساب من');
+    $("#Index_TextLogo").text('صورتحساب های من');
 
     if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");
@@ -74,7 +74,7 @@
 
         Swal.fire({
             title: 'تایید به روز رسانی',
-            text: "لیست صورتحساب من به روز رسانی شود ؟",
+            text: "لیست صورتحساب های من به روز رسانی شود ؟",
             type: 'info',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',

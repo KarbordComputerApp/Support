@@ -189,6 +189,7 @@
              $('#panel_Action').removeAttr('hidden', '');
          }*/
         $('#panel_Action').attr('hidden', '');
+        $('.fix').attr('class', 'form-line focused fix');
         $('#modal-Box').modal('show');
     }
 
