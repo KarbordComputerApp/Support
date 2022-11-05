@@ -48,6 +48,33 @@ namespace Support.Controllers
         }
 
 
+
+        public class ChangePasswordObject
+        {
+            public int LockNumber { get; set; }
+
+            public string OldPass { get; set; }
+
+            public string NewPass { get; set; }
+
+        }
+
+        [Route("api/Data/ChangePassword/")]
+        public async Task<IHttpActionResult> PostChangePassword(ChangePasswordObject ChangePasswordObject)
+        {
+            int res = 0;
+            string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
+            var list = db.Database.SqlQuery<Users>(sql).ToList();
+            if (list.Count > 0)
+            {
+                sql = string.Format(@"update Users set Password = '{0}' where (LockNumber = {1} and Password = '{2}') select 1", EncodePassword(ChangePasswordObject.NewPass), ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
+                res = db.Database.SqlQuery<int>(sql).Single();
+            }
+            return Ok(res);
+        }
+
+
+
         public class LockNumbersObject
         {
             public int LockNumber { get; set; }

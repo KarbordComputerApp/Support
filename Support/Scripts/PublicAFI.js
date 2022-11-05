@@ -11,6 +11,7 @@ var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
 var lastName = localStorage.getItem("LastName");
 var userType = localStorage.getItem("UserType");
+var forceToChangePass = localStorage.getItem("ForceToChangePass");
 var fullName = firstName + ' ' + lastName; 
 var companyName = localStorage.getItem("CompanyName");
 
@@ -25,7 +26,7 @@ var custAccountPass = '@!B913';
 $("#B_CustAccount").attr('disabled', 'disabled');
 
 
-if (userType == '1') {
+if (userType == '1' && forceToChangePass == 'true') {
     $('#B_CustAccount').removeAttr('disabled');
 }
 

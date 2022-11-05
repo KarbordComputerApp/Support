@@ -20,7 +20,7 @@
                 localStorage.setItem("LastName", data[0].LastName);
                 localStorage.setItem("Email", data[0].Email);
                 localStorage.setItem("UserType", data[0].UserType);
-
+                localStorage.setItem("ForceToChangePass", data[0].ForceToChangePass);
 
                 var LockNumbersObject = {
                     LockNumber: lockNumber
@@ -31,11 +31,15 @@
                     if (dataLock.length > 0) {
                         cName = dataLock[0].CompanyName.split("-");
                         localStorage.setItem("CompanyName", cName[0]);
-                        window.location.href = localStorage.getItem("urlIndex");  
+
+
+                        if (data[0].ForceToChangePass == false) {
+                            window.location.href = localStorage.getItem("urlChangePassword");
+                        } else {
+                            window.location.href = localStorage.getItem("urlIndex");
+                        }
                     }
                 })
-
-
 
                 
             }
