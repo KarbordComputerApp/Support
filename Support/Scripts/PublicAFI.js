@@ -456,3 +456,13 @@ $("#LogOut").click(function () {
     window.location.href = localStorage.getItem("urlLogin");
 
 });
+
+
+function showPass(id) {
+    var x = document.getElementById(id);
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}

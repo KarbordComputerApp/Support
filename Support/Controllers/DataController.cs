@@ -67,7 +67,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Users>(sql).ToList();
             if (list.Count > 0)
             {
-                sql = string.Format(@"update Users set Password = '{0}' where (LockNumber = {1} and Password = '{2}') select 1", EncodePassword(ChangePasswordObject.NewPass), ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
+                sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 1 where (LockNumber = {1} and Password = '{2}') select 1", EncodePassword(ChangePasswordObject.NewPass), ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
                 res = db.Database.SqlQuery<int>(sql).Single();
             }
             return Ok(res);

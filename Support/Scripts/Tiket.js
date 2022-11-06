@@ -483,7 +483,13 @@
         //     SaveErjDocXK();
         //}
 
+
         $('#modal-DocAttachSend').modal('show');
+
+        if (counterAttach == 0) {
+            $('#AddFiles').val('').clone(true);
+            $("#AddFiles:hidden").trigger('click');
+        }
         // getDocAttachList(serialNumber);
 
     });
@@ -531,7 +537,6 @@
                 fileFullName = fileList[counterAttach].name;
                 fileData = fileFullName.split(".");
                 fileName = fileData[0];
-
                 $('#bodyDocAttach').append(
                     '<tr>' +
                     '<td style="font-size: 14px;" >' + "مدرک پیوست - " + DateNow + " - " + fileName + '</td>' +

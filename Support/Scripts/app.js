@@ -13,7 +13,7 @@ $("input.int").keydown(function (e) {
 
     }
     else {
-        if (e.shiftKey) { 
+        if (e.shiftKey) {
             // SHIFT + TAB
             if (!((e.keyCode == 9) ||
                 // SHIFT + LEFT ARROW KEY
@@ -386,7 +386,7 @@ function TextHighlightDel(id) {
 function just_persian(str, key) {
     var p = /^[\u0600-\u06FF\s]+$/;
 
-  if (
+    if (
         key == 8 ||
         key == 9 ||
         key == 13 ||
@@ -444,14 +444,14 @@ function KeyPressSearch(e) {
     if (clas == 'type_1') // FARSI='1' 
     {
         return true;
-       // return just_persian(e.key, key)
+        // return just_persian(e.key, key)
     }
 
     else if (clas == 'type_2') // LATIN='2'
     {
         return true;
         //return just_English(e.key, key)
-        
+
     }
 
     else if (clas == 'type_3') { // SHAMSIDATE
@@ -556,4 +556,27 @@ function KeyPressSearch(e) {
 
 
 
+var ShowPasswordToggle = document.querySelector("[type='password']");
+ShowPasswordToggle.onclick = function () {
+
+    document.querySelector("[type='password']").classList.add("input-password");
+
+    document.getElementById("toggle-password").classList.remove("d-none");
+
+    const passwordInput = document.querySelector("[type='password']");
+
+    const togglePasswordButton = document.getElementById("toggle-password");
+
+    togglePasswordButton.addEventListener("click", togglePassword);
+
+
+    function togglePassword() {
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text"; togglePasswordButton.setAttribute("aria-label", "Hide password.")
+        } else {
+            passwordInput.type = "password";
+            togglePasswordButton.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
+        }
+    }
+};
 

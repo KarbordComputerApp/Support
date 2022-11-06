@@ -67,6 +67,10 @@
             ajaxFunction(ChangePasswordUri, 'POST', ChangePasswordObject, false).done(function (data) {
                 if (data == 1) {
                     showNotification('تغییر کلمه عبور انجام شد', 1);
+
+
+
+
                     window.location.href = localStorage.getItem("urlLogin");
                 }
                 else {
