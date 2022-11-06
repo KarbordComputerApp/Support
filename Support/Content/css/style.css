@@ -22178,32 +22178,38 @@ body, html {
     display: none;
 }
 
-button#toggle-password {
+
+
+
+
+button.showHidePass {
     position: absolute;
     top: 3px;
-    right: 4px;
+    left: 4px;
     z-index: 9;
-    width: 28px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     background: 0;
     border: 0;
 }
 
-    button#toggle-password:active,
-    button#toggle-password:focus,
-    button#toggle-password:hover {
+    button.showHidePass:active,
+    button.showHidePass:focus,
+    button.showHidePass:hover {
         cursor: pointer;
     }
 
-    button#toggle-password:focus {
+    button.showHidePass:focus {
         outline: none !important;
     }
+
+
 
 .input-password {
     padding-right: calc(1.5em + 0.75rem);
     background-repeat: no-repeat;
-    background-position: right calc(0.375em + 0.1875rem) center;
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    background-position: left calc(0.375em + 0.1875rem) center;
+    background-size: 30px;
 }
 
     .input-password[type=text]:valid {

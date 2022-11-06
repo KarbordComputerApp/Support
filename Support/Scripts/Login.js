@@ -84,3 +84,13 @@ ko.applyBindings(new ViewModel());
 
 
 
+$(".showHidePass").click(function () {
+    var id = this.id;
+    if (id == "toggle_Pass") {
+        var input = $("#pass").attr("type");
+        if (input == 'text')
+            $("#pass").attr('type', 'password')
+        else
+            $("#pass").attr('type', 'text');
+    }
+})

@@ -86,3 +86,33 @@
 
 
 ko.applyBindings(new ViewModel());
+
+
+$(".showHidePass").click(function () {
+    var id = this.id;
+    if (id == "toggle_oldPass") {
+        var input = $("#oldPass").attr("type");
+        if (input == 'text')
+            $("#oldPass").attr('type', 'password')
+        else
+            $("#oldPass").attr('type', 'text');
+    }
+
+    if (id == "toggle_newPass1") {
+        var input = $("#newPass1").attr("type");
+        if (input == 'text')
+            $("#newPass1").attr('type', 'password')
+        else
+            $("#newPass1").attr('type', 'text');
+    }
+
+    if (id == "toggle_newPass2") {
+        var input = $("#newPass2").attr("type");
+        if (input == 'text')
+            $("#newPass2").attr('type', 'password')
+        else
+            $("#newPass2").attr('type', 'text');
+    }
+
+})
+
