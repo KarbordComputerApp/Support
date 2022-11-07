@@ -520,7 +520,10 @@ namespace Support.Controllers
             //var file = req.Files[req.Files.Keys.Get(0)];
 
             var httpRequest = HttpContext.Current.Request.Files[0];
-            var name = httpRequest.FileName.Split('.');
+
+            var fname = httpRequest.FileName.Replace(" ", "");
+            var name = fname.Split('.');
+
             string tempName = name[0] + "-" + DateTime.Now.ToString("yyMMddHHmmss") + "." + name[1];
             var filePath = folder + tempName;
             httpRequest.SaveAs(filePath);

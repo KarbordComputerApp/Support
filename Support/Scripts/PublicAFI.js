@@ -1,8 +1,8 @@
-﻿//var server = 'http://localhost:52798';
-var server = 'http://192.168.0.114:1000';
+﻿var server = 'http://localhost:52798';
+//var server = 'http://192.168.0.114:1000';
 
-//var serverAccount = 'http://127.0.0.1:902/api/';
-var serverAccount = 'http://192.168.0.114:902/api/';
+var serverAccount = 'http://127.0.0.1:902/api/';
+//var serverAccount = 'http://192.168.0.114:902/api/';
 
 
 var AccountUri = serverAccount + 'Account/'; // آدرس حساب
@@ -26,7 +26,7 @@ var custAccountPass = '@!B913';
 $("#B_CustAccount").attr('disabled', 'disabled');
 
 
-if (userType == '1' && forceToChangePass == 'true') {
+if ((userType == '1' || userType == '3') && forceToChangePass == 'true') {
     $('#B_CustAccount').removeAttr('disabled');
 }
 

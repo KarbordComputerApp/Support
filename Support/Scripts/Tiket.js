@@ -15,7 +15,7 @@
     }
 
 
-    if (lockNumber == null ) {
+    if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");
     }
 
@@ -171,147 +171,9 @@
         }).then((result) => {
             if (result.value) {
                 getErjDocXK();
-                self.sortTableErjDocXK();
             }
         })
     })
-
-
-    self.PageCountView = function () {
-        select = $('#pageCountSelector').val();
-        getErjDocXK();
-        self.sortTableErjDocXK();
-    }
-
-
-    var flagupdate = 0;
-
-    self.currentPageErjDocXK = ko.observable();
-    pageSizeErjDocXK = localStorage.getItem('pageSizeErjDocXK') == null ? 10 : localStorage.getItem('pageSizeErjDocXK');
-    self.pageSizeErjDocXK = ko.observable(pageSizeErjDocXK);
-
-    self.sortType = "ascending";
-
-    self.currentColumn = ko.observable("");
-    self.iconType = ko.observable("");
-
-
-    self.filterDocNo = ko.observable("");
-    self.filterDocDate = ko.observable("");
-    self.filterStatus = ko.observable("");
-    self.filterText = ko.observable("");
-    self.filterMotaghazi = ko.observable("");
-
-
-    self.filterErjDocXKList = ko.computed(function () {
-        self.currentPageIndexErjDocXK(0);
-        var filterDocNo = self.filterDocNo().toUpperCase();
-        var filterDocDate = self.filterDocDate().toUpperCase();
-        var filterStatus = self.filterStatus().toUpperCase();
-        var filterText = self.filterText().toUpperCase();
-        var filterMotaghazi = self.filterMotaghazi().toUpperCase();
-
-        tempData = ko.utils.arrayFilter(self.ErjDocXKList(), function (item) {
-            result =
-                (item.DocNo == null ? '' : item.DocNo.toString().search(filterDocNo) >= 0) &&
-                (item.DocDate == null ? '' : item.DocDate.toString().search(filterDocDate) >= 0) &&
-                (item.Status == null ? '' : item.Status.toString().search(filterStatus) >= 0) &&
-                (item.Text == null ? '' : item.Text.toString().search(filterText) >= 0) &&
-                (item.Motaghazi == null ? '' : item.Motaghazi.toString().search(filterMotaghazi) >= 0)
-            return result;
-        })
-        $("#CountRecord").text(tempData.length);
-        return tempData;
-    });
-
-
-    self.currentPageErjDocXK = ko.computed(function () {
-        var pageSizeErjDocXK = parseInt(self.pageSizeErjDocXK(), 10),
-            startIndex = pageSizeErjDocXK * self.currentPageIndexErjDocXK(),
-            endIndex = startIndex + pageSizeErjDocXK;
-        localStorage.setItem('pageSizeErjDocXK', pageSizeErjDocXK);
-        var a = self.filterErjDocXKList().slice(startIndex, endIndex);
-        return self.filterErjDocXKList().slice(startIndex, endIndex);
-    });
-
-
-    self.nextPageErjDocXK = function () {
-        if (((self.currentPageIndexErjDocXK() + 1) * self.pageSizeErjDocXK()) < self.filterErjDocXKList().length) {
-            self.currentPageIndexErjDocXK(self.currentPageIndexErjDocXK() + 1);
-        }
-    };
-
-    self.previousPageErjDocXK = function () {
-        if (self.currentPageIndexErjDocXK() > 0) {
-            self.currentPageIndexErjDocXK(self.currentPageIndexErjDocXK() - 1);
-        }
-    };
-
-    self.firstPageErjDocXK = function () {
-        self.currentPageIndexErjDocXK(0);
-    };
-
-    self.lastPageErjDocXK = function () {
-        tempCountErjDocXK = parseInt(self.filterErjDocXKList().length / self.pageSizeErjDocXK(), 10);
-        if ((self.filterErjDocXKList().length % self.pageSizeErjDocXK()) == 0)
-            self.currentPageIndexErjDocXK(tempCountErjDocXK - 1);
-        else
-            self.currentPageIndexErjDocXK(tempCountErjDocXK);
-    };
-
-
-
-    self.iconTypeDocNo = ko.observable("");
-    self.iconTypeDocDate = ko.observable("");
-    self.iconTypeStatus = ko.observable("");
-    self.iconTypeText = ko.observable("");
-    self.iconTypeMotaghazi = ko.observable("");
-
-    self.sortTableErjDocXK = function (viewModel, e) {
-
-        if (e != null)
-            var orderProp = $(e.target).attr("data-column")
-        else {
-            orderProp = localStorage.getItem("sortTiket");
-            self.sortType = localStorage.getItem("sortTypeTiket");
-        }
-
-        if (orderProp == null)
-            return null
-
-        if (e != null) {
-            self.currentColumn(orderProp);
-            self.ErjDocXKList.sort(function (left, right) {
-                leftVal = FixSortName(left[orderProp]);
-                rightVal = FixSortName(right[orderProp]);
-                if (self.sortType == "ascending") {
-                    return leftVal < rightVal ? 1 : -1;
-                }
-                else {
-                    return leftVal > rightVal ? 1 : -1;
-                }
-            });
-
-            self.sortType = (self.sortType == "ascending") ? "descending" : "ascending";
-
-            localStorage.setItem("sortTiket", orderProp);
-            localStorage.setItem("sortTypeTiket", self.sortType);
-        }
-
-
-        self.iconTypeDocNo('');
-        self.iconTypeDocDate('');
-        self.iconTypeStatus('');
-        self.iconTypeText('');
-        self.iconTypeMotaghazi('');
-
-        if (orderProp == 'DocNo') self.iconTypeDocNo((self.sortType == "ascending") ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down");
-        if (orderProp == 'DocDate') self.iconTypeDocDate((self.sortType == "ascending") ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down");
-        if (orderProp == 'Status') self.iconTypeStatus((self.sortType == "ascending") ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down");
-        if (orderProp == 'Text') self.iconTypeText((self.sortType == "ascending") ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down");
-        if (orderProp == 'Motaghazi') self.iconTypeMotaghazi((self.sortType == "ascending") ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down");
-    };
-
 
 
     $('#AddNewErjDocXK').click(function () {
@@ -362,7 +224,7 @@
             var ErjSaveTicket_HI = {
                 SerialNumber: 0,
                 DocDate: DateNow,
-                UserCode: 'zand',
+                UserCode: 'ZAND',
                 Status: "فعال",
                 Spec: "",
                 LockNo: lockNumber,
@@ -551,12 +413,24 @@
 
 
     $('#DelAllAttach').click(function () {
-        $('#bodyDocAttach').empty();
-        counterAttach = 0;
-        fileList = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+        Swal.fire({
+            title: 'تایید حذف',
+            text: "آیا پیوست های انتخابی حذف شودند ؟",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'خیر',
+            allowOutsideClick: false,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                $('#bodyDocAttach').empty();
+                counterAttach = 0;
+                fileList = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+            }
+        });
     });
-
-
 
 
     self.selectDocAttach = function (item) {
@@ -744,10 +618,7 @@
 
 
     self.radif = function (index) {
-        countShow = self.pageSizeErjDocXK();
-        page = self.currentPageIndexErjDocXK();
-        calc = (countShow * page) + 1;
-        return index + calc;
+        return index + 0;
     }
 
 
@@ -755,14 +626,12 @@
     self.SearchKeyDown = function (viewModel, e) {
         return KeyPressSearch(e);
     }
-    self.sortTableErjDocXK();
 
 
     setInterval(RefreshTiket, 60000);
 
     function RefreshTiket() {
         getErjDocXK();
-        self.sortTableErjDocXK();
     }
 
 };
