@@ -27,6 +27,27 @@
         }, 2000);
         //window.location.reload(true);
     }
+
+    $('#refreshFinancial').click(function () {
+
+        Swal.fire({
+            title: 'تایید به روز رسانی',
+            text: "لیست اسناد و مستندات به روز رسانی شود ؟",
+            type: 'info',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'خیر',
+
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                getFinancialList();
+            }
+        })
+    })
+
+
 }; 
 
 
