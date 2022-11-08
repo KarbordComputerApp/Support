@@ -6,14 +6,26 @@
     self.BoxList = ko.observableArray([]); // لیست ارتباط با بخش فروش ها  
 
 
+    var DateUri = server + '/api/Data/GetDate/'; // آدرس تاریخ سرور
     var BoxUri = server + '/api/Data/MailBox/'; // آدرس ارتباط با بخش فروش ها
     var DownloadUri = server + '/api/Data/DownloadFileMailBox/'; // دانلود 
-    var AddBoxUri = server + '/api/Data/InsertMailBox/'; // افزودن ارتباط با بخش فروش 
-    var UploadUri = server + '/api/Data/UploadFileMailBox/'; // افزودن ارتباط با بخش فروش 
+    var InsertMailBoxUri = server + '/api/Data/InsertMailBox/'; // افزودن ارتباط با بخش فروش 
+    var DownloadFileMailBoxUri = server + '/api/Data/DownloadFileMailBox/'; // دانلود پیوست ارتباط با بخش فروش 
+
     var DeleteFileUri = server + '/api/Data/DeleteFileMailBox/'; // حذف پیوست ارتباط با بخش فروش 
     var DeleteBoxUri = server + '/api/Data/DeleteMailBox/'; // حذف  ارتباط با بخش فروش 
 
-    DateNow = new Date().toLocaleDateString('fa-IR');
+    //var DateNow = new Date().toLocaleDateString('fa-IR');
+    var DateNow = '';
+
+    //Get DocAttach List
+    function getDate() {
+        ajaxFunction(DateUri, 'GET', false).done(function (data) {
+            DateNow = data[0];
+        });
+    }
+
+    getDate();
 
     getBoxList()
     //Get Box List
@@ -69,13 +81,6 @@
     self.ViewBox = function (item) {
         $('#titleBox').val(item.title);
         $('#bodyBox').val(item.body);
-
-        /* if (item.mode == 2) { // دریافتی
-             $('#panel_Action').attr('hidden', '');
-         }
-         else {
-             $('#panel_Action').removeAttr('hidden', '');
-         }*/
         $('#panel_Action').attr('hidden', '');
         $('.fix').attr('class', 'form-line focused fix');
         $('#modal-Box').modal('show');
@@ -121,7 +126,6 @@
         $('#nameAttach').val('');
         $('#panel_Action').removeAttr('hidden', '');
         $('#modal-Box').modal('show');
-
     })
 
 
@@ -141,10 +145,25 @@
     };
 
 
-    self.ViewBoxAttach = function (item) {
 
-        addr = DownloadUri + lockNumber + '/' + item.namefile;
-        window.location.href = addr;
+    //Get DocAttach List
+    function getBoxAttach(Id) {
+
+        var DownloadFileMailBoxObject = {
+            id: Id
+        }
+
+        ajaxFunction(DownloadFileMailBoxUri, 'POST', DownloadFileMailBoxObject).done(function (data) {
+            var sampleArr = base64ToArrayBuffer(data[0].Atch);
+            saveByteArray(data[0].namefile, sampleArr);
+        });
+    }
+
+    self.ViewBoxAttach = function (item) {
+        getBoxAttach(item.id);
+
+//        addr = DownloadUri + lockNumber + '/' + item.namefile;
+     //   window.location.href = addr;
 
         //getBoxAttach(item.namefile);
     }
@@ -161,6 +180,7 @@
 
         var file = document.getElementById("AddFile");
         fileFullName = '';
+
         if (file.files.length > 0) {
             fileFullName = file.files[0].name;
             fileData = fileFullName.split(".");
@@ -170,33 +190,24 @@
             if (fileData[1] == 'exe') {
                 return showNotification('ابتدا فایل را فشرده کنید سپس ارسال کنید', 2);
             }
+        }
 
             var formData = new FormData();
-            formData.append('fileName', $('#AddFile')[0].files[0]);
 
-            ajaxFunctionUpload(UploadUri + '/' + lockNumber, formData, false).done(function (data) {
-                fileFullName = data;
+            formData.append('mode', 1);
+            formData.append('readst', 'N');
+            formData.append('lockNumber', lockNumber);
+            formData.append('date', DateNow);
+            formData.append('title', title);
+            formData.append('body', body);
+            formData.append('namefile', fileFullName);
+            formData.append('Atch', $('#AddFile')[0].files[0]);
+
+            ajaxFunctionUpload(InsertMailBoxUri , formData, false).done(function (data) {
+                $('#modal-Box').modal('hide');
+                getBoxList();
+                showNotification('ارتباط با بخش فروش ارسال شد', 1);
             });
-        }
-
-
-
-
-        var InsertBoxObject = {
-            Mode: 1,
-            LockNumber: lockNumber,
-            Date: DateNow,
-            Title: title,
-            Body: body,
-            NameFile: fileFullName,
-            UserCode: sessionStorage.userName,
-        }
-        ajaxFunction(AddBoxUri, 'POST', InsertBoxObject).done(function (data) {
-            $('#modal-Box').modal('hide');
-            getBoxList();
-            showNotification('ارتباط با بخش فروش ارسال شد', 1);
-        });
-
 
     });
 
