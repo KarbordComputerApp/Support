@@ -22219,3 +22219,47 @@ button.showHidePass {
     .input-password[type=password]:valid {
         background-image: url("data:image/svg+xml,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z'/%3E%3Cpath fill-rule='evenodd' d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z'/%3E%3C/svg%3E") !important;
     }
+
+
+.page-proccess-wrapper {
+    z-index: 99999999;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    width: 15%;
+    height: 20%;
+    background: #edeef3;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 5px #4048524f;
+}
+
+
+@media (max-width:767px) {
+    .page-proccess-wrapper {
+        z-index: 99999999;
+        position: absolute;
+        top: 30%;
+        left: 25%;
+        width: 50%;
+        height: 20%;
+        background: #edeef3;
+        overflow: hidden;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px 5px #4048524f;
+    }
+}
+
+.page-proccess-wrapper p {
+    font-size: 13px;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #444;
+}
+
+.page-proccess-wrapper .loader {
+    position: relative;
+    top: calc(50% - 30px);
+}

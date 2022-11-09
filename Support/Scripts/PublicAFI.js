@@ -273,7 +273,8 @@ function showNotification(text, colorNumber, From, Align, time) {
                 enter: animateEnter,
                 exit: animateExit
             },
-            template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (allowDismiss ? "p-r-35" : "") + '" role="alert">' +
+
+            template: '<div data-notify="container" style="z-index:20000 !important" class="bootstrap-notify-container alert alert-dismissible {0} ' + (allowDismiss ? "p-r-35" : "") + '" role="alert">' +
                 '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                 '<span data-notify="icon"></span> ' +
                 '<span data-notify="title">{1}</span> ' +

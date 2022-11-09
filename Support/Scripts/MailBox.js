@@ -178,6 +178,14 @@
         title = $("#titleBox").val();
         body = $("#bodyBox").val();
 
+        if (title == '') {
+            return showNotification('عنوان را وارد کنید', 2);
+        }
+
+        if (body == '') {
+            return showNotification('متن را وارد کنید', 2);
+        }
+
         var file = document.getElementById("AddFile");
         fileFullName = '';
 
@@ -187,9 +195,13 @@
             fileName = fileData[0];
             fileType = '.' + fileData[1];
 
-            if (fileData[1] == 'exe') {
-                return showNotification('ابتدا فایل را فشرده کنید سپس ارسال کنید', 2);
+            if (file.files[0].size > 5000000) { // بیشتر از 5 مگابایت
+                return showNotification('فایل پیوست باید کمتر از 5 مگابایت باشد', 2);
             }
+
+            /*if (fileData[1] == 'exe') {
+                return showNotification('ابتدا فایل را فشرده کنید سپس ارسال کنید', 2);
+            }*/
         }
 
             var formData = new FormData();
@@ -203,7 +215,7 @@
             formData.append('namefile', fileFullName);
             formData.append('Atch', $('#AddFile')[0].files[0]);
 
-            ajaxFunctionUpload(InsertMailBoxUri , formData, false).done(function (data) {
+            ajaxFunctionUpload(InsertMailBoxUri , formData, true).done(function (data) {
                 $('#modal-Box').modal('hide');
                 getBoxList();
                 showNotification('ارتباط با بخش فروش ارسال شد', 1);
