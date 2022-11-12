@@ -26,7 +26,7 @@ var custAccountPass = '@!B913';
 $("#B_CustAccount").attr('disabled', 'disabled');
 
 
-if ((userType == '1' || userType == '3') && forceToChangePass == 'true') {
+if ((userType == '1' || userType == '3') && forceToChangePass == 'false') {
     $('#B_CustAccount').removeAttr('disabled');
 }
 

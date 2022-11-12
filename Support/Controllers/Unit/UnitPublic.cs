@@ -14,8 +14,8 @@ namespace Support.Controllers.Unit
 {
     public class UnitPublic
     {
-       public static string titleVer = "ورژن تست";
-       public static string titleVerNumber = "48"; 
+        public static string titleVer = "ورژن تست";
+        public static string titleVerNumber = "50";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1001";
@@ -37,7 +37,7 @@ namespace Support.Controllers.Unit
 
         public static string Encrypt(string str)
         {
-            string EncrptKey = "2013;[pnuLIT)WebCodeExpert";
+            string EncrptKey = "2013;[pnuLIT)WebCodeExpertKarbordComputer";
             byte[] byKey = { };
             byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };
             byKey = System.Text.Encoding.UTF8.GetBytes(EncrptKey.Substring(0, 8));
@@ -47,13 +47,18 @@ namespace Support.Controllers.Unit
             CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(byKey, IV), CryptoStreamMode.Write);
             cs.Write(inputByteArray, 0, inputByteArray.Length);
             cs.FlushFinalBlock();
-            return Convert.ToBase64String(ms.ToArray());
+
+            var res = Convert.ToBase64String(ms.ToArray());
+            res = res.Replace("/", "-");
+            return res;
         }
 
         public static string Decrypt(string str)
         {
+
+            str = str.Replace("-", "/");
             str = str.Replace(" ", "+");
-            string DecryptKey = "2013;[pnuLIT)WebCodeExpert";
+            string DecryptKey = "2013;[pnuLIT)WebCodeExpertKarbordComputer";
             byte[] byKey = { };
             byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };
             byte[] inputByteArray = new byte[str.Length];
@@ -67,6 +72,30 @@ namespace Support.Controllers.Unit
             cs.FlushFinalBlock();
             System.Text.Encoding encoding = System.Text.Encoding.UTF8;
             return encoding.GetString(ms.ToArray());
+        }
+
+
+        public static bool TestEncrypt(string str)
+        {
+
+            DateTime centuryBegin = DateTime.Now;
+            DateTime currentDate = DateTime.Now;
+
+            long elapsedTicks = currentDate.Ticks - centuryBegin.Ticks;
+            TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+            var a = elapsedSpan.TotalSeconds;
+            var b = elapsedSpan.TotalMinutes;
+
+
+            var dateNow = DateTime.Now.Ticks.ToString();
+            dateNow = DateTime.Now.Ticks.ToString();
+            dateNow = DateTime.Now.Ticks.ToString();
+            //var token = UnitPublic.Encrypt(TokenObject.LockNumber + "--" + dateNow);
+           // var token2 = UnitPublic.Decrypt(token);
+
+            return true;
+
         }
 
     }

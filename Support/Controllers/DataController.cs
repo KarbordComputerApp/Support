@@ -69,7 +69,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Users>(sql).ToList();
             if (list.Count > 0)
             {
-                sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 1 where (LockNumber = {1} and Password = '{2}') select 1", EncodePassword(ChangePasswordObject.NewPass), ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
+                sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 0 where (LockNumber = {1} and Password = '{2}') select 1", EncodePassword(ChangePasswordObject.NewPass), ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
                 res = db.Database.SqlQuery<int>(sql).Single();
             }
             return Ok(res);
@@ -673,8 +673,21 @@ namespace Support.Controllers
         }
 
 
-        
 
+        public class TokenObject
+        {
+            public string LockNumber { get; set; }
+        }
+
+       
+        // Post: api/Data/GetToken   
+        [Route("api/Data/Token/")]
+        public async Task<IHttpActionResult> PostToken(TokenObject TokenObject)
+        {
+            string currentDate = DateTime.Now.Ticks.ToString();
+            var token = UnitPublic.Encrypt(TokenObject.LockNumber + "--" + currentDate);
+            return Ok(token);
+        }
 
     }
 }

@@ -33,7 +33,7 @@
                         localStorage.setItem("CompanyName", cName[0]);
 
 
-                        if (data[0].ForceToChangePass == false) {
+                        if (data[0].ForceToChangePass == 1) {
                             window.location.href = localStorage.getItem("urlChangePassword");
                         } else {
                             window.location.href = localStorage.getItem("urlIndex");

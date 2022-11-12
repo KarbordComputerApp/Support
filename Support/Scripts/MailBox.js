@@ -130,6 +130,7 @@
 
 
     $('#AddAttach').click(function () {
+        $('#nameAttach').val('');
         $('#AddFile').val('').clone(true);
         $("#AddFile:hidden").trigger('click');
     });

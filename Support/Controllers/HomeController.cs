@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Support.Controllers.Unit;
 
 namespace Support.Controllers
 {
@@ -37,10 +38,10 @@ namespace Support.Controllers
         {
             return View();
         }
-       /* public ActionResult Tiket()
-        {
-            return View();
-        }*/
+        /* public ActionResult Tiket()
+         {
+             return View();
+         }*/
 
         public ActionResult ChangePassword()
         {
@@ -77,11 +78,29 @@ namespace Support.Controllers
             {
                 ViewBag.LockNumber = LockNumber;
             }
-            
+            else
+            {
+                long currentDate = DateTime.Now.Ticks;
+                var inputToken = UnitPublic.Decrypt(LockNumber);
+                var data = inputToken.Split('-');
+                if (data.Length == 3)
+                {
+                    string lockNumber = data[0];
+                    Int64 tik = Int64.Parse(data[2]);
+                    long elapsedTicks = currentDate -  tik;
+                    TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+                   
+                    if (elapsedSpan.TotalMinutes <= 1)
+                    {
+                        ViewBag.LockNumber = lockNumber;
+                   }
+                }
+            }
+
             return View();
         }
 
-        
+
 
     }
 }
