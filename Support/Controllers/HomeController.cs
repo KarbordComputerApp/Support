@@ -73,27 +73,30 @@ namespace Support.Controllers
 
         public ActionResult Tiket(string LockNumber, string Pass)
         {
-            ViewBag.LockNumber = "";
-            if (Pass == "ADf5243hh2059dghQQQ")
+            if (LockNumber != null)
             {
-                ViewBag.LockNumber = LockNumber;
-            }
-            else
-            {
-                long currentDate = DateTime.Now.Ticks;
-                var inputToken = UnitPublic.Decrypt(LockNumber);
-                var data = inputToken.Split('-');
-                if (data.Length == 3)
+                ViewBag.LockNumber = "";
+                if (Pass == "ADf5243hh2059dghQQQ")
                 {
-                    string lockNumber = data[0];
-                    Int64 tik = Int64.Parse(data[2]);
-                    long elapsedTicks = currentDate -  tik;
-                    TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
-                   
-                    if (elapsedSpan.TotalMinutes <= 1)
+                    ViewBag.LockNumber = LockNumber;
+                }
+                else
+                {
+                    long currentDate = DateTime.Now.Ticks;
+                    var inputToken = UnitPublic.Decrypt(LockNumber);
+                    var data = inputToken.Split('-');
+                    if (data.Length == 3)
                     {
-                        ViewBag.LockNumber = lockNumber;
-                   }
+                        string lockNumber = data[0];
+                        Int64 tik = Int64.Parse(data[2]);
+                        long elapsedTicks = currentDate - tik;
+                        TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                        if (elapsedSpan.TotalMinutes <= 1)
+                        {
+                            ViewBag.LockNumber = lockNumber;
+                        }
+                    }
                 }
             }
 
