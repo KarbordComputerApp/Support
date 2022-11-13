@@ -11,6 +11,7 @@
     var PassInput = $("#PassInput").data("value");
 
     if (LockInput != '') {
+        localStorage.removeItem("lockNumber");
         lockNumber = LockInput;
     }
 

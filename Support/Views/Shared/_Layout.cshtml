@@ -146,7 +146,7 @@
 
     <script type="text/javascript">
         sessionStorage.versionTitle = '@(Support.Controllers.Unit.UnitPublic.titleVer)';
-        sessionStorage.urlHome = '@Url.Action("Index", "AFISanad")';
+        localStorage.setItem("urlLogin", '@Url.Action("Login", "Home")');
     </script>
 
     <script src="~/Content/js/app.min.js"></script>
