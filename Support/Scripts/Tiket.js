@@ -61,8 +61,8 @@
     self.SettingColumnList = ko.observableArray([]); // لیست ستون ها
     self.DocAttachList = ko.observableArray([]); // ليست پیوست
 
-    var counterAttach = 0
-    var fileList = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+    self.AddAttachList = ko.observableArray([]);
+
 
 
 
@@ -180,9 +180,7 @@
     $('#AddNewErjDocXK').click(function () {
         $("#Result").val('');
         $("#motaghazi").val('');
-        $('#bodyDocAttach').empty();
-        counterAttach = 0;
-        fileList = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+        self.AddAttachList([]);
     })
 
 
@@ -216,10 +214,17 @@
         natijeh = $("#Result").val();
         motaghazi = $("#motaghazi").val();
 
-        if (natijeh == '' && counterAttach > 0)
+        
+
+
+        if (natijeh == '' && self.AddAttachList().length > 0)
             natijeh = 'به پیوست مراجعه شود';
 
-        if (natijeh == '' && counterAttach == 0)
+        if (motaghazi == '')
+            return showNotification('متقاضی را وارد کنید', 0);
+
+
+        if (natijeh == '' && self.AddAttachList().length == 0)
             return showNotification('تیکت خالی است', 0);
         else {
             var ErjSaveTicket_HI = {
@@ -256,15 +261,15 @@
                 serialNumber = data;
             });
 
-            for (var i = 1; i <= counterAttach; i++) {
+            for (var i = 0; i <= self.AddAttachList().length - 1; i++) {
 
-                fileAttach = fileList[i];
-                fileFullName = fileAttach.name;
+                fileAttach = self.AddAttachList()[i];
+                fileFullName = fileAttach.File.name;
                 fileData = fileFullName.split(".");
                 fileName = fileData[0];
                 fileType = '.' + fileData[1];
 
-                let result = await ziped(fileType, fileAttach, fileFullName);
+                let result = await ziped(fileType, fileAttach.File, fileFullName);
 
             };
 
@@ -349,7 +354,7 @@
 
         $('#modal-DocAttachSend').modal('show');
 
-        if (counterAttach == 0) {
+        if (self.AddAttachList().length == 0) {
             $('#AddFiles').val('').clone(true);
             $("#AddFiles:hidden").trigger('click');
         }
@@ -359,18 +364,8 @@
 
 
     $('#AddAttachs').click(function () {
-        //e.preventDefault();
-        //$('#AddFiles').val();
         $('#AddFiles').val('').clone(true);
         $("#AddFiles:hidden").trigger('click');
-
-        /*file = 'c:\a\1.png'
-        $('#bodyDocAttach').append(
-            '<tr>' +
-            '<td>' + file + '</td>' +
-            '</tr>'
-        );
-        counterAttach = counterAttach + 1;*/
     });
 
 
@@ -393,30 +388,22 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-
-                counterAttach = counterAttach + 1;
                 a = document.getElementById("AddFiles").files[0];
-                fileList[counterAttach] = a;
-                fileFullName = fileList[counterAttach].name;
+                fileFullName = a.name;
                 fileData = fileFullName.split(".");
                 fileName = fileData[0];
-                $('#bodyDocAttach').append(
-                    '<tr>' +
-                    '<td style="font-size: 14px;" >' + "مدرک پیوست - " + DateNow + " - " + fileName + '</td>' +
-                    '</tr>'
-                );
-
-                e.target.value = ""
-
+                const att = { id: self.AddAttachList().length, File: a, name: "مدرک پیوست - " + DateNow + " - " + fileName };
+                self.AddAttachList.push(att);
             }
         })
     }
 
 
-    $('#DelAllAttach').click(function () {
+
+    self.DelAddAttach = function (Band) {
         Swal.fire({
             title: 'تایید حذف',
-            text: "آیا پیوست های انتخابی حذف شودند ؟",
+            text: "آیا پیوست انتخابی حذف شودند ؟",
             type: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -426,12 +413,13 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                $('#bodyDocAttach').empty();
-                counterAttach = 0;
-                fileList = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+                self.AddAttachList.remove(function (att) {
+                    return att.id == Band.id;
+                });
             }
         });
-    });
+    }
+
 
 
     self.selectDocAttach = function (item) {

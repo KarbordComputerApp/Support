@@ -373,10 +373,6 @@
                     </button>
                     <h4 class="modal-title">پیوست</h4>
                     <div>
-                        <a id="DelAllAttach" style="margin-left: 10px;">
-                            <img src="~/Content/img/Icon_Blue/delete.png" width="20" height="20">
-                        </a>
-
                         <input id="AddFiles" type="file" style="display:none" data-bind="event: {change: $root.AddFile}" />
                         <a id="AddAttachs">
                             <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
@@ -390,9 +386,23 @@
                             <thead style="cursor: pointer;">
                                 <tr>
                                     <th style="text-align: center;">شرح</th>
+                                    <th style="text-align: center;">عملیات</th>
                                 </tr>
                             </thead>
-                            <tbody id="bodyDocAttach" style="cursor: default;"></tbody>
+                            <tbody id="bodyDocAttach0" data-bind="foreach: AddAttachList" style="cursor: default;">
+                                <tr>
+                                    <td data-bind="text: name"></td>
+                                    <td>
+                                        <a data-bind="click: $root.DelAddAttach">
+                                            <img src="~/Content/img/Icon_Blue/delete.png" width="28" style="margin-left:10px" />
+                                        </a>
+                                    </td>
+                                </tr>
+
+                     
+
+                            <!-- <a id="DelAllAttach" style="margin-left: 10px;"><img src="~/Content/img/Icon_Blue/delete.png" width="20" height="20"></a>-->
+                            </tbody>
                         </table>
                     </div>
                 </div>
