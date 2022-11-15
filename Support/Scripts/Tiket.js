@@ -1,6 +1,9 @@
 ﻿var ViewModel = function () {
     var self = this;
     var group_Tiket = localStorage.getItem("Group_Ticket");
+    if (group_Tiket.length == 1) {
+        group_Tiket = '0' + group_Tiket;
+    }
 
     $("#Index_TextLogo").text('تیکت پشتیبانی');
 
