@@ -1,9 +1,6 @@
 ﻿var ViewModel = function () {
     var self = this;
-    var serverTiket;
-    var aceTiket = "Web2";
-    var salTiket = "0000";
-    var groupTiket;
+    var group_Tiket = localStorage.getItem("Group_Ticket");
 
     $("#Index_TextLogo").text('تیکت پشتیبانی');
 
@@ -16,45 +13,20 @@
     }
 
 
-    if (lockNumber == null) {
+    if (lockNumber == null || group_Tiket == null) {
         window.location.href = localStorage.getItem("urlLogin");
     }
 
-    function getAccountDataTiket(lock) {
-        ajaxFunctionAccount(AccountUri + ticketUser + '/' + ticketPass, 'GET').done(function (data) {
-            if (data === 0) {
-                return showNotification(' اطلاعات تیکت یافت نشد ', 0);
-            }
-            else {
-                serverAddress = data.AddressApi;
-                serverTiket = serverAddress;
-                groupTiket = data.ERJ_Group;
-                localStorage.setItem("groupTiket", data.ERJ_Group);
-                localStorage.setItem("ApiAddressTiket", serverAddress);
-
-                /*ajaxFunctionAccount(AccountUri + lock, 'GET').done(function (data) {
-                    if (data === 0) {
-                        return showNotification(' اطلاعات قفل یافت نشد ', 0);
-                    }
-                });*/
-            }
-        });
-    }
-
-    getAccountDataTiket(lockNumber);
 
     self.ErjDocXKList = ko.observableArray([]); // لیست گزارش  
 
-    var ErjDocXKUri = serverTiket + '/api/Web_Data/Web_ErjDocXK/'; // آدرس تیکت ها  
-    var TicketStatusUri = serverTiket + '/api/Web_Data/Web_TicketStatus/'; // آدرس وضعیت تیکت ها 
+    var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها  
+    var TicketStatusUri = server + '/api/KarbordData/Web_TicketStatus/'; // آدرس وضعیت تیکت ها 
+    var DocAttachUri = server + '/api/KarbordData/DocAttach/'; // آدرس لیست پیوست 
+    var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
+    var ErjDocAttach_SaveUri = server + '/api/KarbordData/UploadFile/'; // ذخیره پیوست
+    var ErjDocAttach_DelUri = server + '/api/KarbordData/ErjDocAttach_Del/'; // حذف پیوست
 
-    var RprtColsUri = serverTiket + '/api/Web_Data/RprtCols/'; // آدرس مشخصات ستون ها 
-    var DocAttachUri = serverTiket + '/api/Web_Data/DocAttach/'; // آدرس لیست پیوست 
-    //var DownloadAttachUri = serverTiket + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
-    var ErjSaveTicketUri = serverTiket + '/api/Web_Data/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
-
-    var ErjDocAttach_SaveUri = serverTiket + '/api/FileUpload/UploadFile/'; // ذخیره پیوست
-    var ErjDocAttach_DelUri = serverTiket + '/api/Web_Data/ErjDocAttach_Del/'; // حذف پیوست
 
     var serialNumberAttach = 0;
     var serialNumber = 0;
@@ -67,10 +39,9 @@
 
 
 
-    function getDateServer(server) {
-        var date;
+    function getDateServer() {
         if (server != null) {
-            var DateUri = server + '/api/Web_Data/Date/'; // آدرس  تاریخ سرور
+            var DateUri = server + '/api/KarbordData/Date/'; // آدرس  تاریخ سرور
             ajaxFunction(DateUri, 'GET').done(function (data) {
                 listDate = data[0].split("/");
                 DateNow = data[0];
@@ -79,8 +50,7 @@
         }
     }
 
-
-    getDateServer(serverTiket);
+    getDateServer();
 
 
     //Get ErjDocXK 
@@ -89,13 +59,13 @@
             LockNo: lockNumber,
             ModeCode: '204',
         }
-        ajaxFunction(ErjDocXKUri + aceTiket + '/' + salTiket + '/' + groupTiket + '/', 'Post', ErjDocXKObject).done(function (dataDocXK) {
+        ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
 
             var Object_TicketStatus = {
                 SerialNumber: ''
             }
-            ajaxFunction(TicketStatusUri + aceTiket + '/' + salTiket + '/' + groupTiket + '/', 'Post', Object_TicketStatus, false).done(function (dataTicketStatus) {
+            ajaxFunction(TicketStatusUri, 'Post', Object_TicketStatus, false).done(function (dataTicketStatus) {
 
                 for (var i = 0; i < dataDocXK.length; i++) {
 
@@ -116,30 +86,13 @@
 
 
 
-    /*self.getTicketStatus = function (serial) {
-        v = "";
-        var Object_TicketStatus = {
-            SerialNumber: serial,
-        }
-        ajaxFunction(TicketStatusUri + ace + '/' + sal + '/' + group + '/', 'Post', Object_TicketStatus,false).done(function (data) {
-            a = self.ErjDocXKList;
-            if (data == "")
-                v = ""
-            else
-                v = data[0].TicketStatusSt;
-        });
-        return v
-
-    }*/
-
-
     //Get DocAttach List
     function getDocAttachList(serial) {
         var DocAttachObject = {
             ProgName: 'ERJ1',
-            Group: groupTiket,
-            Year: salTiket,
             ModeCode: '102',
+            Group: group_Tiket,
+            Year:'0000',
             SerialNumber: serial,
             BandNo: 0,
             ByData: 0
@@ -180,6 +133,7 @@
     $('#AddNewErjDocXK').click(function () {
         $("#Result").val('');
         $("#motaghazi").val('');
+        $("#companyNameTiket").val(companyName);
         self.AddAttachList([]);
     })
 
@@ -221,7 +175,7 @@
             natijeh = 'به پیوست مراجعه شود';
 
         if (motaghazi == '')
-            return showNotification('متقاضی را وارد کنید', 0);
+            return showNotification('نام درخواست کننده را وارد کنید', 0);
 
 
         if (natijeh == '' && self.AddAttachList().length == 0)
@@ -257,7 +211,7 @@
                 F20: '',
                 Motaghazi: motaghazi,
             }
-            ajaxFunction(ErjSaveTicketUri + aceTiket + '/' + salTiket + '/' + groupTiket + '/', 'POST', ErjSaveTicket_HI).done(function (data) {
+            ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
                 serialNumber = data;
             });
 
@@ -299,7 +253,7 @@
             formData.append("FName", fileFullName);
             formData.append("Atch", file);
 
-            ajaxFunctionUploadTiket(ErjDocAttach_SaveUri + aceTiket + '/' + salTiket + '/' + groupTiket, formData, false).done(function (response) {
+            ajaxFunctionUploadTiket(ErjDocAttach_SaveUri, formData, false).done(function (response) {
 
             })
         });
@@ -429,9 +383,9 @@
 
         var DownloadAttachObject = {
             ProgName: 'Erj1',
-            Group: groupTiket,
-            Year: salTiket,
             ModeCode: '102',
+            Group: group_Tiket,
+            Year: '0000',
             SerialNumber: item.SerialNumber,
             BandNo: item.BandNo,
             ByData: 1
@@ -463,7 +417,7 @@
                     BandNo: Band.BandNo,
                 };
 
-                ajaxFunction(ErjDocAttach_DelUri + aceTiket + '/' + salTiket + '/' + groupTiket, 'POST', Web_DocAttach_Save).done(function (response) {
+                ajaxFunction(ErjDocAttach_DelUri , 'POST', Web_DocAttach_Save).done(function (response) {
                     getDocAttachList(serialNumber);
                     showNotification('پیوست حذف شد', 1);
                 });
@@ -522,7 +476,7 @@
                     formData.append("FName", fileFullName);
                     formData.append("Atch", file);
 
-                    ajaxFunctionUploadTiket(ErjDocAttach_SaveUri + aceTiket + '/' + salTiket + '/' + groupTiket, formData, true).done(function (response) {
+                    ajaxFunctionUploadTiket(ErjDocAttach_SaveUri, formData, true).done(function (response) {
                         getDocAttachList(serialNumber);
                     })
                 });
@@ -541,7 +495,7 @@
             ModeCode: '',
             BandNo: bandNoImput
         };
-        ajaxFunction(ErjDocAttach_DelUri + aceTiket + '/' + salTiket + '/' + groupTiket, 'POST', Web_DocAttach_Del).done(function (response) {
+        ajaxFunction(ErjDocAttach_DelUri, 'POST', Web_DocAttach_Del).done(function (response) {
         });
     };
 

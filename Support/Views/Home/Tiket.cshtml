@@ -68,7 +68,7 @@
                     <span>توضیحات</span>
                 </th>
                 <th class="notApp">
-                    <span>متقاضی</span>
+                    <span>نام درخواست کننده</span>
                 </th>
                 <th style="border-radius: 20px 0 0 20px;">عملیات</th>
             </tr>
@@ -81,7 +81,7 @@
                 <td data-bind="text: DocDate"></td>
                 <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
                 <td data-bind="text: Text" style="width:40%" class="ellipsis"></td>
-                <td data-bind="text: Motaghazi"class="notApp" ></td>
+                <td data-bind="text: Motaghazi" class="notApp"></td>
                 <td style="border-radius: 30px 0 0 30px;">
                     <!--<a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">-->
                     <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">
@@ -92,333 +92,342 @@
         </tbody>
     </table>
 </div>
-    <!--
+<!--
 
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="header">
-                    <div class="form-inline focused">
-                        <strong style="margin-left: 5px; margin-right: 5px;font-size: 15px;">لیست تیکت های پشتیبانی</strong>
-                        <div class="row header-dropdown m-r--5">
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="form-inline focused">
+                    <strong style="margin-left: 5px; margin-right: 5px;font-size: 15px;">لیست تیکت های پشتیبانی</strong>
+                    <div class="row header-dropdown m-r--5">
 
-                            <a id="refreshErjDocXK" class="">
-                                <img src="~/Content/img/list/streamline-icon-synchronize-arrows-1@48x48.png" width="20" height="20" style="margin-left: 10px;" />
-                            </a>
-                            <a id="AddNewErjDocXK" data-bind="click: $root.AddNewDocH" class="dropdown-toggle" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modal-ErjDocXK"> <img src="~/Content/img/list/streamline-icon-add-circle-alternate@48x48.png" width="20" height="20" /> </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="body">
-
-
-                    <div id="TableList" style="height:400px;overflow:auto;border: 1px #ddd solid;" class="table-responsive-md tableFix">
-                        <table class="table table-hover">
-                            <thead style="cursor: pointer;">
-                                <tr data-bind="click: sortTableErjDocXK">
-                                    <th>ردیف</th>
-                                    <th data-column="DocNo">
-                                        <span data-column="DocNo">شماره</span>
-                                        <span data-bind="attr: { class: currentColumn() == 'DocNo' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                                            <i data-bind="attr: { class: iconTypeDocNo }" data-column="DocNo" class=""></i>
-                                        </span>
-                                    </th>
-                                    <th data-column="DocDate">
-                                        <span data-column="DocDate">تاریخ</span>
-                                        <span data-bind="attr: { class: currentColumn() == 'DocDate' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                                            <i data-bind="attr: { class: iconTypeDocDate }" data-column="DocDate" class=""></i>
-                                        </span>
-                                    </th>
-                                    <th data-column="Status">
-                                        <span data-column="Status">وضعیت</span>
-                                        <span data-bind="attr: { class: currentColumn() == 'Status' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                                            <i data-bind="attr: { class: iconTypeStatus }" data-column="Status" class=""></i>
-                                        </span>
-                                    </th>
-                                    <th data-column="Text">
-                                        <span data-column="Text">توضیحات</span>
-                                        <span data-bind="attr: { class: currentColumn() == 'Text' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                                            <i data-bind="attr: { class: iconTypeText }" data-column="Text" class=""></i>
-                                        </span>
-                                    </th>
-                                    <th data-column="Motaghazi">
-                                        <span data-column="Motaghazi">متقاضی</span>
-                                        <span data-bind="attr: { class: currentColumn() == 'Motaghazi' ? 'isVisible' : 'isHidden' }" class="isHidden">
-                                            <i data-bind="attr: { class: iconTypeMotaghazi }" data-column="Motaghazi" class=""></i>
-                                        </span>
-                                    </th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody data-bind="foreach: currentPageErjDocXK" style="cursor: default;">
-                                <tr>
-                                    <td data-bind="text: $root.radif($index())" style="background-color: #d9d9d9;"></td>
-                                    <td data-bind="text: DocNo"></td>
-                                    <td data-bind="text: DocDate"></td>
-                                    <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
-                                    <td data-bind="text: Text" style="width:40%"></td>
-                                    <td data-bind="text: Motaghazi"></td>
-                                    <td>
-                                        <a data-bind="visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="dropdown" style="padding:10px" aria-expanded="false">
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(50px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                            <li>
-                                                <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">
-                                                    پیوست
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr style="background-color: #efb68399;">
-                                    <td style="background-color: #efb683;"></td>
-                                    <td style="padding: 0px 3px;"><input data-bind="value: filterDocNo, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_7 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"></td>
-                                    <td style="padding: 0px 3px;"><input data-bind="value: filterDocDate, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_3 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
-                                    <td style="padding: 0px 3px;"><input data-bind="value: filterStatus, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_1 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
-                                    <td style="padding: 0px 3px;"><input data-bind="value: filterText, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_1 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
-                                    <td style="padding: 0px 3px;"><input data-bind="value: filterMotaghazi, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_1 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
-                                    <td style="background-color: #efb683;"></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    -->
-    <div class="modal fade" id="modal-SettingColumn" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">تنظیم ستون ها</h4>
-                    <a id=""></a>
-                </div>
-                <div class="modal-body">
-                    <div style="height:500px;overflow:auto;border: 1px #ddd solid;">
-                        <table class="table table-addmin">
-                            <thead style="cursor: pointer;">
-                                <tr>
-                                    <td>ردیف</td>
-                                    <td style="width:250px;"> نام ستون</td>
-                                    <td style="text-align: left;padding: 0px 10px 0px 10px;">
-                                        <label for="AllSettingColumns">انتخاب همه</label>
-                                        <input id="AllSettingColumns" type="checkbox" />
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody id="TableColumn"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div style="padding: 0px; margin: 10px;">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button type="button" id="DefultColumn" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;">
-                                پیش فرض
-                            </button>
-                        </div>
-                        <div class="col-md-6">
-                            <button type="button" id="SaveColumns" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;">
-                                تایید
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="modal fade" id="modal-ErjDocXK" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-        <div class="modal-dialog modal-entesab" style="max-width:980px">
-            <div class="modal-content">
-                <div class="modal-header" style="padding-bottom: 0px;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-
-                    <h4 class="modal-title">ثبت تیکت جدید</h4>
-                    <div>
-                        <a id="attachFile" class="dropdown-toggle" style="margin-left: 10px;">
-                            <img src="~/Content/img/Icon_Blue/attach.png" width="20" height="20">
+                        <a id="refreshErjDocXK" class="">
+                            <img src="~/Content/img/list/streamline-icon-synchronize-arrows-1@48x48.png" width="20" height="20" style="margin-left: 10px;" />
                         </a>
-
+                        <a id="AddNewErjDocXK" data-bind="click: $root.AddNewDocH" class="dropdown-toggle" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modal-ErjDocXK"> <img src="~/Content/img/list/streamline-icon-add-circle-alternate@48x48.png" width="20" height="20" /> </a>
                     </div>
                 </div>
+            </div>
+            <div class="body">
 
-                <div class="modal-body">
-                    <div class="form-group" style="margin-bottom: 0.5rem;">
-                        <div class="cardErj">
-                            <div class="header" style="background-color: #082b44;padding: 10px;margin: 10px;">
-                                <div class="row form-inline modal-header" style="padding:0px;">
-                                    <center> <h6 style="color:white">متن تیکت</h6></center>
-                                </div>
-                            </div>
-                            <div class="body" style="padding:10px;">
-                                <div class="form-group" style="margin-bottom: 0.5rem;">
-                                    <div class="form-line">
-                                        <textarea rows="25" id="Result" class="form-control no-resize auto-growth string"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                <div id="TableList" style="height:400px;overflow:auto;border: 1px #ddd solid;" class="table-responsive-md tableFix">
+                    <table class="table table-hover">
+                        <thead style="cursor: pointer;">
+                            <tr data-bind="click: sortTableErjDocXK">
+                                <th>ردیف</th>
+                                <th data-column="DocNo">
+                                    <span data-column="DocNo">شماره</span>
+                                    <span data-bind="attr: { class: currentColumn() == 'DocNo' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                                        <i data-bind="attr: { class: iconTypeDocNo }" data-column="DocNo" class=""></i>
+                                    </span>
+                                </th>
+                                <th data-column="DocDate">
+                                    <span data-column="DocDate">تاریخ</span>
+                                    <span data-bind="attr: { class: currentColumn() == 'DocDate' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                                        <i data-bind="attr: { class: iconTypeDocDate }" data-column="DocDate" class=""></i>
+                                    </span>
+                                </th>
+                                <th data-column="Status">
+                                    <span data-column="Status">وضعیت</span>
+                                    <span data-bind="attr: { class: currentColumn() == 'Status' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                                        <i data-bind="attr: { class: iconTypeStatus }" data-column="Status" class=""></i>
+                                    </span>
+                                </th>
+                                <th data-column="Text">
+                                    <span data-column="Text">توضیحات</span>
+                                    <span data-bind="attr: { class: currentColumn() == 'Text' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                                        <i data-bind="attr: { class: iconTypeText }" data-column="Text" class=""></i>
+                                    </span>
+                                </th>
+                                <th data-column="Motaghazi">
+                                    <span data-column="Motaghazi">نام درخواست کننده</span>
+                                    <span data-bind="attr: { class: currentColumn() == 'Motaghazi' ? 'isVisible' : 'isHidden' }" class="isHidden">
+                                        <i data-bind="attr: { class: iconTypeMotaghazi }" data-column="Motaghazi" class=""></i>
+                                    </span>
+                                </th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: currentPageErjDocXK" style="cursor: default;">
+                            <tr>
+                                <td data-bind="text: $root.radif($index())" style="background-color: #d9d9d9;"></td>
+                                <td data-bind="text: DocNo"></td>
+                                <td data-bind="text: DocDate"></td>
+                                <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
+                                <td data-bind="text: Text" style="width:40%"></td>
+                                <td data-bind="text: Motaghazi"></td>
+                                <td>
+                                    <a data-bind="visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="dropdown" style="padding:10px" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(50px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <li>
+                                            <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">
+                                                پیوست
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background-color: #efb68399;">
+                                <td style="background-color: #efb683;"></td>
+                                <td style="padding: 0px 3px;"><input data-bind="value: filterDocNo, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_7 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"></td>
+                                <td style="padding: 0px 3px;"><input data-bind="value: filterDocDate, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_3 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
+                                <td style="padding: 0px 3px;"><input data-bind="value: filterStatus, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_1 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
+                                <td style="padding: 0px 3px;"><input data-bind="value: filterText, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_1 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
+                                <td style="padding: 0px 3px;"><input data-bind="value: filterMotaghazi, valueUpdate: 'afterkeydown', event:{ keydown : $root.SearchKeyDown }" type="text" class="type_1 form-control" style="height: 2.4rem;direction: ltr;text-align: right;"> </td>
+                                <td style="background-color: #efb683;"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+-->
+<div class="modal fade" id="modal-SettingColumn" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">تنظیم ستون ها</h4>
+                <a id=""></a>
+            </div>
+            <div class="modal-body">
+                <div style="height:500px;overflow:auto;border: 1px #ddd solid;">
+                    <table class="table table-addmin">
+                        <thead style="cursor: pointer;">
+                            <tr>
+                                <td>ردیف</td>
+                                <td style="width:250px;"> نام ستون</td>
+                                <td style="text-align: left;padding: 0px 10px 0px 10px;">
+                                    <label for="AllSettingColumns">انتخاب همه</label>
+                                    <input id="AllSettingColumns" type="checkbox" />
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="TableColumn"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="padding: 0px; margin: 10px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" id="DefultColumn" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;">
+                            پیش فرض
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" id="SaveColumns" class="btn btn-primary btn-block" style="background-color: #eb8121 !important;">
+                            تایید
+                        </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modal-ErjDocXK" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+    <div class="modal-dialog modal-entesab" style="max-width:980px">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-bottom: 0px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+
+                <h4 class="modal-title">ثبت تیکت جدید</h4>
                 <div>
-                    <div class="row  form-inline ">
-                        <div class="col-sm-3">
-                            <div class="form-group form-float">
-                                <div class="form-line focused fix">
-                                    <input id="motaghazi" class="form-control">
-                                    <label class="form-label active">متقاضی</label>
+                    <a id="attachFile" class="dropdown-toggle" style="margin-left: 10px;">
+                        <img src="~/Content/img/Icon_Blue/attach.png" width="20" height="20">
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                    <div class="cardErj">
+                        <div class="header" style="background-color: #082b44;padding: 10px;margin: 10px;">
+                            <div class="row form-inline modal-header" style="padding:0px;">
+                                <center> <h6 style="color:white">متن تیکت</h6></center>
+                            </div>
+                        </div>
+                        <div class="body" style="padding:10px;">
+                            <div class="form-group" style="margin-bottom: 0.5rem;">
+                                <div class="form-line">
+                                    <textarea rows="25" id="Result" class="form-control no-resize auto-growth string"></textarea>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md pull-left">
-                            <a id="saveErjDocXK" class="btn btn-warning B_Main col-md-6" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left">ارسال تیکت</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row  form-inline ">
+                    <div class="col-sm-3">
+                        <div class="form-group form-float">
+                            <div class="form-line focused fix">
+                                <input id="companyNameTiket" class="form-control" readonly>
+                                <label class="form-label active">نام شرکت</label>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group form-float">
+                            <div class="form-line focused fix">
+                                <input id="motaghazi" class="form-control">
+                                <label class="form-label active">نام درخواست کننده</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md pull-left">
+                        <a id="saveErjDocXK" class="btn btn-warning B_Main col-md-6" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left">ارسال تیکت</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
-    <div class="modal fade" id="modal-DocAttach" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">پیوست</h4>
+<div class="modal fade" id="modal-DocAttach" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">پیوست</h4>
 
-                    <div>
-                        <a id="refreshDocAttach">
-                            <img src="~/Content/img/Icon_Blue/refresh.png" width="20" height="20" style="margin-left: 10px;" />
-                        </a>
+                <div>
+                    <a id="refreshDocAttach">
+                        <img src="~/Content/img/Icon_Blue/refresh.png" width="20" height="20" style="margin-left: 10px;" />
+                    </a>
 
-                        <!--<input id="upload" type="file" style="display:none" data-bind="event: {change: $root.fileUpload}" />
-                        <a id="AddNewDocAttach">
-                            <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
-                        </a>-->
-
-                    </div>
-
+                    <!--<input id="upload" type="file" style="display:none" data-bind="event: {change: $root.fileUpload}" />
+                    <a id="AddNewDocAttach">
+                        <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
+                    </a>-->
 
                 </div>
-                <div class="modal-body">
+
+
+            </div>
+            <div class="modal-body">
 
 
 
-                    <br />
-                    <div style="height:400px;overflow:auto;border: 1px #ddd solid;">
-                        <table class="table table-hover table-striped tableFixList">
-                            <thead style="cursor: pointer;">
-                                <tr>
-                                    <th style="width: 10px;">ردیف</th>
-                                    <th style="text-align: center;">
-                                        شرح
-                                    </th>
-                                    <th style="width:1px;"></th>
-                                </tr>
-                            </thead>
-                            <tbody data-bind="foreach: DocAttachList" style="cursor: default;">
-                                <tr>
-                                    <td data-bind="text: $index() + 1" style="background-color: #d9d9d9;font-size: 14px;"></td>
-                                    <td data-bind="text: Comm" style="font-size: 14px;"></td>
-                                    <td>
-                                        <a data-bind="click: $root.selectDocAttach">
-                                            <img src="~/Content/img/Icon_Blue/Download.png" width="28" style="margin-left:10px" />
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-
-
-
-
+                <br />
+                <div style="height:400px;overflow:auto;border: 1px #ddd solid;">
+                    <table class="table table-hover table-striped tableFixList">
+                        <thead style="cursor: pointer;">
+                            <tr>
+                                <th style="width: 10px;">ردیف</th>
+                                <th style="text-align: center;">
+                                    شرح
+                                </th>
+                                <th style="width:1px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: DocAttachList" style="cursor: default;">
+                            <tr>
+                                <td data-bind="text: $index() + 1" style="background-color: #d9d9d9;font-size: 14px;"></td>
+                                <td data-bind="text: Comm" style="font-size: 14px;"></td>
+                                <td>
+                                    <a data-bind="click: $root.selectDocAttach">
+                                        <img src="~/Content/img/Icon_Blue/Download.png" width="28" style="margin-left:10px" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+
+
+
+
+
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="modal fade" id="modal-DocAttachSend" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">پیوست</h4>
-                    <div>
-                        <input id="AddFiles" type="file" style="display:none" data-bind="event: {change: $root.AddFile}" />
-                        <a id="AddAttachs">
-                            <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
-                        </a>
-                    </div>
+<div class="modal fade" id="modal-DocAttachSend" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">پیوست</h4>
+                <div>
+                    <input id="AddFiles" type="file" style="display:none" data-bind="event: {change: $root.AddFile}" />
+                    <a id="AddAttachs">
+                        <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
+                    </a>
                 </div>
-                <div class="modal-body">
-                    <br />
-                    <div style="height:400px;overflow:auto;border: 1px #ddd solid;">
-                        <table class="table table-hover table-striped tableFixList">
-                            <thead style="cursor: pointer;">
-                                <tr>
-                                    <th style="text-align: center;">شرح</th>
-                                    <th style="text-align: center;">عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bodyDocAttach0" data-bind="foreach: AddAttachList" style="cursor: default;">
-                                <tr>
-                                    <td data-bind="text: name"></td>
-                                    <td>
-                                        <a data-bind="click: $root.DelAddAttach">
-                                            <img src="~/Content/img/Icon_Blue/delete.png" width="28" style="margin-left:10px" />
-                                        </a>
-                                    </td>
-                                </tr>
+            </div>
+            <div class="modal-body">
+                <br />
+                <div style="height:400px;overflow:auto;border: 1px #ddd solid;">
+                    <table class="table table-hover table-striped tableFixList">
+                        <thead style="cursor: pointer;">
+                            <tr>
+                                <th style="text-align: center;">شرح</th>
+                                <th style="text-align: center;">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyDocAttach0" data-bind="foreach: AddAttachList" style="cursor: default;">
+                            <tr>
+                                <td data-bind="text: name"></td>
+                                <td>
+                                    <a data-bind="click: $root.DelAddAttach">
+                                        <img src="~/Content/img/Icon_Blue/delete.png" width="28" style="margin-left:10px" />
+                                    </a>
+                                </td>
+                            </tr>
 
-                     
+
 
                             <!-- <a id="DelAllAttach" style="margin-left: 10px;"><img src="~/Content/img/Icon_Blue/delete.png" width="20" height="20"></a>-->
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
 
 
-    @section scripts{
-        <script src="~/Content/js/jszip.min.js"></script>
-        <script src="~/Scripts/Tiket.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
-    }
+@section scripts{
+    <script src="~/Content/js/jszip.min.js"></script>
+    <script src="~/Scripts/Tiket.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
 
 
 

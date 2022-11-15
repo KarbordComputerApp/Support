@@ -1,11 +1,11 @@
 ﻿var server = 'http://localhost:52798';
 //var server = 'http://192.168.0.114:1000';
 
-var serverAccount = 'http://127.0.0.1:902/api/';
+//var serverAccount = 'http://127.0.0.1:902/api/';
 //var serverAccount = 'http://192.168.0.114:902/api/';
 
 
-var AccountUri = serverAccount + 'Account/'; // آدرس حساب
+//var AccountUri = serverAccount + 'Account/'; // آدرس حساب
 
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");

@@ -1,52 +1,32 @@
 ﻿var ViewModel = function () {
     var self = this;
-    var serverAddress;
-    var aceCustAccount = "Web8";
-    var salCustAccount = "0000";
-    var groupCustAccount;
+    var group_CustAccount = localStorage.getItem("Group_CustAccount");
+
     var loginAccount = "NRlhOcngQl7BwNOhU104";
     $("#Index_TextLogo").text('صورتحساب های من');
 
-    if (lockNumber == null) {
+    if (lockNumber == null || group_CustAccount == null) {
         window.location.href = localStorage.getItem("urlLogin");
     }
-
-    function getAccountDataCustAccount(lock) {
-        ajaxFunctionAccount(AccountUri + custAccountUser + '/' + custAccountPass, 'GET').done(function (data) {
-            if (data === 0) {
-                return showNotification(' اطلاعات لینک پرداخت یافت نشد ', 0);
-            }
-            else {
-                serverAddress = data.AddressApi;
-                groupCustAccount = data.AFI8_Group;
-                localStorage.setItem("groupCustAccount", data.AFI8_Group);
-                localStorage.setItem("ApiAddressCustAccount", serverAddress);
-            }
-        });
-    }
-
-    getAccountDataCustAccount(lockNumber);
 
 
     self.CustAccountList = ko.observableArray([]); // لیست گزارش  
     self.FDocP_CustAcountList = ko.observableArray([]); // لیست چاپ  
 
-    var CustAccountUri = serverAddress + '/api/Web_Data/CustAccount/'; // آدرس فاکتور ها  
-    var FDocP_CustAcountUri = serverAddress + '/api/Web_Data/FDocP_CustAcount/'; // آدرس چاپ فاکتور   
-    var SalePaymentUri = serverAddress + '/api/Shaparak/SalePayment'; // آدرس پرداخت  
-    var PaymentConfirmUri = serverAddress + '/api/Shaparak/PaymentConfirm'; // آدرس تایید پرداخت  
-    var CustAccountSaveUri = serverAddress + "/api/Web_Data/CustAccountSave/"; // آدرس ذخیره لینک پرداخت 
-    var DocAttachUri = serverAddress + '/api/Web_Data/DocAttach/'; // آدرس لیست پیوست 
-    //var DownloadAttachUri = serverAddress + '/api/Web_Data/DownloadAttach/'; // آدرس  دانلود پیوست 
+    var CustAccountUri = server + '/api/KarbordData/CustAccount/'; // آدرس فاکتور ها  
+    var FDocP_CustAcountUri = server + '/api/KarbordData/FDocP_CustAcount/'; // آدرس چاپ فاکتور   
+    var SalePaymentUri = server + '/api/Shaparak/SalePayment'; // آدرس پرداخت  
+    var CustAccountSaveUri = server + "/api/KarbordData/CustAccountSave/"; // آدرس ذخیره لینک پرداخت 
+    var DocAttachUri = server + '/api/KarbordData/DocAttach/'; // آدرس لیست پیوست 
 
 
 
     createViewer();
 
-    function getDateServer(server) {
+    function getDateServer() {
         var date;
         if (server != null) {
-            var DateUri = server + '/api/Web_Data/Date/'; // آدرس  تاریخ سرور
+            var DateUri = server + '/api/KarbordData/Date/'; // آدرس  تاریخ سرور
             ajaxFunction(DateUri, 'GET').done(function (data) {
                 listDate = data[0].split("/");
                 DateNow = data[0];
@@ -56,13 +36,13 @@
     }
 
 
-    getDateServer(serverAddress);
+    getDateServer();
 
     function getCustAccount() {
         var CustAccountObject = {
             LockNo: lockNumber,
         }
-        ajaxFunction(CustAccountUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount + '/', 'Post', CustAccountObject).done(function (data) {
+        ajaxFunction(CustAccountUri , 'Post', CustAccountObject).done(function (data) {
             self.CustAccountList(data)
         });
     }
@@ -115,7 +95,7 @@
                     'OnlineParLink': uriPay,
                     'DownloadCount': null,
                 }
-                ajaxFunction(CustAccountSaveUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount, 'Post', CustAccountSaveObject).done(function (dataSave) {
+                ajaxFunction(CustAccountSaveUri, 'Post', CustAccountSaveObject).done(function (dataSave) {
                     getCustAccount();
                 });
 
@@ -146,7 +126,7 @@
 
         var DocAttachObject = {
             ProgName: 'FCT5',
-            Group: groupCustAccount,
+            Group: group_CustAccount,
             Year: list.Year,
             ModeCode: '2',
             SerialNumber: list.SerialNumber,
@@ -166,7 +146,7 @@
 
                     var DownloadAttachObject = {
                         ProgName: 'FCT5',
-                        Group: groupCustAccount,
+                        Group: group_CustAccount,
                         Year: list.Year,
                         ModeCode: '2',
                         SerialNumber: item.SerialNumber,
@@ -193,10 +173,11 @@
 
     function getFDocP_CustAcount(year, serial) {
         var FDocP_CustAcountObject = {
+            LockNumber: lockNumber,
             Year: year,
             SerialNumber: serial
         }
-        ajaxFunction(FDocP_CustAcountUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount + '/', 'Post', FDocP_CustAcountObject, false).done(function (data) {
+        ajaxFunction(FDocP_CustAcountUri , 'Post', FDocP_CustAcountObject, false).done(function (data) {
             self.FDocP_CustAcountList(data)
         });
     }
@@ -219,7 +200,7 @@
             if (result.value) {
                 printVariable = '"ReportDate":"' + DateNow + '",';
                 getFDocP_CustAcount(list.DocDate.substring(0, 4), list.SerialNumber);
-                setReport(self.FDocP_CustAcountList(), '/Content/Report/SFCT.json?10', printVariable);
+                setReport(self.FDocP_CustAcountList(), '/Content/Report/SFCT.html?12', printVariable);
 
                 var CustAccountSaveObject = {
                     'Year': list.Year,//list.DocDate.substring(0, 4),
@@ -227,7 +208,7 @@
                     'OnlineParLink': null,
                     'DownloadCount': count,
                 }
-                ajaxFunction(CustAccountSaveUri + aceCustAccount + '/' + salCustAccount + '/' + groupCustAccount, 'Post', CustAccountSaveObject).done(function (dataSave) {
+                ajaxFunction(CustAccountSaveUri, 'Post', CustAccountSaveObject).done(function (dataSave) {
                     getCustAccount();
                 });
             }

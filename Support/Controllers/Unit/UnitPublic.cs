@@ -9,13 +9,14 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Support.Controllers.Unit;
+using Support.Models;
 
 namespace Support.Controllers.Unit
 {
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "53";
+        public static string titleVerNumber = "54";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1001";
@@ -24,6 +25,46 @@ namespace Support.Controllers.Unit
         public static IniFile MyIniServer;
         public static string apiAddress;
         public static char[] afiAccess;
+
+
+        static string IniPath = HttpContext.Current.Server.MapPath("~/Content/ini/ServerConfig.Ini");
+
+        static IniFile MyIni = new IniFile(IniPath);
+
+        public static string sql_Name_Ticket = MyIni.Read("SqlServerName", "TicketDatabase");
+        public static string sql_DatabaseName_Ticket = MyIni.Read("DatabaseName", "TicketDatabase");
+        public static string sql_UserName_Ticket = MyIni.Read("SqlUserName", "TicketDatabase");
+        public static string sql_Password_Ticket = MyIni.Read("SqlPassword", "TicketDatabase");
+
+        public static string sql_Group_Ticket = sql_DatabaseName_Ticket.Substring(8, 2);
+
+        public static string ConnectionString_Ticket = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
+                                                       sql_Name_Ticket, sql_DatabaseName_Ticket, sql_UserName_Ticket, sql_Password_Ticket);
+
+        public static string sql_Name_CustAccount = MyIni.Read("SqlServerName", "CustAccountDatabase");
+        public static string sql_DatabaseName_CustAccount = MyIni.Read("DatabaseName", "CustAccountDatabase");
+        public static string sql_UserName_CustAccount = MyIni.Read("SqlUserName", "CustAccountDatabase");
+        public static string sql_Password_CustAccount = MyIni.Read("SqlPassword", "CustAccountDatabase");
+
+        public static string sql_Group_CustAccount = sql_DatabaseName_CustAccount.Substring(8, 2);
+
+        public static string ConnectionString_CustAccount = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
+                                                           sql_Name_CustAccount, sql_DatabaseName_CustAccount, sql_UserName_CustAccount, sql_Password_CustAccount);
+
+        public static string ConnectionString_Config = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
+                                                       sql_Name_Ticket, "Ace_WebConfig", sql_UserName_Ticket, sql_Password_Ticket);
+
+
+
+
+        public static void SaveLog(int lockNumber, int mode, int act, long serialNumber)
+        {
+            SupportModel dbSupport = new SupportModel();
+            string sql = string.Format(@"insert into Log_Data (lockNumber,idact,idmode,serialnumber) values ({0},{1},{2},{3}) select 0",
+                                         lockNumber, act, mode, serialNumber);
+            int res = dbSupport.Database.SqlQuery<int>(sql).Single();
+        }
+
 
         public class listDatabase
         {
@@ -96,6 +137,23 @@ namespace Support.Controllers.Unit
 
             return true;
 
+        }
+
+
+        public static string ConvertTextWebToWin(string text)
+        {
+            int i = 0;
+            string data = "";
+            string[] splitted = text.Split('\n');
+            foreach (string substring in splitted)
+            {
+                i++;
+                if (i <= splitted.Count() - 1)
+                    data += substring + (char)(13) + (char)(10);
+                else
+                    data += substring;
+            }
+            return data;
         }
 
     }

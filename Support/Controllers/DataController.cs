@@ -34,6 +34,25 @@ namespace Support.Controllers
         }
 
 
+        public const int mode_CustomerFiles = 1;
+        public const int mode_UploadFiles = 2;
+        public const int mode_FinancialDocuments = 3;
+        public const int mode_Tiket = 4;
+        public const int mode_CustAccount = 5;
+        public const int mode_MailBox = 6;
+        public const int mode_Login = 7;
+
+
+
+        public const int act_Login = 1;
+        public const int act_New = 2;
+        public const int act_View = 3;
+        public const int act_Print = 4;
+        public const int act_Download = 5;
+        public const int act_ChangePass = 6;
+
+
+
         public class LoginObject
         {
             public int LockNumber { get; set; }
@@ -46,6 +65,12 @@ namespace Support.Controllers
         {
             string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", LoginObject.LockNumber, EncodePassword(LoginObject.Pass));
             var list = db.Database.SqlQuery<Users>(sql).ToList();
+
+            if (list.Count > 0)
+            {
+                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0);
+            }
+
             return Ok(list);
         }
 
@@ -72,6 +97,12 @@ namespace Support.Controllers
                 sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 0 where (LockNumber = {1} and Password = '{2}') select 1", EncodePassword(ChangePasswordObject.NewPass), ChangePasswordObject.LockNumber, EncodePassword(ChangePasswordObject.OldPass));
                 res = db.Database.SqlQuery<int>(sql).Single();
             }
+
+            if (res == 1)
+            {
+                UnitPublic.SaveLog(ChangePasswordObject.LockNumber, mode_Login, act_ChangePass, 0);
+            }
+
             return Ok(res);
         }
 
@@ -125,10 +156,6 @@ namespace Support.Controllers
         }
 
 
-
-
-
-
         public class FinancialDocumentsObject
         {
             public int LockNumber { get; set; }
@@ -140,10 +167,10 @@ namespace Support.Controllers
         {
             string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
             var list = db.Database.SqlQuery<FinancialDocuments>(sql).ToList();
+
+            UnitPublic.SaveLog(FinancialDocumentsObject.LockNumber, mode_FinancialDocuments, act_View, 0);
             return Ok(list);
         }
-
-
 
 
         public class CustomerFilesObject
@@ -158,10 +185,9 @@ namespace Support.Controllers
             string sql = string.Format(@"select *,(select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload 
                                          from CustomerFiles as c where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
+            UnitPublic.SaveLog(CustomerFilesObject.LockNumber, mode_CustomerFiles, act_View, 0);
             return Ok(list);
         }
-
-
 
 
         [Route("api/Data/CustomerFilesCount/")]
@@ -215,6 +241,9 @@ namespace Support.Controllers
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
             response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
+
+            UnitPublic.SaveLog(lockNo, mode_FinancialDocuments, act_Download, 0);
+
             return response;
         }
 
@@ -266,8 +295,64 @@ namespace Support.Controllers
             var list1 = db.Database.SqlQuery<int>(sql).Single();
             db.SaveChanges();
 
+            UnitPublic.SaveLog(lockNo, mode_CustomerFiles, act_Download, 0);
+
             return response;
         }
+
+
+
+
+
+        public class TTMS
+        {
+            public string FilePath { get; set; }
+
+        }
+        [HttpGet]
+        [Route("api/Data/TTMSDownload/")]
+
+        public HttpResponseMessage TTMSDownload()
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+
+            string path = GetPath(2);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string sql = string.Format(@"select top(1) filepath from CustomerFiles where FilePath like '%TTMS%' order by id desc");
+            var list = db.Database.SqlQuery<TTMS>(sql).ToList();
+
+            string fullFileName = MergePaths(path, list[0].FilePath);
+
+            FileInfo f = new FileInfo(fullFileName);
+            string fullname = f.DirectoryName;
+
+
+            string[] files = Directory.GetFiles(fullname, f.Name);
+
+            if (!File.Exists(files[0]))
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
+                throw new HttpResponseException(response);
+            }
+            
+
+
+            byte[] bytes = File.ReadAllBytes(files[0].ToString());
+
+            response.Content = new ByteArrayContent(bytes);
+            response.Content.Headers.ContentLength = bytes.LongLength;
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = f.Name;
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
+
+            return response;
+        }
+
+
+
 
 
         [HttpGet]
@@ -306,9 +391,6 @@ namespace Support.Controllers
         }
 
 
-
-
-
         [Route("api/Data/UploadFile/")]
         public async Task<IHttpActionResult> UploadFile()
         {
@@ -327,12 +409,12 @@ namespace Support.Controllers
             if (!Directory.Exists(pathtemp))
                 Directory.CreateDirectory(pathtemp);
 
-
-
             int lenght = Atch.ContentLength;
             byte[] filebyte = new byte[lenght];
             Atch.InputStream.Read(filebyte, 0, lenght);
             File.WriteAllBytes(pathtemp + "\\" + Atch.FileName, filebyte);
+
+            
             return Ok("Ok");
         }
 
@@ -373,10 +455,10 @@ namespace Support.Controllers
 
             File.WriteAllText(string.Format("{0}\\{1}.txt", fullPath, FinalUploadFileObject.LockNumber), FinalUploadFileObject.Desc, System.Text.Encoding.UTF8);
 
+            UnitPublic.SaveLog(FinalUploadFileObject.LockNumber, mode_UploadFiles, act_New, 0);
             return Ok("Ok");
 
         }
-
 
 
         public partial class Message
@@ -402,11 +484,6 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Message>(sql).ToList(); // db.Access.First(c => c.UserName == userName && c.Password == password);
             return Ok(list);
         }
-
-
-
-
-
 
 
 
@@ -451,49 +528,38 @@ namespace Support.Controllers
                                          order by date desc , id desc", MailBoxObject.Mode, MailBoxObject.LockNumber);
 
             var list = db.Database.SqlQuery<MailBox>(sql).ToList();
+
+            UnitPublic.SaveLog(Int32.Parse(MailBoxObject.LockNumber), mode_MailBox, act_View, 0);
+
             return Ok(list);
         }
 
 
-        /*
-        public class InsertMailBoxObject
+        public class ReadMailBoxObject
         {
 
-            public byte Mode { get; set; }
+            public long Id { get; set; }
 
-            public string LockNumber { get; set; }
-
-            public string Date { get; set; }
-
-            public string Title { get; set; }
-
-            public string Body { get; set; }
-
-            public string NameFile { get; set; }
-
-            public string UserCode { get; set; }
+            public string ReadSt { get; set; }
 
         }
 
 
-        // Post: api/Data/MailBox
-        [Route("api/Data/InsertMailBox/")]
-        public async Task<IHttpActionResult> PostWeb_InsertMailBox(InsertMailBoxObject InsertMailBoxObject)
+        // Post: api/Data/ReadMailBox
+        [Route("api/Data/ReadMailBox/")]
+        public async Task<IHttpActionResult> PostWeb_ReadMailBox(ReadMailBoxObject ReadMailBoxObject)
         {
-            string sql = string.Format("INSERT INTO MailBox (mode,locknumber,date,title,body,namefile)VALUES({0},N'{1}',N'{2}',N'{3}',N'{4}',N'{5}')",
-                                      InsertMailBoxObject.Mode,
-                                      InsertMailBoxObject.LockNumber,
-                                      InsertMailBoxObject.Date,
-                                      InsertMailBoxObject.Title,
-                                      InsertMailBoxObject.Body,
-                                      InsertMailBoxObject.NameFile);
-            var list = db.Database.SqlQuery<MailBox>(sql).ToList();
+            string sql = string.Format("update MailBox set readst = '{0}' where id = {1} select 1",
+                                        ReadMailBoxObject.ReadSt,
+                                        ReadMailBoxObject.Id);
+
+            int list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
             return Ok(list);
         }
-        */
 
-        // get: api/Data/DeleteMailBox
+
+ /*       // get: api/Data/DeleteMailBox
         [Route("api/Data/DeleteMailBox/{lockNumber}/{id}")]
         public async Task<IHttpActionResult> GetWeb_DeleteMailBox(string lockNumber, long id)
         {
@@ -503,81 +569,6 @@ namespace Support.Controllers
             return Ok(list);
         }
 
-
-
-
-
-        /*   [Route("api/Data/UploadFileMailBox/{LockNumber}")]
-           public async Task<IHttpActionResult> UploadFileMailBox(string LockNumber)
-           {
-               var folder = "C://App//Upload//" + LockNumber + "//";
-               //var folder = "C://Test//App//Upload//" + LockNumber + "//";
-               if (!Directory.Exists(folder))
-               {
-                   Directory.CreateDirectory(folder);
-               }
-
-               //var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
-               //var req = HttpContext.Current.Request;
-               //var file = req.Files[req.Files.Keys.Get(0)];
-
-               var httpRequest = HttpContext.Current.Request.Files[0];
-
-               var fname = httpRequest.FileName.Replace(" ", "");
-               var name = fname.Split('.');
-
-               string tempName = name[0] + "-" + DateTime.Now.ToString("yyMMddHHmmss") + "." + name[1];
-               var filePath = folder + tempName;
-               httpRequest.SaveAs(filePath);
-               tempName = name[0] + "-" + DateTime.Now.ToString("yyMMddHHmmss") + "--" + name[1];
-               return Ok(tempName);
-           }
-
-   */
-
-        /*        public class FileDownload
-                {
-                    public string LockNumber { get; set; }
-
-                    public string FileName { get; set; }
-
-                }
-                */
-
-
-        /*   [HttpGet]
-           [Route("api/Data/DownloadFileMailBox/{LockNumber}/{FileName}")]
-           public HttpResponseMessage DownloadMailBox(string LockNumber, string FileName)
-           {
-               HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
-               FileName = FileName.Replace("--", ".");
-               string filePath = "C://App//Upload//" + LockNumber + "//" + FileName;
-
-               if (!File.Exists(filePath))
-               {
-                   response.StatusCode = HttpStatusCode.NotFound;
-                   response.ReasonPhrase = string.Format("File not found: {0} .", FileName);
-                   throw new HttpResponseException(response);
-               }
-
-
-               byte[] bytes = File.ReadAllBytes(filePath);
-
-               //Set the Response Content.
-               response.Content = new ByteArrayContent(bytes);
-
-               //Set the Response Content Length.
-               response.Content.Headers.ContentLength = bytes.LongLength;
-
-               //Set the Content Disposition Header Value and FileName.
-               response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-               response.Content.Headers.ContentDisposition.FileName = FileName;
-
-               //Set the File Content Type.
-               response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(FileName));
-               return response;
-           }
-           */
 
         [HttpGet]
         [Route("api/Data/DeleteFileMailBox/{LockNumber}/{FileName}")]
@@ -595,7 +586,7 @@ namespace Support.Controllers
         }
 
 
-
+    */
         [Route("api/Data/InsertMailBox/")]
         public async Task<IHttpActionResult> SaveMailBox()
         {
@@ -616,7 +607,7 @@ namespace Support.Controllers
                 Atch.InputStream.Read(filebyte, 0, lenght);
             }
 
-           
+
 
             var conStr = System.Configuration.ConfigurationManager.ConnectionStrings["SupportModel"].ConnectionString;
             SqlConnection connection = new SqlConnection(conStr);
@@ -633,6 +624,7 @@ namespace Support.Controllers
             cmd.Parameters.AddWithValue("@Atch", filebyte);
             cmd.ExecuteNonQuery();
             connection.Close();
+            UnitPublic.SaveLog(Int32.Parse(locknumber), mode_MailBox, act_New, 0);
             return Ok("1");
         }
 
@@ -679,7 +671,7 @@ namespace Support.Controllers
             public string LockNumber { get; set; }
         }
 
-       
+
         // Post: api/Data/GetToken   
         [Route("api/Data/Token/")]
         public async Task<IHttpActionResult> PostToken(TokenObject TokenObject)

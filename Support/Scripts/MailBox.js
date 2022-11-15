@@ -15,6 +15,8 @@
     var DeleteFileUri = server + '/api/Data/DeleteFileMailBox/'; // حذف پیوست ارتباط با بخش فروش 
     var DeleteBoxUri = server + '/api/Data/DeleteMailBox/'; // حذف  ارتباط با بخش فروش 
 
+    var ReadMailBoxUri = server + '/api/Data/ReadMailBox/'; // دیدن پیام 
+
     //var DateNow = new Date().toLocaleDateString('fa-IR');
     var DateNow = '';
 
@@ -83,7 +85,15 @@
         $('#bodyBox').val(item.body);
         $('#panel_Action').attr('hidden', '');
         $('.fix').attr('class', 'form-line focused fix');
-        $('#modal-Box').modal('show');
+
+        var ReadBoxObject = {
+            Id: item.id,
+            ReadSt : 'Y'
+        }
+
+        ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) {
+            $('#modal-Box').modal('show');
+        });
     }
 
 

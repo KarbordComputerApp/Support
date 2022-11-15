@@ -147,6 +147,9 @@
     <script type="text/javascript">
         sessionStorage.versionTitle = '@(Support.Controllers.Unit.UnitPublic.titleVer)';
         localStorage.setItem("urlLogin", '@Url.Action("Login", "Home")');
+        localStorage.setItem("Group_Ticket",@(Support.Controllers.Unit.UnitPublic.sql_Group_Ticket) ); 
+        localStorage.setItem("Group_CustAccount",@(Support.Controllers.Unit.UnitPublic.sql_Group_CustAccount) ); 
+        localStorage.setItem("urlLogin", '@Url.Action("Login", "Home")');
     </script>
 
     <script src="~/Content/js/app.min.js"></script>
