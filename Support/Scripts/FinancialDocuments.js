@@ -7,15 +7,16 @@
     $("#Index_TextLogo").text('اسناد و مستندات');
 
 
-    function getFinancialList() {
+    function getFinancialList(log) {
         var FinancialDocumentsObject = {
-            LockNumber: lockNumber
+            LockNumber: lockNumber,
+            FlagLog: log
         }
         ajaxFunction(FinancialUri, 'POST', FinancialDocumentsObject, true).done(function (data) {
             self.FinancialList(data == null ? [] : data);
         });
     }
-    getFinancialList();
+    getFinancialList(true);
 
 
     self.Download = function (item) {
@@ -23,7 +24,7 @@
         a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id;
         a.click();
         setTimeout(function () {
-            getFinancialList();
+            getFinancialList(false);
         }, 2000);
         //window.location.reload(true);
     }
@@ -42,7 +43,7 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                getFinancialList();
+                getFinancialList(false);
             }
         })
     })

@@ -38,16 +38,17 @@
 
     getDateServer();
 
-    function getCustAccount() {
+    function getCustAccount(flag) {
         var CustAccountObject = {
             LockNo: lockNumber,
+            FlagLog:flag
         }
         ajaxFunction(CustAccountUri , 'Post', CustAccountObject).done(function (data) {
             self.CustAccountList(data)
         });
     }
 
-    getCustAccount();
+    getCustAccount(true);
 
 
     $('#refreshCustAccount').click(function () {
@@ -64,7 +65,7 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                getCustAccount();
+                getCustAccount(false);
             }
         })
     })
@@ -96,7 +97,7 @@
                     'DownloadCount': null,
                 }
                 ajaxFunction(CustAccountSaveUri, 'Post', CustAccountSaveObject).done(function (dataSave) {
-                    getCustAccount();
+                    getCustAccount(false);
                 });
 
 
@@ -105,7 +106,7 @@
                 const timer = setInterval(() => {
                     if (win.closed) {
                         clearInterval(timer);
-                        getCustAccount;
+                        getCustAccount(false);
                         //ConfirmPayment(token);
                     }
                 }, 1000);
@@ -209,7 +210,7 @@
                     'DownloadCount': count,
                 }
                 ajaxFunction(CustAccountSaveUri, 'Post', CustAccountSaveObject).done(function (dataSave) {
-                    getCustAccount();
+                    getCustAccount(false);
                 });
             }
         })

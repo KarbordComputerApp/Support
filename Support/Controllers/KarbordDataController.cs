@@ -54,6 +54,16 @@ namespace Support.Controllers
             return Ok(list);
         }
 
+        // GET: api/KarbordData/Group گروه ها
+        [Route("api/KarbordData/Group")]
+        public async Task<IHttpActionResult> GetWeb_Group()
+        {
+            var Person = new {GroupTicket = UnitPublic.sql_Group_Ticket, GroupCustAccount = UnitPublic.sql_Group_CustAccount };
+            return Ok(Person);
+        }
+
+
+        
 
 
 
@@ -216,6 +226,8 @@ namespace Support.Controllers
             public int ModeCode { get; set; }
 
             public string LockNo { get; set; }
+
+            public bool FlagLog { get; set; }
         }
 
 
@@ -226,6 +238,10 @@ namespace Support.Controllers
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
+            if (Object_ErjDocXK.FlagLog == true)
+            {
+                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, act_View, 0);
+            }
             return Ok(list);
         }
 
@@ -363,6 +379,8 @@ namespace Support.Controllers
         {
             public string LockNo { get; set; }
 
+            public bool FlagLog { get; set; }
+
         }
 
         public class CustAccount
@@ -397,6 +415,7 @@ namespace Support.Controllers
 
             public string Year { get; set; }
 
+
         }
 
         [Route("api/KarbordData/CustAccount")]
@@ -408,7 +427,10 @@ namespace Support.Controllers
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
             var list = db.Database.SqlQuery<CustAccount>(sql);
-            UnitPublic.SaveLog(Int32.Parse(CustAccountObject.LockNo), mode_CustAccount, act_View, 0);
+            if (CustAccountObject.FlagLog == true)
+            {
+                UnitPublic.SaveLog(Int32.Parse(CustAccountObject.LockNo), mode_CustAccount, act_View, 0);
+            }
             return Ok(list);
         }
 

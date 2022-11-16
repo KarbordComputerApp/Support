@@ -29,13 +29,14 @@
 
     getDate();
 
-    getBoxList()
+    getBoxList(true)
     //Get Box List
-    function getBoxList() {
+    function getBoxList(log) {
         var BoxObject = {
             LockNumber: lockNumber,
             Mode: $("#BoxMode").val(),
             UserCode: sessionStorage.userName,
+            FlagLog:log
         }
         ajaxFunction(BoxUri, 'POST', BoxObject).done(function (data) {
             self.BoxList(data == null ? [] : data);
@@ -44,7 +45,7 @@
 
 
     $("#BoxMode").change(function () {
-        getBoxList();
+        getBoxList(false);
     });
 
 
@@ -69,7 +70,7 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                getBoxList();
+                getBoxList(false);
             }
         })
     })
@@ -116,7 +117,7 @@
                 }
 
                 ajaxFunction(DeleteBoxUri + '/' + lockNumber + '/' + item.id, 'GET', true).done(function (data) {
-                    getBoxList();
+                    getBoxList(false);
                     showNotification('ارتباط با بخش فروش حذف شد', 1);
                 });
             }
@@ -228,7 +229,7 @@
 
             ajaxFunctionUpload(InsertMailBoxUri , formData, true).done(function (data) {
                 $('#modal-Box').modal('hide');
-                getBoxList();
+                getBoxList(false);
                 showNotification('ارتباط با بخش فروش ارسال شد', 1);
             });
 

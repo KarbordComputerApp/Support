@@ -171,7 +171,9 @@
         natijeh = $("#Result").val();
         motaghazi = $("#motaghazi").val();
 
-        
+
+        $("#FM_Select").val() == 'M' ? fm_Select = 'آقای ' : fm_Select = 'خانم '
+
 
 
         if (natijeh == '' && self.AddAttachList().length > 0)
@@ -212,7 +214,7 @@
                 F18: '',
                 F19: '',
                 F20: '',
-                Motaghazi: motaghazi,
+                Motaghazi: fm_Select +  motaghazi,
             }
             ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
                 serialNumber = data;

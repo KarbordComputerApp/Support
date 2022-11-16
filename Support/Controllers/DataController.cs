@@ -160,6 +160,8 @@ namespace Support.Controllers
         {
             public int LockNumber { get; set; }
 
+            public bool FlagLog { get; set; }
+
         }
 
         [Route("api/Data/FinancialDocuments/")]
@@ -168,7 +170,11 @@ namespace Support.Controllers
             string sql = string.Format(@"select * from FinancialDocuments where LockNumber = {0} order by SubmitDate desc", FinancialDocumentsObject.LockNumber);
             var list = db.Database.SqlQuery<FinancialDocuments>(sql).ToList();
 
-            UnitPublic.SaveLog(FinancialDocumentsObject.LockNumber, mode_FinancialDocuments, act_View, 0);
+            if (FinancialDocumentsObject.FlagLog == true)
+            {
+                UnitPublic.SaveLog(FinancialDocumentsObject.LockNumber, mode_FinancialDocuments, act_View, 0);
+            }
+            
             return Ok(list);
         }
 
@@ -176,6 +182,8 @@ namespace Support.Controllers
         public class CustomerFilesObject
         {
             public int LockNumber { get; set; }
+
+            public bool FlagLog { get; set; }
 
         }
 
@@ -185,7 +193,10 @@ namespace Support.Controllers
             string sql = string.Format(@"select *,(select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload 
                                          from CustomerFiles as c where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
-            UnitPublic.SaveLog(CustomerFilesObject.LockNumber, mode_CustomerFiles, act_View, 0);
+            if (CustomerFilesObject.FlagLog == true)
+            {
+                UnitPublic.SaveLog(CustomerFilesObject.LockNumber, mode_CustomerFiles, act_View, 0);
+            }
             return Ok(list);
         }
 
@@ -515,6 +526,8 @@ namespace Support.Controllers
 
             public string UserCode { get; set; }
 
+            public bool FlagLog { get; set; }
+
         }
 
 
@@ -529,8 +542,10 @@ namespace Support.Controllers
 
             var list = db.Database.SqlQuery<MailBox>(sql).ToList();
 
-            UnitPublic.SaveLog(Int32.Parse(MailBoxObject.LockNumber), mode_MailBox, act_View, 0);
-
+            if (MailBoxObject.FlagLog == true)
+            {
+                UnitPublic.SaveLog(Int32.Parse(MailBoxObject.LockNumber), mode_MailBox, act_View, 0);
+            }
             return Ok(list);
         }
 

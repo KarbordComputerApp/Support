@@ -10,15 +10,16 @@
 
     $("#Index_TextLogo").text('دریافت فایل');
 
-    function getCustomerFilesList() {
+    function getCustomerFilesList(Log) {
         var CustomerFilesObject = {
-            LockNumber: lockNumber
+            LockNumber: lockNumber,
+            FlagLog:Log
         }
         ajaxFunction(CustomerFilesUri, 'POST', CustomerFilesObject, true).done(function (data) {
             self.CustomerFilesList(data == null ? [] : data);
         });
     }
-    getCustomerFilesList();
+    getCustomerFilesList(true);
 
 
     self.Download = function (item) {
@@ -26,7 +27,7 @@
         a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id;
         a.click();
         setTimeout(function () {
-            getCustomerFilesList();
+            getCustomerFilesList(false);
         }, 2000);
     }
 
@@ -59,7 +60,7 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                getCustomerFilesList();
+                getCustomerFilesList(false);
             }
         })
     })
