@@ -191,11 +191,11 @@
         body = $("#bodyBox").val();
 
         if (title == '') {
-            return showNotification('عنوان را وارد کنید', 2);
+            return showNotification('عنوان را وارد کنید', 0);
         }
 
         if (body == '') {
-            return showNotification('متن را وارد کنید', 2);
+            return showNotification('متن را وارد کنید', 0);
         }
 
         var file = document.getElementById("AddFile");
@@ -208,13 +208,15 @@
             fileType = '.' + fileData[1];
 
             if (file.files[0].size > 5000000) { // بیشتر از 5 مگابایت
-                return showNotification('فایل پیوست باید کمتر از 5 مگابایت باشد', 2);
+                return showNotification('فایل پیوست باید کمتر از 5 مگابایت باشد', 0);
             }
 
             /*if (fileData[1] == 'exe') {
                 return showNotification('ابتدا فایل را فشرده کنید سپس ارسال کنید', 2);
             }*/
         }
+
+        $("#saveBox").hide();
 
             var formData = new FormData();
 
@@ -231,6 +233,7 @@
                 $('#modal-Box').modal('hide');
                 getBoxList(false);
                 showNotification('ارتباط با بخش فروش ارسال شد', 1);
+                $("#saveBox").show();
             });
 
     });

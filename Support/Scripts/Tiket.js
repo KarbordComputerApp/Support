@@ -167,7 +167,6 @@
 
     //Add   ذخیره تیکت
     async function SaveErjDocXK() {
-
         natijeh = $("#Result").val();
         motaghazi = $("#motaghazi").val();
 
@@ -186,6 +185,7 @@
         if (natijeh == '' && self.AddAttachList().length == 0)
             return showNotification('تیکت خالی است', 0);
         else {
+            $("#saveErjDocXK").hide();
             var ErjSaveTicket_HI = {
                 SerialNumber: 0,
                 DocDate: DateNow,
@@ -231,6 +231,7 @@
                 let result = await ziped(fileType, fileAttach.File, fileFullName);
 
             };
+            $("#saveErjDocXK").show();
 
             showNotification('تیکت ارسال شد', 1);
             getErjDocXK();
