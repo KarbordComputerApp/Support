@@ -128,7 +128,7 @@ namespace Support.Controllers
         [Route("api/Data/LockNumbers/")]
         public async Task<IHttpActionResult> PostLockNumbers(LockNumbersObject LockNumbersObject)
         {
-            string sql = string.Format(@"select LockNumber,CompanyName,UserCountLimit,Status from LockNumbers where (LockNumber = {0})", LockNumbersObject.LockNumber);
+            string sql = string.Format(@"select LockNumber,replace (CompanyName , N'ي' , N'ی') as CompanyName,UserCountLimit,Status from LockNumbers where (LockNumber = {0})", LockNumbersObject.LockNumber);
             var list = db.Database.SqlQuery<LockNumbers>(sql).ToList();
             return Ok(list);
         }

@@ -1,5 +1,6 @@
 ﻿var ViewModel = function () {
     var self = this;
+    var flagSend = false;
     var group_Tiket = localStorage.getItem("Group_Ticket");
     if (group_Tiket.length == 1) {
         group_Tiket = '0' + group_Tiket;
@@ -95,7 +96,7 @@
             ProgName: 'ERJ1',
             ModeCode: '102',
             Group: group_Tiket,
-            Year:'0000',
+            Year: '0000',
             SerialNumber: serial,
             BandNo: 0,
             ByData: 0
@@ -137,6 +138,7 @@
         $("#Result").val('');
         $("#motaghazi").val('');
         $("#companyNameTiket").val(companyName);
+        flagSend = false;
         self.AddAttachList([]);
     })
 
@@ -165,78 +167,79 @@
     });
 
 
+
     //Add   ذخیره تیکت
     async function SaveErjDocXK() {
-        natijeh = $("#Result").val();
-        motaghazi = $("#motaghazi").val();
+        if (flagSend == false) {
+            natijeh = $("#Result").val();
+            motaghazi = $("#motaghazi").val();
 
 
-        $("#FM_Select").val() == 'M' ? fm_Select = 'آقای ' : fm_Select = 'خانم '
+            $("#FM_Select").val() == 'M' ? fm_Select = 'آقای ' : fm_Select = 'خانم '
 
 
 
-        if (natijeh == '' && self.AddAttachList().length > 0)
-            natijeh = 'به پیوست مراجعه شود';
+            if (natijeh == '' && self.AddAttachList().length > 0)
+                natijeh = 'به پیوست مراجعه شود';
 
-        if (motaghazi == '')
-            return showNotification('نام درخواست کننده را وارد کنید', 0);
+            if (motaghazi == '')
+                return showNotification('نام درخواست کننده را وارد کنید', 0);
 
 
-        if (natijeh == '' && self.AddAttachList().length == 0)
-            return showNotification('تیکت خالی است', 0);
-        else {
-            $("#saveErjDocXK").hide();
-            var ErjSaveTicket_HI = {
-                SerialNumber: 0,
-                DocDate: DateNow,
-                UserCode: 'ZAND',
-                Status: "فعال",
-                Spec: "",
-                LockNo: lockNumber,
-                Text: natijeh,
-                F01: '',
-                F02: '',
-                F03: '',
-                F04: '',
-                F05: '',
-                F06: '',
-                F07: '',
-                F08: '',
-                F09: '',
-                F10: '',
-                F11: '',
-                F12: '',
-                F13: '',
-                F14: '',
-                F15: '',
-                F16: '',
-                F17: '',
-                F18: '',
-                F19: '',
-                F20: '',
-                Motaghazi: fm_Select +  motaghazi,
+            if (natijeh == '' && self.AddAttachList().length == 0)
+                return showNotification('تیکت خالی است', 0);
+            else {
+                flagSend = true;
+                var ErjSaveTicket_HI = {
+                    SerialNumber: 0,
+                    DocDate: DateNow,
+                    UserCode: 'ZAND',
+                    Status: "فعال",
+                    Spec: "",
+                    LockNo: lockNumber,
+                    Text: natijeh,
+                    F01: '',
+                    F02: '',
+                    F03: '',
+                    F04: '',
+                    F05: '',
+                    F06: '',
+                    F07: '',
+                    F08: '',
+                    F09: '',
+                    F10: '',
+                    F11: '',
+                    F12: '',
+                    F13: '',
+                    F14: '',
+                    F15: '',
+                    F16: '',
+                    F17: '',
+                    F18: '',
+                    F19: '',
+                    F20: '',
+                    Motaghazi: fm_Select + motaghazi,
+                }
+                ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
+                    serialNumber = data;
+                });
+
+                for (var i = 0; i <= self.AddAttachList().length - 1; i++) {
+
+                    fileAttach = self.AddAttachList()[i];
+                    fileFullName = fileAttach.File.name;
+                    fileData = fileFullName.split(".");
+                    fileName = fileData[0];
+                    fileType = '.' + fileData[1];
+
+                    let result = await ziped(fileType, fileAttach.File, fileFullName);
+
+                };
+                showNotification('تیکت ارسال شد', 1);
+                getErjDocXK();
+                $('#modal-ErjDocXK').modal('hide');
+
             }
-            ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
-                serialNumber = data;
-            });
-
-            for (var i = 0; i <= self.AddAttachList().length - 1; i++) {
-
-                fileAttach = self.AddAttachList()[i];
-                fileFullName = fileAttach.File.name;
-                fileData = fileFullName.split(".");
-                fileName = fileData[0];
-                fileType = '.' + fileData[1];
-
-                let result = await ziped(fileType, fileAttach.File, fileFullName);
-
-            };
-            $("#saveErjDocXK").show();
-
-            showNotification('تیکت ارسال شد', 1);
-            getErjDocXK();
-            $('#modal-ErjDocXK').modal('hide');
-
         }
     }
 
@@ -423,7 +426,7 @@
                     BandNo: Band.BandNo,
                 };
 
-                ajaxFunction(ErjDocAttach_DelUri , 'POST', Web_DocAttach_Save).done(function (response) {
+                ajaxFunction(ErjDocAttach_DelUri, 'POST', Web_DocAttach_Save).done(function (response) {
                     getDocAttachList(serialNumber);
                     showNotification('پیوست حذف شد', 1);
                 });
