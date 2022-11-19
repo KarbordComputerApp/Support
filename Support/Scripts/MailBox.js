@@ -1,6 +1,6 @@
 ﻿var ViewModel = function () {
     var self = this;
-
+    var flagSend = false;
     $("#Index_TextLogo").text('ارتباط با بخش فروش');
 
     self.BoxList = ko.observableArray([]); // لیست ارتباط با بخش فروش ها  
@@ -136,6 +136,7 @@
         $('#AddFile').val('');
         $('#nameAttach').val('');
         $('#panel_Action').removeAttr('hidden', '');
+        flagSend = false;
         $('#modal-Box').modal('show');
     })
 
@@ -216,8 +217,9 @@
             }*/
         }
 
-        $("#saveBox").hide();
 
+        if (flagSend == false) {
+            flagSend = true;
             var formData = new FormData();
 
             formData.append('mode', 1);
@@ -229,12 +231,13 @@
             formData.append('namefile', fileFullName);
             formData.append('Atch', $('#AddFile')[0].files[0]);
 
-            ajaxFunctionUpload(InsertMailBoxUri , formData, true).done(function (data) {
+            ajaxFunctionUpload(InsertMailBoxUri, formData, true).done(function (data) {
                 $('#modal-Box').modal('hide');
                 getBoxList(false);
                 showNotification('ارتباط با بخش فروش ارسال شد', 1);
-                $("#saveBox").show();
+
             });
+        }
 
     });
 
