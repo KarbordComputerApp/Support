@@ -174,7 +174,7 @@ namespace Support.Controllers
             {
                 UnitPublic.SaveLog(FinancialDocumentsObject.LockNumber, mode_FinancialDocuments, act_View, 0);
             }
-            
+
             return Ok(list);
         }
 
@@ -323,7 +323,7 @@ namespace Support.Controllers
         [HttpGet]
         [Route("api/Data/TTMSDownload/")]
 
-        public HttpResponseMessage TTMSDownload()
+        public byte[] TTMSDownload()
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
@@ -348,18 +348,10 @@ namespace Support.Controllers
                 response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
                 throw new HttpResponseException(response);
             }
-            
-
 
             byte[] bytes = File.ReadAllBytes(files[0].ToString());
 
-            response.Content = new ByteArrayContent(bytes);
-            response.Content.Headers.ContentLength = bytes.LongLength;
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = f.Name;
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
-
-            return response;
+            return bytes;
         }
 
 
@@ -425,7 +417,7 @@ namespace Support.Controllers
             Atch.InputStream.Read(filebyte, 0, lenght);
             File.WriteAllBytes(pathtemp + "\\" + Atch.FileName, filebyte);
 
-            
+
             return Ok("Ok");
         }
 
@@ -514,7 +506,7 @@ namespace Support.Controllers
 
             public string body { get; set; }
 
-            public string namefile { get; set; }
+            public int CountAttach { get; set; }
 
         }
 
@@ -536,9 +528,9 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostWeb_MailBox(MailBoxObject MailBoxObject)
         {
             string sql = string.Format(@"declare @mode tinyint = {0} 
-                                         select id,mode,readst,locknumber,date,title,body,namefile from MailBox where lockNumber = '{1}' and 
-                                                                ((@mode = 0 and (mode = 1 or mode = 2)) or mode = @mode)
-                                         order by date desc , id desc", MailBoxObject.Mode, MailBoxObject.LockNumber);
+                                         select id,mode,readst,locknumber,date,title,body,(select COUNT(id) from DocAttach as d where d.IdMailBox = m.id) as CountAttach from MailBox as m where m.lockNumber = '{1}' and 
+                                                                ((@mode = 0 and (m.mode = 1 or m.mode = 2)) or m.mode = @mode)
+                                         order by m.date desc , m.id desc", MailBoxObject.Mode, MailBoxObject.LockNumber);
 
             var list = db.Database.SqlQuery<MailBox>(sql).ToList();
 
@@ -574,74 +566,163 @@ namespace Support.Controllers
         }
 
 
- /*       // get: api/Data/DeleteMailBox
-        [Route("api/Data/DeleteMailBox/{lockNumber}/{id}")]
-        public async Task<IHttpActionResult> GetWeb_DeleteMailBox(string lockNumber, long id)
+        /*       // get: api/Data/DeleteMailBox
+               [Route("api/Data/DeleteMailBox/{lockNumber}/{id}")]
+               public async Task<IHttpActionResult> GetWeb_DeleteMailBox(string lockNumber, long id)
+               {
+                   string sql = string.Format("update MailBox set mode = 3 WHERE id = {0} and lockNumber = '{1}' and  mode = 1 select 0", id, lockNumber);
+                   var list = db.Database.SqlQuery<int>(sql).ToList();
+                   await db.SaveChangesAsync();
+                   return Ok(list);
+               }
+
+
+               [HttpGet]
+               [Route("api/Data/DeleteFileMailBox/{LockNumber}/{FileName}")]
+               public async Task<IHttpActionResult> DeleteFileMailBox(string LockNumber, string FileName)
+               {
+                   FileName = FileName.Replace("--", ".");
+
+                   string fullPath = "C://App//Upload//" + LockNumber + "//" + FileName;
+
+                   if (System.IO.File.Exists(fullPath))
+                   {
+                       System.IO.File.Delete(fullPath);
+                   }
+                   return Ok("Ok");
+               }
+
+
+           */
+
+
+
+        public class InsertMailBoxObject
         {
-            string sql = string.Format("update MailBox set mode = 3 WHERE id = {0} and lockNumber = '{1}' and  mode = 1 select 0", id, lockNumber);
-            var list = db.Database.SqlQuery<int>(sql).ToList();
-            await db.SaveChangesAsync();
+
+            public int Mode { get; set; }
+
+            public string ReadSt { get; set; }
+
+            public string LockNumber { get; set; }
+
+            public string Date { get; set; }
+
+            public string Title { get; set; }
+
+            public string Body { get; set; }
+
+        }
+
+
+        public class InsertMailBox
+        {
+            public long id { get; set; }
+        }
+
+        [Route("api/Data/InsertMailBox/")]
+        public async Task<IHttpActionResult> SaveMailBox(InsertMailBoxObject InsertMailBoxObject)
+        {
+            string sql = string.Format(@"INSERT INTO MailBox (mode,readst,locknumber,date,title,body) values ({0},'{1}','{2}','{3}','{4}','{5}') select cast (@@IDENTITY as bigint) as id",
+                                         InsertMailBoxObject.Mode,
+                                         InsertMailBoxObject.ReadSt,
+                                         InsertMailBoxObject.LockNumber,
+                                         InsertMailBoxObject.Date,
+                                         InsertMailBoxObject.Title,
+                                         InsertMailBoxObject.Body);
+
+            var list = db.Database.SqlQuery<InsertMailBox>(sql).Single();
+            db.SaveChanges();
+
+            UnitPublic.SaveLog(Int32.Parse(InsertMailBoxObject.LockNumber), mode_MailBox, act_New, 0);
+            return Ok(list.id);
+        }
+
+
+
+        [Route("api/Data/UploadMailBoxFile")]
+        public async Task<IHttpActionResult> UploadMailBoxFile()
+        {
+            string IdMailBox = HttpContext.Current.Request["IdMailBox"];
+            string BandNo = HttpContext.Current.Request["BandNo"];
+            string FName = HttpContext.Current.Request["FName"];
+            var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
+
+            int lenght = Atch.ContentLength;
+            byte[] filebyte = new byte[lenght];
+            Atch.InputStream.Read(filebyte, 0, lenght);
+
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SupportModel"].ConnectionString;
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            SqlCommand cmd = new SqlCommand("DocAttachMailBox_Save", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@IdMailBox", IdMailBox);
+            cmd.Parameters.AddWithValue("@BandNo", BandNo);
+            cmd.Parameters.AddWithValue("@FName", FName);
+            cmd.Parameters.AddWithValue("@Atch", filebyte);
+
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            return Ok(1);
+        }
+
+
+
+
+
+        public class DocAttachBoxListObject
+        {
+            public long Id { get; set; }
+
+            public byte ByData { get; set; }
+        }
+
+        public class DocAttachBoxList
+        {
+
+            public long Id { get; set; }
+
+            public long IdMailBox { get; set; }
+
+            public int? BandNo { get; set; }
+
+            public string FName { get; set; }
+
+            public byte[] Atch { get; set; }
+
+        }
+
+
+        // Post: api/Data/DocAttachBoxList   لیست پیوست  
+        [Route("api/Data/DocAttachBoxList/")]
+        public async Task<IHttpActionResult> PostDownloadFileMailBox(DocAttachBoxListObject DocAttachBoxListObject)
+        {
+            string sql = "select Id,IdMailBox,BandNo,FName,";
+
+            if (DocAttachBoxListObject.ByData == 0)
+                sql += "cast('' as image) as Atch ";
+            else
+                sql += " Atch ";
+
+            sql += " FROM DocAttach where ";
+            
+            if (DocAttachBoxListObject.ByData == 0)
+                sql += string.Format(" IdMailBox = {0}", DocAttachBoxListObject.Id);
+            else
+                sql += string.Format("Id = {0}", DocAttachBoxListObject.Id);
+
+            var list = db.Database.SqlQuery<DocAttachBoxList>(sql);
             return Ok(list);
         }
 
 
-        [HttpGet]
-        [Route("api/Data/DeleteFileMailBox/{LockNumber}/{FileName}")]
-        public async Task<IHttpActionResult> DeleteFileMailBox(string LockNumber, string FileName)
-        {
-            FileName = FileName.Replace("--", ".");
-
-            string fullPath = "C://App//Upload//" + LockNumber + "//" + FileName;
-
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
-            return Ok("Ok");
-        }
 
 
-    */
-        [Route("api/Data/InsertMailBox/")]
-        public async Task<IHttpActionResult> SaveMailBox()
-        {
-            string mode = HttpContext.Current.Request["mode"];
-            string readst = HttpContext.Current.Request["readst"];
-            string locknumber = HttpContext.Current.Request["locknumber"];
-            string date = HttpContext.Current.Request["date"];
-            string title = HttpContext.Current.Request["title"];
-            string body = HttpContext.Current.Request["body"];
-            string namefile = HttpContext.Current.Request["namefile"];
-            var Atch = HttpContext.Current.Request.Files["Atch"];
-
-            byte[] filebyte = new byte[0];
-            if (Atch != null)
-            {
-                int lenght = Atch.ContentLength;
-                filebyte = new byte[lenght];
-                Atch.InputStream.Read(filebyte, 0, lenght);
-            }
-
-
-
-            var conStr = System.Configuration.ConfigurationManager.ConnectionStrings["SupportModel"].ConnectionString;
-            SqlConnection connection = new SqlConnection(conStr);
-            connection.Open();
-            SqlCommand cmd = new SqlCommand("MailBox_Save", connection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@mode", mode);
-            cmd.Parameters.AddWithValue("@readst", readst);
-            cmd.Parameters.AddWithValue("@locknumber", locknumber);
-            cmd.Parameters.AddWithValue("@date", date);
-            cmd.Parameters.AddWithValue("@title", title);
-            cmd.Parameters.AddWithValue("@body", body);
-            cmd.Parameters.AddWithValue("@namefile", namefile);
-            cmd.Parameters.AddWithValue("@Atch", filebyte);
-            cmd.ExecuteNonQuery();
-            connection.Close();
-            UnitPublic.SaveLog(Int32.Parse(locknumber), mode_MailBox, act_New, 0);
-            return Ok("1");
-        }
 
 
 
@@ -688,11 +769,11 @@ namespace Support.Controllers
 
 
         // Post: api/Data/GetToken   
-        [Route("api/Data/Token/")]
-        public async Task<IHttpActionResult> PostToken(TokenObject TokenObject)
+        [Route("api/Data/Token/{lockNumber}")]
+        public async Task<IHttpActionResult> GetToken(string lockNumber)
         {
             string currentDate = DateTime.Now.Ticks.ToString();
-            var token = UnitPublic.Encrypt(TokenObject.LockNumber + "--" + currentDate);
+            var token = UnitPublic.Encrypt(lockNumber + "--" + currentDate);
             return Ok(token);
         }
 

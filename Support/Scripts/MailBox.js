@@ -4,6 +4,8 @@
     $("#Index_TextLogo").text('ارتباط با بخش فروش');
 
     self.BoxList = ko.observableArray([]); // لیست ارتباط با بخش فروش ها  
+    self.AddAttachList = ko.observableArray([]);
+    self.DocAttachList = ko.observableArray([]); // ليست پیوست
 
 
     var DateUri = server + '/api/Data/GetDate/'; // آدرس تاریخ سرور
@@ -16,6 +18,8 @@
     var DeleteBoxUri = server + '/api/Data/DeleteMailBox/'; // حذف  ارتباط با بخش فروش 
 
     var ReadMailBoxUri = server + '/api/Data/ReadMailBox/'; // دیدن پیام 
+    var DocAttachBoxListUri = server + '/api/Data/DocAttachBoxList/'; // آدرس لیست پیوست 
+    var DocAttachMailBox_SaveUri = server + '/api/Data/UploadMailBoxFile/'; // آدرس ذخیره لیست پیوست 
 
     //var DateNow = new Date().toLocaleDateString('fa-IR');
     var DateNow = '';
@@ -29,6 +33,11 @@
 
     getDate();
 
+
+
+    //getDocAttachMailBoxList(1);
+
+
     getBoxList(true)
     //Get Box List
     function getBoxList(log) {
@@ -36,7 +45,7 @@
             LockNumber: lockNumber,
             Mode: $("#BoxMode").val(),
             UserCode: sessionStorage.userName,
-            FlagLog:log
+            FlagLog: log
         }
         ajaxFunction(BoxUri, 'POST', BoxObject).done(function (data) {
             self.BoxList(data == null ? [] : data);
@@ -59,7 +68,7 @@
     $('#refreshBox').click(function () {
 
         Swal.fire({
-            title:  'تایید به روز رسانی',
+            title: 'تایید به روز رسانی',
             text: "لیست ارتباط با بخش فروش به روز رسانی شود ؟",
             type: 'info',
             showCancelButton: true,
@@ -77,7 +86,7 @@
 
 
     self.radif = function (index) {
-        return index + 1 ;
+        return index + 1;
     }
 
 
@@ -89,7 +98,7 @@
 
         var ReadBoxObject = {
             Id: item.id,
-            ReadSt : 'Y'
+            ReadSt: 'Y'
         }
 
         ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) {
@@ -136,6 +145,7 @@
         $('#AddFile').val('');
         $('#nameAttach').val('');
         $('#panel_Action').removeAttr('hidden', '');
+        self.AddAttachList([]);
         flagSend = false;
         $('#modal-Box').modal('show');
     })
@@ -147,39 +157,97 @@
         $("#AddFile:hidden").trigger('click');
     });
 
-    this.fileUpload = function (data, e) {
-        var file = document.getElementById("AddFile");
-
-        if (file.files.length > 0) {
-            fileFullName = file.files[0].name;
-            $('#nameAttach').val(fileFullName);
-        }
-
-    };
+    $('#AddAttachs').click(function () {
+        $('#AddFiles').val('').clone(true);
+        $("#AddFiles:hidden").trigger('click');
+    });
 
 
 
-    //Get DocAttach List
-    function getBoxAttach(Id) {
+    this.AddFile = function (data, e) {
+        a = e;
+        var dataFile;
+        var file = e.target.files[0];
+        var name = file.name;
+        var size = file.size;
+        Swal.fire({
+            title: 'تایید آپلود ؟',
+            text: "آیا " + name + " به پیوست افزوده شود",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'خیر',
+            allowOutsideClick: false,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                a = document.getElementById("AddFiles").files[0];
+                fileFullName = a.name;
+                fileData = fileFullName.split(".");
+                fileName = fileData[0];
+                const att = { id: self.AddAttachList().length, File: a, name: "مدرک پیوست - " + DateNow + " - " + fileName };
+                self.AddAttachList.push(att);
+            }
+        })
+    }
 
-        var DownloadFileMailBoxObject = {
-            id: Id
-        }
 
-        ajaxFunction(DownloadFileMailBoxUri, 'POST', DownloadFileMailBoxObject).done(function (data) {
-            var sampleArr = base64ToArrayBuffer(data[0].Atch);
-            saveByteArray(data[0].namefile, sampleArr);
+
+    self.DelAddAttach = function (Band) {
+        Swal.fire({
+            title: 'تایید حذف',
+            text: "آیا پیوست انتخابی حذف شودند ؟",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'خیر',
+            allowOutsideClick: false,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                self.AddAttachList.remove(function (att) {
+                    return att.id == Band.id;
+                });
+            }
         });
     }
 
     self.ViewBoxAttach = function (item) {
-        getBoxAttach(item.id);
+        var DocAttachBoxListObject = {
+            Id: item.id,
+            ByData: 0
+        }
 
-//        addr = DownloadUri + lockNumber + '/' + item.namefile;
-     //   window.location.href = addr;
-
-        //getBoxAttach(item.namefile);
+        ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
+            self.DocAttachList(data);
+        });
     }
+
+    
+    self.selectDocAttach = function (item) {
+
+        var DocAttachBoxListObject = {
+            Id: item.Id,
+            ByData: 1
+        }
+
+        ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
+            var sampleArr = base64ToArrayBuffer(data[0].Atch);
+            saveByteArray(data[0].FName, sampleArr);
+        });
+    }
+
+
+
+    $('#attachFile').click(function () {
+        $('#modal-DocAttachSend').modal('show');
+        if (self.AddAttachList().length == 0) {
+            $('#AddFiles').val('').clone(true);
+            $("#AddFiles:hidden").trigger('click');
+        }
+    });
 
 
 
@@ -220,7 +288,8 @@
 
         if (flagSend == false) {
             flagSend = true;
-            var formData = new FormData();
+
+            /*var formData = new FormData();
 
             formData.append('mode', 1);
             formData.append('readst', 'N');
@@ -229,19 +298,59 @@
             formData.append('title', title);
             formData.append('body', body);
             formData.append('namefile', fileFullName);
-            formData.append('Atch', $('#AddFile')[0].files[0]);
+            formData.append('Atch', $('#AddFile')[0].files[0]);*/
 
-            ajaxFunctionUpload(InsertMailBoxUri, formData, true).done(function (data) {
-                $('#modal-Box').modal('hide');
-                getBoxList(false);
-                showNotification('ارتباط با بخش فروش ارسال شد', 1);
-
+            var InsertMailBoxObject = {
+                Mode: 1,
+                ReadSt: 'N',
+                LockNumber: lockNumber,
+                Date: DateNow,
+                Title: title,
+                Body: body
+            }
+            ajaxFunction(InsertMailBoxUri, 'POST', InsertMailBoxObject).done(function (data) {
+                idMailBox = data;
+                //$('#modal-Box').modal('hide');
+                // getBoxList(false);
+                // showNotification('ارتباط با بخش فروش ارسال شد', 1);
             });
+
+            for (var i = 0; i <= self.AddAttachList().length - 1; i++) {
+
+                fileAttach = self.AddAttachList()[i];
+                fileFullName = fileAttach.File.name;
+                fileData = fileFullName.split(".");
+                fileName = fileData[0];
+                fileType = '.' + fileData[1];
+                result = SentAttach(idMailBox,i,fileAttach.File, fileFullName);
+
+            };
+
+            $('#modal-Box').modal('hide');
+            getBoxList(false);
+            showNotification('ارتباط با بخش فروش ارسال شد', 1);
+
         }
 
     });
 
-    
+
+
+    function SentAttach(idMailBox, bandNo, fileAttach, fileFullName) {
+
+        var formData = new FormData();
+        formData.append('IdMailBox', idMailBox);
+        formData.append("BandNo", bandNo + 1);
+        formData.append('FName', fileFullName);
+        formData.append('Atch', fileAttach);
+
+        ajaxFunctionUploadTiket(DocAttachMailBox_SaveUri, formData, false).done(function (response) {
+
+        })
+
+    }
+
+
     self.PageIndexBox = function (item) {
         return CountPage(self.filterBoxList(), self.pageSizeBox(), item);
     };

@@ -14,6 +14,17 @@
     if (LockInput != '') {
         localStorage.removeItem("lockNumber");
         lockNumber = LockInput;
+
+        LockNumbersUri = server + '/api/Data/LockNumbers/';
+
+        var LockNumbersObject = {
+            LockNumber: lockNumber
+        }
+        ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
+            if (dataLock.length > 0) {
+                companyName = dataLock[0].CompanyName.split("-")[0];
+            }
+        })
     }
 
 
@@ -58,10 +69,11 @@
 
 
     //Get ErjDocXK 
-    function getErjDocXK() {
+    function getErjDocXK(log) {
         var ErjDocXKObject = {
             LockNo: lockNumber,
             ModeCode: '204',
+            FlagLog: log
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
@@ -84,7 +96,7 @@
         });
     }
 
-    getErjDocXK();
+    getErjDocXK(true);
 
 
 
@@ -128,7 +140,7 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                getErjDocXK();
+                getErjDocXK(false);
             }
         })
     })
@@ -236,7 +248,7 @@
 
                 };
                 showNotification('تیکت ارسال شد', 1);
-                getErjDocXK();
+                getErjDocXK(false);
                 $('#modal-ErjDocXK').modal('hide');
 
             }
@@ -583,7 +595,7 @@
     setInterval(RefreshTiket, 60000);
 
     function RefreshTiket() {
-        getErjDocXK();
+        getErjDocXK(false);
     }
 
 };
