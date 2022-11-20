@@ -93,6 +93,7 @@
     self.ViewBox = function (item) {
         $('#titleBox').val(item.title);
         $('#bodyBox').val(item.body);
+        $('#attachFile').hide();
         $('#panel_Action').attr('hidden', '');
         $('.fix').attr('class', 'form-line focused fix');
 
@@ -147,6 +148,7 @@
         $('#panel_Action').removeAttr('hidden', '');
         self.AddAttachList([]);
         flagSend = false;
+        $('#attachFile').show();
         $('#modal-Box').modal('show');
     })
 

@@ -507,6 +507,7 @@ namespace Support.Controllers
             public string body { get; set; }
 
             public int CountAttach { get; set; }
+            public string Tanzim { get; set; }
 
         }
 
@@ -528,7 +529,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostWeb_MailBox(MailBoxObject MailBoxObject)
         {
             string sql = string.Format(@"declare @mode tinyint = {0} 
-                                         select id,mode,readst,locknumber,date,title,body,(select COUNT(id) from DocAttach as d where d.IdMailBox = m.id) as CountAttach from MailBox as m where m.lockNumber = '{1}' and 
+                                         select id,mode,readst,locknumber,date,title,body,Tanzim,(select COUNT(id) from DocAttach as d where d.IdMailBox = m.id) as CountAttach from MailBox as m where m.lockNumber = '{1}' and 
                                                                 ((@mode = 0 and (m.mode = 1 or m.mode = 2)) or m.mode = @mode)
                                          order by m.date desc , m.id desc", MailBoxObject.Mode, MailBoxObject.LockNumber);
 
@@ -623,7 +624,7 @@ namespace Support.Controllers
         [Route("api/Data/InsertMailBox/")]
         public async Task<IHttpActionResult> SaveMailBox(InsertMailBoxObject InsertMailBoxObject)
         {
-            string sql = string.Format(@"INSERT INTO MailBox (mode,readst,locknumber,date,title,body) values ({0},'{1}','{2}','{3}','{4}','{5}') select cast (@@IDENTITY as bigint) as id",
+            string sql = string.Format(@"INSERT INTO MailBox (mode,readst,locknumber,date,title,body) values ({0},'{1}',N'{2}',N'{3}',N'{4}',N'{5}') select cast (@@IDENTITY as bigint) as id",
                                          InsertMailBoxObject.Mode,
                                          InsertMailBoxObject.ReadSt,
                                          InsertMailBoxObject.LockNumber,
