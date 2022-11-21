@@ -630,7 +630,7 @@ namespace Support.Controllers
                                          InsertMailBoxObject.LockNumber,
                                          InsertMailBoxObject.Date,
                                          InsertMailBoxObject.Title,
-                                         InsertMailBoxObject.Body);
+                                         UnitPublic.ConvertTextWebToWin(InsertMailBoxObject.Body));
 
             var list = db.Database.SqlQuery<InsertMailBox>(sql).Single();
             db.SaveChanges();
@@ -663,7 +663,7 @@ namespace Support.Controllers
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            cmd.Parameters.AddWithValue("@ProgName","");
+            cmd.Parameters.AddWithValue("@ProgName","Supp");
             cmd.Parameters.AddWithValue("@BandNo", BandNo);
             cmd.Parameters.AddWithValue("@ModeCode", 1);
             cmd.Parameters.AddWithValue("@FName", FName);

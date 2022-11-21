@@ -152,6 +152,25 @@
         $("#companyNameTiket").val(companyName);
         flagSend = false;
         self.AddAttachList([]);
+
+        lastSend = localStorage.getItem("SendTiket");
+        if (lastSend != null) {
+            const d = new Date();
+            let time = d.getTime();
+
+            t = (time - parseInt(lastSend)) / 60000;
+            if (t < 1) {
+                return showNotification('فاصله زمانی بین دو تیکت باید حداقل یک دقیقه باشد', 0);
+            }
+            else {
+                localStorage.removeItem("SendTiket");
+            }
+            
+        }
+        
+
+
+        $('#modal-ErjDocXK').modal('show');
     })
 
 
@@ -247,6 +266,12 @@
                     let result = await ziped(fileType, fileAttach.File, fileFullName);
 
                 };
+
+                const d = new Date();
+                let time = d.getTime();
+
+                localStorage.setItem("SendTiket", time);
+
                 showNotification('تیکت ارسال شد', 1);
                 getErjDocXK(false);
                 $('#modal-ErjDocXK').modal('hide');
@@ -399,22 +424,39 @@
 
     self.selectDocAttach = function (item) {
 
-        var fileName = item.FName.split(".");
 
 
-        var DownloadAttachObject = {
-            ProgName: 'Erj1',
-            ModeCode: '102',
-            Group: group_Tiket,
-            Year: '0000',
-            SerialNumber: item.SerialNumber,
-            BandNo: item.BandNo,
-            ByData: 1
-        }
-        ajaxFunction(DocAttachUri, 'POST', DownloadAttachObject).done(function (data) {
-            var sampleArr = base64ToArrayBuffer(data[0].Atch);
-            saveByteArray(fileName[0] + ".zip", sampleArr);
+        Swal.fire({
+            title: 'تایید دانلود',
+            text: "آیا پیوست انتخابی دانلود شود ؟",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'خیر',
+            allowOutsideClick: false,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                var fileName = item.FName.split(".");
+
+
+                var DownloadAttachObject = {
+                    ProgName: 'Erj1',
+                    ModeCode: '102',
+                    Group: group_Tiket,
+                    Year: '0000',
+                    SerialNumber: item.SerialNumber,
+                    BandNo: item.BandNo,
+                    ByData: 1
+                }
+                ajaxFunction(DocAttachUri, 'POST', DownloadAttachObject).done(function (data) {
+                    var sampleArr = base64ToArrayBuffer(data[0].Atch);
+                    saveByteArray(fileName[0] + ".zip", sampleArr);
+                });
+            }
         });
+
     }
 
     self.DeleteDocAttach = function (Band) {

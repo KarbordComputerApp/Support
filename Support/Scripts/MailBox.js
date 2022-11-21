@@ -199,7 +199,7 @@
     self.DelAddAttach = function (Band) {
         Swal.fire({
             title: 'تایید حذف',
-            text: "آیا پیوست انتخابی حذف شودند ؟",
+            text: "آیا پیوست انتخابی حذف شود ؟",
             type: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -227,17 +227,31 @@
         });
     }
 
-    
+
     self.selectDocAttach = function (item) {
 
-        var DocAttachBoxListObject = {
-            Id: item.IId,
-            ByData: 1
-        }
+        Swal.fire({
+            title: 'تایید دانلود',
+            text: "آیا پیوست انتخابی دانلود شود ؟",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'خیر',
+            allowOutsideClick: false,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                    var DocAttachBoxListObject = {
+                        Id: item.IId,
+                        ByData: 1
+                    }
 
-        ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
-            var sampleArr = base64ToArrayBuffer(data[0].Atch);
-            saveByteArray(data[0].FName, sampleArr);
+                    ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
+                        var sampleArr = base64ToArrayBuffer(data[0].Atch);
+                        saveByteArray(data[0].FName, sampleArr);
+                    });
+            }
         });
     }
 
@@ -324,7 +338,7 @@
                 fileData = fileFullName.split(".");
                 fileName = fileData[0];
                 fileType = '.' + fileData[1];
-                result = SentAttach(serialNumber,i,fileAttach.File, fileFullName);
+                result = SentAttach(serialNumber, i, fileAttach.File, fileFullName);
 
             };
 
