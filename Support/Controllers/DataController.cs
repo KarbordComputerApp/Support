@@ -529,7 +529,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostWeb_MailBox(MailBoxObject MailBoxObject)
         {
             string sql = string.Format(@"declare @mode tinyint = {0} 
-                                         select id,mode,readst,locknumber,date,title,body,Tanzim,(select COUNT(id) from DocAttach as d where d.IdMailBox = m.id) as CountAttach from MailBox as m where m.lockNumber = '{1}' and 
+                                         select id,mode,readst,locknumber,date,title,body,Tanzim,(select COUNT(IId) from DocAttach as d where d.SerialNumber = m.id) as CountAttach from MailBox as m where m.lockNumber = '{1}' and 
                                                                 ((@mode = 0 and (m.mode = 1 or m.mode = 2)) or m.mode = @mode)
                                          order by m.date desc , m.id desc", MailBoxObject.Mode, MailBoxObject.LockNumber);
 
@@ -644,7 +644,7 @@ namespace Support.Controllers
         [Route("api/Data/UploadMailBoxFile")]
         public async Task<IHttpActionResult> UploadMailBoxFile()
         {
-            string IdMailBox = HttpContext.Current.Request["IdMailBox"];
+            string SerialNumber = HttpContext.Current.Request["SerialNumber"];
             string BandNo = HttpContext.Current.Request["BandNo"];
             string FName = HttpContext.Current.Request["FName"];
             var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
@@ -662,8 +662,10 @@ namespace Support.Controllers
             SqlCommand cmd = new SqlCommand("DocAttachMailBox_Save", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@IdMailBox", IdMailBox);
+            cmd.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            cmd.Parameters.AddWithValue("@ProgName","");
             cmd.Parameters.AddWithValue("@BandNo", BandNo);
+            cmd.Parameters.AddWithValue("@ModeCode", 1);
             cmd.Parameters.AddWithValue("@FName", FName);
             cmd.Parameters.AddWithValue("@Atch", filebyte);
 
@@ -686,9 +688,9 @@ namespace Support.Controllers
         public class DocAttachBoxList
         {
 
-            public long Id { get; set; }
+            public int? IId { get; set; }
 
-            public long IdMailBox { get; set; }
+            public long? SerialNumber { get; set; }
 
             public int? BandNo { get; set; }
 
@@ -703,7 +705,7 @@ namespace Support.Controllers
         [Route("api/Data/DocAttachBoxList/")]
         public async Task<IHttpActionResult> PostDownloadFileMailBox(DocAttachBoxListObject DocAttachBoxListObject)
         {
-            string sql = "select Id,IdMailBox,BandNo,FName,";
+            string sql = "select IId,SerialNumber,BandNo,FName,";
 
             if (DocAttachBoxListObject.ByData == 0)
                 sql += "cast('' as image) as Atch ";
@@ -713,9 +715,9 @@ namespace Support.Controllers
             sql += " FROM DocAttach where ";
             
             if (DocAttachBoxListObject.ByData == 0)
-                sql += string.Format(" IdMailBox = {0}", DocAttachBoxListObject.Id);
+                sql += string.Format(" SerialNumber = {0}", DocAttachBoxListObject.Id);
             else
-                sql += string.Format("Id = {0}", DocAttachBoxListObject.Id);
+                sql += string.Format("IId = {0}", DocAttachBoxListObject.Id);
 
             var list = db.Database.SqlQuery<DocAttachBoxList>(sql);
             return Ok(list);

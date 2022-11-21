@@ -231,7 +231,7 @@
     self.selectDocAttach = function (item) {
 
         var DocAttachBoxListObject = {
-            Id: item.Id,
+            Id: item.IId,
             ByData: 1
         }
 
@@ -311,7 +311,7 @@
                 Body: body
             }
             ajaxFunction(InsertMailBoxUri, 'POST', InsertMailBoxObject).done(function (data) {
-                idMailBox = data;
+                serialNumber = data;
                 //$('#modal-Box').modal('hide');
                 // getBoxList(false);
                 // showNotification('ارتباط با بخش فروش ارسال شد', 1);
@@ -324,7 +324,7 @@
                 fileData = fileFullName.split(".");
                 fileName = fileData[0];
                 fileType = '.' + fileData[1];
-                result = SentAttach(idMailBox,i,fileAttach.File, fileFullName);
+                result = SentAttach(serialNumber,i,fileAttach.File, fileFullName);
 
             };
 
@@ -338,10 +338,10 @@
 
 
 
-    function SentAttach(idMailBox, bandNo, fileAttach, fileFullName) {
+    function SentAttach(serialNumber, bandNo, fileAttach, fileFullName) {
 
         var formData = new FormData();
-        formData.append('IdMailBox', idMailBox);
+        formData.append('SerialNumber', serialNumber);
         formData.append("BandNo", bandNo + 1);
         formData.append('FName', fileFullName);
         formData.append('Atch', fileAttach);
