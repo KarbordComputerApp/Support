@@ -189,7 +189,7 @@
         count = list.DownloadCount == '' ? 1 : parseInt(list.DownloadCount) + 1;
         Swal.fire({
             title: 'تایید چاپ فاکتور',
-            text: (count == 1 ? "دو" : "یک") + " بار امکان چاپ فاکتور وجود دارد.آیا چاپ شود؟",
+            text:'آیا فاکتور انتخابی چاپ شود', // (count == 1 ? "دو" : "یک") + " بار امکان چاپ فاکتور وجود دارد.آیا چاپ شود؟",
             type: 'info',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -203,7 +203,7 @@
                 getFDocP_CustAcount(list.DocDate.substring(0, 4), list.SerialNumber);
                 setReport(self.FDocP_CustAcountList(), '/Content/Report/SFCT.html?12', printVariable);
 
-                var CustAccountSaveObject = {
+                /*var CustAccountSaveObject = {
                     'Year': list.Year,//list.DocDate.substring(0, 4),
                     'SerialNumber': list.SerialNumber,
                     'OnlineParLink': null,
@@ -211,7 +211,7 @@
                 }
                 ajaxFunction(CustAccountSaveUri, 'Post', CustAccountSaveObject).done(function (dataSave) {
                     getCustAccount(false);
-                });
+                });*/
             }
         })
 
