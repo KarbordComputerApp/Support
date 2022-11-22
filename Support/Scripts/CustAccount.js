@@ -186,10 +186,10 @@
 
     self.ChapFactor = function (list) {
 
-        count = list.DownloadCount == '' ? 1 : parseInt(list.DownloadCount) + 1;
+        //count = list.DownloadCount == '' ? 1 : parseInt(list.DownloadCount) + 1;
         Swal.fire({
             title: 'تایید چاپ فاکتور',
-            text:'آیا فاکتور انتخابی چاپ شود', // (count == 1 ? "دو" : "یک") + " بار امکان چاپ فاکتور وجود دارد.آیا چاپ شود؟",
+            text:'آیا فاکتور انتخابی چاپ شود ؟', // (count == 1 ? "دو" : "یک") + " بار امکان چاپ فاکتور وجود دارد.آیا چاپ شود؟",
             type: 'info',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
