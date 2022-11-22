@@ -97,14 +97,15 @@
         $('#panel_Action').attr('hidden', '');
         $('.fix').attr('class', 'form-line focused fix');
 
-        var ReadBoxObject = {
-            Id: item.id,
-            ReadSt: 'Y'
+        if (item.readst == 'N' && item.mode == 2) {
+            var ReadBoxObject = {
+                Id: item.id,
+                ReadSt: 'Y'
+            }
+            ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) {});
         }
 
-        ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) {
-            $('#modal-Box').modal('show');
-        });
+        $('#modal-Box').modal('show');
     }
 
 
@@ -225,6 +226,14 @@
         ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
             self.DocAttachList(data);
         });
+
+        if (item.readst == 'N' && item.mode == 2) {
+            var ReadBoxObject = {
+                Id: item.id,
+                ReadSt: 'Y'
+            }
+            ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) { });
+        }
     }
 
 
@@ -242,7 +251,7 @@
             confirmButtonText: 'بله'
         }).then((result) => {
             if (result.value) {
-                    var DocAttachBoxListObject = {
+                var DocAttachBoxListObject = {
                         Id: item.IId,
                         ByData: 1
                     }
