@@ -1,7 +1,17 @@
 ﻿var ViewModel = function () {
     $("#Index_TextLogo").text('تغییر رمز ورود به پنل کاربری');
 
+    $("#Index_Home").show();
+    $("#BM_InformationCompany").show();
+    $("#BM_ChangePassword").show();
 
+    changePass = localStorage.getItem("ForceToChangePass");
+
+    if (changePass == '1') {
+        $("#Index_Home").hide();
+        $("#BM_InformationCompany").hide();
+        $("#BM_ChangePassword").hide();
+    }
 
     $('#B_ChangePassword').click(function (e) {
         var oldPass = $('#oldPass').val();
@@ -66,11 +76,8 @@
 
             ajaxFunction(ChangePasswordUri, 'POST', ChangePasswordObject, false).done(function (data) {
                 if (data == 1) {
+                    localStorage.removeItem("ForceToChangePass");
                     showNotification('تغییر کلمه عبور انجام شد', 1);
-
-
-
-
                     window.location.href = localStorage.getItem("urlLogin");
                 }
                 else {

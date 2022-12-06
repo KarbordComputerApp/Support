@@ -1,6 +1,8 @@
 ﻿var ViewModel = function () {
 
     self.LoginUser = function LoginUser() {
+        localStorage.removeItem("ForceToChangePass");
+
         lockNumber = $("#user").val();
         pass = $("#pass").val();
         if (lockNumber === "" || lockNumber === null) {
@@ -31,9 +33,8 @@
                     if (dataLock.length > 0) {
                         cName = dataLock[0].CompanyName.split("-");
                         localStorage.setItem("CompanyName", cName[0]);
-
-
                         if (data[0].ForceToChangePass == 1) {
+                            localStorage.setItem("ForceToChangePass", '1');
                             window.location.href = localStorage.getItem("urlChangePassword");
                         } else {
                             window.location.href = localStorage.getItem("urlIndex");
