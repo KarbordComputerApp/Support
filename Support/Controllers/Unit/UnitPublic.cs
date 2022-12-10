@@ -16,7 +16,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "66";
+        public static string titleVerNumber = "67";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1001";
@@ -57,11 +57,11 @@ namespace Support.Controllers.Unit
 
 
 
-        public static void SaveLog(int lockNumber, int mode, int act, long serialNumber)
+        public static void SaveLog(int lockNumber, int mode, int act, long serialNumber, string ip , string callprog)
         {
             SupportModel dbSupport = new SupportModel();
-            string sql = string.Format(@"insert into Log_Data (lockNumber,idact,idmode,serialnumber) values ({0},{1},{2},{3}) select 0",
-                                         lockNumber, act, mode, serialNumber);
+            string sql = string.Format(@"insert into Log_Data (lockNumber,idact,idmode,serialnumber,ip,callprog) values ({0},{1},{2},{3},'{4}','{5}') select 0",
+                                         lockNumber, act, mode, serialNumber, ip, callprog);
             int res = dbSupport.Database.SqlQuery<int>(sql).Single();
         }
 

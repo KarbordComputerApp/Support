@@ -19,7 +19,7 @@
         var newPass2 = $('#newPass2').val();
 
         if (oldPass == '') {
-            return showNotification('کلمه عبور قدیم را وارد کنید',0)
+            return showNotification('کلمه عبور قدیم را وارد کنید', 0)
         }
 
         if (newPass1 == '') {
@@ -38,7 +38,7 @@
             return showNotification('پسورد جدید باید حداقل 8 کاراکتر باشد', 0);
         }
 
-        
+
 
         if (newPass1.match(lowerCaseLetters) == null) {
             val[0] = true;
@@ -64,27 +64,28 @@
         }
 
 
-       // if (val[0] && val[1] && val[2] && val[3]) {
+        // if (val[0] && val[1] && val[2] && val[3]) {
 
-            ChangePasswordUri = server + '/api/Data/ChangePassword/';
+        ChangePasswordUri = server + '/api/Data/ChangePassword/';
+        var ChangePasswordObject = {
+            LockNumber: lockNumber,
+            OldPass: oldPass,
+            NewPass: newPass1,
+            IP: ipw,
+            CallProg : 'Web'
+        }
 
-            var ChangePasswordObject = {
-                LockNumber: lockNumber,
-                OldPass: oldPass,
-                NewPass: newPass1
+        ajaxFunction(ChangePasswordUri, 'POST', ChangePasswordObject, false).done(function (data) {
+            if (data == 1) {
+                localStorage.removeItem("ForceToChangePass");
+                showNotification('تغییر کلمه عبور انجام شد', 1);
+                window.location.href = localStorage.getItem("urlLogin");
+            }
+            else {
+                showNotification('تغییر کلمه عبور انجام نشد ، کلمه عبور قدیم را بررسی کنید', 0);
             }
 
-            ajaxFunction(ChangePasswordUri, 'POST', ChangePasswordObject, false).done(function (data) {
-                if (data == 1) {
-                    localStorage.removeItem("ForceToChangePass");
-                    showNotification('تغییر کلمه عبور انجام شد', 1);
-                    window.location.href = localStorage.getItem("urlLogin");
-                }
-                else {
-                    showNotification('تغییر کلمه عبور انجام نشد ، کلمه عبور قدیم را بررسی کنید', 0);
-                }
-
-            });
+        });
         //}
     })
 

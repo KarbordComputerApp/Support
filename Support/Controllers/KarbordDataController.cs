@@ -35,7 +35,7 @@ namespace Support.Controllers
         public const int act_Print = 4;
         public const int act_Download = 5;
         public const int act_ChangePass = 6;
-
+        public const int act_NewTiketByLink = 7;
 
         public class Object_TicketStatus
         {
@@ -137,6 +137,11 @@ namespace Support.Controllers
 
             public string Motaghazi { get; set; }
 
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+
+            public bool LoginLink { get; set; }
         }
 
 
@@ -213,7 +218,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
 
-            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, act_New, 0);
+            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg);
 
             return Ok(list);
         }
@@ -228,6 +233,9 @@ namespace Support.Controllers
             public string LockNo { get; set; }
 
             public bool FlagLog { get; set; }
+
+            public string IP { get; set; }
+            public string CallProg { get; set; }
         }
 
 
@@ -240,7 +248,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
             if (Object_ErjDocXK.FlagLog == true)
             {
-                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, act_View, 0);
+                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, act_View, 0, Object_ErjDocXK.IP, Object_ErjDocXK.CallProg);
             }
             return Ok(list);
         }
@@ -381,6 +389,9 @@ namespace Support.Controllers
 
             public bool FlagLog { get; set; }
 
+            public string IP { get; set; }
+            public string CallProg { get; set; }
+
         }
 
         public class CustAccount
@@ -415,7 +426,6 @@ namespace Support.Controllers
 
             public string Year { get; set; }
 
-
         }
 
         [Route("api/KarbordData/CustAccount")]
@@ -429,7 +439,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<CustAccount>(sql);
             if (CustAccountObject.FlagLog == true)
             {
-                UnitPublic.SaveLog(Int32.Parse(CustAccountObject.LockNo), mode_CustAccount, act_View, 0);
+                UnitPublic.SaveLog(Int32.Parse(CustAccountObject.LockNo), mode_CustAccount, act_View, 0, CustAccountObject.IP, CustAccountObject.CallProg);
             }
             return Ok(list);
         }
@@ -482,6 +492,9 @@ namespace Support.Controllers
             public string Year { get; set; }
 
             public long SerialNumber { get; set; }
+
+            public string IP { get; set; }
+            public string CallProg { get; set; }
         }
 
 
@@ -500,7 +513,7 @@ namespace Support.Controllers
 
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
             var list = db.Database.SqlQuery<Web_FDocP>(sql);
-            UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, 0);
+            UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, 0, FDocP_CustAcountObject.IP, FDocP_CustAcountObject.CallProg);
             return Ok(list);
         }
 

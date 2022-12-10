@@ -10,7 +10,9 @@
     function getFinancialList(log) {
         var FinancialDocumentsObject = {
             LockNumber: lockNumber,
-            FlagLog: log
+            FlagLog: log,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(FinancialUri, 'POST', FinancialDocumentsObject, true).done(function (data) {
             self.FinancialList(data == null ? [] : data);
@@ -21,7 +23,7 @@
 
     self.Download = function (item) {
         var a = document.createElement("a");
-        a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id;
+        a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id + '/' + ipw.replaceAll('.', '-') + '/Web';
         a.click();
         setTimeout(function () {
             getFinancialList(false);

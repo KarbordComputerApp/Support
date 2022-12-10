@@ -98,12 +98,12 @@
     $("#SendFiles").on('click', function (e) {
         if (file1 == null && file2 == null && file3 == null) {
             return showNotification('فایل ارسالی را انتخاب کنید', 0);
-        } 
+        }
 
         desc = $("#comm").val();
         if (desc == '') {
             return showNotification('توضیحات فایل ارسالی را واردی کنید', 0);
-        } 
+        }
 
 
         if (file1 != null) {
@@ -173,7 +173,9 @@
 
         var FinalUploadFileObject = {
             LockNumber: lockNumber,
-            Desc: desc
+            Desc: desc,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(FinalUploadFilesUri, 'POST', FinalUploadFileObject, true).done(function (data) {
             $("#comm").val('');
@@ -182,10 +184,10 @@
                 return showNotification('بارگذاری با موفقیت انجام شد', 1);
             }
 
-            
 
 
-            
+
+
 
         });
 

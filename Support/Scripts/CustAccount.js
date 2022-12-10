@@ -41,7 +41,9 @@
     function getCustAccount(flag) {
         var CustAccountObject = {
             LockNo: lockNumber,
-            FlagLog:flag
+            FlagLog: flag,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(CustAccountUri , 'Post', CustAccountObject).done(function (data) {
             self.CustAccountList(data)
@@ -76,6 +78,7 @@
     self.ShowLinkPardakht = function (list) {
         callBackUrl = "https://karbordcomputerapp.ir/Pay/PaymentCallback";
         random = Math.floor(Math.random() * 90000) + 10000;
+
         var SalePaymentRequestObject = {
             'CallBackUrl': callBackUrl,
             'LoginAccount': loginAccount,
@@ -132,7 +135,9 @@
             ModeCode: '2',
             SerialNumber: list.SerialNumber,
             BandNo: 0,
-            ByData: 0
+            ByData: 0,
+            IP: ipw,
+            CallProg: 'Web'
         }
 
         ajaxFunction(DocAttachUri, 'POST', DocAttachObject).done(function (data) {
@@ -152,7 +157,9 @@
                         ModeCode: '2',
                         SerialNumber: item.SerialNumber,
                         BandNo: item.BandNo,
-                        ByData: 1
+                        ByData: 1,
+                        IP: ipw,
+                        CallProg: 'Web'
                     }
                     ajaxFunction(DocAttachUri, 'POST', DownloadAttachObject).done(function (data) {
                         var sampleArr = base64ToArrayBuffer(data[0].Atch);
@@ -176,7 +183,9 @@
         var FDocP_CustAcountObject = {
             LockNumber: lockNumber,
             Year: year,
-            SerialNumber: serial
+            SerialNumber: serial,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(FDocP_CustAcountUri , 'Post', FDocP_CustAcountObject, false).done(function (data) {
             self.FDocP_CustAcountList(data)

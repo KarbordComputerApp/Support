@@ -45,7 +45,9 @@
             LockNumber: lockNumber,
             Mode: $("#BoxMode").val(),
             UserCode: sessionStorage.userName,
-            FlagLog: log
+            FlagLog: log,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(BoxUri, 'POST', BoxObject).done(function (data) {
             self.BoxList(data == null ? [] : data);
@@ -100,7 +102,9 @@
         if (item.readst == 'N' && item.mode == 2) {
             var ReadBoxObject = {
                 Id: item.id,
-                ReadSt: 'Y'
+                ReadSt: 'Y',
+                IP: ipw,
+                CallProg: 'Web'
             }
             ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) {});
         }
@@ -220,7 +224,9 @@
     self.ViewBoxAttach = function (item) {
         var DocAttachBoxListObject = {
             Id: item.id,
-            ByData: 0
+            ByData: 0,
+            IP: ipw,
+            CallProg: 'Web'
         }
 
         ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
@@ -230,7 +236,9 @@
         if (item.readst == 'N' && item.mode == 2) {
             var ReadBoxObject = {
                 Id: item.id,
-                ReadSt: 'Y'
+                ReadSt: 'Y',
+                IP: ipw,
+                CallProg: 'Web'
             }
             ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) { });
         }
@@ -253,7 +261,9 @@
             if (result.value) {
                 var DocAttachBoxListObject = {
                         Id: item.IId,
-                        ByData: 1
+                    ByData: 1,
+                    IP: ipw,
+                    CallProg: 'Web'
                     }
 
                     ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
@@ -331,7 +341,9 @@
                 LockNumber: lockNumber,
                 Date: DateNow,
                 Title: title,
-                Body: body
+                Body: body,
+                IP: ipw,
+                CallProg: 'Web'
             }
             ajaxFunction(InsertMailBoxUri, 'POST', InsertMailBoxObject).done(function (data) {
                 serialNumber = data;

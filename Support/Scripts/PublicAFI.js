@@ -16,6 +16,8 @@ var ticketPass = '@!B912';
 var custAccountUser = 'CustAccount';
 var custAccountPass = '@!B913';
 
+var ipw = localStorage.getItem("IPW");
+
 
 $("#B_CustAccount").attr('disabled', 'disabled');
 

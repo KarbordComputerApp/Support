@@ -6,19 +6,23 @@
         group_Tiket = '0' + group_Tiket;
     }
 
+    var loginLink = false;
     $("#Index_TextLogo").text('تیکت پشتیبانی');
 
     var LockInput = $("#LockInput").data("value");
     var PassInput = $("#PassInput").data("value");
 
     if (LockInput != '') {
+        loginLink = true;
         localStorage.removeItem("lockNumber");
         lockNumber = LockInput;
 
         LockNumbersUri = server + '/api/Data/LockNumbers/';
 
         var LockNumbersObject = {
-            LockNumber: lockNumber
+            LockNumber: lockNumber,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
             if (dataLock.length > 0) {
@@ -73,13 +77,17 @@
         var ErjDocXKObject = {
             LockNo: lockNumber,
             ModeCode: '204',
-            FlagLog: log
+            FlagLog: log,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
 
             var Object_TicketStatus = {
-                SerialNumber: ''
+                SerialNumber: '',
+                IP: ipw,
+                CallProg: 'Web'
             }
             ajaxFunction(TicketStatusUri, 'Post', Object_TicketStatus, false).done(function (dataTicketStatus) {
 
@@ -111,7 +119,9 @@
             Year: '0000',
             SerialNumber: serial,
             BandNo: 0,
-            ByData: 0
+            ByData: 0,
+            IP: ipw,
+            CallProg: 'Web'
         }
 
         ajaxFunction(DocAttachUri, 'POST', DocAttachObject).done(function (data) {
@@ -165,9 +175,9 @@
             else {
                 localStorage.removeItem("SendTiket");
             }
-            
+
         }
-        
+
 
 
         $('#modal-ErjDocXK').modal('show');
@@ -250,6 +260,9 @@
                     F19: '',
                     F20: '',
                     Motaghazi: fm_Select + motaghazi,
+                    IP: ipw,
+                    CallProg: 'Web',
+                    LoginLink: loginLink
                 }
                 ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
                     serialNumber = data;
@@ -448,7 +461,9 @@
                     Year: '0000',
                     SerialNumber: item.SerialNumber,
                     BandNo: item.BandNo,
-                    ByData: 1
+                    ByData: 1,
+                    IP: ipw,
+                    CallProg: 'Web'
                 }
                 ajaxFunction(DocAttachUri, 'POST', DownloadAttachObject).done(function (data) {
                     var sampleArr = base64ToArrayBuffer(data[0].Atch);
@@ -478,6 +493,8 @@
                     ProgName: 'ERJ1',
                     ModeCode: 102,
                     BandNo: Band.BandNo,
+                    IP: ipw,
+                    CallProg: 'Web'
                 };
 
                 ajaxFunction(ErjDocAttach_DelUri, 'POST', Web_DocAttach_Save).done(function (response) {
@@ -556,7 +573,9 @@
             SerialNumber: serialNumber,
             ProgName: '',
             ModeCode: '',
-            BandNo: bandNoImput
+            BandNo: bandNoImput,
+            IP: ipw,
+            CallProg: 'Web'
         };
         ajaxFunction(ErjDocAttach_DelUri, 'POST', Web_DocAttach_Del).done(function (response) {
         });

@@ -13,7 +13,9 @@
     function getCustomerFilesList(Log) {
         var CustomerFilesObject = {
             LockNumber: lockNumber,
-            FlagLog:Log
+            FlagLog: Log,
+            IP: ipw,
+            CallProg: 'Web'
         }
         ajaxFunction(CustomerFilesUri, 'POST', CustomerFilesObject, true).done(function (data) {
             self.CustomerFilesList(data == null ? [] : data);
@@ -24,7 +26,7 @@
 
     self.Download = function (item) {
         var a = document.createElement("a");
-        a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id;
+        a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id + '/' + ipw.replaceAll('.', '-') + '/Web';
         a.click();
         setTimeout(function () {
             getCustomerFilesList(false);
