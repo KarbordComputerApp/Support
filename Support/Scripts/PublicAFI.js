@@ -474,6 +474,8 @@ function getIP() {
         //localStorage.setItem("CityLogin", data.city);
 
         sessionStorage.IPW = data.query;
+        ipw = data.query;
+
         //sessionStorage.CountryLogin = data.country
         //sessionStorage.CityLogin = data.city
     });
