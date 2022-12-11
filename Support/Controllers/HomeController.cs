@@ -69,14 +69,14 @@ namespace Support.Controllers
             return View();
         }
 
-        //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQQQ
+        //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQpAdq42114
 
         public ActionResult Tiket(string LockNumber, string Pass)
         {
             if (LockNumber != null)
             {
                 ViewBag.LockNumber = "";
-                if (Pass == "ADf5243hh2059dghQQQ")
+                if (Pass == "ADf5243hh2059dghQpAdq42114")
                 {
                     ViewBag.LockNumber = LockNumber;
                 }

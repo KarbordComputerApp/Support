@@ -463,3 +463,18 @@ function showPass(id) {
         x.type = "password";
     }
 }
+
+
+function getIP() {
+    ajaxFunctionAccount('http://ip-api.com/json/', 'GET').done(function (data) {
+        //a = sessionStorage.MacAddress;
+        //b = sessionStorage.IP4Address;
+        localStorage.setItem("IPW", data.query);
+        //localStorage.setItem("CountryLogin", data.country);
+        //localStorage.setItem("CityLogin", data.city);
+
+        sessionStorage.IPW = data.query;
+        //sessionStorage.CountryLogin = data.country
+        //sessionStorage.CityLogin = data.city
+    });
+}

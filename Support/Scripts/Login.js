@@ -1,18 +1,5 @@
 ﻿var ViewModel = function () {
 
-    function getIP(data) {
-        ajaxFunctionAccount('http://ip-api.com/json/', 'GET').done(function (data) {
-            //a = sessionStorage.MacAddress;
-            //b = sessionStorage.IP4Address;
-            localStorage.setItem("IPW", data.query);
-            //localStorage.setItem("CountryLogin", data.country);
-            //localStorage.setItem("CityLogin", data.city);
-
-            sessionStorage.IPW = data.query;
-            //sessionStorage.CountryLogin = data.country
-            //sessionStorage.CityLogin = data.city
-        });
-    }
     getIP();
 
     self.LoginUser = function LoginUser() {

@@ -36,6 +36,7 @@ namespace Support.Controllers
         public const int act_Download = 5;
         public const int act_ChangePass = 6;
         public const int act_NewTiketByLink = 7;
+        public const int act_ViewTiketByLink = 8;
 
         public class Object_TicketStatus
         {
@@ -235,7 +236,10 @@ namespace Support.Controllers
             public bool FlagLog { get; set; }
 
             public string IP { get; set; }
+
             public string CallProg { get; set; }
+
+            public bool LoginLink { get; set; }
         }
 
 
@@ -248,7 +252,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
             if (Object_ErjDocXK.FlagLog == true)
             {
-                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, act_View, 0, Object_ErjDocXK.IP, Object_ErjDocXK.CallProg);
+                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, Object_ErjDocXK.LoginLink == true ? act_ViewTiketByLink : act_View, 0, Object_ErjDocXK.IP, Object_ErjDocXK.CallProg);
             }
             return Ok(list);
         }

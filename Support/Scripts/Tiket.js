@@ -14,6 +14,7 @@
 
     if (LockInput != '') {
         loginLink = true;
+        getIP();
         localStorage.removeItem("lockNumber");
         lockNumber = LockInput;
 
@@ -79,7 +80,8 @@
             ModeCode: '204',
             FlagLog: log,
             IP: ipw,
-            CallProg: 'Web'
+            CallProg: 'Web',
+            LoginLink: loginLink
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
