@@ -16,7 +16,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "69";
+        public static string titleVerNumber = "70";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1001";
@@ -91,6 +91,7 @@ namespace Support.Controllers.Unit
 
             var res = Convert.ToBase64String(ms.ToArray());
             res = res.Replace("/", "-");
+            res = res.Replace("+", ";");
             return res;
         }
 
@@ -98,7 +99,8 @@ namespace Support.Controllers.Unit
         {
 
             str = str.Replace("-", "/");
-            str = str.Replace(" ", "+");
+            str = str.Replace(" ", "-");
+            str = str.Replace(";", "+");
             string DecryptKey = "2013;[pnuLIT)WebCodeExpertKarbordComputer";
             byte[] byKey = { };
             byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };

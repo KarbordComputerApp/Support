@@ -790,13 +790,8 @@ namespace Support.Controllers
 
 
 
-        public class TokenObject
-        {
-            public string LockNumber { get; set; }
-        }
 
-
-        // Post: api/Data/GetToken   
+        // Get: api/Data/GetToken   
         [Route("api/Data/Token/{lockNumber}")]
         public async Task<IHttpActionResult> GetToken(string lockNumber)
         {
@@ -804,6 +799,88 @@ namespace Support.Controllers
             var token = UnitPublic.Encrypt(lockNumber + "--" + currentDate);
             return Ok(token);
         }
+
+
+
+        public class LastCustomerFiles
+        {
+            public long Id { get; set; }
+
+            public int? LockNumber { get; set; }
+
+            public string Date { get; set; }
+
+            public string FileName { get; set; }
+
+            public string FilePath { get; set; }
+        }
+
+
+        //http://localhost:52798/api/Data/LastCustomerFiles/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+
+        // Post: api/Data/LastCustomerFiles   
+        [Route("api/Data/LastCustomerFile/{Token}")]
+        public async Task<IHttpActionResult> GetLastCustomerFile(string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                //if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles
+                                                 where  id = (select max(id) from CustomerFiles where LockNumber = {0})", lockNumber);
+                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).Single();
+                    return Ok(list.Id.ToString() + ',' + list.LockNumber.ToString() + ',' + list.Date + ',' + list.FileName + ',' + list.FilePath);
+                }
+            }
+            return Ok("");
+        }
+
+
+
+
+        [HttpGet]
+        [Route("api/Data/LastCustomerFileDownload/{Id}")]
+
+        public byte[] LastCustomerFileDownload(string id)
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+
+            string path = GetPath(2);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string sql = string.Format(@"select filepath from CustomerFiles where id = {0}", id);
+            var filePath = db.Database.SqlQuery<string>(sql).Single();
+
+            string fullFileName = path + "\\" + filePath.ToString();
+
+            FileInfo f = new FileInfo(fullFileName);
+            string fullname = f.DirectoryName;
+
+
+            string[] files = Directory.GetFiles(fullname, f.Name);
+
+            if (!File.Exists(files[0]))
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
+                throw new HttpResponseException(response);
+            }
+
+            byte[] bytes = File.ReadAllBytes(files[0].ToString());
+
+            return bytes;
+        }
+
+
 
     }
 }
