@@ -171,7 +171,7 @@
             let time = d.getTime();
 
             t = (time - parseInt(lastSend)) / 60000;
-            if (t < 1) {
+            if (t < 1 && lockNumber != "10000") {
                 return showNotification('فاصله زمانی بین دو تیکت باید حداقل یک دقیقه باشد', 0);
             }
             else {

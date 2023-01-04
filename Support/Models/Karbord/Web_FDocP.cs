@@ -70,14 +70,10 @@ namespace Support.Models
 
         public string PaymentTypeSt { get; set; }
 
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long SerialNumber { get; set; }
 
         public string KalaCode { get; set; }
 
-        [Column(TypeName = "ntext")]
         public string Comm { get; set; }
 
         public short? MainUnit { get; set; }
@@ -99,8 +95,6 @@ namespace Support.Models
         public double? Discount { get; set; }
 
         [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BandNo { get; set; }
 
         public string CustCode { get; set; }
@@ -207,11 +201,30 @@ namespace Support.Models
         [Column(TypeName = "image")]
         public byte[] TaeedEmza { get; set; }
 
-        [Column(TypeName = "image")]
         public byte[] TanzimEmza { get; set; }
 
         [Column(TypeName = "image")]
         public byte[] TasvibEmza { get; set; }
+
+        public double? AddMin1 { get; set; }
+
+        public double? AddMin2 { get; set; }
+
+        public double? AddMin3 { get; set; }
+
+        public double? AddMin4 { get; set; }
+
+        public double? AddMin5 { get; set; }
+
+        public double? AddMin6 { get; set; }
+
+        public double? AddMin7 { get; set; }
+
+        public double? AddMin8 { get; set; }
+
+        public double? AddMin9 { get; set; }
+
+        public double? AddMin10 { get; set; }
 
     }
 }
