@@ -43,6 +43,11 @@ namespace Support.Controllers
              return View();
          }*/
 
+        public ActionResult Learn()
+        {
+            return View();
+        }
+
         public ActionResult ChangePassword()
         {
             return View();

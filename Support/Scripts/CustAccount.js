@@ -210,7 +210,7 @@
             if (result.value) {
                 printVariable = '"ReportDate":"' + DateNow + '",';
                 getFDocP_CustAcount(list.DocDate.substring(0, 4), list.SerialNumber);
-                setReport(self.FDocP_CustAcountList(), '/Content/Report/SFCT.html?13', printVariable);
+                setReport(self.FDocP_CustAcountList(), '/Content/Report/SFCT.html?14', printVariable);
 
                 /*var CustAccountSaveObject = {
                     'Year': list.Year,//list.DocDate.substring(0, 4),
