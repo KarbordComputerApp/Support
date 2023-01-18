@@ -317,6 +317,8 @@
     <Content Include="Content\fonts\Vazir-FD-WOL.ttf" />
     <Content Include="Content\fonts\Vazir-FD-WOL.woff" />
     <Content Include="Content\fonts\Vazir-FD-WOLReport.ttf" />
+    <Content Include="Content\img\android.png" />
+    <Content Include="Content\img\attach.png" />
     <Content Include="Content\img\download.svg" />
     <Content Include="Content\img\icons\contract.png" />
     <Content Include="Content\img\icons\download.png" />
@@ -351,6 +353,8 @@
     <Content Include="Content\img\Logo.png" />
     <Content Include="Content\img\LogoMin.png" />
     <Content Include="Content\img\LogoTop.png" />
+    <Content Include="Content\img\movie.png" />
+    <Content Include="Content\img\doc.png" />
     <Content Include="Content\img\pardakht.svg" />
     <Content Include="Content\img\print.svg" />
     <Content Include="Content\img\svg\1.png" />
@@ -717,7 +721,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Learn.js" />
+    <Content Include="Scripts\Download.js" />
     <Content Include="Scripts\MailBox.js" />
     <Content Include="Scripts\ChangePassword.js" />
     <Content Include="Scripts\shamsi.js" />
@@ -774,7 +778,7 @@
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Home\CustAccount.cshtml" />
     <Content Include="Views\Home\MailBox.cshtml" />
-    <Content Include="Views\Home\Learn.cshtml" />
+    <Content Include="Views\Home\Download.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

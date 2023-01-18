@@ -31,5 +31,7 @@ namespace Support.Models
 
         public byte? VerificationStatus { get; set; }
 
+        public string TrsDownload { get; set; }
+
     }
 }

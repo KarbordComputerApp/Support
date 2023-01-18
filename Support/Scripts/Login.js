@@ -30,6 +30,7 @@
                 localStorage.setItem("Email", data[0].Email);
                 localStorage.setItem("UserType", data[0].UserType);
                 localStorage.setItem("ForceToChangePass", data[0].ForceToChangePass);
+                localStorage.setItem("TrsDownload", data[0].TrsDownload);
 
                 var LockNumbersObject = {
                     LockNumber: lockNumber

@@ -884,12 +884,13 @@ namespace Support.Controllers
 
 
         [HttpGet]
-        [Route("api/Data/KarbordDownload/{Name}/")]
-        public HttpResponseMessage KarbordDownload(String Name)
+        [Route("api/Data/KarbordDownload/{Mode}/{Name}/")]
+        public HttpResponseMessage KarbordDownload(String Mode, String Name)
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(43); 
+            string path = GetPath(43) + "\\" + Mode;
+
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -914,41 +915,6 @@ namespace Support.Controllers
 
             return response;
         }
-
-
-
-        [HttpGet]
-        [Route("api/Data/LearnDownload/{Name}/")]
-        public HttpResponseMessage LearnDownload(String Name)
-        {
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
-
-            string path = GetPath(44);
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            string[] files = Directory.GetFiles(path, string.Format("{0}.*", Name));
-
-            FileInfo f = new FileInfo(files[0]);
-
-            if (!File.Exists(files[0]))
-            {
-                response.StatusCode = HttpStatusCode.NotFound;
-                response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
-                throw new HttpResponseException(response);
-            }
-
-            byte[] bytes = File.ReadAllBytes(files[0].ToString());
-
-            response.Content = new ByteArrayContent(bytes);
-            response.Content.Headers.ContentLength = bytes.LongLength;
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = f.Name;
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
-
-            return response;
-        }
-
 
 
 

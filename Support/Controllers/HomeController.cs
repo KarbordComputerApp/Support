@@ -43,7 +43,7 @@ namespace Support.Controllers
              return View();
          }*/
 
-        public ActionResult Learn()
+        public ActionResult Download()
         {
             return View();
         }

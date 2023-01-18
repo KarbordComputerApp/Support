@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "دانلود ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center>
+    <p style="font-size: 20px;margin-bottom: 10px;">دانلود ها</p>
+</center>
+
+<div class="row">
+    <div id="P_App" class="col-md-6 col-sx-12">
+        <div style="margin: 15px; background-color:white;border-radius: 25px;padding: 20px;box-shadow:1px 1px 10px #bbbbbb;">
+            <div class="row" style="padding:10px">
+                <h4>اپلیکیشن اندروید</h4>
+            </div>
+            <div class="row" style="padding:10px">
+
+                <a href="~/api/Data/KarbordDownload/App/KarbordApp" class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px;cursor: pointer; ">
+                    <img src="~/Content/img/android.png" width="20" style="margin-left:10px" />
+                    <h6>اپ کاربرد</h6>
+                </a>
+
+                <a href="~/api/Data/KarbordDownload/App/SupportApp" class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px;cursor: pointer;">
+                    <img src="~/Content/img/android.png" width="20" style="margin-left:10px" />
+                    <h6>اپ ساپورت</h6>
+                </a>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div id="P_TTMS" class="col-md-6 col-sx-12">
+        <div style="margin: 15px; background-color:white;border-radius: 25px;padding: 20px;box-shadow:1px 1px 10px #bbbbbb;">
+            <div class="row" style="padding:10px">
+                <h4>صورت معاملات فصلی</h4>
+            </div>
+            <div class="row" style="padding:10px">
+                <a href="~/api/Data/KarbordDownload/TTMS/TTMS" class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px;cursor: pointer; ">
+                    <img src="~/Content/img/attach.png" width="20" style="margin-left:10px" />
+                    <h6>TTMS</h6>
+                </a>
+
+                <div class="col-12" style="height:30px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="P_Learn" class="col-md-6 col-sx-12">
+        <div style="margin: 15px; background-color:white;border-radius: 25px;padding: 20px;box-shadow:1px 1px 10px #bbbbbb;">
+            <div class="row" style="padding:10px">
+                <h4>آموزش های نرم افزار</h4>
+            </div>
+            <div class="row" style="padding:10px">
+
+                <a href="~/api/Data/KarbordDownload/Learn/Karbord-ACC" class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px;cursor: pointer; ">
+                    <img src="~/Content/img/movie.png" width="20" style="margin-left:10px" />
+                    <h6>حسابداری</h6>
+                </a>
+
+                <a class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px;cursor: no-drop;">
+                    <img src="~/Content/img/movie.png" width="20" style="margin-left:10px" />
+                    <h6>خرید و فروش</h6>
+                </a>
+                <a class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px; cursor: no-drop;">
+                    <img src="~/Content/img/movie.png" width="20" style="margin-left:10px" />
+                    <h6>انبارداری</h6>
+                </a>
+
+                <a class="form-inline  col-12" id="Learn_Acc" style="padding-right:20px;cursor: no-drop;">
+                    <img src="~/Content/img/movie.png" width="20" style="margin-left:10px" />
+                    <h6>اتوماسیون</h6>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="P_Api" class="col-md-6 col-sx-12">
+        <div style="margin: 15px; background-color:white;border-radius: 25px;padding: 20px;box-shadow:1px 1px 10px #bbbbbb;">
+            <div class="row" style="padding:10px">
+                <h4>مستندات</h4>
+            </div>
+            <div class="row" style="padding:10px">
+                <a href="~/api/Data/KarbordDownload/DocumentAPI/DocumentAPI" class="form-inline col-12" id="Learn_Acc" style="padding-right:20px;padding-bottom:10px;cursor: pointer; ">
+                    <img src="~/Content/img/doc.png" width="20" style="margin-left:10px" />
+                    <h6>مستندات API</h6>
+                </a>
+
+                <div class="col-12" style="height:80px;"> </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/Download.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
