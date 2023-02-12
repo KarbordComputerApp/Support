@@ -2,6 +2,7 @@
     var self = this;
     var FinancialUri = server + '/api/Data/FinancialDocuments/'; // آدرس فاکتور
     var FinancialDownloadlUri = server + '/api/Data/FinancialDocumentsDownload/'; // آدرس دانلود
+    var FinancialDocumentsDownload_TesttUri = server + '/api/Data/FinancialDocumentsDownload_Test/'; // آدرس  تست دانلود
     self.FinancialList = ko.observableArray([]); // ليست فاکتور
 
     $("#Index_TextLogo").text('اسناد و مستندات');
@@ -22,13 +23,33 @@
 
 
     self.Download = function (item) {
-        var a = document.createElement("a");
-        a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id + '/' + ipw.replaceAll('.', '-') + '/Web';
-        a.click();
-        setTimeout(function () {
-            getFinancialList(false);
-        }, 2000);
-        //window.location.reload(true);
+        ajaxFunction(FinancialDocumentsDownload_TesttUri + item.LockNumber + '/' + item.Id, 'GET', true).done(function (data) {
+            if (data == "NotFound") {
+                return showNotification('فایل یافت نشد', 0);
+            }
+            else {
+                Swal.fire({
+                    title: 'تایید دانلود',
+                    text: "آیا فایل انتخابی دانلود شود ؟",
+                    type: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#3085d6',
+                    cancelButtonText: 'خیر',
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'بله'
+                }).then((result) => {
+                    if (result.value) {
+                        var a = document.createElement("a");
+                        a.href = FinancialDownloadlUri + item.LockNumber + '/' + item.Id + '/' + ipw.replaceAll('.', '-') + '/Web';
+                        a.click();
+                        setTimeout(function () {
+                            getFinancialList(false);
+                        }, 2000);
+                    }
+                });
+            }
+        })
     }
 
     $('#refreshFinancial').click(function () {
@@ -51,7 +72,7 @@
     })
 
 
-}; 
+};
 
 
 ko.applyBindings(new ViewModel());

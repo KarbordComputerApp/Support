@@ -6,7 +6,7 @@ var firstName = localStorage.getItem("FirstName");
 var lastName = localStorage.getItem("LastName");
 var userType = localStorage.getItem("UserType");
 var forceToChangePass = localStorage.getItem("ForceToChangePass");
-var fullName = firstName + ' ' + lastName; 
+var fullName = firstName + ' ' + lastName;
 var companyName = localStorage.getItem("CompanyName");
 
 
@@ -323,7 +323,7 @@ function createViewer() {
     options.appearance.scrollbarsMode = true;
     options.toolbar.showSaveButton = true;
 
-    if (lockNumber == 10011 || lockNumber == 10071 || lockNumber == 10000 ) {
+    if (lockNumber == 10011 || lockNumber == 10071 || lockNumber == 10000) {
         options.toolbar.showDesignButton = true;
         $('#DesignPrint').attr('style', 'display: unset');
     } else {
@@ -479,4 +479,19 @@ function getIP() {
         //sessionStorage.CountryLogin = data.country
         //sessionStorage.CityLogin = data.city
     });
+}
+
+
+var testFile = false;
+function TestDownload(mode, lockNo, id) {
+    var Download_TestUri = server + '/api/Data/Download_Test/'; // آدرس  تست دانلود
+    ajaxFunction(Download_TestUri + mode + "/" + lockNo + '/' + id, 'GET', false).done(function (data) {
+        if (data == "NotFound") {
+            testFile = false;
+            return showNotification('فایل یافت نشد', 0);
+        }
+        else {
+            testFile = true;
+        }
+    })
 }

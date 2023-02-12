@@ -233,8 +233,25 @@ namespace Support.Controllers
 
 
         [HttpGet]
+        [Route("api/Data/FinancialDocumentsDownload_Test/{lockNo}/{idFinancial}")]
+        public async Task<IHttpActionResult> FinancialDocumentsDownload_Test(int lockNo, long idFinancial)
+        {
+            string path = GetPath(8) + "\\" + lockNo.ToString();
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string[] files = Directory.GetFiles(path, string.Format("{0}_*", idFinancial));
+            if (files.Length == 0)
+            {
+                return Ok("NotFound");
+            }
+            return Ok("OK");
+        }
+
+
+        [HttpGet]
         [Route("api/Data/FinancialDocumentsDownload/{lockNo}/{idFinancial}/{IP}/{CallProg}")]
-        public HttpResponseMessage FinancialDocumentsDownload(int lockNo, long idFinancial, string IP, string CallProg )
+        public HttpResponseMessage FinancialDocumentsDownload(int lockNo, long idFinancial, string IP, string CallProg)
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
@@ -243,7 +260,12 @@ namespace Support.Controllers
                 Directory.CreateDirectory(path);
 
             string[] files = Directory.GetFiles(path, string.Format("{0}_*", idFinancial));
-
+            if (files.Length == 0)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = string.Format("File not found");
+                return response;
+            }
             FileInfo f = new FileInfo(files[0]);
 
             if (!File.Exists(files[0]))
@@ -266,7 +288,7 @@ namespace Support.Controllers
             response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
 
-            UnitPublic.SaveLog(lockNo, mode_FinancialDocuments, act_Download, 0, IP.Replace("-","."), CallProg);
+            UnitPublic.SaveLog(lockNo, mode_FinancialDocuments, act_Download, 0, IP.Replace("-", "."), CallProg);
 
             return response;
         }
@@ -276,6 +298,34 @@ namespace Support.Controllers
         {
             return part1.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar + part2.TrimStart(Path.DirectorySeparatorChar);
         }
+
+
+        [HttpGet]
+        [Route("api/Data/CustomerDownload_Test/{idCustomer}")]
+        public async Task<IHttpActionResult> CustomerDownload_Test(long idCustomer)
+        {
+            string path = GetPath(2);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string sql = string.Format(@"select *, 0 as CountDownload from CustomerFiles where id = {0}", idCustomer);
+            var list = db.Database.SqlQuery<CustomerFiles>(sql).Single();
+
+            string fullFileName = MergePaths(path, list.FilePath);
+
+            FileInfo f = new FileInfo(fullFileName);
+            string fullname = f.DirectoryName;
+
+            string[] files = Directory.GetFiles(fullname, f.Name);
+
+
+            if (files.Length == 0)
+            {
+                return Ok("NotFound");
+            }
+            return Ok("OK");
+        }
+
 
         [HttpGet]
         [Route("api/Data/CustomerDocumentsDownload/{lockNo}/{idCustomer}/{IP}/{CallProg}")]
@@ -688,7 +738,7 @@ namespace Support.Controllers
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            cmd.Parameters.AddWithValue("@ProgName","Supp");
+            cmd.Parameters.AddWithValue("@ProgName", "Supp");
             cmd.Parameters.AddWithValue("@BandNo", BandNo);
             cmd.Parameters.AddWithValue("@ModeCode", 1);
             cmd.Parameters.AddWithValue("@FName", FName);
@@ -738,7 +788,7 @@ namespace Support.Controllers
                 sql += " Atch ";
 
             sql += " FROM DocAttach where ";
-            
+
             if (DocAttachBoxListObject.ByData == 0)
                 sql += string.Format(" SerialNumber = {0}", DocAttachBoxListObject.Id);
             else

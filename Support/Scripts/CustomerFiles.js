@@ -3,6 +3,7 @@
     var CustomerFilesUri = server + '/api/Data/CustomerFiles/'; // آدرس فایل
     self.CustomerFilesList = ko.observableArray([]); // ليست فایل
     var CustomerDownloadlUri = server + '/api/Data/CustomerDocumentsDownload/'; // آدرس دانلود
+    var CustomerDownload_TesttUri = server + '/api/Data/CustomerDownload_Test/'; // آدرس تست دانلود
 
     if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");
@@ -25,12 +26,33 @@
 
 
     self.Download = function (item) {
-        var a = document.createElement("a");
-        a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id + '/' + ipw.replaceAll('.', '-') + '/Web';
-        a.click();
-        setTimeout(function () {
-            getCustomerFilesList(false);
-        }, 2000);
+        ajaxFunction(CustomerDownload_TesttUri + item.Id, 'GET', true).done(function (data) {
+            if (data == "NotFound") {
+                return showNotification('فایل یافت نشد', 0);
+            }
+            else {
+                Swal.fire({
+                    title: 'تایید دانلود',
+                    text: "آیا فایل انتخابی دانلود شود ؟",
+                    type: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#3085d6',
+                    cancelButtonText: 'خیر',
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'بله'
+                }).then((result) => {
+                    if (result.value) {
+                        var a = document.createElement("a");
+                        a.href = CustomerDownloadlUri + item.LockNumber + '/' + item.Id + '/' + ipw.replaceAll('.', '-') + '/Web';
+                        a.click();
+                        setTimeout(function () {
+                            getCustomerFilesList(false);
+                        }, 2000);
+                    }
+                });
+            }
+        });
     }
 
     self.ReplaceSpec = function (item) {
@@ -39,7 +61,7 @@
 
     self.ReplaceDate = function (item) {
         date = item.substring(0, 10);
-        date = date.replaceAll('-', '/'); 
+        date = date.replaceAll('-', '/');
         return convertDate(date);
     }
 
@@ -68,7 +90,7 @@
     })
 
 
-}; 
+};
 
 
 ko.applyBindings(new ViewModel());
