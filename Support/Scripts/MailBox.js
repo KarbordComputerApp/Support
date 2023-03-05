@@ -3,6 +3,37 @@
     var flagSend = false;
     $("#Index_TextLogo").text('ارتباط با بخش فروش');
 
+    var LockInput = $("#LockInput").data("value");
+    var PassInput = $("#PassInput").data("value");
+
+    if (LockInput != '') {
+        loginLink = true;
+        getIP();
+        localStorage.removeItem("lockNumber");
+        lockNumber = LockInput;
+
+        LockNumbersUri = server + '/api/Data/LockNumbers/';
+
+        var LockNumbersObject = {
+            LockNumber: lockNumber,
+            IP: ipw,
+            CallProg: 'Web'
+        }
+        ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
+            if (dataLock.length > 0) {
+                companyName = dataLock[0].CompanyName.split("-")[0];
+            }
+        })
+    }
+
+
+    if (lockNumber == null ) {
+        window.location.href = localStorage.getItem("urlLogin");
+    }
+
+
+
+
     self.BoxList = ko.observableArray([]); // لیست ارتباط با بخش فروش ها  
     self.AddAttachList = ko.observableArray([]);
     self.DocAttachList = ko.observableArray([]); // ليست پیوست

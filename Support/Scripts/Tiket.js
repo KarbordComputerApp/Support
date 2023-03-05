@@ -12,7 +12,11 @@
     var LockInput = $("#LockInput").data("value");
     var PassInput = $("#PassInput").data("value");
 
-    if (LockInput != '') {
+    if (LockInput == 'NotAccess') {
+        alert('شما به این بخش دسترسی ندارید');
+        window.location.href = localStorage.getItem("urlLogin");
+    }
+    else if (LockInput != '') {
         loginLink = true;
         getIP();
         localStorage.removeItem("lockNumber");

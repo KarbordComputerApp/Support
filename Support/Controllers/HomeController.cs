@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Support.Controllers.Unit;
+using Support.Models;
 
 namespace Support.Controllers
 {
@@ -69,14 +70,9 @@ namespace Support.Controllers
             return View();
         }
 
-        public ActionResult MailBox()
-        {
-            return View();
-        }
 
-        //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQpAdq42114
-
-        public ActionResult Tiket(string LockNumber, string Pass)
+        //http://localhost:52798/Home/MailBox?LockNumber=10000&Pass=ADf5243hh2059dghQpAdq42114
+        public ActionResult MailBox(string LockNumber, string Pass)
         {
             if (LockNumber != null)
             {
@@ -100,6 +96,60 @@ namespace Support.Controllers
                         if (elapsedSpan.TotalMinutes <= 1)
                         {
                             ViewBag.LockNumber = lockNumber;
+                        }
+                    }
+                }
+            }
+
+
+            return View();
+        }
+
+        //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQpAdq42114
+
+        public ActionResult Tiket(string LockNumber, string Pass)
+        {
+            SupportModel db = new SupportModel();
+            if (LockNumber != null)
+            {
+                ViewBag.LockNumber = "";
+                if (Pass == "ADf5243hh2059dghQpAdq42114")
+                {
+                    string sql = string.Format(@"select * from Users where (LockNumber = {0})", LockNumber);
+                    var list = db.Database.SqlQuery<Users>(sql).First(); // اگر 1 یا 2 بود به تیکت دسترسی دارد
+                    if (list.UserType == 1 || list.UserType == 2)
+                    {
+                        ViewBag.LockNumber = LockNumber;
+                    }
+                    else
+                    {
+                        ViewBag.LockNumber = "NotAccess";
+                    }
+                }
+                else
+                {
+                    long currentDate = DateTime.Now.Ticks;
+                    var inputToken = UnitPublic.Decrypt(LockNumber);
+                    var data = inputToken.Split('-');
+                    if (data.Length == 3)
+                    {
+                        string lockNumber = data[0];
+                        Int64 tik = Int64.Parse(data[2]);
+                        long elapsedTicks = currentDate - tik;
+                        TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                        if (elapsedSpan.TotalMinutes <= 1)
+                        {
+                            string sql = string.Format(@"select * from Users where (LockNumber = {0})", lockNumber);
+                            var list = db.Database.SqlQuery<Users>(sql).First();
+                            if (list.UserType == 1 || list.UserType == 2)
+                            {
+                                ViewBag.LockNumber = lockNumber;
+                            }
+                            else
+                            {
+                                ViewBag.LockNumber = "NotAccess";
+                            }
                         }
                     }
                 }

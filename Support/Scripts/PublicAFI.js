@@ -20,10 +20,15 @@ var ipw = localStorage.getItem("IPW");
 
 
 $("#B_CustAccount").attr('disabled', 'disabled');
+$("#B_Tiket").attr('disabled', 'disabled');
 
 
-if ((userType == '1' || userType == '3') && forceToChangePass == 'false') {
+if (userType == '1' && forceToChangePass == 'false') {
     $('#B_CustAccount').removeAttr('disabled');
+}
+
+if ((userType == '1' || userType == '2')) {
+    $('#B_Tiket').removeAttr('disabled');
 }
 
 
