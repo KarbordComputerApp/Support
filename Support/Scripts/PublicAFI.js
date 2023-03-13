@@ -471,6 +471,10 @@ function showPass(id) {
 
 
 function getIP() {
+    localStorage.setItem("IPW", "Error Get IP");
+    sessionStorage.IPW = "Error Get IP";
+    ipw = "Error Get IP";
+
     ajaxFunctionAccount('http://ip-api.com/json/', 'GET').done(function (data) {
         //a = sessionStorage.MacAddress;
         //b = sessionStorage.IP4Address;

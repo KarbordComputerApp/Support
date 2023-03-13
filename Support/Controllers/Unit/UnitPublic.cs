@@ -16,7 +16,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "77";
+        public static string titleVerNumber = "78";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1001";
@@ -57,11 +57,11 @@ namespace Support.Controllers.Unit
 
 
 
-        public static void SaveLog(int lockNumber, int mode, int act, long serialNumber, string ip , string callprog)
+        public static void SaveLog(int lockNumber, int mode, int act, long serialNumber, string ip, string callprog, string spec)
         {
             SupportModel dbSupport = new SupportModel();
-            string sql = string.Format(@"insert into Log_Data (lockNumber,idact,idmode,serialnumber,ip,callprog) values ({0},{1},{2},{3},'{4}','{5}') select 0",
-                                         lockNumber, act, mode, serialNumber, ip, callprog);
+            string sql = string.Format(@"insert into Log_Data (lockNumber,idact,idmode,serialnumber,ip,callprog,spec) values ({0},{1},{2},{3},N'{4}',N'{5}',N'{6}') select 0",
+                                         lockNumber, act, mode, serialNumber, ip, callprog, spec);
             int res = dbSupport.Database.SqlQuery<int>(sql).Single();
         }
 
@@ -135,7 +135,7 @@ namespace Support.Controllers.Unit
             dateNow = DateTime.Now.Ticks.ToString();
             dateNow = DateTime.Now.Ticks.ToString();
             //var token = UnitPublic.Encrypt(TokenObject.LockNumber + "--" + dateNow);
-           // var token2 = UnitPublic.Decrypt(token);
+            // var token2 = UnitPublic.Decrypt(token);
 
             return true;
 

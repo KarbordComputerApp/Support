@@ -219,7 +219,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
 
-            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg);
+            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, "");
 
             return Ok(list);
         }
@@ -252,7 +252,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
             if (Object_ErjDocXK.FlagLog == true)
             {
-                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, Object_ErjDocXK.LoginLink == true ? act_ViewTiketByLink : act_View, 0, Object_ErjDocXK.IP, Object_ErjDocXK.CallProg);
+                UnitPublic.SaveLog(Int32.Parse(Object_ErjDocXK.LockNo), mode_Tiket, Object_ErjDocXK.LoginLink == true ? act_ViewTiketByLink : act_View, 0, Object_ErjDocXK.IP, Object_ErjDocXK.CallProg, "");
             }
             return Ok(list);
         }
@@ -443,7 +443,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<CustAccount>(sql);
             if (CustAccountObject.FlagLog == true)
             {
-                UnitPublic.SaveLog(Int32.Parse(CustAccountObject.LockNo), mode_CustAccount, act_View, 0, CustAccountObject.IP, CustAccountObject.CallProg);
+                UnitPublic.SaveLog(Int32.Parse(CustAccountObject.LockNo), mode_CustAccount, act_View, 0, CustAccountObject.IP, CustAccountObject.CallProg, "");
             }
             return Ok(list);
         }
@@ -517,7 +517,7 @@ namespace Support.Controllers
 
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
             var list = db.Database.SqlQuery<Web_FDocP>(sql);
-            UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, 0, FDocP_CustAcountObject.IP, FDocP_CustAcountObject.CallProg);
+            UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, FDocP_CustAcountObject.SerialNumber, FDocP_CustAcountObject.IP, FDocP_CustAcountObject.CallProg, "");
             return Ok(list);
         }
 

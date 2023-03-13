@@ -70,7 +70,7 @@ namespace Support.Controllers
 
             if (list.Count > 0)
             {
-                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0, LoginObject.IP, LoginObject.CallProg);
+                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0, LoginObject.IP, LoginObject.CallProg,"");
             }
 
             return Ok(list);
@@ -106,7 +106,7 @@ namespace Support.Controllers
 
             if (res == 1)
             {
-                UnitPublic.SaveLog(ChangePasswordObject.LockNumber, mode_Login, act_ChangePass, 0, ChangePasswordObject.IP, ChangePasswordObject.CallProg);
+                UnitPublic.SaveLog(ChangePasswordObject.LockNumber, mode_Login, act_ChangePass, 0, ChangePasswordObject.IP, ChangePasswordObject.CallProg, "");
             }
 
             return Ok(res);
@@ -182,7 +182,7 @@ namespace Support.Controllers
 
             if (FinancialDocumentsObject.FlagLog == true)
             {
-                UnitPublic.SaveLog(FinancialDocumentsObject.LockNumber, mode_FinancialDocuments, act_View, 0, FinancialDocumentsObject.IP, FinancialDocumentsObject.CallProg);
+                UnitPublic.SaveLog(FinancialDocumentsObject.LockNumber, mode_FinancialDocuments, act_View, 0, FinancialDocumentsObject.IP, FinancialDocumentsObject.CallProg, "");
             }
 
             return Ok(list);
@@ -208,7 +208,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
             if (CustomerFilesObject.FlagLog == true)
             {
-                UnitPublic.SaveLog(CustomerFilesObject.LockNumber, mode_CustomerFiles, act_View, 0, CustomerFilesObject.IP, CustomerFilesObject.CallProg);
+                UnitPublic.SaveLog(CustomerFilesObject.LockNumber, mode_CustomerFiles, act_View, 0, CustomerFilesObject.IP, CustomerFilesObject.CallProg, "");
             }
             return Ok(list);
         }
@@ -288,7 +288,7 @@ namespace Support.Controllers
             response.Content.Headers.ContentDisposition.FileName = f.Name;
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
 
-            UnitPublic.SaveLog(lockNo, mode_FinancialDocuments, act_Download, 0, IP.Replace("-", "."), CallProg);
+            UnitPublic.SaveLog(lockNo, mode_FinancialDocuments, act_Download, 0, IP.Replace("-", "."), CallProg, f.Name);
 
             return response;
         }
@@ -369,7 +369,7 @@ namespace Support.Controllers
             var list1 = db.Database.SqlQuery<int>(sql).Single();
             db.SaveChanges();
 
-            UnitPublic.SaveLog(lockNo, mode_CustomerFiles, act_Download, 0, IP.Replace("-", "."), CallProg);
+            UnitPublic.SaveLog(lockNo, mode_CustomerFiles, act_Download, 0, IP.Replace("-", "."), CallProg, f.Name);
 
             return response;
         }
@@ -525,7 +525,7 @@ namespace Support.Controllers
 
             File.WriteAllText(string.Format("{0}\\{1}.txt", fullPath, FinalUploadFileObject.LockNumber), FinalUploadFileObject.Desc, System.Text.Encoding.UTF8);
 
-            UnitPublic.SaveLog(FinalUploadFileObject.LockNumber, mode_UploadFiles, act_New, 0, FinalUploadFileObject.IP, FinalUploadFileObject.CallProg);
+            UnitPublic.SaveLog(FinalUploadFileObject.LockNumber, mode_UploadFiles, act_New, 0, FinalUploadFileObject.IP, FinalUploadFileObject.CallProg, "");
             return Ok("Ok");
 
         }
@@ -607,7 +607,7 @@ namespace Support.Controllers
 
             if (MailBoxObject.FlagLog == true)
             {
-                UnitPublic.SaveLog(Int32.Parse(MailBoxObject.LockNumber), mode_MailBox, act_View, 0, MailBoxObject.IP, MailBoxObject.CallProg);
+                UnitPublic.SaveLog(Int32.Parse(MailBoxObject.LockNumber), mode_MailBox, act_View, 0, MailBoxObject.IP, MailBoxObject.CallProg, "");
             }
             return Ok(list);
         }
@@ -710,7 +710,7 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<InsertMailBox>(sql).Single();
             db.SaveChanges();
 
-            UnitPublic.SaveLog(Int32.Parse(InsertMailBoxObject.LockNumber), mode_MailBox, act_New, 0, InsertMailBoxObject.IP, InsertMailBoxObject.CallProg);
+            UnitPublic.SaveLog(Int32.Parse(InsertMailBoxObject.LockNumber), mode_MailBox, act_New, 0, InsertMailBoxObject.IP, InsertMailBoxObject.CallProg, "");
             return Ok(list.id);
         }
 
