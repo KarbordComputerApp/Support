@@ -33,5 +33,7 @@ namespace Support.Models
 
         public string TrsDownload { get; set; }
 
+        public string SamaneTrs { get; set; }
+
     }
 }

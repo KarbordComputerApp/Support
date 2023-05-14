@@ -41,6 +41,7 @@ namespace Support.Controllers
         public const int mode_CustAccount = 5;
         public const int mode_MailBox = 6;
         public const int mode_Login = 7;
+        public const int mode_Samane = 12;
 
 
 
@@ -75,6 +76,30 @@ namespace Support.Controllers
 
             return Ok(list);
         }
+
+        public class SamaneTrsObject
+        {
+            public int LockNumber { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+        }
+
+        [Route("api/Data/SamaneTrs/")]
+        public async Task<IHttpActionResult> PostSamaneTrs(SamaneTrsObject SamaneTrsObject)
+        {
+            string sql = string.Format(@"select * from Users where (LockNumber = {0})", SamaneTrsObject.LockNumber);
+            var list = db.Database.SqlQuery<Users>(sql).ToList();
+
+            if (list.Count > 0)
+            {
+                UnitPublic.SaveLog(SamaneTrsObject.LockNumber, mode_Samane, act_Login, 0, SamaneTrsObject.IP, SamaneTrsObject.CallProg, "");
+            }
+
+            return Ok(list);
+        }
+
 
 
 
