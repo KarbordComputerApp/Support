@@ -79,7 +79,7 @@ namespace Support.Controllers
 
         public class SamaneTrsObject
         {
-            public int LockNumber { get; set; }
+            public string LockNumber { get; set; }
 
             public string IP { get; set; }
 
@@ -89,12 +89,14 @@ namespace Support.Controllers
         [Route("api/Data/SamaneTrs/")]
         public async Task<IHttpActionResult> PostSamaneTrs(SamaneTrsObject SamaneTrsObject)
         {
-            string sql = string.Format(@"select * from Users where (LockNumber = {0})", SamaneTrsObject.LockNumber);
+            string sql = string.Format(@"SELECT Id,UserName,Password,FirstName,LastName,Email,UserType,LockNumber,DateRegistred,ForceToChangePass,VerificationStatus,TrsDownload,
+                                                case when SamaneTrs = '' then '1402/03/31	10000' else  SamaneTrs end as SamaneTrs
+                                         FROM   Users where (LockNumber = {0})", SamaneTrsObject.LockNumber);
             var list = db.Database.SqlQuery<Users>(sql).ToList();
 
             if (list.Count > 0)
             {
-                UnitPublic.SaveLog(SamaneTrsObject.LockNumber, mode_Samane, act_Login, 0, SamaneTrsObject.IP, SamaneTrsObject.CallProg, "");
+                UnitPublic.SaveLog(Convert.ToInt16(SamaneTrsObject.LockNumber), mode_Samane, act_Login, 0, SamaneTrsObject.IP, SamaneTrsObject.CallProg, "");
             }
 
             return Ok(list);
