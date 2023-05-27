@@ -1,5 +1,14 @@
 ﻿var ViewModel = function () {
     var self = this;
+
+    image = localStorage.getItem("Pic");
+
+    if (image != "null") {
+        var picUrl = base64Url(image);
+        imageUser.src = picUrl;
+    }
+
+
     if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");
     }

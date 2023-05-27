@@ -8,8 +8,9 @@
     .form-control {
         direction: rtl;
         background-color: #f1f2f7;
-        margin-bottom:20px;
-        margin-top:10px;
+        margin-bottom: 20px;
+        margin-top: 10px;
+        width: 95%;
     }
 </style>
 
@@ -22,10 +23,61 @@
 
 
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-10">
         <div style="background-color:white;padding: 10px;border-radius: 10px;">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
+                    <p style="margin-bottom:0px">نام</p>
+                    <div class="form-line focused fix">
+                        <input id="Name" class="form-control" placeholder="نام را وارد کنید" />
+                    </div>
+
+                    <p style="margin-bottom:0px">تلفن ثابت</p>
+                    <div class="form-line focused fix">
+                        <input id="Tel" class="form-control" placeholder="تلفن ثابت را وارد کنید" />
+                    </div>
+                    <p style="margin-bottom:0px">موبایل</p>
+                    <div class="form-line focused fix">
+                        <input id="Mobile" class="form-control" placeholder="موبایل را وارد کنید" />
+                    </div>
+                    <p style="margin-bottom:0px">پست الکترونیکی</p>
+                    <div class="form-line focused fix">
+                        <input id="EMail" class="form-control" placeholder="پست الکترونیکی را وارد کنید" />
+                    </div>
+
+                    <p style="margin-bottom:0px">آدرس</p>
+                    <div class="form-line focused fix">
+                        <input id="Address" class="form-control" placeholder="آدرس را وارد کنید" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+
+                        <center style="padding:15px">
+                            <img id="imageUser" src="~/Content/img/user.png" width="256" height="256">
+                        </center>
+
+                        <center>
+                            <a id="DelImage" title="حذف" style="margin-left: 10px;">
+                                <img src="~/Content/img/Icon_Blue/delete.png" width="20" height="20">
+                            </a>
+
+                            <input id="upload" type="file" style="display:none" data-bind="event: {change: $root.fileUpload}">
+                            <a id="AddImage" title="افزودن">
+                                <img src="~/Content/img/Icon_Blue/add.png" width="20" height="20">
+                            </a>
+                        </center>
+
+
+
+
+
+
+
+                </div>
+
+                <!--<div class="col-md-5">
                     <p style="margin-bottom:0px">شخصیت</p>
                     <div class="form-line focused fix">
                         <input id="aaa" class="form-control" placeholder="حقیقی/حقوقی" readonly />
@@ -78,11 +130,22 @@
                             <input id="EMail" class="form-control" placeholder="پست الکترونیکی خود را کامل وارد کنید" readonly/>
                         </div>
                     </div>
+                </div>-->
+
+
+            </div>
+            <div id="panel_Action">
+                <div class="row  form-inline ">
+                    <div class="col-md-12 row">
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12"></div>
+                        <div class="col-md pull-left">
+                            <button type="button" id="save" class="btn btn-warning B_Main col-md-6" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left">ذخیره</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
-
-
 </div>
 @section scripts{
     <script src="~/Scripts/User.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>

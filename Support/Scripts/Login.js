@@ -24,6 +24,7 @@
 
         ajaxFunction(LoginUri, 'POST', LoginObject,false).done(function (data) {
             if (data.length > 0) {
+                localStorage.setItem("IdUser", data[0].Id);
                 localStorage.setItem("lockNumber", lockNumber);
                 localStorage.setItem("FirstName", data[0].FirstName);
                 localStorage.setItem("LastName", data[0].LastName);
@@ -31,6 +32,12 @@
                 localStorage.setItem("UserType", data[0].UserType);
                 localStorage.setItem("ForceToChangePass", data[0].ForceToChangePass);
                 localStorage.setItem("TrsDownload", data[0].TrsDownload);
+
+                localStorage.setItem("Name", data[0].Name);
+                localStorage.setItem("Tel", data[0].Tel);
+                localStorage.setItem("Mobile", data[0].Mobile);
+                localStorage.setItem("Address", data[0].Address);
+                localStorage.setItem("Pic", data[0].Pic);
 
                 var LockNumbersObject = {
                     LockNumber: lockNumber

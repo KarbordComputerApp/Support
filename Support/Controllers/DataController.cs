@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -71,11 +72,31 @@ namespace Support.Controllers
 
             if (list.Count > 0)
             {
-                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0, LoginObject.IP, LoginObject.CallProg,"");
+                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0, LoginObject.IP, LoginObject.CallProg, "");
             }
 
             return Ok(list);
         }
+
+
+
+
+        public class UserObject
+        {
+            public long IdUser { get; set; }
+
+        }
+
+        [Route("api/Data/User/")]
+        public async Task<IHttpActionResult> PostUser(UserObject UserObject)
+        {
+            string sql = string.Format(@"select * from Users where id = {0} and Password = '{1}')", UserObject.IdUser);
+            var list = db.Database.SqlQuery<Users>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
 
         public class SamaneTrsObject
         {
@@ -90,7 +111,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostSamaneTrs(SamaneTrsObject SamaneTrsObject)
         {
             string sql = string.Format(@"SELECT Id,UserName,Password,FirstName,LastName,Email,UserType,LockNumber,DateRegistred,ForceToChangePass,VerificationStatus,TrsDownload,
-                                                case when SamaneTrs = '' then '1402/03/31	10000' else  SamaneTrs end as SamaneTrs
+                                                case when SamaneTrs = '' or '   ' then '1402/03/31	10000' else  SamaneTrs end as SamaneTrs
                                          FROM   Users where (LockNumber = {0})", SamaneTrsObject.LockNumber);
             var list = db.Database.SqlQuery<Users>(sql).ToList();
 
@@ -994,6 +1015,194 @@ namespace Support.Controllers
         }
 
 
+
+        public class ChangeUserObject
+        {
+            public long IdUser { get; set; }
+
+            public string Name { get; set; }
+
+            public string Tel { get; set; }
+
+            public string Mobile { get; set; }
+
+            public string Address { get; set; }
+
+            public string Email { get; set; }
+
+            public bool DelImage { get; set; }
+        }
+
+        [Route("api/Data/ChangeUser/")]
+        public async Task<IHttpActionResult> PostChangeUser(ChangeUserObject ChangeUserObject)
+        {
+            int res = 0;
+            string sql = string.Format(@"update Users set Name = N'{0}',Tel = '{1}',Mobile = '{2}',Address = N'{3}',Email = '{4}' where id = {5} select 1",
+                                  ChangeUserObject.Name,
+                                  ChangeUserObject.Tel,
+                                  ChangeUserObject.Mobile,
+                                  ChangeUserObject.Address,
+                                  ChangeUserObject.Email,
+                                  ChangeUserObject.IdUser
+                                  );
+            res = db.Database.SqlQuery<int>(sql).Single();
+            db.SaveChangesAsync();
+
+            if (ChangeUserObject.DelImage == true)
+            {
+                sql = string.Format(@"update Users set pic = null where id = {0} select 1", ChangeUserObject.IdUser);
+                db.Database.SqlQuery<int>(sql).Single();
+                db.SaveChangesAsync();
+            }
+            return Ok(res);
+        }
+
+        public static Image resizeImage(Image imgToResize, Size size)
+        {
+            return (Image)(new Bitmap(imgToResize, size));
+        }
+
+        public byte[] ConvertToBitmap(Stream bmpStream)
+        {
+            Image image = Image.FromStream(bmpStream);
+
+            image = resizeImage(image, new Size(256, 256));
+
+            MemoryStream stream = new MemoryStream();
+            image.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
+            return stream.ToArray();
+        }
+
+
+
+
+        [Route("api/Data/SaveUserImage")]
+        public async Task<IHttpActionResult> PostSaveUserImage()
+        {
+            var idUser = HttpContext.Current.Request["IdUser"];
+            var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
+
+            int lenght = Atch.ContentLength;
+            byte[] filebyte = new byte[lenght];
+            Atch.InputStream.Read(filebyte, 0, lenght);
+
+            Stream S = new MemoryStream(filebyte);
+            filebyte = ConvertToBitmap(S);
+            Atch.InputStream.Read(filebyte, 0, lenght);
+
+            var conStr = db.Database.Connection.ConnectionString;
+            SqlConnection connection = new SqlConnection(conStr);
+            connection.Open();
+            string sql = string.Format(@"update Users set Pic = @Pic  where id = {0} ", idUser);
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@Pic", filebyte);
+            cmd.ExecuteNonQuery();
+            connection.Close();
+
+            sql = string.Format(@"select Pic from Users where id = {0} ", idUser);
+            var res = db.Database.SqlQuery<byte[]>(sql).Single();
+            return Ok(res);
+
+        }
+
+
+
+
+        // Post: api/Data/DownloadVideo   دانلود ویدیو  
+        [HttpGet]
+        [Route("api/Data/DownloadVideo/{IdUser}/{VideoName}/")]
+        public HttpResponseMessage GetDownloadVideo(long IdUser, string VideoName)
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+
+            string sql = string.Format(@"select TrsDownload from Users where id = {0} ", IdUser);
+            var trsDownload = db.Database.SqlQuery<string>(sql).Single();
+
+            var trsList = trsDownload.Split('-');
+
+            bool access = false;
+            //VIDEO_AFI2-VIDEO_AFI3-VIDEO_ACC6-VIDEO_CSH5-VIDEO_FCT6-VIDEO_INV6-VIDEO_PAY6-VIDEO_ERJ1-API-
+            var allVideo = "VIDEO";
+            string ounVideo = "";
+
+            if (VideoName == "Karbord-AFI2")
+            {
+                ounVideo = "VIDEO_AFI2";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+            else if (VideoName == "Karbord-AFI3")
+            {
+                ounVideo = "VIDEO_AFI3";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+            else if (VideoName == "Karbord-ACC6")
+            {
+                ounVideo = "VIDEO_ACC6";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+            else if (VideoName == "Karbord-CSH5")
+            {
+                ounVideo = "VIDEO_CSH5";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+             else if (VideoName == "Karbord-FCT6")
+            {
+                ounVideo = "VIDEO_FCT6";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+             else if (VideoName == "Karbord-INV6")
+            {
+                ounVideo = "VIDEO_INV6";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+             else if (VideoName == "Karbord-PAY6")
+            {
+                ounVideo = "VIDEO_PAY6";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+             else if (VideoName == "Karbord-ERJ1")
+            {
+                ounVideo = "VIDEO_ERJ1";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+
+            if (access)
+            {
+                string path = GetPath(43) + "\\Learn\\";
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                string[] files = Directory.GetFiles(path, string.Format("{0}.*", VideoName));
+
+                FileInfo f = new FileInfo(files[0]);
+
+                if (!File.Exists(files[0]))
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
+                    throw new HttpResponseException(response);
+                }
+
+                byte[] bytes = File.ReadAllBytes(files[0].ToString());
+
+                response.Content = new ByteArrayContent(bytes);
+                response.Content.Headers.ContentLength = bytes.LongLength;
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = f.Name;
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
+            }
+            return response;
+        }
 
     }
 }

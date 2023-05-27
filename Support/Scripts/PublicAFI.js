@@ -1,5 +1,5 @@
-﻿//var server = 'http://localhost:52798';
-var server = 'http://192.168.0.114:1000';
+﻿var server = 'http://localhost:52798';
+//var server = 'http://192.168.0.114:1000';
 
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
@@ -504,3 +504,25 @@ function TestDownload(mode, lockNo, id) {
         }
     })
 }
+
+
+
+
+function base64ToArrayBuffer(base64) {
+    var binaryString = window.atob(base64);
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+    for (var i = 0; i < binaryLen; i++) {
+        var ascii = binaryString.charCodeAt(i);
+        bytes[i] = ascii;
+    }
+    return bytes;
+}
+
+
+function base64Url(data) {
+    var bytes = base64ToArrayBuffer(data);
+    var blob = new Blob([bytes.buffer], { type: 'image/png' });
+    return URL.createObjectURL(blob);
+}
+
