@@ -9,7 +9,7 @@
     $("#Address").val(localStorage.getItem("Address"));
     image = localStorage.getItem("Pic");
 
-    if (image != "null") {
+    if (image != "null" && image != "undefined") {
         var picUrl = base64Url(image);
         imageUser.src = picUrl;
     }
@@ -72,7 +72,7 @@
                 formData.append("Atch", file);
                 var SaveUserImageUri = server + '/api/Data/SaveUserImage/'; // ذخیره عکس
 
-                ajaxFunctionUpload(SaveUserImageUri , formData, true).done(function (response) {
+                ajaxFunctionUpload(SaveUserImageUri , formData, false).done(function (response) {
                     localStorage.setItem("Pic", response);
                 })
             }

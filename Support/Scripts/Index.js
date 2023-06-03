@@ -3,7 +3,7 @@
 
     image = localStorage.getItem("Pic");
 
-    if (image != "null") {
+    if (image != "null" && image != "undefined") {
         var picUrl = base64Url(image);
         imageUser.src = picUrl;
     }

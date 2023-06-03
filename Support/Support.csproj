@@ -191,6 +191,7 @@
     <Compile Include="Models\Support\ProductVersions.cs" />
     <Compile Include="Models\Support\RequestVerifications.cs" />
     <Compile Include="Models\Support\SupportModel.cs" />
+    <Compile Include="Models\Support\UsersLogin.cs" />
     <Compile Include="Models\Support\Users.cs" />
     <Compile Include="Models\Support\Visits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

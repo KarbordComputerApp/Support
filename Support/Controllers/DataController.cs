@@ -68,7 +68,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostLogin(LoginObject LoginObject)
         {
             string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", LoginObject.LockNumber, EncodePassword(LoginObject.Pass));
-            var list = db.Database.SqlQuery<Users>(sql).ToList();
+            var list = db.Database.SqlQuery<UsersLogin>(sql).ToList();
 
             if (list.Count > 0)
             {
@@ -80,20 +80,6 @@ namespace Support.Controllers
 
 
 
-
-        public class UserObject
-        {
-            public long IdUser { get; set; }
-
-        }
-
-        [Route("api/Data/User/")]
-        public async Task<IHttpActionResult> PostUser(UserObject UserObject)
-        {
-            string sql = string.Format(@"select * from Users where id = {0} and Password = '{1}')", UserObject.IdUser);
-            var list = db.Database.SqlQuery<Users>(sql).ToList();
-            return Ok(list);
-        }
 
 
 
@@ -111,7 +97,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostSamaneTrs(SamaneTrsObject SamaneTrsObject)
         {
             string sql = string.Format(@"SELECT Id,UserName,Password,FirstName,LastName,Email,UserType,LockNumber,DateRegistred,ForceToChangePass,VerificationStatus,TrsDownload,
-                                                case when SamaneTrs = '' or '   ' then '1402/03/31	10000' else  SamaneTrs end as SamaneTrs
+                                                case when SamaneTrs = '' or SamaneTrs = '   ' then '1402/03/31	10000' else  SamaneTrs end as SamaneTrs
                                          FROM   Users where (LockNumber = {0})", SamaneTrsObject.LockNumber);
             var list = db.Database.SqlQuery<Users>(sql).ToList();
 

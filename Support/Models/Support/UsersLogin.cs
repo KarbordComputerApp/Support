@@ -6,7 +6,7 @@ namespace Support.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Users
+    public partial class UsersLogin
     {
         [Key]
         public long Id { get; set; }
@@ -35,7 +35,7 @@ namespace Support.Models
 
         public string SamaneTrs { get; set; }
 
-        /*public string Name { get; set; }
+        public string Name { get; set; }
 
         public string Tel { get; set; }
 
@@ -43,7 +43,7 @@ namespace Support.Models
 
         public string Address { get; set; }
 
-        public byte[] Pic { get; set; }*/
+        public byte[] Pic { get; set; }
 
     }
 }
