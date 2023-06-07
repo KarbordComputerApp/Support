@@ -71,7 +71,8 @@
         if (lockNumber === "" || lockNumber === null) {
             return showNotification('شماره قفل را وارد کنید', 0);
         }
-       
+
+        localStorage.setItem("lockNumber", lockNumber);
         window.location.href = localStorage.getItem("urlRecoveryPassword");
 
     }

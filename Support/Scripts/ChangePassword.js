@@ -1,5 +1,5 @@
 ﻿var ViewModel = function () {
-    $("#Index_TextLogo").text('تغییر رمز ورود به پنل کاربری');
+    $("#Index_TextLogo").text('تغییر کلمه ورود به پنل کاربری');
 
     $("#Index_Home").show();
     $("#BM_InformationCompany").show();

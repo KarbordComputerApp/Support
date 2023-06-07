@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,7 +21,7 @@ namespace Support.Controllers.Unit
         //public static string titleVerNumber = "80";
 
         public static string titleVer = "ورژن";
-        public static string titleVerNumber = "1006";
+        public static string titleVerNumber = "1008";
 
         public static string Appddress; //ادرس نرم افزار
         public static IniFile MyIniServer;
@@ -156,6 +158,67 @@ namespace Support.Controllers.Unit
                     data += substring;
             }
             return data;
+        }
+
+        public static string SendEmail(string to , string subject, string body)
+        {
+            string email = MyIni.Read("email", "SendMail");
+            string host = MyIni.Read("host", "SendMail");
+            int port = Convert.ToInt32(MyIni.Read("port", "SendMail"));
+            string userName = MyIni.Read("userName", "SendMail");
+            string pass = MyIni.Read("pass", "SendMail");
+            bool enableSsl = MyIni.Read("enableSsl", "SendMail") == "true";
+            bool useDefaultCredentials = MyIni.Read("UseDefaultCredentials", "SendMail") == "true";
+
+            try
+            {
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress(email);
+                message.To.Add(new MailAddress(to));
+                message.Subject = subject;
+                message.SubjectEncoding = Encoding.UTF8;
+                message.IsBodyHtml = false;
+                message.Body = body;
+                message.BodyEncoding = Encoding.UTF8;
+
+                smtp.Port = port;
+                smtp.Host = host;
+                smtp.EnableSsl = enableSsl;
+                smtp.UseDefaultCredentials = useDefaultCredentials;
+                smtp.Credentials = new NetworkCredential(userName, pass);
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(message);
+                message.Dispose();
+                return "Send";
+            }
+            catch (Exception e)
+            {
+                return e.Message.ToString();
+
+            }
+            /*
+            try
+            {
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress(email);
+                message.To.Add(new MailAddress(to));
+                message.Subject = subject;
+                message.IsBodyHtml = true;
+                message.Body = body;
+                smtp.Port = port;
+                smtp.Host = host;
+                smtp.EnableSsl = enableSsl;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential(userName, pass);
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(message);
+            }
+            catch (Exception e)
+            {
+                var a = e.Message.ToString();
+            }*/
         }
 
     }

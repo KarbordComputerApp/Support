@@ -146,6 +146,68 @@ namespace Support.Controllers
             return Ok(res);
         }
 
+        private string Token(byte Length)
+        {
+            char[] Chars = new char[] {
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','@','!','#'
+        };
+            string String = string.Empty;
+            Random Random = new Random();
+
+            for (byte a = 0; a < Length; a++)
+            {
+                String += Chars[Random.Next(0, 61)];
+            };
+
+            return (String);
+        }
+
+        public class RecoveryPasswordObject
+        {
+            public int LockNumber { get; set; }
+
+            public string Email { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+        }
+
+        [Route("api/Data/RecoveryPassword/")]
+        public async Task<IHttpActionResult> PostRecoveryPassword(RecoveryPasswordObject RecoveryPasswordObject)
+        {
+            int res = 0;
+            string sql = string.Format(@"select * from Users where (LockNumber = {0} and Email = '{1}')", RecoveryPasswordObject.LockNumber, RecoveryPasswordObject.Email);
+            var list = db.Database.SqlQuery<Users>(sql).ToList();
+
+
+
+            if (list.Count > 0)
+            {
+                string newPass = Token(10);
+                string resEmail = UnitPublic.SendEmail(RecoveryPasswordObject.Email, "کاربرد کامپیوتر", "کلمه ورود به سایت ساپورت = " + newPass);
+                if (resEmail == "Send")
+                {
+                    sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 1 where id = {1}  select 1", EncodePassword(newPass), list[0].Id);
+                    res = db.Database.SqlQuery<int>(sql).Single();
+                }
+                else
+                {
+                    return Ok(resEmail);
+                }
+
+            }
+
+            if (res == 1)
+            {
+                UnitPublic.SaveLog(RecoveryPasswordObject.LockNumber, mode_Login, act_ChangePass, 0, RecoveryPasswordObject.IP, RecoveryPasswordObject.CallProg, "");
+            }
+
+            return Ok(res);
+        }
+
 
 
         public class LockNumbersObject
@@ -1136,25 +1198,25 @@ namespace Support.Controllers
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
-             else if (VideoName == "Karbord-FCT6")
+            else if (VideoName == "Karbord-FCT6")
             {
                 ounVideo = "VIDEO_FCT6";
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
-             else if (VideoName == "Karbord-INV6")
+            else if (VideoName == "Karbord-INV6")
             {
                 ounVideo = "VIDEO_INV6";
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
-             else if (VideoName == "Karbord-PAY6")
+            else if (VideoName == "Karbord-PAY6")
             {
                 ounVideo = "VIDEO_PAY6";
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
-             else if (VideoName == "Karbord-ERJ1")
+            else if (VideoName == "Karbord-ERJ1")
             {
                 ounVideo = "VIDEO_ERJ1";
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
