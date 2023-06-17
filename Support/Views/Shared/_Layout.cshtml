@@ -14,7 +14,7 @@
     <link href="~/Content/css/stimulsoft.designer.office2013.whiteblue.css" rel="stylesheet" />
 </head>
 <body class="light rtlSite" ondragstart="return false;" ondrop="return false;">
-    
+
     <div id="loadingsite" class="page-loader-wrapper">
         <div class="loader">
             <div class="m-t-30">
@@ -144,11 +144,46 @@
     </div>
 
 
+
+    <div class="modal fade" id="modal-Comm" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" id="modal-dialogComm" style="top: 150px;">
+            <div class="modal-content" style="font-size:14px">
+                <div class="modal-header" style="padding-bottom: 0px;">
+                    <div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <a id="minMaxComm">
+                            <img id="imgComm" src="" style="width:16px">
+                        </a>
+                    </div>
+                    <h4 class="modal-title" id="titleComm">توضیحات</h4>
+                    <div>
+
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                   <!-- <textarea id="commPublic" rows="20" class="form-control no-resize auto-growth string autocomplete" style="text-align:justify" readonly></textarea>-->
+
+                    <div>
+                        <p id="ResultSt" style="height:150px"></p>
+                        <br>
+                        <div id="LinkSt"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script type="text/javascript">
         sessionStorage.versionTitle = '@(Support.Controllers.Unit.UnitPublic.titleVer)';
         localStorage.setItem("urlLogin", '@Url.Action("Login", "Home")');
-        localStorage.setItem("Group_Ticket", @(Support.Controllers.Unit.UnitPublic.sql_Group_Ticket) ); 
-        localStorage.setItem("Group_CustAccount",@(Support.Controllers.Unit.UnitPublic.sql_Group_CustAccount)  ); 
+        localStorage.setItem("Group_Ticket", @(Support.Controllers.Unit.UnitPublic.sql_Group_Ticket) );
+        localStorage.setItem("Group_CustAccount",@(Support.Controllers.Unit.UnitPublic.sql_Group_CustAccount)  );
         localStorage.setItem("urlLogin", '@Url.Action("Login", "Home")');
     </script>
 

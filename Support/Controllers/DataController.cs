@@ -42,6 +42,7 @@ namespace Support.Controllers
         public const int mode_CustAccount = 5;
         public const int mode_MailBox = 6;
         public const int mode_Login = 7;
+        public const int mode_Download = 11;
         public const int mode_Samane = 12;
 
 
@@ -1156,15 +1157,14 @@ namespace Support.Controllers
 
 
 
-
         // Post: api/Data/DownloadVideo   دانلود ویدیو  
         [HttpGet]
-        [Route("api/Data/DownloadVideo/{IdUser}/{VideoName}/")]
-        public HttpResponseMessage GetDownloadVideo(long IdUser, string VideoName)
+        [Route("api/Data/DownloadVideo/{LockNumber}/{CallProg}/{IP}/{VideoName}")]
+        public HttpResponseMessage GetDownloadVideo(int LockNumber, string CallProg, string IP, string VideoName)
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string sql = string.Format(@"select TrsDownload from Users where id = {0} ", IdUser);
+            string sql = string.Format(@"select TrsDownload from Users where LockNumber = {0} ", LockNumber);
             var trsDownload = db.Database.SqlQuery<string>(sql).Single();
 
             var trsList = trsDownload.Split('-');
@@ -1248,6 +1248,12 @@ namespace Support.Controllers
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName = f.Name;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
+                UnitPublic.SaveLog(LockNumber, mode_Download, act_Download, 0, IP, CallProg, VideoName);
+            }
+            else
+            {
+                response.StatusCode = HttpStatusCode.OK;
+                response.Content = new StringContent("دسترسی ندارید");
             }
             return response;
         }

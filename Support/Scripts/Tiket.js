@@ -77,6 +77,28 @@
     getDateServer();
 
 
+
+    self.ViewResultSt = function (Band) {
+        $('#LinkSt').empty();
+        if (Band.ResultSt.length > 0) {
+            $('#titleComm').text('نتیجه');
+            $('#modal-Comm').modal('show');
+            $('#ResultSt').text(Band.ResultSt);
+            list = Band.LinkSt.split("\r\n");
+            item = "";
+            for (var i = 0; i < list.length; i++) {
+
+                downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
+
+                if (list[i] != "") {
+                    item += '<a href ="' + downloadVideoUri + list[i] + '">لینک'+(i+1)+'</a><br>';
+                }
+            }
+            $('#LinkSt').append(item);
+        }
+
+    }
+
     //Get ErjDocXK 
     function getErjDocXK(log) {
         var ErjDocXKObject = {
@@ -664,6 +686,10 @@
     function RefreshTiket() {
         getErjDocXK(false);
     }
+
+
+
+
 
 };
 
