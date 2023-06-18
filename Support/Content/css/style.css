@@ -22055,7 +22055,7 @@ html.ie11 .bs-searchbox .form-control {
 
 
 .ellipsis {
-    max-width: 100px;
+    max-width: 300px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -22167,7 +22167,7 @@ body, html {
 }
 
 .ellipsis {
-    max-width: 100px;
+    max-width: 300px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

@@ -91,7 +91,14 @@
                 //downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
 
                 if (list[i] != "") {
-                    item += '<a href ="' + list[i] + '">لینک'+(i+1)+'</a><br>';
+                    item +=
+                        '<div class="row">' +
+                            '<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1)+'</span>:</span>'+
+                            '<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">'+
+                                 '<a  href ="' + list[i] + '"  ><span>' + list[i] + '  </span></a>' +
+                            '</div>'+
+                        '</div>';
+                    //item += '<a href ="' + list[i] + '">لینک<span>' + (i + 1) + '  </span>:</a><br>';
                 }
             }
             $('#LinkSt').append(item);
