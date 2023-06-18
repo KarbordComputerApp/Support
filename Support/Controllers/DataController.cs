@@ -1248,7 +1248,7 @@ namespace Support.Controllers
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName = f.Name;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(files[0]));
-                UnitPublic.SaveLog(LockNumber, mode_Download, act_Download, 0, IP, CallProg, VideoName);
+                UnitPublic.SaveLog(LockNumber, mode_Download, act_Download, 0, IP.Replace("-", "."), CallProg, VideoName);
             }
             else
             {

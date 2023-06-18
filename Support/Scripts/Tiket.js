@@ -88,10 +88,10 @@
             item = "";
             for (var i = 0; i < list.length; i++) {
 
-                downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
+                //downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
 
                 if (list[i] != "") {
-                    item += '<a href ="' + downloadVideoUri + list[i] + '">لینک'+(i+1)+'</a><br>';
+                    item += '<a href ="' + list[i] + '">لینک'+(i+1)+'</a><br>';
                 }
             }
             $('#LinkSt').append(item);

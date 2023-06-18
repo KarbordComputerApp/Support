@@ -56,7 +56,7 @@
 
 
 
-    downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
+    downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw.replaceAll('.', '-') + "/";
     tokenUri = server + '/api/Data/Token/';
 
     var a = document.createElement("a");
