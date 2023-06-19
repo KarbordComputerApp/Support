@@ -4300,7 +4300,7 @@ h5 {
 }
 
 h6 {
-   /* font-size: 1rem;*/
+    /* font-size: 1rem;*/
 }
 
 button,
@@ -4318,7 +4318,7 @@ a {
     }
 
 img {
-  /*  max-width: 100%; */
+    /*  max-width: 100%; */
 }
 
 .icon {
@@ -12407,7 +12407,6 @@ table .checkbox [type="checkbox"] + label {
             -o-transition: 0.25s ease-in;
             -webkit-transition: 0.25s ease-in;
             transition: 0.25s ease-in;
-
         }
 
         .input-group .form-line + .input-group-addon {
@@ -12462,7 +12461,7 @@ table .checkbox [type="checkbox"] + label {
         padding-right: 0;
         font-weight: bold;
         display: table-cell;
-        width : 1px;
+        width: 1px;
     }
 
         .input-group .input-group-addon .material-icons {
@@ -12529,7 +12528,7 @@ table .checkbox [type="checkbox"] + label {
         border-radius: 0;
         padding-right: 0;
         padding-left: 0;
-        font-size:11px
+        font-size: 11px
     }
 
     .form-group input.form-control {
@@ -12615,7 +12614,7 @@ table .checkbox [type="checkbox"] + label {
         }
 
 .input-group .form-group .form-line.focused .form-label {
-   /* top: -20px;*/
+    /* top: -20px;*/
     right: 0;
     font-size: 11px;
 }
@@ -12665,6 +12664,7 @@ fieldset[disabled] .form-control {
     display: block;
     left: -80px !important;
 }
+
 .spinner .input-group-addon {
     /*position: relative;*/
     position: absolute;
@@ -13403,7 +13403,6 @@ fieldset[disabled] .form-control {
                 -o-transition: all 0.3s;
                 -webkit-transition: all 0.3s;
                 transition: all 0.3s;
-               
             }
 
 .menu-toggleltr {
@@ -13419,118 +13418,118 @@ fieldset[disabled] .form-control {
     transform: scale(1);
 }
 
-            .sidebar .menu .list .menu-toggle:after {
-                content: '\2013';
-                -moz-transform: scale(0);
-                -ms-transform: scale(0);
-                -o-transform: scale(0);
-                -webkit-transform: scale(0);
-                transform: scale(0);
-            }
+.sidebar .menu .list .menu-toggle:after {
+    content: '\2013';
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
 
-            .sidebar .menu .list .menu-toggle.toggled:before {
-                -moz-transform: scale(0);
-                -ms-transform: scale(0);
-                -o-transform: scale(0);
-                -webkit-transform: scale(0);
-                transform: scale(0);
-            }
+.sidebar .menu .list .menu-toggle.toggled:before {
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
 
-            .sidebar .menu .list .menu-toggle.toggled:after {
-                -moz-transform: scale(1);
-                -ms-transform: scale(1);
-                -o-transform: scale(1);
-                -webkit-transform: scale(1);
-                transform: scale(1);
-            }
+.sidebar .menu .list .menu-toggle.toggled:after {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
 
-            .sidebar .menu .list a {
-                color: #ffffff;
-                position: relative;
-                vertical-align: middle;
-                font-size: 11px;
-                display: block;
-                overflow: hidden;
-                line-height: 2rem;
-                padding: 9px 18px 9px 9px;
-                margin: 10px 13px;
-                border-radius: 3rem;
-            }
+.sidebar .menu .list a {
+    color: #ffffff;
+    position: relative;
+    vertical-align: middle;
+    font-size: 11px;
+    display: block;
+    overflow: hidden;
+    line-height: 2rem;
+    padding: 9px 18px 9px 9px;
+    margin: 10px 13px;
+    border-radius: 3rem;
+}
 
-                .sidebar .menu .list a:hover, .sidebar .menu .list a:active, .sidebar .menu .list a:focus {
-                    text-decoration: none !important;
-                    background-color: rgba(0, 0, 0, 0.03);
-                }
+    .sidebar .menu .list a:hover, .sidebar .menu .list a:active, .sidebar .menu .list a:focus {
+        text-decoration: none !important;
+        background-color: rgba(0, 0, 0, 0.03);
+    }
 
-                .sidebar .menu .list a small {
-                    position: absolute;
-                    top: calc(50% - 7.5px);
-                    left: 15px;
-                }
+    .sidebar .menu .list a small {
+        position: absolute;
+        top: calc(50% - 7.5px);
+        left: 15px;
+    }
 
-                .sidebar .menu .list a span {
-                    margin: 7px 12px 7px 0;
-                    color: #ffffff;
-                    font-size: 12px;
-                    overflow: hidden;
-                }
+    .sidebar .menu .list a span {
+        margin: 7px 12px 7px 0;
+        color: #ffffff;
+        font-size: 12px;
+        overflow: hidden;
+    }
 
-            .sidebar .menu .list .ml-menu {
-                list-style: none;
-                display: none;
-                padding-right: 0;
-            }
+.sidebar .menu .list .ml-menu {
+    list-style: none;
+    display: none;
+    padding-right: 0;
+}
 
-                .sidebar .menu .list .ml-menu span {
-                    font-weight: normal;
-                    font-size: 14px;
-                    margin: 3px 6px 1px 0;
-                }
+    .sidebar .menu .list .ml-menu span {
+        font-weight: normal;
+        font-size: 14px;
+        margin: 3px 6px 1px 0;
+    }
 
-                .sidebar .menu .list .ml-menu li a {
-                    padding-right: 50px;
-                    padding-top: 7px;
-                    padding-bottom: 7px;
-                }
+    .sidebar .menu .list .ml-menu li a {
+        padding-right: 50px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
 
 
-                    .sidebar .menu .list .ml-menu li a:before {
-                        font-family: 'Material Icons';
-                        position: relative;
-                        font-size: 13px;
-                        height: 20px;
-                        top: 0px;
-                        left: 5px;
-                    }
+        .sidebar .menu .list .ml-menu li a:before {
+            font-family: 'Material Icons';
+            position: relative;
+            font-size: 13px;
+            height: 20px;
+            top: 0px;
+            left: 5px;
+        }
 
-                .sidebar .menu .list .ml-menu li.active a.toggled:not(.menu-toggle):before {
-                    content: '';
-                    display: block;
-                    width: 7px;
-                    height: 7px;
-                    border-radius: 50%;
-                    position: absolute;
-                    right: 18%;
-                    top: 50%;
-                    -webkit-transform: translate(10px, -50%);
-                    -moz-transform: translate(10px, -50%);
-                    -ms-transform: translate(10px, -50%);
-                    -o-transform: translate(10px, -50%);
-                    transform: translate(10px, -50%);
-                    opacity: 1;
-                    -webkit-transition: all 0.2s ease;
-                    -o-transition: all 0.2s ease;
-                    -moz-transition: all 0.2s ease;
-                    transition: all 0.2s ease;
-                }
+    .sidebar .menu .list .ml-menu li.active a.toggled:not(.menu-toggle):before {
+        content: '';
+        display: block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        position: absolute;
+        right: 18%;
+        top: 50%;
+        -webkit-transform: translate(10px, -50%);
+        -moz-transform: translate(10px, -50%);
+        -ms-transform: translate(10px, -50%);
+        -o-transform: translate(10px, -50%);
+        transform: translate(10px, -50%);
+        opacity: 1;
+        -webkit-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
 
-                .sidebar .menu .list .ml-menu li .ml-menu li a {
-                    padding-right: 80px;
-                }
+    .sidebar .menu .list .ml-menu li .ml-menu li a {
+        padding-right: 80px;
+    }
 
-                .sidebar .menu .list .ml-menu li .ml-menu .ml-menu li a {
-                    padding-right: 95px;
-                }
+    .sidebar .menu .list .ml-menu li .ml-menu .ml-menu li a {
+        padding-right: 95px;
+    }
 
 .right-sidebar {
     width: 280px;
@@ -14974,6 +14973,7 @@ nav.navbar {
 .side-closed.side-closed-hover section.content {
     margin-right: 276px;
 }
+
 .side-closed.side-closed-hover section.contentltr {
     margin-left: 276px;
 }
@@ -18375,7 +18375,6 @@ header {
     }
 
         .dataTables_wrapper input[type="search"]:focus, .dataTables_wrapper input[type="search"]:active {
-
         }
 
     .dataTables_wrapper .dt-buttons {
@@ -19244,7 +19243,7 @@ table.shoping-cart-table {
 }
 
 .alert-danger {
-     background-color: red;
+    background-color: red;
     border-radius: 15px;
 }
 
@@ -20402,7 +20401,6 @@ span.badge {
         position: relative;
         margin: 10px 10px 0px 10px;
         padding-bottom: 15px;
-        
     }
 
         .card .header .header-dropdown {
@@ -22062,7 +22060,7 @@ html.ie11 .bs-searchbox .form-control {
 }
 
 
-.B_Main{
+.B_Main {
     background-color: #eb8121 !important;
     margin: 15px 0px 30px 0px;
     border-radius: 5px;
@@ -22071,8 +22069,8 @@ html.ie11 .bs-searchbox .form-control {
 .P_Main {
     background-color: #dcdcdc;
     border-radius: 20px;
-    margin:3px;
-    min-height:150px;
+    margin: 3px;
+    min-height: 150px;
 }
 
 .DotText {
@@ -22095,7 +22093,6 @@ body, html {
     */
 
 .continerMain {
-    
 }
 
 @media (min-width: 768px) {
@@ -22108,9 +22105,9 @@ body, html {
         margin: 0px 100px 0 100px;
     }
 
-    .logoTop{
-        height:100px;
-        width:100px;
+    .logoTop {
+        height: 100px;
+        width: 100px;
     }
 
     .TilteTop {
@@ -22128,6 +22125,7 @@ body, html {
     .continerMain {
         margin: 10px 10px 0 10px;
     }
+
     .continerHead {
         padding: 5px;
         margin: 0px 0px 0px 0px;
@@ -22147,8 +22145,6 @@ body, html {
         margin-top: 0px;
         margin-right: 0px;
     }
-
-
 }
 
 #LastPadding {
@@ -22163,7 +22159,6 @@ body, html {
     #LastPadding {
         display: block;
     }
-
 }
 
 .ellipsis {
@@ -22262,4 +22257,19 @@ button.showHidePass {
 .page-proccess-wrapper .loader {
     position: relative;
     top: calc(50% - 30px);
+}
+
+
+
+.badgeCount {
+    position: absolute;
+    top: -3px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    left: 62px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding-top: 2px;
 }

@@ -21,6 +21,7 @@ var ipw = localStorage.getItem("IPW");
 
 $("#B_CustAccount").attr('disabled', 'disabled');
 $("#B_Tiket").attr('disabled', 'disabled');
+$("#Index_TextTiket").attr('disabled', 'disabled');
 
 
 if (userType == '1' && forceToChangePass == 'false') {
@@ -29,7 +30,31 @@ if (userType == '1' && forceToChangePass == 'false') {
 
 if ((userType == '1' || userType == '2')) {
     $('#B_Tiket').removeAttr('disabled');
+    $('#Index_TextTiket').removeAttr('disabled');
 }
+
+
+
+var Web_CountErjDocXKUri = server + '/api/KarbordData/Web_CountErjDocXK/'; // تعداد تیکت خوانده نشده
+function GetCountErjDocX() {
+    var Object_CountErjDocXK = {
+        LockNo: lockNumber,
+        ModeCode: '204',
+    }
+    ajaxFunction(Web_CountErjDocXKUri, 'POST', Object_CountErjDocXK, true).done(function (data) {
+        $("#notificationCount").text(data[0]);
+        localStorage.setItem("notificationCount", data[0]);
+    });
+}
+
+var notificationCount = localStorage.getItem("notificationCount");
+if (notificationCount != "null" && notificationCount != null) {
+    $("#notificationCount").text(notificationCount);
+} else {
+    GetCountErjDocX();
+}
+
+
 
 
 

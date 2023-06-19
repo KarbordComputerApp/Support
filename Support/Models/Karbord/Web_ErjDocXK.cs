@@ -39,5 +39,7 @@ namespace Support.Models
 
         public string LinkSt { get; set; }
 
+        public bool? ResultRead { get; set; }
+
     }
 }

@@ -85,7 +85,7 @@
                 <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
                 <td data-bind="text: Text" style="width:35%" class="ellipsis"></td>
                 <td data-bind="text: Motaghazi" class="notApp"></td>
-                <td data-bind="text: ResultSt , click: $root.ViewResultSt" class="ellipsis" style="cursor:pointer"></td>
+                <td data-bind="text: ResultSt , click: $root.ViewResultSt,style: {color: ResultRead == true ? '#0595ff' : null}" class="ellipsis" style="cursor:pointer"></td>
                 <td style="border-radius: 30px 0 0 30px;">
                     <!--<a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">-->
                     <a data-bind="click: $root.ViewDocAttach, visible: DocAttachExists == 1" class="dropdown-toggle" data-toggle="modal" data-target="#modal-DocAttach" data-backdrop="static" data-keyboard="false" style="font-size: 11px;text-align: right;">

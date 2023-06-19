@@ -21,7 +21,7 @@ namespace Support.Controllers.Unit
         //public static string titleVerNumber = "80";
 
         public static string titleVer = "ورژن";
-        public static string titleVerNumber = "1013";
+        public static string titleVerNumber = "1014";
 
         public static string Appddress; //ادرس نرم افزار
         public static IniFile MyIniServer;
@@ -160,7 +160,7 @@ namespace Support.Controllers.Unit
             return data;
         }
 
-        public static string SendEmail(string to , string subject, string body)
+        public static string SendEmail(string to, string subject, string body)
         {
             string email = MyIni.Read("email", "SendMail");
             string host = MyIni.Read("host", "SendMail");
@@ -178,8 +178,12 @@ namespace Support.Controllers.Unit
                 message.To.Add(new MailAddress(to));
                 message.Subject = subject;
                 message.SubjectEncoding = Encoding.UTF8;
-                message.IsBodyHtml = false;
-                message.Body = body;
+                message.IsBodyHtml = true;
+
+                string text =
+         "<table style=\"width: 100%;direction: rtl;text-align: right;font-family: tahoma\">    <tbody>        <tr>            <td style=\"color: red;padding-bottom: 20px;padding-top: 5px;\">بازیابی رمز ورود</td>        </tr>        <tr>            <td>با سلام</td>        </tr>        <tr>            <td>شما درخواست بازیابی رمز عبور خود را ارسال کرده اید که برای ورود به پنل پشتیبایی باید پسورد زیر را وارد نمایید.</td>        </tr>        <tr>            <td style=\"padding-top: 30px;padding-bottom: 30px;font-weight: bold;\">رمز ورود جدید :999999999</td>        </tr>        <tr>            <td >با تشکر</td>        </tr>        <tr>            <td style=\"padding-bottom: 100px\">شرکت کاربرد کامپیوتر</td>        </tr>        <tr>            <td style=\"background-color:red;color:white;text-align: center;\">این ایمیل توسط شرکت کاربرد کامپیوتر برای شما ارسال شده است در صورتی که در بازیابی رمز عبور به مشکل برخورد کردید لطفا با کارشناسان شرکت کاربرد کامپیوتر تماس حاصل فرمائید.</td>        </tr>    </tbody></table>";                            
+  
+                message.Body = text;
                 message.BodyEncoding = Encoding.UTF8;
 
                 smtp.Port = port;

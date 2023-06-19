@@ -50,6 +50,7 @@
     var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
     var ErjDocAttach_SaveUri = server + '/api/KarbordData/UploadFile/'; // ذخیره پیوست
     var ErjDocAttach_DelUri = server + '/api/KarbordData/ErjDocAttach_Del/'; // حذف پیوست
+    var Ticket_UpdateResultUri = server + '/api/KarbordData/Ticket_UpdateResult/'; // خواندن نتیجه تیکت
 
 
     var serialNumberAttach = 0;
@@ -92,16 +93,24 @@
 
                 if (list[i] != "") {
                     item +=
-                        '<div class="row">' +
-                            '<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1)+'</span>:</span>'+
-                            '<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">'+
-                                 '<a  href ="' + list[i] + '"  ><span>' + list[i] + '  </span></a>' +
-                            '</div>'+
+                        '<div class="row" style="margin-top: 5px;margin-bottom: 5px !important;">' +
+                        '<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' +
+                        '<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">' +
+                        '<a  href ="' + list[i] + '"  ><span>' + list[i] + '  </span></a>' +
+                        '</div>' +
                         '</div>';
                     //item += '<a href ="' + list[i] + '">لینک<span>' + (i + 1) + '  </span>:</a><br>';
                 }
             }
             $('#LinkSt').append(item);
+
+            var Object_Ticket_UpdateResult = {
+                SerialNumber: Band.SerialNumber,
+            }
+            ajaxFunction(Ticket_UpdateResultUri, 'Post', Object_Ticket_UpdateResult).done(function (dataDocXK) {
+                GetCountErjDocX();
+                getErjDocXK(false);
+            });
         }
 
     }
@@ -163,9 +172,6 @@
             self.DocAttachList(data);
         });
     }
-
-
-
 
 
 

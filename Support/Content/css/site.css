@@ -1793,83 +1793,83 @@ input[type="checkbox"] {
     }
 }
 
-        .page-proccess-wrapper p {
-            font-size: 13px;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #444;
-        }
+.page-proccess-wrapper p {
+    font-size: 13px;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #444;
+}
 
-        .page-proccess-wrapper .loader {
-            position: relative;
-            top: calc(50% - 30px);
-        }
+.page-proccess-wrapper .loader {
+    position: relative;
+    top: calc(50% - 30px);
+}
 
 
 
-    @keyframes blinker {
-        50% {
-            opacity: 0;
-        }
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blink {
+    animation: blinker 1s step-start infinite;
+}
+
+.notification {
+}
+
+    .notification .badge {
+        position: absolute;
+        top: -3px;
+        right: -10px;
+        border-radius: 50%;
+        background: red;
+        color: white;
     }
 
-    .blink {
-        animation: blinker 1s step-start infinite;
-    }
-
-    .notification {
-    }
-
-        .notification .badge {
-            position: absolute;
-            top: -3px;
-            right: -10px;
-            border-radius: 50%;
-            background: red;
-            color: white;
-        }
 
 
 
+.tableFix th {
+    background-color: #d9d9d9;
+}
 
-    .tableFix th {
-        background-color: #d9d9d9;
-    }
-
-        .tableFix td:first-child, .tableFix th:first-child {
-            position: sticky;
-            right: 0;
-            z-index: 1;
-            background-color: #d9d9d9;
-        }
-
-
-        .tableFix td:last-child, .tableFix th:last-child {
-            position: sticky;
-            left: 0;
-            z-index: 1;
-            background-color: white;
-        }
-
-
-
-    .tableFix thead tr th {
+    .tableFix td:first-child, .tableFix th:first-child {
         position: sticky;
-        top: 0;
+        right: 0;
         z-index: 1;
-    }
-
-    .tableFix tfoot tr td {
-        position: sticky;
-        bottom: 0;
-        background-color: #efb683 !important;
-    }
-
-
-    .tableFix th:first-child, .tableFix th:last-child {
-        z-index: 2;
         background-color: #d9d9d9;
     }
+
+
+    .tableFix td:last-child, .tableFix th:last-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: white;
+    }
+
+
+
+.tableFix thead tr th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.tableFix tfoot tr td {
+    position: sticky;
+    bottom: 0;
+    background-color: #efb683 !important;
+}
+
+
+.tableFix th:first-child, .tableFix th:last-child {
+    z-index: 2;
+    background-color: #d9d9d9;
+}
 
 
 
@@ -1934,50 +1934,50 @@ input[type="checkbox"] {
 
 
 
-    .tableFixList th {
-        background-color: #d9d9d9;
-    }
+.tableFixList th {
+    background-color: #d9d9d9;
+}
 
-        .tableFixList td:first-child, .tableFixList th:first-child {
-            /*position: sticky;
+    .tableFixList td:first-child, .tableFixList th:first-child {
+        /*position: sticky;
         right: 0;
         z-index: 1;
         background-color: #d9d9d9;*/
-        }
+    }
 
-        .tableFixList td:last-child, .tableFixList th:last-child {
-            /* position: sticky;
+    .tableFixList td:last-child, .tableFixList th:last-child {
+        /* position: sticky;
         left: 0;
         z-index: 1;
         background-color: white;*/
-        }
-
-    .tableFixList thead tr th {
-        position: sticky;
-        top: 0;
     }
 
-    .tableFixList tfoot tr td {
-        position: sticky;
-        bottom: 0;
-        background-color: #efb683 !important;
-    }
+.tableFixList thead tr th {
+    position: sticky;
+    top: 0;
+}
+
+.tableFixList tfoot tr td {
+    position: sticky;
+    bottom: 0;
+    background-color: #efb683 !important;
+}
 
 
-    .tableFixList th:first-child, .tableFixList th:last-child {
-        z-index: 2;
-        background-color: #d9d9d9;
-    }
+.tableFixList th:first-child, .tableFixList th:last-child {
+    z-index: 2;
+    background-color: #d9d9d9;
+}
 
 
 
-    .ui-autocomplete {
-        font-family: Vazir;
-        font-size: 11px
-    }
+.ui-autocomplete {
+    font-family: Vazir;
+    font-size: 11px
+}
 
 
-    /*
+/*
 
 .tableFix {
     overflow-y: auto;
@@ -2011,9 +2011,9 @@ th {
 
 
 
-    input[type="checkbox"] {
-        mix-blend-mode: exclusion;
-    }
+input[type="checkbox"] {
+    mix-blend-mode: exclusion;
+}
 
 
 
@@ -2022,3 +2022,6 @@ th {
     direction: ltr !important;
     font-family: Merriweather-Light !important;
 }
+
+
+

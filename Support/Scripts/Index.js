@@ -39,9 +39,11 @@
     $('#Index_TextBack').hide();
 
     $('#Index_Home').attr('src', '/Content/img/Icon_White/Home.png');
+    $('#Index_Tiket').attr('src', '/Content/img/Icon_White/Alarm.png');
     $('#Index_User').attr('src', '/Content/img/Icon_White/User.png');
 
     var CustomerFilesCountUri = server + '/api/Data/CustomerFilesCount/'; // آدرس فایل
+
 
     //$('#B_Tiket').attr('disabled', 'disabled');
     //if (lockNumber == '10000') {
@@ -60,6 +62,11 @@
         });
     }
     getCustomerFilesCount();
+
+    
+    GetCountErjDocX();
+
+
 
 
    /* $("#p_information").show();

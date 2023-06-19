@@ -259,6 +259,45 @@ namespace Support.Controllers
 
 
 
+        public class Object_CountErjDocXK
+        {
+            public int ModeCode { get; set; }
+
+            public string LockNo { get; set; }
+
+        }
+
+
+        [Route("api/KarbordData/Web_CountErjDocXK")]
+        public async Task<IHttpActionResult> PostWeb_CountErjDocXK(Object_CountErjDocXK Object_CountErjDocXK)
+        {
+            string sql = string.Format("select count(1) as countRead from dbo.Web_ErjDocXK({0},'{1}')  where ResultRead = 1", Object_CountErjDocXK.ModeCode, Object_CountErjDocXK.LockNo);
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+            var list = db.Database.SqlQuery<int>(sql);
+            return Ok(list);
+        }
+
+
+        public class Object_Ticket_UpdateResult
+        {
+            public long SerialNumber { get; set; }
+        }
+
+        // Post: api/KarbordData/Ticket_UpdateResult پیوست  
+        [Route("api/KarbordData/Ticket_UpdateResult/")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_Ticket_UpdateResult(Object_Ticket_UpdateResult Object_Ticket_UpdateResult)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture,@"EXEC Web_ErjSaveTicket_UpdateResult @SerialNumber = {0} select 1 ", Object_Ticket_UpdateResult.SerialNumber);
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+            var res = db.Database.SqlQuery<int>(sql);
+            return Ok(res);
+        }
+
+
+
         public class DocAttachObject
         {
             public string ProgName { get; set; }
