@@ -188,7 +188,7 @@ namespace Support.Controllers
             if (list.Count > 0)
             {
                 string newPass = Token(10);
-                string resEmail = UnitPublic.SendEmail(RecoveryPasswordObject.Email, "کاربرد کامپیوتر", "کلمه ورود به سایت ساپورت = " + newPass);
+                string resEmail = UnitPublic.SendEmail(RecoveryPasswordObject.Email, "کاربرد کامپیوتر",  newPass);
                 if (resEmail == "Send")
                 {
                     sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 1 where id = {1}  select 1", EncodePassword(newPass), list[0].Id);
@@ -237,15 +237,27 @@ namespace Support.Controllers
         }
 
 
-
-        [Route("api/Data/FAG/")]
-        public async Task<IHttpActionResult> GetFAG()
+         [Route("api/Data/FAQ/")]
+        public async Task<IHttpActionResult> GetFAQ()
         {
             string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId  from FAQs
                                          union all
                                          select id,Title,Description,Body,SortId from FAQs
                                          order by title , SortId");
             var list = db.Database.SqlQuery<FAQs>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
+        [Route("api/Data/Videos/")]
+        public async Task<IHttpActionResult> GetVideos()
+        {
+            string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId,link,FormId  from Videos
+                                         union all
+                                         select id,Title,Description,Body,SortId,link,FormId  from Videos
+                                         order by title , SortId");
+            var list = db.Database.SqlQuery<Videos>(sql).ToList();
             return Ok(list);
         }
 

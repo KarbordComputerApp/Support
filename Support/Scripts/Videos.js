@@ -1,7 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
-    var FAGUri = server + '/api/Data/FAQ/';
-    self.FAGList = ko.observableArray([]);
+    var VideosUri = server + '/api/Data/Videos/';
+    self.VideosList = ko.observableArray([]);
     self.filter = ko.observable("");
     self.filterGru = ko.observable("");
 
@@ -9,18 +9,19 @@
         window.location.href = localStorage.getItem("urlLogin");
     }
 
+    $("#F_Video").attr("src", "");
     var Gru;
 
     $("#Index_TextLogo").text('سوالات متداول');
 
-    function getFAGList() {
-        ajaxFunction(FAGUri, 'GET', true).done(function (data) {
-            self.FAGList(data == null ? [] : data);
+    function getVideosList() {
+        ajaxFunction(VideosUri, 'GET', true).done(function (data) {
+            self.VideosList(data == null ? [] : data);
             Gru = [...new Set(data.map(item => item.Title))];
 
             var textExc = '';
 
-            textExc = '<select class="form-control" style="height: 37px;" id="FAQSelect">';
+            textExc = '<select class="form-control" style="height: 37px;" id="VideosSelect">';
             textExc += '<option value="">تمام بخش ها</option>';
 
             for (var i = 0; i < Gru.length; i++) {
@@ -29,27 +30,26 @@
             }
 
             textExc += '</select>';
-            $("#SelectFAQ").empty();
-            $('#SelectFAQ').append(textExc);
+            $("#SelectVideos").empty();
+            $('#SelectVideos').append(textExc);
 
         });
 
     }
-    getFAGList();
+    getVideosList();
 
 
-    self.FilterFag = ko.computed(function () {
+    self.FilterVideos = ko.computed(function () {
         var filter = self.filter();
         var filterGru = self.filterGru();
         if (!filter && !filterGru) {
-            return self.FAGList();
+            return self.VideosList();
         } else {
-            tempData = ko.utils.arrayFilter(self.FAGList(), function (item) {
+            tempData = ko.utils.arrayFilter(self.VideosList(), function (item) {
                 result =
                     (item.Title == null ? '' : item.Title.toString().search(filterGru) >= 0) &&
 
                     (
-
                         (item.Description == null ? '' : item.Description.toString().search(filter) >= 0) ||
                         (item.Body == null ? '' : item.Body.toString().search(filter) >= 0)
                     )
@@ -59,10 +59,20 @@
         }
     })
 
-    $("#FAQSelect").change(function () {
-        select = $("#FAQSelect").val();
+    $("#VideosSelect").change(function () {
+        select = $("#VideosSelect").val();
         self.filterGru(select);
     })
+
+    self.ShowVideo = function (band) {
+        $("#Title_Video").text(band.Title + ' - ' + band.Description);
+        $("#F_Video").attr("src",band.Link);
+        $("#modal-Video").modal('show');
+    }
+
+    $('#modal-Video').on('hide.bs.modal', function () {
+        $("#F_Video").attr("src", "");
+    });
 };
 
 

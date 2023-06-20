@@ -39,6 +39,11 @@ namespace Support.Controllers
         {
             return View();
         }
+
+        public ActionResult Videos()
+        {
+            return View();
+        }
         /* public ActionResult Tiket()
          {
              return View();

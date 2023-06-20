@@ -2,6 +2,8 @@
     $("#Index_TextLogo").text('تغییر کلمه ورود به پنل کاربری');
 
     $("#Index_Home").show();
+    $("#Index_Pic_line1").show();
+    $("#Index_TextTiket").show();
     $("#BM_InformationCompany").show();
     $("#BM_ChangePassword").show();
 
@@ -9,6 +11,8 @@
 
     if (changePass == '1') {
         $("#Index_Home").hide();
+        $("#Index_Pic_line1").hide();
+        $("#Index_TextTiket").hide();
         $("#BM_InformationCompany").hide();
         $("#BM_ChangePassword").hide();
     }

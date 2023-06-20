@@ -174,6 +174,7 @@
     <Compile Include="Models\Support\CustomerInfos.cs" />
     <Compile Include="Models\Support\CustomPages.cs" />
     <Compile Include="Models\Support\ExceptionLogs.cs" />
+    <Compile Include="Models\Support\Videos.cs" />
     <Compile Include="Models\Support\FAQs.cs" />
     <Compile Include="Models\Support\Feedbacks.cs" />
     <Compile Include="Models\Support\FinancialDocuments.cs" />
@@ -352,11 +353,13 @@
     <Content Include="Content\img\Icon_White\Print.png" />
     <Content Include="Content\img\Icon_White\User.png" />
     <Content Include="Content\img\Logo.png" />
+    <Content Include="Content\img\LogoMail.png" />
     <Content Include="Content\img\LogoMin.png" />
     <Content Include="Content\img\LogoTop.png" />
     <Content Include="Content\img\movie.png" />
     <Content Include="Content\img\doc.png" />
     <Content Include="Content\img\pardakht.svg" />
+    <Content Include="Content\img\play-icon.png" />
     <Content Include="Content\img\print.svg" />
     <Content Include="Content\img\svg\1.png" />
     <Content Include="Content\img\svg\2.png" />
@@ -723,6 +726,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Download.js" />
+    <Content Include="Scripts\Videos.js" />
     <Content Include="Scripts\MailBox.js" />
     <Content Include="Scripts\ChangePassword.js" />
     <Content Include="Scripts\shamsi.js" />
@@ -780,6 +784,7 @@
     <Content Include="Views\Home\CustAccount.cshtml" />
     <Content Include="Views\Home\MailBox.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\Videos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

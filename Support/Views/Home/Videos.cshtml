@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "ویدیوها و مقالات آموزشی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color:white;border-radius: 25px;padding: 20px; margin-bottom:20px">
+    <div class="row">
+        <div class="col-md-4">
+            <p style="margin-bottom:0px">جستجوی کامل</p>
+            <div class="row">
+                <input data-bind="value: filter , valueUpdate: 'afterkeydown'" class="form-control" placeholder="عبارت را وارد کنید">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <p style="margin-bottom:0px">دسته بندی</p>
+            <div id="SelectVideos">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div style="background-color:white;border-radius: 25px;padding: 20px;">
+
+
+    <!-- <div class="accordion" id="accordionExample">
+
+             <a  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true">
+                 Collapsible Group Item #1
+             </a>
+
+             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+             </div>
+     </div>
+        -->
+
+
+
+
+    <div class="accordion" id="accordionExample1" data-bind="foreach: FilterVideos">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne" style="border-radius: 15px;">
+                    <div class="panel-title">
+                        <a data-bind="click: Id == 0 ? null : $root.ShowVideo , attr: { 'data-target': Id == 0 ? '' : '#AAA' + Id } ,style: { 'background-color': Id == 0 ? '#082b44' : '#dcdcdc', 'cursor': Id == 0 ? null:'pointer'} " role="button" style="color:black;">
+                            <span data-bind="text:Description , style: { 'color' :  Id == 0 ? 'white' : '#082b44'}" style="color:white"></span>
+                            <img src="~/Content/img/play-icon.png" data-bind="text:Description, style: { 'display' :  Id == 0 ? 'none' : 'block' }" style="float: left;display: block;height: 20px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modal-Video" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" dir="ltr" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="max-width:750px;max-height:500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="خروج">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 id="Title_Video" class="modal-title"></h4>
+                <a id=""></a>
+            </div>
+            <div class="modal-body">
+                <div class="h_iframe-aparat_embed_frame">
+                    <span style="display: block;padding-top: 57%"></span>
+                    <iframe id="F_Video" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Videos.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
