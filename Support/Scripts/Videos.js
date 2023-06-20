@@ -12,7 +12,7 @@
     $("#F_Video").attr("src", "");
     var Gru;
 
-    $("#Index_TextLogo").text('سوالات متداول');
+    $("#Index_TextLogo").text('ویدیوهای آموزشی');
 
     function getVideosList() {
         ajaxFunction(VideosUri, 'GET', true).done(function (data) {

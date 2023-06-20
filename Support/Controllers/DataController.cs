@@ -253,7 +253,7 @@ namespace Support.Controllers
         [Route("api/Data/Videos/")]
         public async Task<IHttpActionResult> GetVideos()
         {
-            string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId,link,FormId  from Videos
+            string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId, '' as link, '' as FormId  from Videos
                                          union all
                                          select id,Title,Description,Body,SortId,link,FormId  from Videos
                                          order by title , SortId");
