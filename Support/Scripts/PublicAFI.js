@@ -42,7 +42,7 @@ function GetCountErjDocXK() {
             LockNo: lockNumber,
             ModeCode: '204',
         }
-        ajaxFunction(Web_CountErjDocXKUri, 'POST', Object_CountErjDocXK, true).done(function (data) {
+        ajaxFunction(Web_CountErjDocXKUri, 'POST', Object_CountErjDocXK, false).done(function (data) {
 
             count = data[0];
             $("#notificationCount").text(data[0]);
