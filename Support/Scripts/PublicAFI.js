@@ -36,23 +36,50 @@ if ((userType == '1' || userType == '2')) {
 
 
 var Web_CountErjDocXKUri = server + '/api/KarbordData/Web_CountErjDocXK/'; // تعداد تیکت خوانده نشده
-function GetCountErjDocX() {
-    var Object_CountErjDocXK = {
-        LockNo: lockNumber,
-        ModeCode: '204',
+function GetCountErjDocXK() {
+    if (lockNumber != "" && lockNumber != null) {
+        var Object_CountErjDocXK = {
+            LockNo: lockNumber,
+            ModeCode: '204',
+        }
+        ajaxFunction(Web_CountErjDocXKUri, 'POST', Object_CountErjDocXK, true).done(function (data) {
+
+            count = data[0];
+            $("#notificationCount").text(data[0]);
+            localStorage.setItem("notificationCount", data[0]);
+
+            if (count == 0) {
+                $("#notificationCount").hide();
+            } else {
+                $("#notificationCount").show();
+            }
+        });
     }
-    ajaxFunction(Web_CountErjDocXKUri, 'POST', Object_CountErjDocXK, true).done(function (data) {
-        $("#notificationCount").text(data[0]);
-        localStorage.setItem("notificationCount", data[0]);
-    });
 }
 
+setInterval(RefreshCountErjDocXK, 60000);
+
+function RefreshCountErjDocXK() {
+    GetCountErjDocXK();
+}
+
+RefreshCountErjDocXK();
+/*
 var notificationCount = localStorage.getItem("notificationCount");
 if (notificationCount != "null" && notificationCount != null) {
     $("#notificationCount").text(notificationCount);
+    if (notificationCount == "0") {
+        $("#notificationCount").hide();
+    }
 } else {
-    GetCountErjDocX();
 }
+*/
+
+
+
+
+
+
 
 
 

@@ -108,7 +108,7 @@
                 SerialNumber: Band.SerialNumber,
             }
             ajaxFunction(Ticket_UpdateResultUri, 'Post', Object_Ticket_UpdateResult).done(function (dataDocXK) {
-                GetCountErjDocX();
+                GetCountErjDocXK();
                 getErjDocXK(false);
             });
         }

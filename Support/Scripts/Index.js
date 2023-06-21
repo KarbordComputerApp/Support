@@ -64,7 +64,7 @@
     getCustomerFilesCount();
 
     
-    GetCountErjDocX();
+    //GetCountErjDocXK();
 
 
 
