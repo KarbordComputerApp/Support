@@ -1,6 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
     var VideosUri = server + '/api/Data/Videos/';
+    var LogVideosUri = server + '/api/Data/LogVideos/';
     self.VideosList = ko.observableArray([]);
     self.filter = ko.observable("");
     self.filterGru = ko.observable("");
@@ -15,7 +16,13 @@
     $("#Index_TextLogo").text('ویدیوهای آموزشی');
 
     function getVideosList() {
-        ajaxFunction(VideosUri, 'GET', true).done(function (data) {
+        var VideosObject = {
+            LockNumber: lockNumber,
+            FlagLog: true,
+            IP: ipw,
+            CallProg: 'Web'
+        }
+        ajaxFunction(VideosUri, 'POST', VideosObject, true).done(function (data) {
             self.VideosList(data == null ? [] : data);
             Gru = [...new Set(data.map(item => item.Title))];
 
@@ -66,8 +73,19 @@
 
     self.ShowVideo = function (band) {
         $("#Title_Video").text(band.Title + ' - ' + band.Description);
-        $("#F_Video").attr("src",band.Link);
-        $("#modal-Video").modal('show');
+        $("#F_Video").attr("src", band.Link);
+
+
+        var LogVideosObject = {
+            LockNumber: lockNumber,
+            IP: ipw,
+            CallProg: 'Web',
+            Spec: band.Description
+        }
+        ajaxFunction(LogVideosUri, 'POST', LogVideosObject, true).done(function (data) {
+            $("#modal-Video").modal('show');
+        });
+
     }
 
     $('#modal-Video').on('hide.bs.modal', function () {

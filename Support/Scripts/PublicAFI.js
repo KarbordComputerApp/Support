@@ -43,7 +43,6 @@ function GetCountErjDocXK() {
             ModeCode: '204',
         }
         ajaxFunction(Web_CountErjDocXKUri, 'POST', Object_CountErjDocXK, false).done(function (data) {
-
             count = data[0];
             $("#notificationCount").text(data[0]);
             localStorage.setItem("notificationCount", data[0]);

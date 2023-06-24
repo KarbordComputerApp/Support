@@ -1,7 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
-    var FAGUri = server + '/api/Data/FAQ/';
-    self.FAGList = ko.observableArray([]);
+    var FAQUri = server + '/api/Data/FAQ/';
+    self.FAQList = ko.observableArray([]);
     self.filter = ko.observable("");
     self.filterGru = ko.observable("");
 
@@ -13,9 +13,15 @@
 
     $("#Index_TextLogo").text('سوالات متداول');
 
-    function getFAGList() {
-        ajaxFunction(FAGUri, 'GET', true).done(function (data) {
-            self.FAGList(data == null ? [] : data);
+    function getFAQList() {
+        var FAQObject = {
+            LockNumber: lockNumber,
+            FlagLog: true,
+            IP: ipw,
+            CallProg: 'Web'
+        }
+        ajaxFunction(FAQUri, 'POST', FAQObject, true).done(function (data) {
+            self.FAQList(data == null ? [] : data);
             Gru = [...new Set(data.map(item => item.Title))];
 
             var textExc = '';
@@ -35,16 +41,16 @@
         });
 
     }
-    getFAGList();
+    getFAQList();
 
 
-    self.FilterFag = ko.computed(function () {
+    self.FilterFAQ = ko.computed(function () {
         var filter = self.filter();
         var filterGru = self.filterGru();
         if (!filter && !filterGru) {
-            return self.FAGList();
+            return self.FAQList();
         } else {
-            tempData = ko.utils.arrayFilter(self.FAGList(), function (item) {
+            tempData = ko.utils.arrayFilter(self.FAQList(), function (item) {
                 result =
                     (item.Title == null ? '' : item.Title.toString().search(filterGru) >= 0) &&
 

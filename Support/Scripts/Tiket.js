@@ -92,17 +92,45 @@
                 //downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
 
                 if (list[i] != "") {
-                    item +=
+                    div1 = $('<div class="row" style="margin - top: 5px; margin - bottom: 5px!important;">');
+                    span = $('<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' );
+                    div2 = $('<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">');
+                    a = $('<a href="' + list[i] + '"><span>' + list[i] + '  </span></a>');
+
+                    div2.append(a);
+                    div1.append(span);
+                    div1.append(div2);
+                    $('#LinkSt').append(div1);
+
+                    a.click(function () {
+                        var href = $(this).attr("href");
+
+                        var LogLinkTiketUri = server + '/api/Data/LogLinkTiket/';
+                        var LogLinkTiketObject = {
+                            LockNumber: lockNumber,
+                            IP: ipw,
+                            CallProg: 'Web',
+                            Link: href
+                        }
+                        ajaxFunction(LogLinkTiketUri, 'POST', LogLinkTiketObject, true).done(function (data) {
+                        });
+                    });
+
+                   /* item +=
                         '<div class="row" style="margin-top: 5px;margin-bottom: 5px !important;">' +
                         '<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' +
                         '<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">' +
-                        '<a  href ="' + list[i] + '"  ><span>' + list[i] + '  </span></a>' +
+                        '<a class="LinkTiket"><span>' + list[i] + '  </span></a>' +
                         '</div>' +
-                        '</div>';
+                        '</div>';*/
                     //item += '<a href ="' + list[i] + '">لینک<span>' + (i + 1) + '  </span>:</a><br>';
                 }
             }
-            $('#LinkSt').append(item);
+
+           
+
+
+            //$('#LinkSt').append(item);
 
             var Object_Ticket_UpdateResult = {
                 SerialNumber: Band.SerialNumber,
@@ -114,6 +142,9 @@
         }
 
     }
+
+
+
 
     //Get ErjDocXK 
     function getErjDocXK(log) {

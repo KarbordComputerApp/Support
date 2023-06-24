@@ -1,5 +1,5 @@
 ﻿var ViewModel = function () {
-    $("#Index_TextLogo").text('مشخصات شرکت');
+    $("#Index_TextLogo").text('اطلاعات کاربری');
 
     idUser = localStorage.getItem("IdUser");
     $("#Name").val(localStorage.getItem("Name"));

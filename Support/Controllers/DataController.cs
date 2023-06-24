@@ -42,8 +42,13 @@ namespace Support.Controllers
         public const int mode_CustAccount = 5;
         public const int mode_MailBox = 6;
         public const int mode_Login = 7;
+        public const int mode_LockInfo = 8;
+        public const int mode_Box = 9;
+        public const int mode_Notification = 10;
         public const int mode_Download = 11;
         public const int mode_Samane = 12;
+        public const int mode_FAQ = 13;
+        public const int mode_Videos = 14;
 
 
 
@@ -53,6 +58,9 @@ namespace Support.Controllers
         public const int act_Print = 4;
         public const int act_Download = 5;
         public const int act_ChangePass = 6;
+        public const int act_NewLink = 7;
+        public const int act_ViewLink = 8;
+        public const int act_ViewLinkAparat_Tiket = 9;
 
 
 
@@ -188,7 +196,7 @@ namespace Support.Controllers
             if (list.Count > 0)
             {
                 string newPass = Token(10);
-                string resEmail = UnitPublic.SendEmail(RecoveryPasswordObject.Email, "کاربرد کامپیوتر",  newPass);
+                string resEmail = UnitPublic.SendEmail(RecoveryPasswordObject.Email, "کاربرد کامپیوتر", newPass);
                 if (resEmail == "Send")
                 {
                     sql = string.Format(@"update Users set Password = '{0}' , ForceToChangePass = 1 where id = {1}  select 1", EncodePassword(newPass), list[0].Id);
@@ -236,28 +244,62 @@ namespace Support.Controllers
             return Ok(list);
         }
 
+        public class FAQObject
+        {
+            public int LockNumber { get; set; }
 
-         [Route("api/Data/FAQ/")]
-        public async Task<IHttpActionResult> GetFAQ()
+            public bool FlagLog { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+
+        }
+
+        [Route("api/Data/FAQ/")]
+        public async Task<IHttpActionResult> PostFAQ(FAQObject FAQObject)
         {
             string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId  from FAQs
                                          union all
                                          select id,Title,Description,Body,SortId from FAQs
                                          order by title , SortId");
             var list = db.Database.SqlQuery<FAQs>(sql).ToList();
+
+            if (FAQObject.FlagLog == true)
+            {
+                UnitPublic.SaveLog(FAQObject.LockNumber, mode_FAQ, act_View, 0, FAQObject.IP, FAQObject.CallProg, "");
+            }
+
             return Ok(list);
         }
 
 
+        public class VideosObject
+        {
+            public int LockNumber { get; set; }
+
+            public bool FlagLog { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+
+        }
 
         [Route("api/Data/Videos/")]
-        public async Task<IHttpActionResult> GetVideos()
+        public async Task<IHttpActionResult> PostVideos(VideosObject VideosObject)
         {
             string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId, '' as link, '' as FormId  from Videos
                                          union all
                                          select id,Title,Description,Body,SortId,link,FormId  from Videos
                                          order by title , SortId");
             var list = db.Database.SqlQuery<Videos>(sql).ToList();
+
+            if (VideosObject.FlagLog == true)
+            {
+                UnitPublic.SaveLog(VideosObject.LockNumber, mode_Videos, act_View, 0, VideosObject.IP, VideosObject.CallProg, "");
+            }
+
             return Ok(list);
         }
 
@@ -1269,6 +1311,72 @@ namespace Support.Controllers
             }
             return response;
         }
+
+
+
+
+        public class LogVideosObject
+        {
+            public int LockNumber { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+
+            public string Spec { get; set; }
+
+        }
+
+        [Route("api/Data/LogVideos/")]
+        public async Task<IHttpActionResult> PostLogVideos(LogVideosObject LogVideosObject)
+        {
+
+            UnitPublic.SaveLog(LogVideosObject.LockNumber,
+                mode_Videos,
+                act_ViewLinkAparat_Tiket,
+                0,
+                LogVideosObject.IP,
+                LogVideosObject.CallProg,
+                LogVideosObject.Spec);
+
+            return Ok("OK");
+        }
+
+
+        public class LogLinkTiketObject
+        {
+            public int LockNumber { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+
+            public string Link { get; set; }
+
+        }
+
+        [Route("api/Data/LogLinkTiket/")]
+        public async Task<IHttpActionResult> PostLogLinkTiket(LogLinkTiketObject LogLinkTiketObject)
+        {
+            string spec = LogLinkTiketObject.Link;
+            string sql = string.Format(@"select Description from Videos where Link = '{0}'", spec);
+            var filePath = db.Database.SqlQuery<string>(sql).ToList();
+            if (filePath.Count > 0)
+            {
+                spec = filePath[0];
+            }
+            UnitPublic.SaveLog(LogLinkTiketObject.LockNumber,
+                mode_Tiket,
+                act_ViewLinkAparat_Tiket,
+                0,
+                LogLinkTiketObject.IP,
+                LogLinkTiketObject.CallProg,
+                spec);
+
+            return Ok("OK");
+        }
+
+
 
     }
 }

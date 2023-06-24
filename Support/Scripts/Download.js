@@ -34,7 +34,7 @@
         if (jQuery.inArray("VIDEO", trs) !== -1) { // all
             $("#Karbord-AFI2").show();
             //$("#Karbord-AFI3").show();
-            //$("#Karbord-CSH5").show();
+            $("#Karbord-CSH5").show();
             $("#Karbord-ACC6").show();
             $("#Karbord-FCT6").show();
             $("#Karbord-INV6").show();
@@ -45,7 +45,7 @@
 
         if (jQuery.inArray("VIDEO_AFI2", trs) !== -1) $("#Karbord-AFI2").show();
         //if (jQuery.inArray("VIDEO_AFI3", trs) !== -1) $("#Karbord-AFI3").show();
-        //if (jQuery.inArray("VIDEO_CSH5", trs) !== -1) $("#Karbord-CSH5").show();
+        if (jQuery.inArray("VIDEO_CSH5", trs) !== -1) $("#Karbord-CSH5").show();
         if (jQuery.inArray("VIDEO_ACC6", trs) !== -1) $("#Karbord-ACC6").show();
         if (jQuery.inArray("VIDEO_FCT6", trs) !== -1) $("#Karbord-FCT6").show();
         if (jQuery.inArray("VIDEO_INV6", trs) !== -1) $("#Karbord-INV6").show();
