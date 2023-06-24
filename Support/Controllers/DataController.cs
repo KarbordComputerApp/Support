@@ -60,7 +60,9 @@ namespace Support.Controllers
         public const int act_ChangePass = 6;
         public const int act_NewLink = 7;
         public const int act_ViewLink = 8;
-        public const int act_ViewLinkAparat_Tiket = 9;
+        public const int act_Save = 9;
+        public const int act_Delete = 10;
+        public const int act_ViewLinkAparat_Tiket = 11;
 
 
 
