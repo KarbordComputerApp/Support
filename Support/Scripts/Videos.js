@@ -73,12 +73,15 @@
 
     var videoclip = document.getElementById('videoclip');
     var videosource = document.getElementById('mp4video');
+
+    isAparat = false;
+
     self.ShowVideo = function (band) {
         $("#P_Aparat").hide();
         $("#videoclip").hide();
         $("#Title_Video").text(band.Title + ' - ' + band.Description);
         src = band.Link;
-        isAparat = false;
+        
 
         if (src.search("aparat.com") > 0) {
             isAparat = true;
@@ -112,9 +115,12 @@
     }
 
     $('#modal-Video').on('hide.bs.modal', function () {
-        $("#F_Video").attr("src", "");
-        videoclip.pause();
-        videoclip.currentTime = 0
+        if (isAparat) {
+            $("#F_Video").attr("src", "");
+        } else {
+            videoclip.pause();
+            videoclip.currentTime = 0
+        }
     });
 };
 
