@@ -71,9 +71,22 @@
         self.filterGru(select);
     })
 
+    var videoclip = document.getElementById('videoclip');
+    var videosource = document.getElementById('mp4video');
     self.ShowVideo = function (band) {
+        $("#P_Aparat").hide();
+        $("#videoclip").hide();
         $("#Title_Video").text(band.Title + ' - ' + band.Description);
-        $("#F_Video").attr("src", band.Link);
+        src = band.Link;
+        isAparat = false;
+
+        if (src.search("aparat.com") > 0) {
+            isAparat = true;
+            $("#P_Aparat").show();
+        }
+        else {
+            $("#videoclip").show();
+        }
 
 
         var LogVideosObject = {
@@ -83,6 +96,16 @@
             Spec: band.Description
         }
         ajaxFunction(LogVideosUri, 'POST', LogVideosObject, true).done(function (data) {
+            if (isAparat) {
+                $("#F_Video").attr("src", band.Link);
+            }
+            else {
+                videoclip.pause();
+                videosource.setAttribute('src', band.Link);
+                videoclip.load();
+                videoclip.play();
+            }
+
             $("#modal-Video").modal('show');
         });
 
@@ -90,6 +113,8 @@
 
     $('#modal-Video').on('hide.bs.modal', function () {
         $("#F_Video").attr("src", "");
+        videoclip.pause();
+        videoclip.currentTime = 0
     });
 };
 
