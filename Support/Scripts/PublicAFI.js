@@ -21,6 +21,7 @@ var ipw = localStorage.getItem("IPW");
 
 $("#B_CustAccount").attr('disabled', 'disabled');
 $("#B_Tiket").attr('disabled', 'disabled');
+$("#B_Videos").attr('disabled', 'disabled');
 $("#Index_TextTiket").attr('disabled', 'disabled');
 
 
@@ -29,6 +30,7 @@ if (userType == '1' && forceToChangePass == 'false') {
 }
 
 if ((userType == '1' || userType == '2')) {
+    $('#B_Videos').removeAttr('disabled');
     $('#B_Tiket').removeAttr('disabled');
     $('#Index_TextTiket').removeAttr('disabled');
 }

@@ -95,7 +95,7 @@
                     div1 = $('<div class="row" style="margin - top: 5px; margin - bottom: 5px!important;">');
                     span = $('<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' );
                     div2 = $('<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">');
-                    a = $('<a href="' + list[i] + '"><span>' + list[i] + '  </span></a>');
+                    a = $('<a href="' + list[i] + '" target="_blank"><span>' + list[i] + '  </span></a>');
 
                     div2.append(a);
                     div1.append(span);
