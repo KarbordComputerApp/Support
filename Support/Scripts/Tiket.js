@@ -92,8 +92,8 @@
             for (var i = 0; i < list.length; i++) {
 
                 //downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
-                linkSt = list[i];
-                isVideo = linkSt.search("/Content/Video/") > 0;
+                linkSt = list[i].toLowerCase();
+                isVideo = linkSt.search("/content/video/") > 0;
 
                 textVideo = "ویدیو آموزشی";
 

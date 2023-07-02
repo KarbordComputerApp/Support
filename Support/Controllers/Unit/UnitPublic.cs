@@ -21,7 +21,7 @@ namespace Support.Controllers.Unit
         //public static string titleVerNumber = "80";
 
         public static string titleVer = "ورژن";
-        public static string titleVerNumber = "1022";
+        public static string titleVerNumber = "1023";
 
         public static string Appddress; //ادرس نرم افزار
         public static IniFile MyIniServer;
