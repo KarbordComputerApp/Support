@@ -78,6 +78,8 @@
     getDateServer();
 
 
+    var videoclip = document.getElementById('videoclip');
+    var videosource = document.getElementById('mp4video');
 
     self.ViewResultSt = function (Band) {
         $('#LinkSt').empty();
@@ -90,12 +92,21 @@
             for (var i = 0; i < list.length; i++) {
 
                 //downloadVideoUri = server + '/api/Data/DownloadVideo/' + lockNumber + "/Web/" + ipw + "/";
+                linkSt = list[i];
+                isVideo = linkSt.search("/Content/Video/") > 0;
+
+                textVideo = "ویدیو آموزشی";
 
                 if (list[i] != "") {
                     div1 = $('<div class="row" style="margin - top: 5px; margin - bottom: 5px!important;">');
-                    span = $('<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' );
+                    span = $('<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>');
                     div2 = $('<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">');
-                    a = $('<a href="' + list[i] + '" target="_blank"><span>' + list[i] + '  </span></a>');
+                    if (isVideo == true) {
+                        a = $('<a href = "#" name = "' + list[i] + '"><span>' + textVideo + '</span></a>');
+                    }
+                    else {
+                        a = $('<a href="' + list[i] + '" target="_blank" name = "' + list[i] + '"><span>' + linkSt + '  </span></a>');
+                    }
 
                     div2.append(a);
                     div1.append(span);
@@ -104,30 +115,43 @@
 
                     a.click(function () {
                         var href = $(this).attr("href");
+                        var name = $(this).attr("name");
 
                         var LogLinkTiketUri = server + '/api/Data/LogLinkTiket/';
                         var LogLinkTiketObject = {
                             LockNumber: lockNumber,
                             IP: ipw,
                             CallProg: 'Web',
-                            Link: href
+                            Link: name
                         }
-                        ajaxFunction(LogLinkTiketUri, 'POST', LogLinkTiketObject, true).done(function (data) {
+                        ajaxFunction(LogLinkTiketUri, 'POST', LogLinkTiketObject, false).done(function (data) {
+                            if (href == "#") {
+                                videoclip.pause();
+                                videosource.setAttribute('src', name);
+                                videoclip.load();
+                                videoclip.play();
+                                $("#Title_Video").text(textVideo);
+                                $("#modal-Video").modal('show');
+                            }
                         });
                     });
 
-                   /* item +=
-                        '<div class="row" style="margin-top: 5px;margin-bottom: 5px !important;">' +
-                        '<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' +
-                        '<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">' +
-                        '<a class="LinkTiket"><span>' + list[i] + '  </span></a>' +
-                        '</div>' +
-                        '</div>';*/
+                    /* item +=
+                         '<div class="row" style="margin-top: 5px;margin-bottom: 5px !important;">' +
+                         '<span class="col-1" style="margin-left: 5px;">لینک<span style="padding-right: 4px;padding-left: 3px;">' + (i + 1) + '</span>:</span>' +
+                         '<div class="col" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;direction: ltr;max-width: 440px;">' +
+                         '<a class="LinkTiket"><span>' + list[i] + '  </span></a>' +
+                         '</div>' +
+                         '</div>';*/
                     //item += '<a href ="' + list[i] + '">لینک<span>' + (i + 1) + '  </span>:</a><br>';
                 }
             }
 
-           
+
+            $('#modal-Video').on('hide.bs.modal', function () {
+                videoclip.pause();
+                videoclip.currentTime = 0
+            });
 
 
             //$('#LinkSt').append(item);
