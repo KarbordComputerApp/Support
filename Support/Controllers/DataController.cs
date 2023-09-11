@@ -1380,5 +1380,29 @@ namespace Support.Controllers
 
 
 
+        [Route("api/Data/GetResetCache/{pass}")]
+        public async Task<IHttpActionResult> GetResetCache(string pass)
+        {
+            if (pass == "K@rbordWeb1234")
+            {
+                string sql = string.Format(@"select Value from Configs where Id = 1");
+                var filePath = db.Database.SqlQuery<string>(sql).ToList();
+                string realFileName = "C:" + filePath[0] + "\\AceMessage.WebCache";
+                if (File.Exists(realFileName))
+                {
+                    File.Delete(realFileName);
+                    return Ok("OK");
+                }
+                else
+                {
+                    return Ok(realFileName + " Not Found");
+                }
+            }
+            else
+                return Ok("Error");
+        }
+
+
+
     }
 }
