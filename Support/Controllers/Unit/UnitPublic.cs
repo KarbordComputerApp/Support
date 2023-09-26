@@ -17,11 +17,11 @@ namespace Support.Controllers.Unit
 {
     public class UnitPublic
     {
-        //public static string titleVer = "ورژن تست";
-        //public static string titleVerNumber = "80";
+        public static string titleVer = "ورژن تست";
+        public static string titleVerNumber = "81";
 
-        public static string titleVer = "ورژن";
-        public static string titleVerNumber = "1024";
+        //public static string titleVer = "ورژن";
+        //public static string titleVerNumber = "1024";
 
         public static string Appddress; //ادرس نرم افزار
         public static IniFile MyIniServer;

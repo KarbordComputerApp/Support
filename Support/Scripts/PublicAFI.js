@@ -1,5 +1,5 @@
 ﻿var server = 'http://localhost:52798';
-//var server = 'http://192.168.0.114:1000';
+//var server = 'http://192.168.0.106:1000';
 
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
