@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.UI;
+using Newtonsoft.Json;
 using Support.Controllers.Unit;
 using Support.Models;
 
@@ -1396,6 +1398,49 @@ namespace Support.Controllers
                 else
                 {
                     return Ok(realFileName + " Not Found");
+                }
+            }
+            else
+                return Ok("Error");
+        }
+        private String sqlDatoToJson(SqlDataReader dataReader)
+        {
+            var dataTable = new DataTable();
+            dataTable.Load(dataReader);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dataTable);
+            return JSONString;
+        }
+
+        //http://localhost:52798/api/Data/ProgVersions/K@rbordWeb1234
+        [Route("api/Data/ProgVersions/{pass}")]
+        public async Task<IHttpActionResult> GetProgVersions(string pass)
+        {
+            if (pass == "K@rbordWeb1234")
+            {
+                try
+                {
+                    string dbName = "Versions.mdb";
+                    string path = GetPath(44) + "\\" + dbName;
+                    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path;
+                    string sql = @" SELECT v.*, p.Name
+                                FROM Progs as p INNER JOIN
+                                           Versions as v ON p.Code = v.ProgName
+                                WHERE(v.code In(select max(code) from Versions group by ProgName)) ";
+
+                    OleDbConnection conn = new OleDbConnection(connectionString);
+                    conn.Open();
+                    OleDbCommand command = new OleDbCommand(sql, conn);
+                    OleDbDataReader data = command.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(data);
+                    var d = JsonConvert.SerializeObject(dt);
+                    conn.Close();
+                    return Ok(d);
+                }
+                catch (Exception e)
+                {
+                    return Ok(e.Message.ToString());
                 }
             }
             else

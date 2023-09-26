@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "تغییرات برنامه ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color:white;border-radius: 25px;padding: 20px;">
+    <div class="accordion" id="accordionExample1" data-bind="foreach: FilterProgVersions">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="cursor: pointer;">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne" style="border-radius: 15px;">
+                    <h4 class="panel-title">
+                        <a data-bind="attr: { 'data-target': '#AAA' + Code } ,style: { 'background-color':'#082b44', 'color' : 'white' } " role="button" data-toggle="collapse" data-parent="#accordionExample1" aria-expanded="true" style="color:black;">
+                            <span data-bind="text:Name"></span>
+                            <span style="padding-right:10px">ورژن :</span>
+                            <span data-bind="text:Version" style=""></span>
+                            <span style="float: left;font-size: 25px;">+</span>
+                            
+                        </a>
+                    </h4>
+                </div>
+                <div data-bind="attr: { 'id': 'AAA' + Code }" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body" style="background-color: #f3f2f2;color: #082b44">
+                        <div class="row" style="font-size: 16px;padding-bottom:10px">
+                            <span data-bind="text: $root.reverseString(UpdateDate) + ':'" style="padding-left:10px"></span>
+                            <span data-bind="text: Title"></span>
+                        </div>
+                        
+                        <span data-bind="text: $root.ReplaceSpec(Spec)" style="font-size: 14px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/ProgVersions.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
