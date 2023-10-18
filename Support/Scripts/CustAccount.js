@@ -15,6 +15,7 @@
 
     var CustAccountUri = server + '/api/KarbordData/CustAccount/'; // آدرس فاکتور ها  
     var FDocP_CustAcountUri = server + '/api/KarbordData/FDocP_CustAcount/'; // آدرس چاپ فاکتور   
+    var DownloadContractUri = server + '/api/KarbordData/DownloadContract/'; // آدرس قراداد   
     var SalePaymentUri = server + '/api/Shaparak/SalePayment'; // آدرس پرداخت  
     var CustAccountSaveUri = server + "/api/KarbordData/CustAccountSave/"; // آدرس ذخیره لینک پرداخت 
     var DocAttachUri = server + '/api/KarbordData/DocAttach/'; // آدرس لیست پیوست 
@@ -45,7 +46,7 @@
             IP: ipw,
             CallProg: 'Web'
         }
-        ajaxFunction(CustAccountUri , 'Post', CustAccountObject).done(function (data) {
+        ajaxFunction(CustAccountUri, 'Post', CustAccountObject).done(function (data) {
             self.CustAccountList(data)
         });
     }
@@ -187,7 +188,7 @@
             IP: ipw,
             CallProg: 'Web'
         }
-        ajaxFunction(FDocP_CustAcountUri , 'Post', FDocP_CustAcountObject, false).done(function (data) {
+        ajaxFunction(FDocP_CustAcountUri, 'Post', FDocP_CustAcountObject, false).done(function (data) {
             self.FDocP_CustAcountList(data)
         });
     }
@@ -198,7 +199,7 @@
         //count = list.DownloadCount == '' ? 1 : parseInt(list.DownloadCount) + 1;
         Swal.fire({
             title: 'تایید چاپ فاکتور',
-            text:'آیا فاکتور انتخابی چاپ شود ؟', // (count == 1 ? "دو" : "یک") + " بار امکان چاپ فاکتور وجود دارد.آیا چاپ شود؟",
+            text: 'آیا فاکتور انتخابی چاپ شود ؟', // (count == 1 ? "دو" : "یک") + " بار امکان چاپ فاکتور وجود دارد.آیا چاپ شود؟",
             type: 'info',
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -226,6 +227,39 @@
 
     };
 
+    self.DownloadAttach = function (list) {
+        if (list.TasviyeCode == 2) {
+            Swal.fire({
+                title: 'تایید دانلود قرارداد',
+                text: 'آیا قرارداد انتخابی دانلود شود ؟',
+                type: 'info',
+                showCancelButton: true,
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'خیر',
+
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'بله'
+            }).then((result) => {
+                if (result.value) {
+
+                    var Object = {
+                        LockNumber: lockNumber,
+                        Year: list.Year,
+                        SerialNumber: list.SerialNumber,
+                        IP: ipw,
+                        BandNo: 1,
+                        CallProg: 'Web'
+                    }
+                    ajaxFunction(DownloadContractUri, 'Post', Object, false).done(function (data) {
+                        var sampleArr = base64ToArrayBuffer(data.Atch);
+                        dateName = data.FName.split("."); 
+                        saveByteArray(dateName[0] + ".pdf", sampleArr);
+                    });
+
+                }
+            })
+        }
+    };
 
 
 };

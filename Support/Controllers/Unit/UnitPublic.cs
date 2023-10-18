@@ -12,13 +12,15 @@ using System.Web;
 using System.Web.Mvc;
 using Support.Controllers.Unit;
 using Support.Models;
+using System.IO.Compression;
+using Ionic.Zip;
 
 namespace Support.Controllers.Unit
 {
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "81";
+        public static string titleVerNumber = "82";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";
@@ -225,6 +227,18 @@ namespace Support.Controllers.Unit
             {
                 var a = e.Message.ToString();
             }*/
+        }
+
+        public static byte[] Decompress(byte[] data)
+        {
+            var from = new MemoryStream(data);
+            using (ZipFile zout = ZipFile.Read(from))
+            {
+                ZipEntry entry = zout.FirstOrDefault();
+                MemoryStream zos = new MemoryStream();
+                entry.Extract(zos);
+                return zos.ToArray();
+            }
         }
 
     }

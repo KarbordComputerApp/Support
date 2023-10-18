@@ -1449,5 +1449,41 @@ namespace Support.Controllers
 
 
 
+        [Route("api/Data/ProgVersions0/{pass}")]
+        public async Task<IHttpActionResult> GetProgVersions0(string pass)
+        {
+            if (pass == "K@rbordWeb1234")
+            {
+                try
+                {
+                    string dbName = "Versions.mdb";
+                    string path = GetPath(44) + "\\" + dbName;
+                    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path;
+                    string sql = @" SELECT v.*, p.Name
+                                FROM Progs as p INNER JOIN
+                                           Versions as v ON p.Code = v.ProgName
+                                WHERE(v.code In(select max(code) from Versions group by ProgName)) ";
+
+                    OleDbConnection conn = new OleDbConnection(connectionString);
+                    conn.Open();
+                    OleDbCommand command = new OleDbCommand(sql, conn);
+                    OleDbDataReader data = command.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(data);
+                    var d = JsonConvert.SerializeObject(dt);
+                    conn.Close();
+                    return Ok(d);
+                }
+                catch (Exception e)
+                {
+                    return Ok(e.Message.ToString());
+                }
+            }
+            else
+                return Ok("Error");
+        }
+
+
+
     }
 }

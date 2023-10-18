@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Spire.Doc;
 using Support.Controllers.Unit;
 using Support.Models;
 
@@ -59,12 +62,12 @@ namespace Support.Controllers
         [Route("api/KarbordData/Group")]
         public async Task<IHttpActionResult> GetWeb_Group()
         {
-            var Person = new {GroupTicket = UnitPublic.sql_Group_Ticket, GroupCustAccount = UnitPublic.sql_Group_CustAccount };
+            var Person = new { GroupTicket = UnitPublic.sql_Group_Ticket, GroupCustAccount = UnitPublic.sql_Group_CustAccount };
             return Ok(Person);
         }
 
 
-        
+
 
 
 
@@ -289,7 +292,7 @@ namespace Support.Controllers
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PostWeb_Ticket_UpdateResult(Object_Ticket_UpdateResult Object_Ticket_UpdateResult)
         {
-            string sql = string.Format(CultureInfo.InvariantCulture,@"EXEC Web_ErjSaveTicket_UpdateResult @SerialNumber = {0} select 1 ", Object_Ticket_UpdateResult.SerialNumber);
+            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateResult @SerialNumber = {0} select 1 ", Object_Ticket_UpdateResult.SerialNumber);
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var res = db.Database.SqlQuery<int>(sql);
@@ -347,44 +350,44 @@ namespace Support.Controllers
         }
 
 
-   /*     public class Web_DocAttach_Del
-        {
+        /*     public class Web_DocAttach_Del
+             {
 
-            public string ProgName { get; set; }
+                 public string ProgName { get; set; }
 
-            public string ModeCode { get; set; }
+                 public string ModeCode { get; set; }
 
-            public long SerialNumber { get; set; }
+                 public long SerialNumber { get; set; }
 
-            public int BandNo { get; set; }
+                 public int BandNo { get; set; }
 
-        }
+             }
 
-        // POST: api/KarbordData/ErjDocAttach_Del
-        [Route("api/KarbordData/ErjDocAttach_Del")]
-        public async Task<IHttpActionResult> PostErjDocAttach_Del(Web_DocAttach_Del Web_DocAttach_Del)
-        {
-            string sql = string.Format(CultureInfo.InvariantCulture,
-                          @"DECLARE	@return_value int
-                            EXEC	@return_value = [dbo].[Web_DocAttach_Del]
-		                            @ProgName = '{0}',
-		                            @ModeCode = '{1}',
-		                            @SerialNumber = {2},
-		                            @BandNo = {3}
-                            SELECT	'Return Value' = @return_value",
-                       Web_DocAttach_Del.ProgName,
-                       Web_DocAttach_Del.ModeCode,
-                       Web_DocAttach_Del.SerialNumber,
-                       Web_DocAttach_Del.BandNo
-                       );
-            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
-            var list = db.Database.SqlQuery<int>(sql).Single();
-            await db.SaveChangesAsync();
-            return Ok(list);
-        }
+             // POST: api/KarbordData/ErjDocAttach_Del
+             [Route("api/KarbordData/ErjDocAttach_Del")]
+             public async Task<IHttpActionResult> PostErjDocAttach_Del(Web_DocAttach_Del Web_DocAttach_Del)
+             {
+                 string sql = string.Format(CultureInfo.InvariantCulture,
+                               @"DECLARE	@return_value int
+                                 EXEC	@return_value = [dbo].[Web_DocAttach_Del]
+                                         @ProgName = '{0}',
+                                         @ModeCode = '{1}',
+                                         @SerialNumber = {2},
+                                         @BandNo = {3}
+                                 SELECT	'Return Value' = @return_value",
+                            Web_DocAttach_Del.ProgName,
+                            Web_DocAttach_Del.ModeCode,
+                            Web_DocAttach_Del.SerialNumber,
+                            Web_DocAttach_Del.BandNo
+                            );
+                 var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+                 KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+                 var list = db.Database.SqlQuery<int>(sql).Single();
+                 await db.SaveChangesAsync();
+                 return Ok(list);
+             }
 
-    */
+         */
 
         [Route("api/KarbordData/UploadFile")]
         public async Task<IHttpActionResult> UploadFile()
@@ -528,7 +531,7 @@ namespace Support.Controllers
 
 
 
-        public class FDocP_CustAcountObject
+        public class DownloadContractObject
         {
             public int LockNumber { get; set; }
 
@@ -537,29 +540,63 @@ namespace Support.Controllers
             public long SerialNumber { get; set; }
 
             public string IP { get; set; }
+
+            public int BandNo { get; set; }
+
             public string CallProg { get; set; }
         }
 
-
-        [Route("api/KarbordData/FDocP_CustAcount")]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PostWeb_FDocP_CustAcount(FDocP_CustAcountObject FDocP_CustAcountObject)
+        public class ContractAttach
         {
-            string sql = string.Format(@"EXEC  [dbo].[Web_FDocP]
-		                                       @Year = N'{0}',
-		                                       @SerialNumber = {1}",
-                                       FDocP_CustAcountObject.Year,
-                                       FDocP_CustAcountObject.SerialNumber
-                          );
 
-            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            public string FName { get; set; }
 
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
-            var list = db.Database.SqlQuery<Web_FDocP>(sql);
-            UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, FDocP_CustAcountObject.SerialNumber, FDocP_CustAcountObject.IP, FDocP_CustAcountObject.CallProg, "");
-            return Ok(list);
+            public byte[] Atch { get; set; }
+
         }
 
+        [Route("api/KarbordData/DownloadContract")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Post_DownloadContract(DownloadContractObject DownloadContractObject)
+        {
 
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                                       @"EXEC [dbo].[Web_DocAttach]
+                                              @ProgName = N'FCT5',
+                                              @Group = N'{0}',
+                                              @Year = N'{1}',
+                                              @DMode = N'2',
+                                              @SerialNumber = {2},
+                                              @BandNo = {3},
+                                              @ByData = 1",
+                                              UnitPublic.sql_Group_CustAccount,
+                                              DownloadContractObject.Year,
+                                              DownloadContractObject.SerialNumber,
+                                              DownloadContractObject.BandNo
+                                              );
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Config);
+            var list = db.Database.SqlQuery<Web_DocAttach>(sql);
+            byte[] atch = list.First().Atch;
+            string filename = list.First().FName;
+            byte[] decompress = UnitPublic.Decompress(atch);
+            Document doc = new Document();
+            var from = new MemoryStream(decompress);
+            doc.LoadFromStream(from, Spire.Doc.FileFormat.Auto);
+            MemoryStream to = new MemoryStream();
+            //doc.SaveToFile(@"d:\Foo0.pdf", FileFormat.PDF);
+            to.Position = 0;
+            doc.SaveToStream(to, Spire.Doc.FileFormat.PDF);
+            var res = to.ToArray();
+            //System.Diagnostics.Process.Start("toPDF.PDF");
+            //File.WriteAllBytes(@"d:\Foo.docx", a);
+
+            ContractAttach p = new ContractAttach()
+            {
+                FName = filename,
+                Atch = res
+            };
+
+            return Ok(p);
+        }
     }
 }
