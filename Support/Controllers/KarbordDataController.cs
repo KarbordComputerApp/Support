@@ -531,6 +531,39 @@ namespace Support.Controllers
 
 
 
+        public class FDocP_CustAcountObject
+        {
+            public int LockNumber { get; set; }
+
+            public string Year { get; set; }
+
+            public long SerialNumber { get; set; }
+
+            public string IP { get; set; }
+            public string CallProg { get; set; }
+        }
+
+
+        [Route("api/KarbordData/FDocP_CustAcount")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_FDocP_CustAcount(FDocP_CustAcountObject FDocP_CustAcountObject)
+        {
+            string sql = string.Format(@"EXEC  [dbo].[Web_FDocP]
+		                                       @Year = N'{0}',
+		                                       @SerialNumber = {1}",
+                                       FDocP_CustAcountObject.Year,
+                                       FDocP_CustAcountObject.SerialNumber
+                          );
+
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
+            var list = db.Database.SqlQuery<Web_FDocP>(sql);
+            UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, FDocP_CustAcountObject.SerialNumber, FDocP_CustAcountObject.IP, FDocP_CustAcountObject.CallProg, "");
+            return Ok(list);
+        }
+
+
         public class DownloadContractObject
         {
             public int LockNumber { get; set; }
