@@ -472,6 +472,8 @@ namespace Support.Controllers
 
             public string Year { get; set; }
 
+            public int AttachLen { get; set; }
+
         }
 
         [Route("api/KarbordData/CustAccount")]

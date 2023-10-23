@@ -77,7 +77,7 @@
                 <td data-bind="text: Tasviye, style: {color: TasviyeCode == 0 ? null : TasviyeCode == 1 ? 'blue' : TasviyeCode == 2 ? 'green' : 'red'}" style="direction: ltr;color: rgb(0, 0, 0);"></td>
 
                 <td>
-                    <a data-bind="click: $root.DownloadAttach,visible: TasviyeCode == 2" style="direction: ltr;cursor:pointer; color:blue">
+                    <a data-bind="click: $root.DownloadAttach,visible: TasviyeCode == 2 && AttachLen > 0" style="direction: ltr;cursor:pointer; color:blue">
                        <!-- <img src="~/Content/img/Icon_Blue/Download.png" width="30">-->
                         دریافت قرارداد
                     </a>
