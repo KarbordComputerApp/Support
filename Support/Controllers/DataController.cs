@@ -379,19 +379,13 @@ namespace Support.Controllers
 
 
 
-        public string GetPath(int IdConfig)
-        {
-            string sql = string.Format(@"select value from Configs where id = {0}", IdConfig.ToString());
-            string list = db.Database.SqlQuery<string>(sql).Single();
-            return "C:" + list;
-        }
 
 
         [HttpGet]
         [Route("api/Data/FinancialDocumentsDownload_Test/{lockNo}/{idFinancial}")]
         public async Task<IHttpActionResult> FinancialDocumentsDownload_Test(int lockNo, long idFinancial)
         {
-            string path = GetPath(8) + "\\" + lockNo.ToString();
+            string path = UnitPublic.GetPath(8) + "\\" + lockNo.ToString();
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -410,7 +404,7 @@ namespace Support.Controllers
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(8) + "\\" + lockNo.ToString();
+            string path = UnitPublic.GetPath(8) + "\\" + lockNo.ToString();
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -459,7 +453,7 @@ namespace Support.Controllers
         [Route("api/Data/CustomerDownload_Test/{idCustomer}")]
         public async Task<IHttpActionResult> CustomerDownload_Test(long idCustomer)
         {
-            string path = GetPath(2);
+            string path = UnitPublic.GetPath(2);
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -489,7 +483,7 @@ namespace Support.Controllers
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(2);
+            string path = UnitPublic.GetPath(2);
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -545,7 +539,7 @@ namespace Support.Controllers
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(2);
+            string path = UnitPublic.GetPath(2);
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -582,7 +576,7 @@ namespace Support.Controllers
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(2) + "\\" + lockNo.ToString();
+            string path = UnitPublic.GetPath(2) + "\\" + lockNo.ToString();
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -615,7 +609,7 @@ namespace Support.Controllers
         [Route("api/Data/UploadFile/")]
         public async Task<IHttpActionResult> UploadFile()
         {
-            string path = GetPath(3);
+            string path = UnitPublic.GetPath(3);
             var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
             var lockNumber = System.Web.HttpContext.Current.Request["LockNumber"];
 
@@ -656,7 +650,7 @@ namespace Support.Controllers
         [Route("api/Data/FinalUploadFile/")]
         public async Task<IHttpActionResult> FinalUploadFile(FinalUploadFileObject FinalUploadFileObject)
         {
-            string path = GetPath(3);
+            string path = UnitPublic.GetPath(3);
             string date = CustomPersianCalendar.ToPersianDate(DateTime.Now).Replace('/', '-');
             string ticket = string.Format("{0:yyyyMMddHHmmssfff}", CustomPersianCalendar.GetCurrentIRNow(false));
 
@@ -1058,7 +1052,7 @@ namespace Support.Controllers
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(2);
+            string path = UnitPublic.GetPath(2);
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -1094,7 +1088,7 @@ namespace Support.Controllers
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            string path = GetPath(43) + "\\" + Mode;
+            string path = UnitPublic.GetPath(43) + "\\" + Mode;
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -1283,7 +1277,7 @@ namespace Support.Controllers
 
             if (access)
             {
-                string path = GetPath(43) + "\\Learn\\";
+                string path = UnitPublic.GetPath(43) + "\\Learn\\";
 
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
@@ -1421,7 +1415,7 @@ namespace Support.Controllers
                 try
                 {
                     string dbName = "Versions.mdb";
-                    string path = GetPath(44) + "\\" + dbName;
+                    string path = UnitPublic.GetPath(44) + "\\" + dbName;
                     string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path;
                     string sql = @" SELECT v.*, p.Name
                                 FROM Progs as p INNER JOIN
@@ -1457,7 +1451,7 @@ namespace Support.Controllers
                 try
                 {
                     string dbName = "Versions.mdb";
-                    string path = GetPath(44) + "\\" + dbName;
+                    string path = UnitPublic.GetPath(44) + "\\" + dbName;
                     string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path;
                     string sql = @" SELECT v.*, p.Name
                                 FROM Progs as p INNER JOIN

@@ -16,7 +16,7 @@
 
     .container-fluid td {
         padding: 25px 10px;
-        background-color: #dcdcdc;
+        /*background-color: #dcdcdc;*/
         color: #082b44;
         text-align: center;
         border: 1px solid #f1f2f7;
@@ -50,6 +50,9 @@
                 </th>
                 <th>
                     <span>تاریخ</span>
+                </th> 
+                <th>
+                    <span>نوع فاکتور</span>
                 </th>
                 <th class="notApp">
                     <span>ملاحظات</span>
@@ -68,32 +71,30 @@
         </thead>
 
         <tbody data-bind="foreach: CustAccountList" style="cursor: default;">
-            <tr>
+            <tr data-bind="style: {'background-color': ModeCode == 'SFCT' ? '#dcdcdc' : '#ddd2d2'}">
                 <td data-bind="text: $index()+1" style="border-radius: 0 30px 30px 0;"></td>
                 <td data-bind="text: DocNo" class="notApp"></td>
                 <td data-bind="text: DocDate"></td>
+                <td data-bind="text: ModeCode == 'SFCT' ? 'فاکتور فروش' : 'برگشت از فروش'"></td>
                 <td data-bind="text: Spec" class="notApp"></td>
                 <td data-bind="text: NumberToNumberString(TotalValue)" style="direction:ltr"></td>
                 <td data-bind="text: Tasviye, style: {color: TasviyeCode == 0 ? null : TasviyeCode == 1 ? 'blue' : TasviyeCode == 2 ? 'green' : 'red'}" style="direction: ltr;color: rgb(0, 0, 0);"></td>
-
                 <td>
-                    <a data-bind="click: $root.DownloadAttach,visible: TasviyeCode == 2 && AttachLen > 0" style="direction: ltr;cursor:pointer; color:blue">
-                       <!-- <img src="~/Content/img/Icon_Blue/Download.png" width="30">-->
+                    <a data-bind="click: $root.DownloadAttach,visible: TasviyeCode == 2 && AttachLen > 0" style="direction: ltr;cursor:pointer">
                         دریافت قرارداد
                     </a>
                 </td>
 
-
                 <td style="border-radius: 30px 0 0 30px;">
                     <!-- <a data-bind="click: $root.ShowLinkPardakht, visible: TasviyeCode < 2 " title="پرداخت آنلاین">
-                         <img src="~/Content/img/Icon_Blue/cash.png" width="30">
-                     </a>-->
+             <img src="~/Content/img/Icon_Blue/cash.png" width="30">
+         </a>-->
                     <!--
-                    زمان ذخیره پیوست با عنوان رسید در فاکتور فعال می شود
-                    این بخش با نظر خانم افشار کامنت شد
-                    <a data-bind="click: $root.ResidPardakht, visible: Tasviye == 'پرداخت شده'" title="دریافت رسید">
-                        
-                    </a>-->
+        زمان ذخیره پیوست با عنوان رسید در فاکتور فعال می شود
+        این بخش با نظر خانم افشار کامنت شد
+        <a data-bind="click: $root.ResidPardakht, visible: Tasviye == 'پرداخت شده'" title="دریافت رسید">
+
+        </a>-->
                     <!--<a data-bind="click: $root.ChapFactor, visible: DownloadCount != '2'" title="چاپ فاکتور">-->
                     <a data-bind="click: $root.ChapFactor" title="چاپ فاکتور">
                         <img src="~/Content/img/Icon_Blue/Print.png" width="30">

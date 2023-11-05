@@ -241,5 +241,13 @@ namespace Support.Controllers.Unit
             }
         }
 
+        public static string GetPath(int IdConfig)
+        {
+            SupportModel db = new SupportModel();
+            string sql = string.Format(@"select value from Configs where id = {0}", IdConfig.ToString());
+            string list = db.Database.SqlQuery<string>(sql).Single();
+            return "C:" + list;
+        }
+
     }
 }

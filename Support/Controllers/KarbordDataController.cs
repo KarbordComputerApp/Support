@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.Office.Interop.Word;
 using Spire.Doc;
 using Support.Controllers.Unit;
 using Support.Models;
@@ -589,6 +590,22 @@ namespace Support.Controllers
             public byte[] Atch { get; set; }
 
         }
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                //TODO
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
 
         [Route("api/KarbordData/DownloadContract")]
         [ResponseType(typeof(void))]
@@ -614,16 +631,49 @@ namespace Support.Controllers
             byte[] atch = list.First().Atch;
             string filename = list.First().FName;
             byte[] decompress = UnitPublic.Decompress(atch);
-            Document doc = new Document();
+
             var from = new MemoryStream(decompress);
-            doc.LoadFromStream(from, Spire.Doc.FileFormat.Auto);
-            MemoryStream to = new MemoryStream();
-            //doc.SaveToFile(@"d:\Foo0.pdf", FileFormat.PDF);
-            to.Position = 0;
-            doc.SaveToStream(to, Spire.Doc.FileFormat.PDF);
-            var res = to.ToArray();
-            //System.Diagnostics.Process.Start("toPDF.PDF");
-            //File.WriteAllBytes(@"d:\Foo.docx", a);
+
+            string path = UnitPublic.GetPath(45);
+            string date = CustomPersianCalendar.ToPersianDate(DateTime.Now).Replace('/', '-');
+            string ticket = string.Format("{0:yyyyMMddHHmmssfff}", CustomPersianCalendar.GetCurrentIRNow(false));
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string pathFile = path + "\\" + date;
+            if (!Directory.Exists(pathFile))
+                Directory.CreateDirectory(pathFile);
+
+            string wordName = string.Format("{0}\\{1}_{2}.docx", pathFile, ticket, DownloadContractObject.LockNumber.ToString());
+            string pdfName = string.Format("{0}\\{1}_{2}.pdf", pathFile, ticket, DownloadContractObject.LockNumber.ToString());
+
+            Stream file = new FileStream(wordName, FileMode.Create, FileAccess.Write);
+            from.WriteTo(file);
+            file.Close();
+            from.Close();
+            object misValue = System.Reflection.Missing.Value;
+
+            try
+            {
+                var Word = new Microsoft.Office.Interop.Word.Application();
+                Microsoft.Office.Interop.Word.Document doc = Word.Documents.Open(wordName);
+                doc.Activate();
+
+                doc.SaveAs2(pdfName, WdSaveFormat.wdFormatPDF, misValue, misValue, misValue, misValue, misValue, misValue, misValue, misValue, misValue, misValue);
+                doc.Close();
+                Word.Quit();
+
+                releaseObject(doc);
+                releaseObject(Word);
+            }
+            catch (Exception a)
+            {
+                var ss = a.Message.ToString();
+                throw;
+            }
+
+            var res = File.ReadAllBytes(pdfName);
 
             ContractAttach p = new ContractAttach()
             {
