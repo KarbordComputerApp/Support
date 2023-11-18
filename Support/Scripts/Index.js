@@ -42,7 +42,10 @@
     $('#Index_Tiket').attr('src', '/Content/img/Icon_White/Alarm.png');
     $('#Index_User').attr('src', '/Content/img/Icon_White/User.png');
 
+
+
     var CustomerFilesCountUri = server + '/api/Data/CustomerFilesCount/'; // آدرس فایل
+    var HasContractUri = server + '/api/Data/HasContract/'; // آدرس قرارداد
 
 
     //$('#B_Tiket').attr('disabled', 'disabled');
@@ -62,6 +65,22 @@
         });
     }
     getCustomerFilesCount();
+    $("#t_HasContract").text("");
+    function getHasContract() {
+        ajaxFunction(HasContractUri + lockNumber, 'GET', true).done(function (data) {
+            if (data.length > 0) {
+                data = data[0].split('-')
+                access = data[0];
+                endDate = data[1] == "" ? "" : "در تاریخ:" + data[1] + " ";
+                if (access == 0) {
+                    $("#t_HasContract").text("قرارداد نگهداری  شما " + endDate + "پایان یافته است");
+                }
+               
+            }
+            
+        });
+    }
+    getHasContract();
 
     
     //GetCountErjDocXK();

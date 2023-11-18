@@ -989,6 +989,25 @@ namespace Support.Controllers
 
 
 
+        [Route("api/Data/HasContract/{lockNo}")]
+        public async Task<IHttpActionResult> GetHasContract(string lockNo)
+        {
+            KarbordModel dbConfig = new KarbordModel(UnitPublic.ConnectionString_Config);
+            string sql = string.Format(@"DECLARE	@return_value int,
+		                                            @EndDate nvarchar(10)
+
+                                            EXEC	@return_value = [dbo].[Web_HasContract]
+		                                            @LockNumber = N'{0}',
+		                                            @EndDate = @EndDate OUTPUT
+                                            SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate" , lockNo);
+            var list = dbConfig.Database.SqlQuery<string>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
+
+
 
         // Get: api/Data/GetToken   
         [Route("api/Data/Token/{lockNumber}")]
@@ -1015,11 +1034,11 @@ namespace Support.Controllers
         }
 
 
-        //http://localhost:52798/api/Data/LastCustomerFiles/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        //http://localhost:52798/api/Data/LastCustomerFile/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
 
         // Post: api/Data/LastCustomerFiles   
-        [Route("api/Data/LastCustomerFile/{Row}/{Token}")]
-        public async Task<IHttpActionResult> GetLastCustomerFile(int Row , string Token)
+        [Route("api/Data/LastCustomerFile/{Token}/{Row}")]
+        public async Task<IHttpActionResult> GetLastCustomerFile(string Token = "", int Row = 1)
         {
             long currentDate = DateTime.Now.Ticks;
             var inputToken = UnitPublic.Decrypt(Token);
@@ -1031,7 +1050,7 @@ namespace Support.Controllers
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 
-                //if (elapsedSpan.TotalMinutes <= 1)
+                if (elapsedSpan.TotalMinutes <= 1)
                 {
                     //string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles
                     //                             where  id = (select max(id) from CustomerFiles where LockNumber = {0})", lockNumber);
@@ -1054,6 +1073,42 @@ namespace Support.Controllers
         }
 
 
+
+/*
+        //http://localhost:52798/api/Data/LastCustomerFiles/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+
+        // Post: api/Data/LastCustomerFiles   
+        [Route("api/Data/CheckVideoFormId/{Row}/{Token}")]
+        public async Task<IHttpActionResult> GetCheckVideo(string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                //if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    string sql = string.Format(@"select top(1) * from Videos where FormId = 1",
+                                                 lockNumber);
+
+                    // 
+                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
+                    if (list.Count > 0)
+                    {
+                        var l = list.Single();
+                        return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath);
+                    }
+                    return Ok("");
+                }
+            }
+            return Ok("");
+        }
+*/
 
 
         [HttpGet]
