@@ -1018,8 +1018,8 @@ namespace Support.Controllers
         //http://localhost:52798/api/Data/LastCustomerFiles/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
 
         // Post: api/Data/LastCustomerFiles   
-        [Route("api/Data/LastCustomerFile/{Token}")]
-        public async Task<IHttpActionResult> GetLastCustomerFile(string Token)
+        [Route("api/Data/LastCustomerFile/{Row}/{Token}")]
+        public async Task<IHttpActionResult> GetLastCustomerFile(int Row , string Token)
         {
             long currentDate = DateTime.Now.Ticks;
             var inputToken = UnitPublic.Decrypt(Token);
@@ -1033,10 +1033,21 @@ namespace Support.Controllers
 
                 //if (elapsedSpan.TotalMinutes <= 1)
                 {
-                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles
-                                                 where  id = (select max(id) from CustomerFiles where LockNumber = {0})", lockNumber);
-                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).Single();
-                    return Ok(list.Id.ToString() + ',' + list.LockNumber.ToString() + ',' + list.Date + ',' + list.FileName + ',' + list.FilePath);
+                    //string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles
+                    //                             where  id = (select max(id) from CustomerFiles where LockNumber = {0})", lockNumber);
+
+                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles 
+                                                 where id = (select id from ((select ROW_NUMBER() over (order by id desc) ro , id from CustomerFiles where LockNumber = {0})) as b where ro = {1})",
+                                                 lockNumber, Row);
+
+                    // 
+                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
+                    if (list.Count > 0)
+                    {
+                        var l = list.Single();
+                        return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath);
+                    }
+                    return Ok("");
                 }
             }
             return Ok("");
