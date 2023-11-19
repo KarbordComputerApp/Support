@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "ویدیو آموزشی";
+}
+
+<input type="hidden" id="LockInput" data-value="@ViewBag.LockNumber" />
+<input type="hidden" id="Link" data-value="@ViewBag.Link" />
+
+<center>
+    <div class="modal-body" style="width:70%">
+        <div id="P_Aparat" class="h_iframe-aparat_embed_frame">
+            <span style="display: block;padding-top: 57%"></span>
+            <iframe id="F_Video" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" name="F_Video"></iframe>
+        </div>
+
+        <video id="videoclip" controls autoplay controlsList="nodownload" oncontextmenu="return false;" style="width: 100%;">
+            <source id="mp4video" type="video/mp4" />
+        </video>
+    </div>
+</center>
+
+
+@section scripts{
+    <script src="~/Scripts/VideoFormId.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}

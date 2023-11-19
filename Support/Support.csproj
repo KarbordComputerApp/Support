@@ -738,6 +738,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Download.js" />
     <Content Include="Scripts\ProgVersions.js" />
+    <Content Include="Scripts\VideoFormId.js" />
     <Content Include="Scripts\Videos.js" />
     <Content Include="Scripts\MailBox.js" />
     <Content Include="Scripts\ChangePassword.js" />
@@ -801,6 +802,7 @@
     <Content Include="Views\Home\Download.cshtml" />
     <Content Include="Views\Home\Videos.cshtml" />
     <Content Include="Views\Home\ProgVersions.cshtml" />
+    <Content Include="Views\Home\VideoFormId.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

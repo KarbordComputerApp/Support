@@ -168,6 +168,29 @@ namespace Support.Controllers
             return View();
         }
 
+        //http://localhost:52798/api/Data/CheckVideoFormId/1/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        //http://localhost:52798/Home/VideoFormId?HashLink=RnRjZ6pO2xlDkNOb641a8saAXdSngF1qycRKhFU0vZEn84JBwWWaP9n6IW4oj5VqwHapxFS5zB;RtEHnqKnaJA==&&Token=4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        public ActionResult VideoFormId(string HashLink , string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+                if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    ViewBag.Link = UnitPublic.Decrypt(HashLink);
+                    ViewBag.LockNumber = lockNumber;
+                }
+            }
+            return View();
+        }
+
+
 
 
     }

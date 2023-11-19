@@ -22,8 +22,8 @@ var ipw = localStorage.getItem("IPW");
 $("#B_CustAccount").attr('disabled', 'disabled');
 $("#B_Tiket").attr('disabled', 'disabled');
 $("#B_Videos").attr('disabled', 'disabled');
-$("#Index_TextTiket").attr('disabled', 'disabled');
-
+$("#Index_TextTiket").hide();
+$("#Index_Pic_line1").show();
 
 if (userType == '1' && forceToChangePass == 'false') {
     $('#B_CustAccount').removeAttr('disabled');
@@ -32,8 +32,34 @@ if (userType == '1' && forceToChangePass == 'false') {
 if ((userType == '1' || userType == '2')) {
     $('#B_Videos').removeAttr('disabled');
     $('#B_Tiket').removeAttr('disabled');
-    $('#Index_TextTiket').removeAttr('disabled');
+    $('#Index_TextTiket').show()
 }
+
+var HasContractUri = server + '/api/Data/HasContract/'; // آدرس قرارداد
+
+$("#t_HasContract").text("");
+function getHasContract() {
+    ajaxFunction(HasContractUri + lockNumber, 'GET', true).done(function (data) {
+        if (data.length > 0) {
+            data = data[0].split('-')
+            access = data[0];
+            endDate = data[1] == "" ? "" : "در تاریخ:" + data[1] + " ";
+            localStorage.setItem("HasContract", access);
+            if (access == 0) {
+                $("#t_HasContract").text("قرارداد نگهداری  شما " + endDate + "پایان یافته است");
+
+                $("#B_CustomerFiles").attr('disabled', 'disabled');
+                $("#B_Download").attr('disabled', 'disabled');
+                $("#B_FAQ").attr('disabled', 'disabled');
+                $("#B_Tiket").attr('disabled', 'disabled');
+                $("#B_Videos").attr('disabled', 'disabled');
+                $("#Index_TextTiket").hide();
+                $("#Index_Pic_line1").hide();
+            }
+        }
+    });
+}
+getHasContract();
 
 
 

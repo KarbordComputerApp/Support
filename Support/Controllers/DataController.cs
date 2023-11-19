@@ -992,16 +992,7 @@ namespace Support.Controllers
         [Route("api/Data/HasContract/{lockNo}")]
         public async Task<IHttpActionResult> GetHasContract(string lockNo)
         {
-            KarbordModel dbConfig = new KarbordModel(UnitPublic.ConnectionString_Config);
-            string sql = string.Format(@"DECLARE	@return_value int,
-		                                            @EndDate nvarchar(10)
-
-                                            EXEC	@return_value = [dbo].[Web_HasContract]
-		                                            @LockNumber = N'{0}',
-		                                            @EndDate = @EndDate OUTPUT
-                                            SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate" , lockNo);
-            var list = dbConfig.Database.SqlQuery<string>(sql).ToList();
-            return Ok(list);
+            return Ok(UnitPublic.HasContract(lockNo));
         }
 
 
@@ -1074,12 +1065,12 @@ namespace Support.Controllers
 
 
 
-/*
-        //http://localhost:52798/api/Data/LastCustomerFiles/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
 
-        // Post: api/Data/LastCustomerFiles   
-        [Route("api/Data/CheckVideoFormId/{Row}/{Token}")]
-        public async Task<IHttpActionResult> GetCheckVideo(string Token)
+        //http://localhost:52798/api/Data/CheckVideoFormId/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+
+        // Post: api/Data/CheckVideoFormId   
+        [Route("api/Data/CheckVideoFormId/{FormId}/{Token}")]
+        public async Task<IHttpActionResult> GetCheckVideo(string FormId, string Token)
         {
             long currentDate = DateTime.Now.Ticks;
             var inputToken = UnitPublic.Decrypt(Token);
@@ -1091,24 +1082,34 @@ namespace Support.Controllers
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 
-                //if (elapsedSpan.TotalMinutes <= 1)
+                if (elapsedSpan.TotalMinutes <= 1)
                 {
-                    string sql = string.Format(@"select top(1) * from Videos where FormId = 1",
-                                                 lockNumber);
-
-                    // 
-                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
-                    if (list.Count > 0)
+                    string contract = UnitPublic.HasContract(lockNumber);
+                    if (contract != "")
                     {
-                        var l = list.Single();
-                        return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath);
+                        if(contract.Split('-')[0] == "1")
+                        {
+                            string sql = string.Format(@"select top(1) * from Videos where FormId = '{0}'", FormId);
+                            var list = db.Database.SqlQuery<Videos>(sql).ToList();
+                            if (list.Count > 0)
+                            {
+                                return Ok("/Home/Videos/" + UnitPublic.Encrypt(list[0].Link) + '/' + Token);
+                            }
+                            else
+                            {
+                                return Ok("NotFound");
+                            }
+                        }
+                        else
+                        {
+                            return Ok("NotAccess");
+                        }
                     }
-                    return Ok("");
                 }
             }
             return Ok("");
         }
-*/
+
 
 
         [HttpGet]

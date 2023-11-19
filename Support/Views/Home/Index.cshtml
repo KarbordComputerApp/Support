@@ -39,7 +39,7 @@
         <div class="row">
 
             <div class="col-md P_Main notApp" id="p_CustomerFiles">
-                <a href="@Url.Action("CustomerFiles","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a id="B_CustomerFiles" href="@Url.Action("CustomerFiles","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center>
                         <p style="color:black;font-size: 20px;margin-top: 55px;">دریافت فایل</p> <!-- <p id="t_CustomerFiles"></p>-->
                     </center>
@@ -47,13 +47,13 @@
                 <center><p style="height: 40px;margin-top: 100px;">برای دریافت فایل های بروز رسانی نرم افزارهایتان بر روی دکمه بالا کلیک کنید</p></center>
             </div>
             <div class="col-md P_Main notApp" id="p_UploadFiles">
-                <a href="@Url.Action("UploadFiles","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a id="B_UploadFiles" href="@Url.Action("UploadFiles","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center><p style="color:black;font-size: 20px;margin-top: 55px;">ارسال فایل</p></center>
                 </a>
                 <center><p style="height: 40px;margin-top: 100px;">برای ارسال فایل های پشتیبانی نرم افزارهایتان بر روی دکمه بالا کلیک کنید</p></center>
             </div>
             <div class="col-md P_Main notApp" id="p_FinancialDocuments">
-                <a href="@Url.Action("FinancialDocuments","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a id="B_FinancialDocuments" href="@Url.Action("FinancialDocuments","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center><p style="color:black;font-size: 20px;margin-top: 55px;">اسناد و مستندات</p></center>
                 </a>
                 <center><p style="height: 40px;margin-top: 100px;">برای رویت اسناد تنظیم شده از طرف کاربرد کامپیوتر برای شما بر روی دکمه بالا کلیک کنید</p></center>
@@ -73,7 +73,7 @@
             <div class="w-100" id="LastPadding" style="margin-top:80px"></div>
 
             <div class="col-md P_Main" id="p_CustAccount">
-                <a href="@Url.Action("CustAccount","Home")" id="B_CustAccount" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a  id="B_CustAccount" href="@Url.Action("CustAccount","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center><p style="color:black;font-size: 20px;margin-top: 55px;">صورتحساب های من</p></center>
                 </a>
                 <center><p style="height: 40px;margin-top: 100px;">برای پرداخت آنلاین صورتحساب های خود برروی دکمه بالا کلیک کنید</p></center>
@@ -83,7 +83,7 @@
 
 
             <div class="col-md P_Main" id="p_CustAccount">
-                <a href="@Url.Action("MailBox","Home")" id="B_MailBox" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a id="B_MailBox" href="@Url.Action("MailBox","Home")" id="B_MailBox" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center><p style="color:black;font-size: 20px;margin-top: 55px;">ارتباط با بخش فروش</p></center>
                 </a>
                 <center><p style="height: 40px;margin-top: 100px;">برای ارسال پیام برروی دکمه بالا کلیک کنید</p></center>
@@ -95,14 +95,14 @@
 
 
             <div class="col-md P_Main notApp" id="p_Learn">
-                <a href="@Url.Action("Download","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a id="B_Download" href="@Url.Action("Download","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center><p style="color:black;font-size: 20px;margin-top: 55px;">دانلود ها</p></center>
                 </a>
                 <center><p style="height: 40px;margin-top: 100px;">برای دانلود فیلم های اموزشی و اپلیکیشن و سایر اطلاعات  بر روی دکمه بالا کلیک کنید</p></center>
             </div>
 
             <div class="col-md P_Main notApp" id="p_FAQ">
-                <a href="@Url.Action("FAQ","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
+                <a id="B_FAQ" href="@Url.Action("FAQ","Home")" style="height: 100%; border-radius: 20px; background-color:white;width: 70%;position: absolute;top: -50%;right: 15%;white-space: inherit;" class="btn btn-warning B_Main">
                     <center><p style="color:black;font-size: 20px;margin-top: 55px;">سوالات متداول</p></center>
                 </a>
                 <center><p style="height: 40px;margin-top: 100px;">برای رویت سوالهای متداول  و پاسخ آنها که ممکن است سوال شما نیز باشد بر روی دکمه بالا کلیک کنید</p></center>

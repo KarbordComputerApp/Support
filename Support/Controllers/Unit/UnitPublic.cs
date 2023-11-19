@@ -20,7 +20,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "87";
+        public static string titleVerNumber = "88";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";
@@ -247,6 +247,20 @@ namespace Support.Controllers.Unit
             string sql = string.Format(@"select value from Configs where id = {0}", IdConfig.ToString());
             string list = db.Database.SqlQuery<string>(sql).Single();
             return "C:" + list;
+        }
+
+        public static string HasContract(string lockNo)
+        {
+            KarbordModel dbConfig = new KarbordModel(UnitPublic.ConnectionString_Config);
+            string sql = string.Format(@"DECLARE	@return_value int,
+		                                            @EndDate nvarchar(10)
+
+                                            EXEC	@return_value = [dbo].[Web_HasContract]
+		                                            @LockNumber = N'{0}',
+		                                            @EndDate = @EndDate OUTPUT
+                                            SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate", lockNo);
+            var list = dbConfig.Database.SqlQuery<string>(sql).Single();
+            return list;
         }
 
     }
