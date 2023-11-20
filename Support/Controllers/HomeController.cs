@@ -173,6 +173,7 @@ namespace Support.Controllers
         public ActionResult VideoFormId(string HashLink , string Token)
         {
             long currentDate = DateTime.Now.Ticks;
+
             var inputToken = UnitPublic.Decrypt(Token);
             var data = inputToken.Split('-');
             if (data.Length == 3)

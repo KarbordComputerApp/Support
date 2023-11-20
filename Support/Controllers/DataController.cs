@@ -1093,7 +1093,7 @@ namespace Support.Controllers
                             var list = db.Database.SqlQuery<Videos>(sql).ToList();
                             if (list.Count > 0)
                             {
-                                return Ok("/Home/Videos/" + UnitPublic.Encrypt(list[0].Link) + '/' + Token);
+                                return Ok("/Home/VideoFormId?HashLink=" + UnitPublic.Encrypt(list[0].Link) + "&&Token=" + Token);
                             }
                             else
                             {

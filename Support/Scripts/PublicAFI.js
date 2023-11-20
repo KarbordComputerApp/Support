@@ -41,12 +41,12 @@ $("#t_HasContract").text("");
 function getHasContract() {
     ajaxFunction(HasContractUri + lockNumber, 'GET', true).done(function (data) {
         if (data.length > 0) {
-            data = data[0].split('-')
+            data = data.split('-')
             access = data[0];
-            endDate = data[1] == "" ? "" : "در تاریخ:" + data[1] + " ";
+            endDate = data.length == 1 || data[1] == "" ? "" : data[1] + " ";
             localStorage.setItem("HasContract", access);
             if (access == 0) {
-                $("#t_HasContract").text("قرارداد نگهداری  شما " + endDate + "پایان یافته است");
+                $("#t_HasContract").text("قرارداد پشتیبانی شما پایان یافته است");
 
                 $("#B_CustomerFiles").attr('disabled', 'disabled');
                 $("#B_Download").attr('disabled', 'disabled');
@@ -55,11 +55,18 @@ function getHasContract() {
                 $("#B_Videos").attr('disabled', 'disabled');
                 $("#Index_TextTiket").hide();
                 $("#Index_Pic_line1").hide();
+            } else if (access == 1) {
+                $("#t_HasContract").text("قرارداد پشتیبانی شما تا تاریخ " + endDate + " معتبر است");
+                $("#t_HasContract").css("color", "#128d35")
             }
+
         }
     });
 }
-getHasContract();
+if (lockNumber != "" && lockNumber != null ) {
+    getHasContract();
+}
+
 
 
 
