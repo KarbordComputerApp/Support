@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -1028,8 +1029,9 @@ namespace Support.Controllers
         //http://localhost:52798/api/Data/LastCustomerFile/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
 
         // Post: api/Data/LastCustomerFiles   
+        [Route("api/Data/LastCustomerFile/{Token}")]
         [Route("api/Data/LastCustomerFile/{Token}/{Row}")]
-        public async Task<IHttpActionResult> GetLastCustomerFile(string Token = "", int Row = 1)
+        public async Task<IHttpActionResult> GetLastCustomerFile(string Token = "", int? Row = 1)
         {
             long currentDate = DateTime.Now.Ticks;
             var inputToken = UnitPublic.Decrypt(Token);
@@ -1046,7 +1048,7 @@ namespace Support.Controllers
                     //string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles
                     //                             where  id = (select max(id) from CustomerFiles where LockNumber = {0})", lockNumber);
 
-                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles 
+                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath , (select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload FROM CustomerFiles as c 
                                                  where id = (select id from ((select ROW_NUMBER() over (order by id desc) ro , id from CustomerFiles where LockNumber = {0})) as b where ro = {1})",
                                                  lockNumber, Row);
 
@@ -1140,6 +1142,12 @@ namespace Support.Controllers
                 response.ReasonPhrase = string.Format("File not found: {0} .", files[0]);
                 throw new HttpResponseException(response);
             }
+
+            sql = string.Format(@"INSERT INTO CustomerFileDownloadInfos (FileId,IP,DownloadTime) VALUES ({0},'',getdate()) select 1", id);
+            var list1 = db.Database.SqlQuery<int>(sql).Single();
+            db.SaveChanges();
+
+            //UnitPublic.SaveLog(lockNo, mode_CustomerFiles, act_Download, 0, IP.Replace("-", "."), CallProg, f.Name);
 
             byte[] bytes = File.ReadAllBytes(files[0].ToString());
 
