@@ -1023,6 +1023,8 @@ namespace Support.Controllers
             public string FileName { get; set; }
 
             public string FilePath { get; set; }
+
+            public int? CountDownload { get; set; }
         }
 
 
@@ -1057,7 +1059,7 @@ namespace Support.Controllers
                     if (list.Count > 0)
                     {
                         var l = list.Single();
-                        return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath);
+                        return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath + ',' + l.CountDownload.ToString());
                     }
                     return Ok("");
                 }
