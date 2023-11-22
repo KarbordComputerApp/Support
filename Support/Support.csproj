@@ -211,6 +211,7 @@
     <Content Include="Content\css\all-themes.css" />
     <Content Include="Content\css\bootstrap-colorpicker.css" />
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\chat.css" />
     <Content Include="Content\css\dx.light.css" />
     <Content Include="Content\css\extra_pages.css" />
     <Content Include="Content\css\font-awesome.min.css" />
@@ -331,6 +332,7 @@
     <Content Include="Content\fonts\Vazir-FD-WOLReport.ttf" />
     <Content Include="Content\img\android.png" />
     <Content Include="Content\img\attach.png" />
+    <Content Include="Content\img\chat.png" />
     <Content Include="Content\img\download.svg" />
     <Content Include="Content\img\icons\contract.png" />
     <Content Include="Content\img\icons\download.png" />
@@ -737,6 +739,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Download.js" />
+    <Content Include="Scripts\Chat.js" />
     <Content Include="Scripts\ProgVersions.js" />
     <Content Include="Scripts\VideoFormId.js" />
     <Content Include="Scripts\Videos.js" />
