@@ -699,38 +699,6 @@
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $('#modal-Erja').on('shown.bs.modal', function () {
 
     });

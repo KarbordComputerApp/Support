@@ -168,6 +168,7 @@
     <Compile Include="Models\Karbord\Web_ErjDocXK.cs" />
     <Compile Include="Models\Karbord\Web_FDocP.cs" />
     <Compile Include="Models\Karbord\Web_TicketStatus.cs" />
+    <Compile Include="Models\Support\Chat.cs" />
     <Compile Include="Models\Support\AceBackUp.cs" />
     <Compile Include="Models\Support\AceMessageLogs.cs" />
     <Compile Include="Models\Support\AceMessageLogsLockNumbers.cs" />
@@ -806,6 +807,7 @@
     <Content Include="Views\Home\Videos.cshtml" />
     <Content Include="Views\Home\ProgVersions.cshtml" />
     <Content Include="Views\Home\VideoFormId.cshtml" />
+    <Content Include="Views\Home\ChatUser.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

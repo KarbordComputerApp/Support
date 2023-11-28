@@ -27,7 +27,7 @@
     }
 
 
-    if (lockNumber == null ) {
+    if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");
     }
 
@@ -137,7 +137,7 @@
                 IP: ipw,
                 CallProg: 'Web'
             }
-            ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) {});
+            ajaxFunction(ReadMailBoxUri, 'POST', ReadBoxObject).done(function (data) { });
         }
 
         $('#modal-Box').modal('show');
@@ -291,16 +291,16 @@
         }).then((result) => {
             if (result.value) {
                 var DocAttachBoxListObject = {
-                        Id: item.IId,
+                    Id: item.IId,
                     ByData: 1,
                     IP: ipw,
                     CallProg: 'Web'
-                    }
+                }
 
-                    ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
-                        var sampleArr = base64ToArrayBuffer(data[0].Atch);
-                        saveByteArray(data[0].FName, sampleArr);
-                    });
+                ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
+                    var sampleArr = base64ToArrayBuffer(data[0].Atch);
+                    saveByteArray(data[0].FName, sampleArr);
+                });
             }
         });
     }

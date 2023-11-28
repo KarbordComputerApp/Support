@@ -63,7 +63,7 @@ function getHasContract() {
         }
     });
 }
-if (lockNumber != "" && lockNumber != null ) {
+if (lockNumber != "" && lockNumber != null) {
     getHasContract();
 }
 

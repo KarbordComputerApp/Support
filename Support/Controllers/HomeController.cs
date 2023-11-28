@@ -192,6 +192,28 @@ namespace Support.Controllers
         }
 
 
+        // http://localhost:52798/Home/ChatUser?UserCode=ehsanif&&ChatId=16&&Token=4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        public ActionResult ChatUser(string UserCode, long ChatId, string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            //if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+                //if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    ViewBag.ChatId = ChatId;
+                    ViewBag.LockNumber = lockNumber;
+                    ViewBag.UserCode = UserCode;
+                }
+            }
+            return View();
+        }
 
 
     }

@@ -645,7 +645,7 @@ img {
 
 
 
-button,input,select,textarea {
+button, input, select, textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit
@@ -708,10 +708,10 @@ html * {
     box-shadow: none
 }
 
-.btn.btn-simple,.btn.btn-simple:hover {
-    background-color: transparent;
-    color: #999
-}
+    .btn.btn-simple, .btn.btn-simple:hover {
+        background-color: transparent;
+        color: #999
+    }
 
 .text-warning {
     color: #ff9800
@@ -749,7 +749,7 @@ html * {
 
 @media (min-width: 992px) {
     .hover-collapse {
-        display:block;
+        display: block;
         position: absolute;
         top: 0;
         right: 81px;
@@ -774,31 +774,23 @@ html * {
     transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1)
 }
 
-.btn::-moz-focus-inner {
-    border: 0
-}
+    .btn::-moz-focus-inner {
+        border: 0
+    }
 
-.btn,.btn.btn-default {
-    box-shadow: 0 2px 2px 0 rgba(153,153,153,.14),0 3px 1px -2px rgba(153,153,153,.2),0 1px 5px 0 rgba(153,153,153,.12)
-}
+    .btn, .btn.btn-default {
+        box-shadow: 0 2px 2px 0 rgba(153,153,153,.14),0 3px 1px -2px rgba(153,153,153,.2),0 1px 5px 0 rgba(153,153,153,.12)
+    }
 
-.btn.btn-default.disabled,.btn.btn-default.disabled.active,.btn.btn-default.disabled.focus,.btn.btn-default.disabled:active,.btn.btn-default.disabled:focus,.btn.btn-default.disabled:hover,.btn.btn-default:disabled,.btn.btn-default:disabled.active,.btn.btn-default:disabled.focus,.btn.btn-default:disabled:active,.btn.btn-default:disabled:focus,.btn.btn-default:disabled:hover,.btn.btn-default[disabled],.btn.btn-default[disabled].active,.btn.btn-default[disabled].focus,.btn.btn-default[disabled]:active,.btn.btn-default[disabled]:focus,.btn.btn-default[disabled]:hover,.btn.disabled,.btn.disabled.active,.btn.disabled.focus,.btn.disabled:active,.btn.disabled:focus,.btn.disabled:hover,.btn:disabled,.btn:disabled.active,.btn:disabled.focus,.btn:disabled:active,.btn:disabled:focus,.btn:disabled:hover,.btn[disabled],.btn[disabled].active,.btn[disabled].focus,.btn[disabled]:active,.btn[disabled]:focus,.btn[disabled]:hover,.close,fieldset[disabled] .btn,fieldset[disabled] .btn.active,fieldset[disabled] .btn.btn-default,fieldset[disabled] .btn.btn-default.active,fieldset[disabled] .btn.btn-default.focus,fieldset[disabled] .btn.btn-default:active,fieldset[disabled] .btn.btn-default:focus,fieldset[disabled] .btn.btn-default:hover,fieldset[disabled] .btn.focus,fieldset[disabled] .btn:active,fieldset[disabled] .btn:focus,fieldset[disabled] .btn:hover {
-    font-size: inherit;
-    color: #fff;
-    opacity: .9;
-    text-shadow: none
-}
+        .btn.btn-default.disabled, .btn.btn-default.disabled.active, .btn.btn-default.disabled.focus, .btn.btn-default.disabled:active, .btn.btn-default.disabled:focus, .btn.btn-default.disabled:hover, .btn.btn-default:disabled, .btn.btn-default:disabled.active, .btn.btn-default:disabled.focus, .btn.btn-default:disabled:active, .btn.btn-default:disabled:focus, .btn.btn-default:disabled:hover, .btn.btn-default[disabled], .btn.btn-default[disabled].active, .btn.btn-default[disabled].focus, .btn.btn-default[disabled]:active, .btn.btn-default[disabled]:focus, .btn.btn-default[disabled]:hover, .btn.disabled, .btn.disabled.active, .btn.disabled.focus, .btn.disabled:active, .btn.disabled:focus, .btn.disabled:hover, .btn:disabled, .btn:disabled.active, .btn:disabled.focus, .btn:disabled:active, .btn:disabled:focus, .btn:disabled:hover, .btn[disabled], .btn[disabled].active, .btn[disabled].focus, .btn[disabled]:active, .btn[disabled]:focus, .btn[disabled]:hover, fieldset[disabled] .btn, fieldset[disabled] .btn.active, fieldset[disabled] .btn.btn-default, fieldset[disabled] .btn.btn-default.active, fieldset[disabled] .btn.btn-default.focus, fieldset[disabled] .btn.btn-default:active, fieldset[disabled] .btn.btn-default:focus, fieldset[disabled] .btn.btn-default:hover, fieldset[disabled] .btn.focus, fieldset[disabled] .btn:active, fieldset[disabled] .btn:focus, fieldset[disabled] .btn:hover {
+            font-size: inherit;
+            color: #fff;
+            opacity: .9;
+            text-shadow: none
+        }
 
-.close:focus,.close:hover {
-    opacity: 1;
-    color: #fff
-}
 
-.close i {
-    font-size: 11px
-}
-
-a,a:focus,a:hover {
+a, a:focus, a:hover {
     color: #09a1b5;
     text-decoration: none
 }
@@ -807,8 +799,8 @@ a,a:focus,a:hover {
     outline: 0
 }
 
-a:active,a:focus,button::-moz-focus-inner,button:active,button:focus,button:hover,input[type=button]::-moz-focus-inner,input[type=file]>input[type=button]::-moz-focus-inner,input[type=submit]::-moz-focus-inner,select::-moz-focus-inner {
-    outline: 0!important
+a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button:hover, input[type=button]::-moz-focus-inner, input[type=file] > input[type=button]::-moz-focus-inner, input[type=submit]::-moz-focus-inner, select::-moz-focus-inner {
+    outline: 0 !important
 }
 
 .form-control {
@@ -828,26 +820,26 @@ a:active,a:focus,button::-moz-focus-inner,button:active,button:focus,button:hove
     line-height: 1.42857
 }
 
-.form-control:-ms-input-placeholder {
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #aaa;
-    font-weight: 400
-}
+    .form-control:-ms-input-placeholder {
+        font-size: 14px;
+        line-height: 1.42857;
+        color: #aaa;
+        font-weight: 400
+    }
 
-.form-control::-moz-placeholder {
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #aaa;
-    font-weight: 400
-}
+    .form-control::-moz-placeholder {
+        font-size: 14px;
+        line-height: 1.42857;
+        color: #aaa;
+        font-weight: 400
+    }
 
-.form-control::-webkit-input-placeholder {
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #aaa;
-    font-weight: 400
-}
+    .form-control::-webkit-input-placeholder {
+        font-size: 14px;
+        line-height: 1.42857;
+        color: #aaa;
+        font-weight: 400
+    }
 
 .btn-file {
     position: relative;
@@ -855,39 +847,39 @@ a:active,a:focus,button::-moz-focus-inner,button:active,button:focus,button:hove
     vertical-align: middle
 }
 
-.btn-file>input {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    font-size: 23px;
-    cursor: pointer;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    direction: ltr
-}
+    .btn-file > input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-size: 23px;
+        cursor: pointer;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        direction: ltr
+    }
 
 .fileinput {
     display: inline-block;
     margin-bottom: 9px
 }
 
-.fileinput .form-control {
-    display: inline-block;
-    padding-top: 7px;
-    padding-bottom: 5px;
-    margin-bottom: 0;
-    vertical-align: middle;
-    cursor: text
-}
+    .fileinput .form-control {
+        display: inline-block;
+        padding-top: 7px;
+        padding-bottom: 5px;
+        margin-bottom: 0;
+        vertical-align: middle;
+        cursor: text
+    }
 
-.dc-text i,.fileinput .btn,.fileinput-filename {
-    vertical-align: middle
-}
+    .dc-text i, .fileinput .btn, .fileinput-filename {
+        vertical-align: middle
+    }
 
-.fileinput-exists .fileinput-new,.fileinput-new .fileinput-exists {
+.fileinput-exists .fileinput-new, .fileinput-new .fileinput-exists {
     display: none
 }
 
@@ -908,26 +900,26 @@ a:active,a:focus,button::-moz-focus-inner,button:active,button:focus,button:hove
     display: table
 }
 
-.fileinput.input-group>* {
-    position: relative;
-    z-index: 2
-}
+    .fileinput.input-group > * {
+        position: relative;
+        z-index: 2
+    }
 
-.fileinput.input-group>.btn-file {
-    z-index: 1
-}
+    .fileinput.input-group > .btn-file {
+        z-index: 1
+    }
 
-.fileinput-new .input-group .btn-file,.fileinput-new.input-group .btn-file {
+.fileinput-new .input-group .btn-file, .fileinput-new.input-group .btn-file {
     border-radius: 0 4px 4px 0
 }
 
-.fileinput-new .input-group .btn-file.btn-sm,.fileinput-new .input-group .btn-file.btn-xs,.fileinput-new.input-group .btn-file.btn-sm,.fileinput-new.input-group .btn-file.btn-xs {
-    border-radius: 0 3px 3px 0
-}
+    .fileinput-new .input-group .btn-file.btn-sm, .fileinput-new .input-group .btn-file.btn-xs, .fileinput-new.input-group .btn-file.btn-sm, .fileinput-new.input-group .btn-file.btn-xs {
+        border-radius: 0 3px 3px 0
+    }
 
-.fileinput-new .input-group .btn-file.btn-lg,.fileinput-new.input-group .btn-file.btn-lg {
-    border-radius: 0 6px 6px 0
-}
+    .fileinput-new .input-group .btn-file.btn-lg, .fileinput-new.input-group .btn-file.btn-lg {
+        border-radius: 0 6px 6px 0
+    }
 
 .form-group.has-warning .fileinput .fileinput-preview {
     color: #ff9800
@@ -937,9 +929,6 @@ a:active,a:focus,button::-moz-focus-inner,button:active,button:focus,button:hove
     border-color: #ff9800
 }
 
-.alert.alert-danger i,.form-group.has-error .fileinput .fileinput-preview {
-    color: #f44336
-}
 
 .form-group.has-error .fileinput .thumbnail {
     border-color: #f44336
@@ -953,300 +942,15 @@ a:active,a:focus,button::-moz-focus-inner,button:active,button:focus,button:hove
     border-color: #4caf50
 }
 
-.alert,.alert.alert-default {
-    background-color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(255,255,255,.4)
-}
-
-.alert {
-    border: 0;
-    right: 20px!important;
-    left: 20px!important;
-    position: relative;
-    padding: 15px;
-    line-height: 20px
-}
-
-.alert b {
-    font-weight: 500;
-    font-size: 12px
-}
-
-.alert.alert-default {
-    color: #555
-}
-
-.alert,.alert .alert-link,.alert a,.alert.alert-default .alert-link,.alert.alert-default a {
-    color: #555
-}
-
-.alert.alert-inverse {
-    background-color: #2e2e2e;
-    color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(33,33,33,.4)
-}
-
-.alert-danger,.alert-info,.alert-rose,.alert-success,.alert-warning,.alert.alert-danger .alert-link,.alert.alert-danger a,.alert.alert-info .alert-link,.alert.alert-info a,.alert.alert-inverse .alert-link,.alert.alert-inverse a,.alert.alert-primary .alert-link,.alert.alert-primary a,.alert.alert-rose .alert-link,.alert.alert-rose a,.alert.alert-success .alert-link,.alert.alert-success a,.alert.alert-warning .alert-link,.alert.alert-warning a {
-    color: #fff
-}
-
-.alert.alert-primary,.alert.alert-success {
-    background-color: #af2cc5;
-    color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(156,39,176,.4)
-}
-
-.alert.alert-success {
-    background-color: #5cb860;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(76,175,80,.4)
-}
-
-.alert.alert-info,.alert.alert-warning {
-    background-color: #00bcd4;
-    color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(0,188,212,.4)
-}
-
-.alert.alert-warning {
-    background-color: #ffa21a;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(255,152,0,.4)
-}
-
-.alert.alert-danger,.alert.alert-rose {
-    background-color: #f55a4e;
-    color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(244,67,54,.4)
-}
-
-.alert.alert-rose {
-    background-color: #eb3573;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(233,30,99,.4)
-}
-
-.alert-default .alert-link,.alert-default a {
-    color: rgba(0,0,0,.87)
-}
-
-.alert span {
-    display: block;
-    max-width: 89%;
-    font-size: 13px
-}
-
-.alert.alert-warning i {
-    color: #ff9800
-}
-
-.alert.alert-success i {
-    color: #4caf50
-}
-
-.alert.alert-info i {
-    color: #00bcd4
-}
-
-.alert.alert-primary i {
-    color: #9c27b0
-}
-
-.alert.alert-rose i {
-    color: #e91e63
-}
-
-.alert.alert-with-icon {
-    margin-top: 43px;
-    padding-right: 60px
-}
-
-.alert.alert-with-icon i[data-notify=icon] {
-    display: block;
-    right: 10px;
-    position: absolute;
-    margin-top: -35px;
-    font-size: 20px;
-    background-color: #fff;
-    padding: 7px;
-    text-align: center;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    box-shadow: 0 10px 30px -12px rgba(0,0,0,.4),0 4px 20px 0 rgba(0,0,0,.2),0 8px 10px -5px rgba(0,0,0,.2)
-}
-
-.alert .close i {
-    color: #fff
-}
-
-.alert i[data-notify=icon] {
-    display: none
-}
-
-.alert .alert-icon {
-    display: block;
-    float: left;
-    margin-right: 15px
-}
-
-.alert .alert-icon i {
-    margin-top: -7px;
-    top: 5px;
-    position: relative
-}
-
-.alert [data-notify=dismiss] {
-    margin-left: 5px
-}
-
-button.close {
-    -webkit-appearance: none;
-    padding: 0;
-    cursor: pointer;
-    background: 0 0;
-    border: 0
-}
-
-.tooltip {
-    position: absolute;
-    z-index: 107000;
-    display: block;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: none;
-    text-transform: none;
-    letter-spacing: 0;
-    word-break: normal;
-    word-spacing: normal;
-    word-wrap: normal;
-    white-space: normal;
-    filter: alpha(opacity=0);
-    line-break: auto
-}
-
-.tooltip.in {
-    filter: alpha(opacity=90)
-}
-
-.tooltip.top {
-    padding: 5px 0;
-    margin-top: -3px
-}
-
-.tooltip.right {
-    padding: 0 5px;
-    margin-left: 3px
-}
-
-.tooltip.bottom {
-    padding: 5px 0;
-    margin-top: 3px
-}
-
-.tooltip.left {
-    padding: 0 5px;
-    margin-left: -3px
-}
-
-.tooltip-inner {
-    max-width: 200px;
-    text-align: center;
-    background-color: #000
-}
-
-
-
-.tooltip-arrow {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-color: transparent;
-    border-style: solid
-}
-
-.tooltip.top .tooltip-arrow {
-    bottom: 0;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px 5px 0
-}
-
-.tooltip.top-left .tooltip-arrow,.tooltip.top-right .tooltip-arrow {
-    bottom: 0;
-    margin-bottom: -5px;
-    border-width: 5px 5px 0;
-    border-top-color: #000
-}
-
-.tooltip.top-left .tooltip-arrow {
-    right: 5px
-}
-
-.tooltip.top-right .tooltip-arrow {
-    left: 5px
-}
-
-.tooltip.right .tooltip-arrow {
-    top: 50%;
-    left: 0;
-    margin-top: -5px;
-    border-width: 5px 5px 5px 0
-}
-
-.tooltip.left .tooltip-arrow {
-    top: 50%;
-    right: 0;
-    margin-top: -5px;
-    border-width: 5px 0 5px 5px
-}
-
-.tooltip.bottom .tooltip-arrow {
-    top: 0;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 0 5px 5px
-}
-
-.tooltip.bottom-left .tooltip-arrow {
-    top: 0;
-    right: 5px;
-    margin-top: -5px;
-    border-width: 0 5px 5px;
-    border-bottom-color: #000
-}
-
-.tooltip.bottom-right .tooltip-arrow {
-    top: 0;
-    left: 5px;
-    margin-top: -5px;
-    border-width: 0 5px 5px;
-    border-bottom-color: #000
-}
-
-.popover,.tooltip-inner {
-    color: #fff;
-    line-height: 1.5em;
-    background: #333;
-    border: 0;
-    border-radius: 3px;
-    box-shadow: none
-}
 
 .popover {
     padding: 0;
     box-shadow: 0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12),0 8px 10px -5px rgba(0,0,0,.2)
 }
 
-.popover.bottom>.arrow,.popover.left>.arrow,.popover.right>.arrow,.popover.top>.arrow {
-    border: 0
-}
+    .popover.bottom > .arrow, .popover.left > .arrow, .popover.right > .arrow, .popover.top > .arrow {
+        border: 0
+    }
 
 .popover-title {
     background-color: #fff;
@@ -1260,45 +964,6 @@ button.close {
     line-height: 1.4
 }
 
-.tooltip.in {
-    opacity: 1;
-    -webkit-transform: translate3d(0,0,0);
-    -moz-transform: translate3d(0,0,0);
-    -o-transform: translate3d(0,0,0);
-    -ms-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0)
-}
-
-.tooltip {
-    opacity: 0;
-    transition: opacity,transform .2s ease;
-    -webkit-transform: translate3d(0,5px,0);
-    -moz-transform: translate3d(0,5px,0);
-    -o-transform: translate3d(0,5px,0);
-    -ms-transform: translate3d(0,5px,0);
-    transform: translate3d(0,5px,0)
-}
-
-.tooltip.left .tooltip-arrow {
-    border-left-color: #333
-}
-
-.tooltip.right .tooltip-arrow {
-    border-right-color: #333
-}
-
-.tooltip.top .tooltip-arrow {
-    border-top-color: #333
-}
-
-.tooltip.bottom .tooltip-arrow {
-    border-bottom-color: #333
-}
-
-.tooltip-inner {
-    padding: 5px 10px
-}
-
 .box-chat-content {
     display: inline-block;
     position: relative;
@@ -1308,21 +973,17 @@ button.close {
     color: rgba(0,0,0,.87)
 }
 
-.box-chat-content .card-actions .btn {
-    padding-left: 12px;
-    padding-right: 12px
-}
+    .box-chat-content .card-actions .btn {
+        padding-left: 12px;
+        padding-right: 12px
+    }
 
 @media (max-width: 767px) {
     .fileinput {
-        display:block
+        display: block
     }
 
-    .modal-small {
-        width: auto;
-        margin-left: 15px;
-        margin-right: 15px
-    }
+
 }
 
 .form-control {
@@ -1330,19 +991,15 @@ button.close {
     text-align: right
 }
 
-.container {
-    direction: rtl
-}
+
 
 .padding {
     padding: 15px
 }
 
-.tooltip {
-    font-family: fontsans,tahoma
-}
 
-.loading,.notify_date div {
+
+.loading, .notify_date div {
     width: 100%;
     position: absolute;
     right: 0;
@@ -1356,25 +1013,6 @@ button.close {
     display: none;
     height: calc(100vh - 230px);
     background: #fff
-}
-
-#close_autopm,#close_autopm svg {
-    float: left;
-    cursor: pointer;
-    opacity: .5
-}
-
-#close_autopm {
-    margin-left: -5px
-}
-
-#close_autopm svg {
-    margin: 0 6px 0 -2px!important;
-    fill: #333
-}
-
-#close_autopm:hover {
-    opacity: .8
 }
 
 .box-chat-content {
@@ -1398,16 +1036,16 @@ button.close {
     padding: 0 5px 0 10px
 }
 
-#box-new-message-content .dc-text {
-    cursor: pointer;
-    border-radius: 8px
-}
+    #box-new-message-content .dc-text {
+        cursor: pointer;
+        border-radius: 8px
+    }
 
 .box-header.with-border {
     border-bottom: 1px solid #f4f4f4
 }
 
-.box-header,.dc-msg {
+.box-header, .dc-msg {
     display: block;
     position: relative
 }
@@ -1417,11 +1055,11 @@ button.close {
     padding: 13px 10px
 }
 
-.box-header>.box-tools {
-    position: absolute;
-    left: 2px;
-    bottom: 2px
-}
+    .box-header > .box-tools {
+        position: absolute;
+        left: 2px;
+        bottom: 2px
+    }
 
 .box-chat-content .box-body {
     position: relative;
@@ -1457,7 +1095,7 @@ button.close {
     bottom: 6px
 }
 
-.box-chat-content .right>.dc-text {
+.box-chat-content .right > .dc-text {
     background: #fff;
     color: #444
 }
@@ -1481,13 +1119,10 @@ button.close {
     max-width: calc(100% - 75px)
 }
 
-.dc-text svg,.modal-body i {
-    vertical-align: middle;
-    margin-left: 6px
-}
+
 
 .right .dc-text {
-    margin-right: 42px;
+    margin-right: 8px;
     margin-left: 0;
     float: right;
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.2)
@@ -1502,11 +1137,11 @@ button.close {
     text-decoration: underline
 }
 
-.box-chat-content .right>.dc-text:after,.box-chat-content .right>.dc-text:before {
+.box-chat-content .right > .dc-text:after, .box-chat-content .right > .dc-text:before {
     border-left-color: #f3f4f7
 }
 
-.dc-msg:after,.dc-msg:before {
+.dc-msg:after, .dc-msg:before {
     content: " ";
     display: table
 }
@@ -1515,7 +1150,7 @@ button.close {
     clear: both
 }
 
-.dc-text:before,.right .dc-text:before {
+.dc-text:before, .right .dc-text:before {
     bottom: 0;
     height: 18px;
     -webkit-transform: translate(0,-2px);
@@ -1549,7 +1184,7 @@ button.close {
     background: #fff
 }
 
-.dc-text:after,.right .dc-text:after {
+.dc-text:after, .right .dc-text:after {
     bottom: -2px;
     width: 16px;
     height: 20px;
@@ -1576,7 +1211,7 @@ button.close {
     white-space: initial
 }
 
-.right .file:after,.right .file:before {
+.right .file:after, .right .file:before {
     border-right: 0
 }
 
@@ -1597,39 +1232,31 @@ button.close {
     direction: ltr
 }
 
-.file .file-box a {
-    float: left;
-    font-size: 13px;
-    text-overflow: ellipsis;
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap
-}
+    .file .file-box a {
+        float: left;
+        font-size: 13px;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap
+    }
 
-.file .file-box span {
-    float: left;
-    font-size: 11px;
-    opacity: .7;
-    margin-top: -3px
-}
+    .file .file-box span {
+        float: left;
+        font-size: 11px;
+        opacity: .7;
+        margin-top: -3px
+    }
 
-#box-send,.typing {
+#box-send, .typing {
     display: inline-block
 }
 
-.close,.file svg {
-    float: left
-}
 
-.modal-body i {
-    margin-left: 10px
-}
 
-.modal-title {
-    color: #ff9800
-}
 
-.hide_ba:after,.hide_ba:before {
+
+.hide_ba:after, .hide_ba:before {
     display: none
 }
 
@@ -1641,29 +1268,29 @@ button.close {
     padding: 20px 0
 }
 
-.notify_date:before {
-    border-top: 1px solid #dcdcdc;
-    width: 96%;
-    position: absolute;
-    top: 19px;
-    right: 2%;
-    z-index: 0
-}
+    .notify_date:before {
+        border-top: 1px solid #dcdcdc;
+        width: 96%;
+        position: absolute;
+        top: 19px;
+        right: 2%;
+        z-index: 0
+    }
 
-.notify_date div {
-    top: 10px;
-    z-index: 0
-}
+    .notify_date div {
+        top: 10px;
+        z-index: 0
+    }
 
-.notify_date div span {
-    background: #f3f3f3;
-    padding: 0 10px;
-    font-size: 12px
-}
+        .notify_date div span {
+            background: #f3f3f3;
+            padding: 0 10px;
+            font-size: 12px
+        }
 
 #box-send textarea {
     border: 0;
-    background: 0 0!important;
+    background: 0 0 !important;
     overflow: hidden;
     height: auto;
     min-height: 30px;
@@ -1684,9 +1311,9 @@ button.close {
     margin: 0
 }
 
-.box-footer .btn-simple i {
-    font-size: 22px
-}
+    .box-footer .btn-simple i {
+        font-size: 22px
+    }
 
 .box-footer .form-group {
     margin: 0;
@@ -1699,10 +1326,7 @@ button.close {
     margin: 0
 }
 
-.modal-backdrop.in {
-    filter: alpha(opacity=70);
-    opacity: .7
-}
+
 
 .fix-contentchat .btn-file, .fix-contentchat i {
     opacity: .6
@@ -1733,29 +1357,27 @@ button.close {
     z-index: 10
 }
 
-.dragandrophandlerbg i {
-    font-size: 8em
-}
+    .dragandrophandlerbg i {
+        font-size: 8em
+    }
 
 .nimhide {
     border: 0
 }
 
-.nimhide #chatbox {
-    opacity: .15
-}
+    .nimhide #chatbox {
+        opacity: .15
+    }
 
-.nimhide .dragandrophandlerbg {
-    display: inline-block
-}
+    .nimhide .dragandrophandlerbg {
+        display: inline-block
+    }
 
 .hidden {
     display: none
 }
 
-.alert {
-    direction: rtl
-}
+
 
 .load-older {
     display: inherit;
@@ -1773,9 +1395,9 @@ button.close {
     font-size: 12px
 }
 
-.load-older:hover {
-    font-weight: 700
-}
+    .load-older:hover {
+        font-weight: 700
+    }
 
 .cssload-loader {
     width: 50px;
@@ -1790,57 +1412,57 @@ button.close {
     -moz-transform: translate(-50%,-50%)
 }
 
-.cssload-loader>div {
-    content: " ";
-    width: 10px;
-    height: 10px;
-    background: #311423;
-    border-radius: 100%;
-    position: absolute;
-    animation: cssload-shift 2.3s linear infinite;
-    -o-animation: cssload-shift 2.3s linear infinite;
-    -ms-animation: cssload-shift 2.3s linear infinite;
-    -webkit-animation: cssload-shift 2.3s linear infinite;
-    -moz-animation: cssload-shift 2.3s linear infinite
-}
+    .cssload-loader > div {
+        content: " ";
+        width: 10px;
+        height: 10px;
+        background: #311423;
+        border-radius: 100%;
+        position: absolute;
+        animation: cssload-shift 2.3s linear infinite;
+        -o-animation: cssload-shift 2.3s linear infinite;
+        -ms-animation: cssload-shift 2.3s linear infinite;
+        -webkit-animation: cssload-shift 2.3s linear infinite;
+        -moz-animation: cssload-shift 2.3s linear infinite
+    }
 
-.cssload-loader>div:nth-of-type(1) {
-    animation-delay: -.46s;
-    -o-animation-delay: -.46s;
-    -ms-animation-delay: -.46s;
-    -webkit-animation-delay: -.46s;
-    -moz-animation-delay: -.46s
-}
+        .cssload-loader > div:nth-of-type(1) {
+            animation-delay: -.46s;
+            -o-animation-delay: -.46s;
+            -ms-animation-delay: -.46s;
+            -webkit-animation-delay: -.46s;
+            -moz-animation-delay: -.46s
+        }
 
-.cssload-loader>div:nth-of-type(2) {
-    animation-delay: -.92s;
-    -o-animation-delay: -.92s;
-    -ms-animation-delay: -.92s;
-    -webkit-animation-delay: -.92s;
-    -moz-animation-delay: -.92s
-}
+        .cssload-loader > div:nth-of-type(2) {
+            animation-delay: -.92s;
+            -o-animation-delay: -.92s;
+            -ms-animation-delay: -.92s;
+            -webkit-animation-delay: -.92s;
+            -moz-animation-delay: -.92s
+        }
 
-.cssload-loader>div:nth-of-type(3) {
-    animation-delay: -1.38s;
-    -o-animation-delay: -1.38s;
-    -ms-animation-delay: -1.38s;
-    -webkit-animation-delay: -1.38s;
-    -moz-animation-delay: -1.38s
-}
+        .cssload-loader > div:nth-of-type(3) {
+            animation-delay: -1.38s;
+            -o-animation-delay: -1.38s;
+            -ms-animation-delay: -1.38s;
+            -webkit-animation-delay: -1.38s;
+            -moz-animation-delay: -1.38s
+        }
 
-.cssload-loader>div:nth-of-type(4) {
-    animation-delay: -1.84s;
-    -o-animation-delay: -1.84s;
-    -ms-animation-delay: -1.84s;
-    -webkit-animation-delay: -1.84s;
-    -moz-animation-delay: -1.84s
-}
+        .cssload-loader > div:nth-of-type(4) {
+            animation-delay: -1.84s;
+            -o-animation-delay: -1.84s;
+            -ms-animation-delay: -1.84s;
+            -webkit-animation-delay: -1.84s;
+            -moz-animation-delay: -1.84s
+        }
 
-#emoji span,.but {
+#emoji span, .but {
     cursor: pointer
 }
 
-.box-new-message .dc-text:after,.box-new-message .dc-text:before,.btn-send {
+.box-new-message .dc-text:after, .box-new-message .dc-text:before, .btn-send {
     display: none
 }
 
@@ -1869,19 +1491,19 @@ button.close {
     text-align: center;
     vertical-align: middle;
     font-size: 24px;
-    -webkit-transition: all .2s ease!important;
-    -moz-transition: all .2s ease!important;
-    -ms-transition: all .2s ease!important;
-    -o-transition: all .2s ease!important;
-    transition: all .2s ease!important
+    -webkit-transition: all .2s ease !important;
+    -moz-transition: all .2s ease !important;
+    -ms-transition: all .2s ease !important;
+    -o-transition: all .2s ease !important;
+    transition: all .2s ease !important
 }
 
-#emoji span:hover {
-    transition-delay: 0ms;
-    -webkit-transform: scale(1.3);
-    -ms-transform: scale(1.3);
-    transform: scale(1.3)
-}
+    #emoji span:hover {
+        transition-delay: 0ms;
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3)
+    }
 
 #box-chat .form-group textarea {
     height: 30px;
@@ -1970,9 +1592,9 @@ button.close {
     font-size: 12px
 }
 
-#box-chat .box-body,#box-chat .chatboxi .box-chat-content {
-    height: calc(100vh);
- }
+#box-chat .box-body, #box-chat .chatboxi .box-chat-content {
+    height: 490px;/*calc(100vh);*/
+}
 
 #box-chat .box-footer .form-group {
     width: calc(100% - 72px)
@@ -1983,15 +1605,9 @@ button.close {
     height: 35px
 }
 
-.clclose i {
-    font-size: 14px;
-    margin: 3px
-}
 
-.clclose:hover {
-    background: rgba(0,0,0,.1);
-    border-radius: 50%
-}
+
+
 
 #box-chat .focustype {
     background: #fff;
@@ -2003,7 +1619,8 @@ button.close {
 }
 
 #box-chat #chatbox {
-    min-height: calc(100vh - 215px);
+    height: fit-content;
+    /*min-height: calc(100vh - 215px);*/
     padding-top: 15px;
     position: relative;
     overflow-x: hidden
@@ -2019,42 +1636,42 @@ button.close {
     font-size: 12px
 }
 
-.cssload-piano>div {
-    height: 7px;
-    float: right;
-    width: 8px;
-    border-radius: 50%;
-    margin-right: 5px;
-    animation: stretchdelay 1.38s infinite ease-in-out;
-    -o-animation: stretchdelay 1.38s infinite ease-in-out;
-    -ms-animation: stretchdelay 1.38s infinite ease-in-out;
-    -webkit-animation: stretchdelay 1.38s infinite ease-in-out;
-    -moz-animation: stretchdelay 1.38s infinite ease-in-out
-}
+    .cssload-piano > div {
+        height: 7px;
+        float: right;
+        width: 8px;
+        border-radius: 50%;
+        margin-right: 5px;
+        animation: stretchdelay 1.38s infinite ease-in-out;
+        -o-animation: stretchdelay 1.38s infinite ease-in-out;
+        -ms-animation: stretchdelay 1.38s infinite ease-in-out;
+        -webkit-animation: stretchdelay 1.38s infinite ease-in-out;
+        -moz-animation: stretchdelay 1.38s infinite ease-in-out
+    }
 
-.cssload-piano .cssload-rect2 {
-    animation-delay: -1.15s;
-    -o-animation-delay: -1.15s;
-    -ms-animation-delay: -1.15s;
-    -webkit-animation-delay: -1.15s;
-    -moz-animation-delay: -1.15s
-}
+    .cssload-piano .cssload-rect2 {
+        animation-delay: -1.15s;
+        -o-animation-delay: -1.15s;
+        -ms-animation-delay: -1.15s;
+        -webkit-animation-delay: -1.15s;
+        -moz-animation-delay: -1.15s
+    }
 
-.cssload-piano .cssload-rect3 {
-    animation-delay: -.92s;
-    -o-animation-delay: -.92s;
-    -ms-animation-delay: -.92s;
-    -webkit-animation-delay: -.92s;
-    -moz-animation-delay: -.92s
-}
+    .cssload-piano .cssload-rect3 {
+        animation-delay: -.92s;
+        -o-animation-delay: -.92s;
+        -ms-animation-delay: -.92s;
+        -webkit-animation-delay: -.92s;
+        -moz-animation-delay: -.92s
+    }
 
-.cssload-piano .cssload-rect4 {
-    animation-delay: -.69s;
-    -o-animation-delay: -.69s;
-    -ms-animation-delay: -.69s;
-    -webkit-animation-delay: -.69s;
-    -moz-animation-delay: -.69s
-}
+    .cssload-piano .cssload-rect4 {
+        animation-delay: -.69s;
+        -o-animation-delay: -.69s;
+        -ms-animation-delay: -.69s;
+        -webkit-animation-delay: -.69s;
+        -moz-animation-delay: -.69s
+    }
 
 .font14 {
     font-size: 14px
@@ -2071,18 +1688,14 @@ button.close {
     float: right
 }
 
-.icond img {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    overflow: hidden
-}
+    .icond img {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        overflow: hidden
+    }
 
-#btn-close-chat div,.unread-num {
-    border-radius: 50%;
-    color: #fff;
-    text-align: center
-}
+
 
 .unread-num {
     font-size: 12px;
@@ -2107,20 +1720,20 @@ button.close {
     padding-top: 5px
 }
 
-.box-new-message .dc-text {
-    box-shadow: 0 2px 7px rgba(0,0,0,.3);
-    background: #fff;
-    color: #444;
-    max-width: 100%!important;
-    line-height: 23px
-}
+    .box-new-message .dc-text {
+        box-shadow: 0 2px 7px rgba(0,0,0,.3);
+        background: #fff;
+        color: #444;
+        max-width: 100% !important;
+        line-height: 23px
+    }
 
-.box-new-message .dc-img {
-    box-shadow: 0 2px 7px rgba(0,0,0,.2);
-    width: 32px;
-    height: 32px;
-    margin-top: 5px
-}
+    .box-new-message .dc-img {
+        box-shadow: 0 2px 7px rgba(0,0,0,.2);
+        width: 32px;
+        height: 32px;
+        margin-top: 5px
+    }
 
 #box-chat {
     overflow: hidden;
@@ -2129,6 +1742,13 @@ button.close {
     box-shadow: rgba(0,0,0,.25) 0 0 15px;
     margin: 15px
 }
+
+#btn-close-chat div, .unread-num {
+    border-radius: 50%;
+    color: #fff;
+    text-align: center
+}
+
 
 #btn-close-chat {
     position: absolute;
@@ -2141,18 +1761,57 @@ button.close {
     padding-left: 10px
 }
 
-#btn-close-chat div {
-    background: rgba(0,0,0,.1);
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    padding-top: 5px;
-    float: left
+    #btn-close-chat div {
+        background: rgba(0,0,0,.1);
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        padding-top: 5px;
+        float: left
+    }
+
+        #btn-close-chat div:hover {
+            background: rgba(0,0,0,.3)
+        }
+
+    #btn-close-chat div, .unread-num {
+        border-radius: 50%;
+        color: #fff;
+        text-align: center
+    }
+
+#btn-max-chat {
+    position: absolute;
+    z-index: 20005;
+    width: 50px;
+    height: 50px;
+    top: 0;
+    left: 35px;
+    padding-top: 10px;
+    padding-left: 10px
 }
 
-#btn-close-chat div:hover {
-    background: rgba(0,0,0,.3)
-}
+    #btn-max-chat div {
+        background: rgba(0,0,0,.1);
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        padding-top: 5px;
+        float: left
+    }
+
+        #btn-max-chat div:hover {
+            background: rgba(0,0,0,.3)
+        }
+
+    #btn-max-chat div, .unread-num {
+        border-radius: 50%;
+        color: #fff;
+        text-align: center
+    }
+
+
+
 
 #box-widget-icon {
     cursor: pointer;
@@ -2165,7 +1824,7 @@ button.close {
 }
 
 .widget-icon {
-    transition: all .2s ease!important;
+    transition: all .2s ease !important;
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -2173,15 +1832,15 @@ button.close {
     margin: 0 auto
 }
 
-.widget-icon img {
-    border-radius: 50%;
-    width: 100%;
-    height: 100%
-}
+    .widget-icon img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%
+    }
 
-#box-widget-icon:hover .unread-num,.widget-icon:hover {
-    transform: scale(1.1)
-}
+    #box-widget-icon:hover .unread-num, .widget-icon:hover {
+        transform: scale(1.1)
+    }
 
 .pull-right {
     float: right
@@ -2214,29 +1873,26 @@ button.close {
     color: #333
 }
 
-.tagha span.chkagain {
-    background: #337ab7;
-    color: #fff
-}
+    .tagha span.chkagain {
+        background: #337ab7;
+        color: #fff
+    }
 
-.emojz div.tooltip .tooltip-inner,.picprev:hover span {
-    color: #fff!important
-}
 
 ::-webkit-input-placeholder {
-    color: #aaa!important
+    color: #aaa !important
 }
 
 ::-moz-placeholder {
-    color: #aaa!important
+    color: #aaa !important
 }
 
 :-ms-input-placeholder {
-    color: #aaa!important
+    color: #aaa !important
 }
 
 :-moz-placeholder {
-    color: #aaa!important
+    color: #aaa !important
 }
 
 .emojz {
@@ -2245,29 +1901,19 @@ button.close {
     margin-bottom: -2px
 }
 
-.emojz .dc-text,.emojz .dc-text:after,.emojz .dc-text:before {
-    line-height: 45px;
-    background: 0 0!important;
-    box-shadow: none!important;
-    border: 0;
-    font-size: 40px;
-    padding: 0
-}
+    .emojz .dc-text, .emojz .dc-text:after, .emojz .dc-text:before {
+        line-height: 45px;
+        background: 0 0 !important;
+        box-shadow: none !important;
+        border: 0;
+        font-size: 40px;
+        padding: 0
+    }
 
 .left.emojz .dc-text {
     text-align: left
 }
 
-.fade {
-    opacity: 0;
-    -webkit-transition: opacity .15s linear;
-    -o-transition: opacity .15s linear;
-    transition: opacity .15s linear
-}
-
-.fade.in {
-    opacity: 1
-}
 
 .fadeInUp {
     -webkit-animation-name: fadeInUp;
@@ -2278,50 +1924,22 @@ button.close {
     animation-fill-mode: both
 }
 
-.fadeInLeft,.fadeOutDown,.fadeOutLeft,.slideInleft,.slideInright {
-    -webkit-animation-name: fadeOutDown;
-    animation-name: fadeOutDown;
-    -webkit-animation-duration: .5s;
-    animation-duration: .5s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both
-}
-
 #box-chat {
     direction: rtl;
     display: none
 }
 
-.fadeInLeft,.fadeOutLeft,.slideInleft,.slideInright {
-    -webkit-animation-name: slideInRight;
-    animation-name: slideInRight
-}
-
-.fadeInLeft,.fadeOutLeft,.slideInleft {
-    -webkit-animation-name: slideInLeft;
-    animation-name: slideInLeft
-}
-
-.fadeInLeft,.fadeOutLeft {
-    -webkit-animation-name: fadeInLeft;
-    animation-name: fadeInLeft
-}
-
-.fadeOutLeft {
-    -webkit-animation-name: fadeOutLeft;
-    animation-name: fadeOutLeft
-}
 
 @media (min-width: 411px) {
-    #box-chat .box-body,.box-new-message {
-        font-size:14px
+    #box-chat .box-body, .box-new-message {
+        font-size: 14px
     }
 
-    #box-chat .form-group textarea,#box-chat .title-name {
+    #box-chat .form-group textarea, #box-chat .title-name {
         font-size: 15px
     }
 
-    #box-chat .title-text,.copyright1 {
+    #box-chat .title-text, .copyright1 {
         font-size: 13px
     }
 
@@ -2339,27 +1957,27 @@ button.close {
     }
 
     .dc-img {
-        width: 36px!important;
-        height: 36px!important;
+        width: 36px !important;
+        height: 36px !important;
         bottom: 5px
     }
 
     .right .dc-text {
         max-width: calc(100% - 83px);
-        margin-right: 50px
+       
     }
 }
 
 @media (max-width: 409px) {
-    #box-chat .box-body,.box-new-message {
-        font-size:13px
+    #box-chat .box-body, .box-new-message {
+        font-size: 13px
     }
 
-    #box-chat .form-group textarea,#box-chat .title-name {
+    #box-chat .form-group textarea, #box-chat .title-name {
         font-size: 15px
     }
 
-    #box-chat .title-text,.copyright1,.unread-num {
+    #box-chat .title-text, .copyright1, .unread-num {
         font-size: 13px
     }
 
@@ -2376,14 +1994,14 @@ button.close {
     }
 
     .dc-img {
-        width: 36px!important;
-        height: 36px!important;
+        width: 36px !important;
+        height: 36px !important;
         bottom: 5px
     }
 
     .right .dc-text {
         max-width: calc(100% - 83px);
-        margin-right: 50px
+        
     }
 }
 
@@ -2414,14 +2032,14 @@ button.close {
     transition: background 0s ease-out
 }
 
-.goftino_field.focus_field {
-    outline: 0;
-    background-size: 100% 2px,100% 1px;
-    transition: background .2s ease-out
-}
+    .goftino_field.focus_field {
+        outline: 0;
+        background-size: 100% 2px,100% 1px;
+        transition: background .2s ease-out
+    }
 
 .error_field {
-    background-image: linear-gradient(#f44336,#f44336),linear-gradient(#d2d2d2,#d2d2d2)!important
+    background-image: linear-gradient(#f44336,#f44336),linear-gradient(#d2d2d2,#d2d2d2) !important
 }
 
 .goftino_field:first-of-type {
@@ -2437,27 +2055,26 @@ button.close {
     cursor: pointer
 }
 
-.sendFormButton:hover {
-    opacity: .8
-}
+    .sendFormButton:hover {
+        opacity: .8
+    }
 
-.timeago_l,.timeago_r {
+.timeago_left, .timeago_right {
     color: #888;
     font-size: 11px;
     direction: rtl;
     width: 100%;
-    margin-top: -7px;
     float: right;
-    padding-bottom: 10px
+    padding-bottom: 2px
 }
 
-.timeago_l {
+.timeago_left {
     padding-left: 7px;
     text-align: left
 }
 
-.timeago_r {
-    padding-right: 40px;
+.timeago_right {
+    padding-right: 10px;
     text-align: right
 }
 
@@ -2473,7 +2090,7 @@ button.close {
     padding-top: 3px
 }
 
-#mic:hover svg,.btn-emoji:hover svg {
+#mic:hover svg, .btn-emoji:hover svg {
     fill: #888
 }
 
@@ -2491,37 +2108,37 @@ button.close {
     width: 100%
 }
 
-.goftinoaudioplayer svg {
-    fill: #666
-}
+    .goftinoaudioplayer svg {
+        fill: #666
+    }
 
-.goftinoaudioplayer div {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box
-}
+    .goftinoaudioplayer div {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box
+    }
 
-.amazingaudioplayer-time,.goftinoaudioplayer ul {
-    display: none
-}
+    .amazingaudioplayer-time, .goftinoaudioplayer ul {
+        display: none
+    }
 
-.goftinoaudioplayer .amazingaudioplayer-bar-clear {
-    clear: both
-}
+    .goftinoaudioplayer .amazingaudioplayer-bar-clear {
+        clear: both
+    }
 
-.goftinoaudioplayer .amazingaudioplayer-playpause {
-    float: left;
-    width: 48px;
-    margin: 0 15px 0 0
-}
+    .goftinoaudioplayer .amazingaudioplayer-playpause {
+        float: left;
+        width: 48px;
+        margin: 0 15px 0 0
+    }
 
-.amazingaudioplayer-pause,.amazingaudioplayer-play {
+.amazingaudioplayer-pause, .amazingaudioplayer-play {
     position: relative
 }
 
-.amazingaudioplayer-pause:hover,.amazingaudioplayer-play:hover {
-    opacity: .8
-}
+    .amazingaudioplayer-pause:hover, .amazingaudioplayer-play:hover {
+        opacity: .8
+    }
 
 .goftinoaudioplayer .amazingaudioplayer-progress {
     position: relative;
@@ -2541,7 +2158,7 @@ button.close {
     background-color: #fff
 }
 
-.amazingaudioplayer-time,.amazingaudioplayer-timeall {
+.amazingaudioplayer-time, .amazingaudioplayer-timeall {
     text-align: left;
     direction: ltr;
     font-size: 12px;
@@ -2558,7 +2175,7 @@ button.close {
 
 
 
-#mictimer,.dc-text.audiotype,select {
+#mictimer, .dc-text.audiotype, select {
     width: 100%
 }
 
@@ -2575,7 +2192,7 @@ button.close {
     min-height: 42px
 }
 
-#mic.pressmic,.mydlsound,.picprev span {
+#mic.pressmic, .mydlsound, .picprev span {
     position: absolute;
     z-index: 10
 }
@@ -2589,7 +2206,7 @@ button.close {
 }
 
 .pressmic svg {
-    fill: #fff!important;
+    fill: #fff !important;
     display: block;
     margin: 15px auto;
     -webkit-transform: scale(1.5);
@@ -2639,15 +2256,15 @@ button.close {
 }
 
 .dc-text.picprev {
-    background: 0 0!important;
+    background: 0 0 !important;
     padding: 5px 0;
     box-shadow: none
 }
 
-.dc-text.picprev::after,.dc-text.picprev::before {
-    background: 0 0;
-    box-shadow: none
-}
+    .dc-text.picprev::after, .dc-text.picprev::before {
+        background: 0 0;
+        box-shadow: none
+    }
 
 .mydlsound {
     top: 2px;
@@ -2667,17 +2284,17 @@ button.close {
     opacity: .7
 }
 
-.goftino_rubberBand,.goftino_shake,.goftino_tada,.goftino_wobble {
+.goftino_rubberBand, .goftino_shake, .goftino_tada, .goftino_wobble {
     animation-name: goftino_rubberBand;
     animation-duration: 1s;
     animation-fill-mode: both
 }
 
-.goftino_shake,.goftino_tada,.goftino_wobble {
+.goftino_shake, .goftino_tada, .goftino_wobble {
     animation-name: goftino_shake
 }
 
-.goftino_tada,.goftino_wobble {
+.goftino_tada, .goftino_wobble {
     animation-name: goftino_tada
 }
 
@@ -2689,7 +2306,7 @@ button.close {
     animation-name: goftino_rotateIn
 }
 
-.goftino_bounceIn,.goftino_flip,.goftino_rotateIn {
+.goftino_bounceIn, .goftino_flip, .goftino_rotateIn {
     animation-duration: 1s;
     animation-fill-mode: both
 }
@@ -2709,17 +2326,17 @@ button.close {
     margin: 8px 5px
 }
 
-.status_pm svg {
-    fill: #c1c1c1
-}
+    .status_pm svg {
+        fill: #c1c1c1
+    }
 
 .doResendPM {
     cursor: pointer
 }
 
-.doResendPM svg {
-    fill: #00bcd4
-}
+    .doResendPM svg {
+        fill: #00bcd4
+    }
 
 .resend-animate {
     animation: spinn 1s linear infinite
@@ -2734,28 +2351,28 @@ button.close {
     padding: 12px 12px 8px
 }
 
-.box-rating span {
-    display: inline-block;
-    font-size: 29px;
-    transition: all .2s ease;
-    margin: 8px 4px
-}
+    .box-rating span {
+        display: inline-block;
+        font-size: 29px;
+        transition: all .2s ease;
+        margin: 8px 4px
+    }
 
-.box-rating span:hover {
-    transform: scale(1.2);
-    cursor: pointer
-}
+        .box-rating span:hover {
+            transform: scale(1.2);
+            cursor: pointer
+        }
 
-.box-rating div {
-    font-size: 12px;
-    color: #777;
-    display: block;
-    height: 20px
-}
+    .box-rating div {
+        font-size: 12px;
+        color: #777;
+        display: block;
+        height: 20px
+    }
 
 @media print {
     .widget-icon {
-        display: none!important
+        display: none !important
     }
 }
 
@@ -2772,29 +2389,29 @@ select {
     display: none
 }
 
-#replybox span:first-child {
-    float: left;
-    padding: 0;
-    cursor: pointer
-}
+    #replybox span:first-child {
+        float: left;
+        padding: 0;
+        cursor: pointer
+    }
 
-#replybox span:hover svg {
-    fill: red
-}
+    #replybox span:hover svg {
+        fill: red
+    }
 
-#replybox div {
-    display: inline-block;
-    font-size: 12px;
-    max-width: calc(100% - 30px)
-}
+    #replybox div {
+        display: inline-block;
+        font-size: 12px;
+        max-width: calc(100% - 30px)
+    }
 
-#replybox div svg {
-    margin-left: 10px
-}
+        #replybox div svg {
+            margin-left: 10px
+        }
 
-#replybox svg {
-    vertical-align: middle
-}
+    #replybox svg {
+        vertical-align: middle
+    }
 
 .reply_but {
     float: left;
@@ -2804,16 +2421,16 @@ select {
     transition: all .2s ease-out
 }
 
-.reply_but svg {
-    fill: #666
-}
+    .reply_but svg {
+        fill: #666
+    }
 
 .right .reply_but svg {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1)
 }
 
-.dc-msg:hover .reply_but,.qa_btn a:hover {
+.dc-msg:hover .reply_but, .qa_btn a:hover {
     opacity: 1
 }
 
@@ -2836,7 +2453,7 @@ select {
 }
 
 .left .reply-op {
-    border-right: 3px solid #fff!important;
+    border-right: 3px solid #fff !important;
     background: rgba(255,255,255,.2);
     color: #fff
 }
@@ -2872,14 +2489,14 @@ select {
     transition: all .3s ease
 }
 
-.qa_btn a {
-    display: block
-}
+    .qa_btn a {
+        display: block
+    }
 
-.qa_btn:hover {
-    opacity: .8;
-    cursor: pointer
-}
+    .qa_btn:hover {
+        opacity: .8;
+        cursor: pointer
+    }
 
 .box-answer {
     margin-top: 10px
@@ -2912,10 +2529,10 @@ select {
     float: left
 }
 
-.uploader-box:hover {
-    opacity: .7;
-    cursor: pointer
-}
+    .uploader-box:hover {
+        opacity: .7;
+        cursor: pointer
+    }
 
 .uploader-circle {
     position: absolute;
@@ -2937,9 +2554,9 @@ select {
     cursor: pointer
 }
 
-.uploader-stop svg {
-    margin: 0
-}
+    .uploader-stop svg {
+        margin: 0
+    }
 
 .uploader-file {
     width: calc(100% - 60px);
@@ -2971,7 +2588,7 @@ select {
     overflow: hidden
 }
 
-.qa_btn a,a.sendFormButton {
+.qa_btn a, a.sendFormButton {
     text-decoration: none
 }
 
@@ -3017,12 +2634,6 @@ select {
     background: rgba(250, 110, 70, 0.15)
 }
 
-.box-title,
-.clclose,
-.left > .dc-text,
-.qa_btn {
-    color: white
-}
 
 .left .dc-text svg {
     fill: white
@@ -3038,7 +2649,7 @@ select {
 
 #box-new-message-content .dc-text {
     float: right;
-    margin-right: 50px
+
 }
 
 .unread-num {

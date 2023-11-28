@@ -1047,21 +1047,30 @@ namespace Support.Controllers
 
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
-                    //string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath FROM CustomerFiles
-                    //                             where  id = (select max(id) from CustomerFiles where LockNumber = {0})", lockNumber);
-
-                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath , (select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload FROM CustomerFiles as c 
-                                                 where id = (select id from ((select ROW_NUMBER() over (order by id desc) ro , id from CustomerFiles where LockNumber = {0})) as b where ro = {1})",
-                                                 lockNumber, Row);
-
-                    // 
-                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
-                    if (list.Count > 0)
+                    string contract = UnitPublic.HasContract(lockNumber);
+                    if (contract != "")
                     {
-                        var l = list.Single();
-                        return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath + ',' + l.CountDownload.ToString());
+                        if (contract.Split('-')[0] == "1")
+                        {
+                            string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath , (select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload FROM CustomerFiles as c 
+                                                    where id = (select id from ((select ROW_NUMBER() over (order by id desc) ro , id from CustomerFiles where LockNumber = {0} and filepath like '%.exe' )) as b where ro = {1})",
+                                         lockNumber, Row);
+                            var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
+                            if (list.Count > 0)
+                            {
+                                var l = list.Single();
+                                return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath + ',' + l.CountDownload.ToString());
+                            }
+                            else
+                            {
+                                return Ok("NotFound");
+                            }
+                        }
+                        else
+                        {
+                            return Ok("NotAccess");
+                        }
                     }
-                    return Ok("");
                 }
             }
             return Ok("");
@@ -1091,7 +1100,7 @@ namespace Support.Controllers
                     string contract = UnitPublic.HasContract(lockNumber);
                     if (contract != "")
                     {
-                        if(contract.Split('-')[0] == "1")
+                        if (contract.Split('-')[0] == "1")
                         {
                             string sql = string.Format(@"select top(1) * from Videos where FormId = '{0}'", FormId);
                             var list = db.Database.SqlQuery<Videos>(sql).ToList();
@@ -1554,6 +1563,106 @@ namespace Support.Controllers
                 return Ok("Error");
         }
 
+
+        public class AddChatObject
+        {
+            public string LockNumber { get; set; }
+
+            public long SerialNumber { get; set; }
+
+            public byte Mode { get; set; }
+
+            public byte Status { get; set; }
+
+            public byte ReadSt { get; set; }
+
+            public string UserCode { get; set; }
+
+            public string Body { get; set; }
+        }
+
+        [Route("api/Data/AddChat/")]
+        public async Task<IHttpActionResult> PostAddChat(AddChatObject c)
+        {
+            string sql = string.Format(@"INSERT INTO Chat(LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Date,Body) VALUES('{0}',{1} ,{2} ,{3} ,{4}, '{5}', getdate(),N'{6}') select cast(@@IDENTITY as nvarchar(10))",
+                c.LockNumber,
+                c.SerialNumber,
+                c.Mode,
+                c.Status,
+                c.ReadSt,
+                c.UserCode,
+                c.Body);
+            var idChat = db.Database.SqlQuery<string>(sql).Single();
+            db.SaveChanges();
+            return Ok(idChat);
+        }
+
+
+        public class ChatObject
+        {
+            public string LockNumber { get; set; }
+
+            public long SerialNumber { get; set; }
+
+        }
+
+        [Route("api/Data/Chat/")]
+        public async Task<IHttpActionResult> PostChat(ChatObject c)
+        {
+            string sql = string.Format(@"declare @now datetime = getdate()
+                                         SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body, DATEDIFF(MINUTE, Date, @now) AS DateMin FROM Chat
+                                         where  LockNumber = {0} and SerialNumber = {1}",
+                                         c.LockNumber,c.SerialNumber);
+            var list  = db.Database.SqlQuery<Chat>(sql).ToList();
+            return Ok(list);
+        }
+
+
+        [Route("api/Data/UploadChatFile")]
+        public async Task<IHttpActionResult> UploadChatFile()
+        {
+            string SerialNumber = HttpContext.Current.Request["SerialNumber"];
+            string BandNo = HttpContext.Current.Request["BandNo"];
+            string FName = HttpContext.Current.Request["FName"];
+            var Atch = System.Web.HttpContext.Current.Request.Files["Atch"];
+
+            int lenght = Atch.ContentLength;
+            byte[] filebyte = new byte[lenght];
+            Atch.InputStream.Read(filebyte, 0, lenght);
+
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SupportModel"].ConnectionString;
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            SqlCommand cmd = new SqlCommand("DocAttachMailBox_Save", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            cmd.Parameters.AddWithValue("@ProgName", "Supp");
+            cmd.Parameters.AddWithValue("@BandNo", BandNo);
+            cmd.Parameters.AddWithValue("@ModeCode", 2);
+            cmd.Parameters.AddWithValue("@FName", FName);
+            cmd.Parameters.AddWithValue("@Atch", filebyte);
+
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            return Ok(1);
+        }
+
+        /*public async Task<IHttpActionResult> PostLogin1(LoginObject LoginObject)
+        {
+            string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", LoginObject.LockNumber, EncodePassword(LoginObject.Pass));
+            var list = db.Database.SqlQuery<UsersLogin>(sql).ToList();
+
+            if (list.Count > 0)
+            {
+                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0, LoginObject.IP, LoginObject.CallProg, "");
+            }
+
+            return Ok(list);
+        }*/
 
 
     }

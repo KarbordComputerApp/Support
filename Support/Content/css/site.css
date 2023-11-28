@@ -1817,8 +1817,7 @@ input[type="checkbox"] {
     animation: blinker 1s step-start infinite;
 }
 
-.notification {
-}
+
 
     .notification .badge {
         position: absolute;
