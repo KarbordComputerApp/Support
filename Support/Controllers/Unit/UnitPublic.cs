@@ -31,7 +31,7 @@ namespace Support.Controllers.Unit
         public static char[] afiAccess;
 
 
-        static string IniPath = HttpContext.Current.Server.MapPath("~/Content/ini/ServerConfig.Ini");
+        static string IniPath = HttpContext.Current.Server.MapPath("~/Content/ini/ServerConfig.Ini"); 
 
         static IniFile MyIni = new IniFile(IniPath);
 
