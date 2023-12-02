@@ -1651,6 +1651,37 @@ namespace Support.Controllers
             return Ok(1);
         }
 
+        public class DocAttachChatObject
+        {
+            public long SerialNumber { get; set; }
+            public int BandNo { get; set; }
+        }
+
+        public class DocAttachChat
+        {
+            public int? IId { get; set; }
+
+            public long? SerialNumber { get; set; }
+
+            public int? BandNo { get; set; }
+
+            public string FName { get; set; }
+
+            public byte[] Atch { get; set; }
+
+        }
+
+
+        // Post: api/Data/DocAttachChat   لیست پیوست  
+        [Route("api/Data/DocAttachChat/")]
+        public async Task<IHttpActionResult> PostDownloadFileChat(DocAttachChatObject c)
+        {
+            string sql = string.Format("select IId,SerialNumber,BandNo,FName,Atch FROM DocAttach where SerialNumber = {0} and BandNo={1}", c.SerialNumber,c.BandNo);
+            var list = db.Database.SqlQuery<DocAttachChat>(sql);
+            return Ok(list);
+        }
+
+
         /*public async Task<IHttpActionResult> PostLogin1(LoginObject LoginObject)
         {
             string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", LoginObject.LockNumber, EncodePassword(LoginObject.Pass));

@@ -2,7 +2,7 @@
 var ChatUri = server + '/api/Data/Chat/'; // آدرس لیست چت 
 var DateUri = server + '/api/Data/GetDate/';
 var UploadChatFileUri = server + '/api/Data/UploadChatFile/'; // آدرس ذخیره لیست پیوست 
-
+var DocAttachChatUri = server + '/api/Data/DocAttachChat/'; // آدرس لیست پیوست 
 //localStorage.removeItem("idChat")
 var idChat = localStorage.getItem("idChat");
 
@@ -38,20 +38,18 @@ $("#btn-close-chat").click(function () {
 $("#chat-bell-image-wrapper").click(function () {
     $("#chat-bell").hide();
     $("#box-chat").show();
+    $(".dragandrophandler").scrollTop(1000000);
 });
 
 $("#btn-max-chat").click(function () {
     if ($("#box-chat").css("width") == "380px") {
         $("#box-chat").css("width", "-webkit-fill-available");
         $("#box-chat").css("height", "auto");
-        var h = $("#box-chat").css("height");
-        $(".dragandrophandler").css("height", h);
     } else {
         $("#box-chat").css("width", "380px");
         $("#box-chat").css("height", "620px");
         $(".dragandrophandler").css("height", "490px");
     }
-
 });
 
 $("#chatbox").empty();
@@ -92,7 +90,7 @@ function refresh() {
 
             if (item.Body.search("!!AttachFile!!") >= 0) {
                 fileName = item.Body.split(',')[1]
-                res += '<a class="ChatDownloadFile" idBand="' + item.Id + '">'
+                res += '<a class="ChatDownloadFile" idBand="' + item.Id + '"  onclick="ChatDownloadFile(this)">';
                 res +=
                     '<img src="/Content/img/Icon_Blue/Download.png" width="28" style="margin-left:10px">' +
                     '<span>' + fileName + '</span>';
@@ -109,6 +107,7 @@ function refresh() {
 
         }
         $("#chatbox").append(res);
+        $(".dragandrophandler").scrollTop(1000000);
     });
 }
 
@@ -117,7 +116,18 @@ if (idChat != null) {
     setInterval(refresh, 6000);
 }
 
+$("#ChatMessage").keyup(function (e) {
+    if (e.keyCode == 13) {
+        ChatSend();
+    }
+})
 $("#ChatSend").click(function () {
+    ChatSend();
+
+});
+
+
+function ChatSend() {
     var message = $("#ChatMessage").val();
     if (message == "") {
         return showNotification('پیام را وارد کنید', 0);
@@ -184,8 +194,7 @@ $("#ChatSend").click(function () {
         refresh();
         $("#ChatMessage").val("");
     });
-
-});
+}
 
 $("#ChatAttach").change(function (e) {
     var dataFile;
@@ -239,11 +248,19 @@ $("#ChatAttach").change(function (e) {
 
 
 
+function ChatDownloadFile(e) {
+    idBand = $(e).attr("idBand");
 
-$(".ChatDownloadFile").click(function () {
-    a = $(this).attr("idBand");
+    var DocAttachChatObject = {
+        SerialNumber: idChat,
+        BandNo: idBand
+    }
+    ajaxFunction(DocAttachChatUri, 'POST', DocAttachChatObject).done(function (data) {
+        var sampleArr = base64ToArrayBuffer(data[0].Atch);
+        saveByteArray(data[0].FName, sampleArr);
+    });
+}
 
-});
 
 
 /*
