@@ -141,7 +141,7 @@ refresh(idChat,false);
 
 setInterval(() => {
     refresh(idChat, false)
-}, 300000);
+}, 30000);
 
 
 
