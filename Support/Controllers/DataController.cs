@@ -294,10 +294,13 @@ namespace Support.Controllers
         [Route("api/Data/Videos/")]
         public async Task<IHttpActionResult> PostVideos(VideosObject VideosObject)
         {
-            string sql = string.Format(@"select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId, '' as link, '' as FormId  from Videos
-                                         union all
-                                         select id,Title,Description,Body,SortId,link,FormId  from Videos
-                                         order by title , SortId");
+            string sql = string.Format(@"
+                                select distinct 0 as id , Title , Title as Description , Title as Body , 0 as SortId, '' as link, '' as FormId, cast(1 as bit) as IsPublic  from Videos
+                                union all
+                                select id,Title,Description,Body,SortId,link,FormId ,IsPublic from Videos 
+                                where IsPublic = 1 or 
+                                      (IsPublic = 0 and id in (select Name from Ace_WebConfig.dbo.Web_SplitString((select replace(TrsVideo,'-',',') from Users where LockNumber = {0})) where name <> '' ))
+                                order by title , SortId", VideosObject.LockNumber);
             var list = db.Database.SqlQuery<Videos>(sql).ToList();
 
             if (VideosObject.FlagLog == true)

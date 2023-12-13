@@ -49,6 +49,7 @@
                         <a data-bind="click: Id == 0 ? null : $root.ShowVideo , attr: { 'data-target': Id == 0 ? '' : '#AAA' + Id } ,style: { 'background-color': Id == 0 ? '#082b44' : '#dcdcdc', 'cursor': Id == 0 ? null:'pointer'} " role="button" style="color:black;">
                             <span data-bind="text:Description , style: { 'color' :  Id == 0 ? 'white' : '#082b44'}" style="color:white"></span>
                             <img src="~/Content/img/play-icon.png" data-bind="text:Description, style: { 'display' :  Id == 0 ? 'none' : 'block' }" style="float: left;display: block;height: 25px;">
+                            <img src="~/Content/img/dolar.png" data-bind="style: { 'display' :  Id == 0 ? 'none' :  IsPublic == true ? 'none' : 'block' }" style="float: left;display: block;margin-left:5px;width: 25px;">
                         </a>
                     </div>
                 </div>

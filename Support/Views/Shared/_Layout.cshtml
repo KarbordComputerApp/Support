@@ -124,9 +124,9 @@
         <div class="container-fluid">
             @RenderBody()
 
-            <div id="chat-bell" chattooltip="‍چت" chattooltip-position="left" class="">
+            <div id="chat-bell" >
                 <a id="chat-bell-image-wrapper">
-                    <img id="chat-bell-image" src="~/Content/img/chat.png" />
+                    <img id="chat-bell-image" src="~/Content/img/icon_White/chat.png" />
                 </a>
             </div>
         </div>
@@ -136,16 +136,23 @@
 
     <div id="box-chat" class="fadeInUp">
         <div class="box-chat-content">
-            <div id="btn-max-chat">
+            <div id="btn-max-chat" title="تغییر اندازه" >
                 <div>
                     _
                 </div>
             </div>
-            <div id="btn-close-chat">
+
+            <div id="btn-end-chat" title="پایان یافته">
+                <div>
+                    *
+                </div>
+            </div>
+
+            <div id="btn-close-chat" title="بستن" >
                 <div>
                     <svg fill="#ffffff" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-                    </svg> 
+                    </svg>
                 </div>
             </div>
             <div class="box-header">
@@ -174,15 +181,15 @@
 
                     <!--  <div class="dc-msg slideInright right" data-sender="635e6b2c" data-tmp="3769726" data-pmtype="t">
 
-                  <div class="dc-text" rel="tooltip" data-container="body" data-placement="top auto" data-date="2023-11-21T12:47:11.807Z" title=""
-                       data-original-title="16:17">سلام وقت بخیر سلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیر</div>
-                  <div class="reply_but" title="پاسخ به این پیام">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="21" viewBox="0 0 24 24" width="21">
-                          <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"></path>
-                      </svg>
-                  </div>
-              </div>
-              <div class="timeago_r slideInright">یک دقیقه پیش</div>-->
+                <div class="dc-text" rel="tooltip" data-container="body" data-placement="top auto" data-date="2023-11-21T12:47:11.807Z" title=""
+                     data-original-title="16:17">سلام وقت بخیر سلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیر</div>
+                <div class="reply_but" title="پاسخ به این پیام">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="21" viewBox="0 0 24 24" width="21">
+                        <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="timeago_r slideInright">یک دقیقه پیش</div>-->
                 </div>
             </div>
             <div class="box-footer">
@@ -195,18 +202,18 @@
                 </div>
                 <form id="box-send" class="hasmic">
                     <!-- <a id="mic" class="mic_perm" rel="tooltip" data-placement="top" data-container="body" title="" data-original-title="برای ضبط صدا، فشار داده و نگه دارید">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#bababa">
-                     <path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
-                     <path d="M0 0h24v24H0z" fill="none"></path>
-                 </svg>
-             </a>
-             <div id="mictimer">
-                 <span></span>
-                 <div id="recordtime"></div>
-             </div>
-                -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#bababa">
+                    <path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </a>
+            <div id="mictimer">
+                <span></span>
+                <div id="recordtime"></div>
+            </div>
+               -->
                     <div class="form-group is-empty">
-                        <textarea maxlength="2000" id="ChatMessage" type="text" placeholder="پیامی بنویسید..." class="form-control" style="overflow: hidden; overflow-wrap: break-word; height: 40px;"></textarea>
+                        <textarea maxlength="2000" id="ChatMessage" type="text" placeholder="پیامی بنویسید..." class="form-controlChat" style="overflow: hidden; overflow-wrap: break-word; height: 40px;"></textarea>
                         <span class="material-input"></span>
                     </div>
                     <div id="ChatAttach" class="fix-contentchat" style="margin-top:10px">

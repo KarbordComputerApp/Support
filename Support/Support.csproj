@@ -333,7 +333,8 @@
     <Content Include="Content\fonts\Vazir-FD-WOLReport.ttf" />
     <Content Include="Content\img\android.png" />
     <Content Include="Content\img\attach.png" />
-    <Content Include="Content\img\chat.png" />
+    <Content Include="Content\img\Icon_White\chat.png" />
+    <Content Include="Content\img\dolar.png" />
     <Content Include="Content\img\download.svg" />
     <Content Include="Content\img\icons\contract.png" />
     <Content Include="Content\img\icons\download.png" />
@@ -347,6 +348,7 @@
     <Content Include="Content\img\Icon_Blue\Alarm.png" />
     <Content Include="Content\img\Icon_Blue\attach.png" />
     <Content Include="Content\img\Icon_Blue\cash.png" />
+    <Content Include="Content\img\Icon_Blue\chat.png" />
     <Content Include="Content\img\Icon_Blue\delete.png" />
     <Content Include="Content\img\Icon_Blue\Download.png" />
     <Content Include="Content\img\Icon_Blue\edit.png" />

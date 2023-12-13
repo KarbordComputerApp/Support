@@ -168,7 +168,14 @@
     }
 
 
-
+    self.ViewText = function (Band) {
+        $('#LinkSt').empty();
+        if (Band.Text.length > 15) {
+            $('#titleComm').text('توضیحات');
+            $('#modal-Comm').modal('show');
+            $('#ResultSt').text(Band.Text);
+        }
+    }
 
     //Get ErjDocXK 
     function getErjDocXK(log) {
@@ -425,6 +432,14 @@
     self.ViewDocAttach = function (Band) {
         serialNumber = Band.SerialNumber;
         getDocAttachList(Band.SerialNumber);
+    }
+
+    self.ViewChat = function (Band) {
+        refresh(Band.SerialNumber,true);
+        $("#chat-bell").hide();
+        $("#box-chat").show();
+        $(".dragandrophandler").scrollTop(1000000);
+
     }
 
 

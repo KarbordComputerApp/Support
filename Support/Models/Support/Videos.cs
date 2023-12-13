@@ -20,5 +20,7 @@ namespace Support.Models
 
         public string Body { get; set; }
 
+        public bool? IsPublic { get; set; }
+
     }
 }

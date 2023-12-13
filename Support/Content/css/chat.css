@@ -803,7 +803,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     outline: 0 !important
 }
 
-.form-control {
+.form-controlChat {
     background-image: linear-gradient(#9c27b0,#9c27b0),linear-gradient(#d2d2d2,#d2d2d2);
     background-size: 0 2px,100% 1px;
     background-repeat: no-repeat;
@@ -820,21 +820,21 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     line-height: 1.42857
 }
 
-    .form-control:-ms-input-placeholder {
+    .form-controlChat:-ms-input-placeholder {
         font-size: 14px;
         line-height: 1.42857;
         color: #aaa;
         font-weight: 400
     }
 
-    .form-control::-moz-placeholder {
+    .form-controlChat::-moz-placeholder {
         font-size: 14px;
         line-height: 1.42857;
         color: #aaa;
         font-weight: 400
     }
 
-    .form-control::-webkit-input-placeholder {
+    .form-controlChat::-webkit-input-placeholder {
         font-size: 14px;
         line-height: 1.42857;
         color: #aaa;
@@ -866,7 +866,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     margin-bottom: 9px
 }
 
-    .fileinput .form-control {
+    .fileinput .form-controlChat {
         display: inline-block;
         padding-top: 7px;
         padding-bottom: 5px;
@@ -892,7 +892,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     overflow: hidden
 }
 
-.form-control .fileinput-filename {
+.form-controlChat .fileinput-filename {
     vertical-align: bottom
 }
 
@@ -986,7 +986,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 }
 
-.form-control {
+.form-controlChat {
     direction: rtl;
     text-align: right
 }
@@ -1810,6 +1810,35 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
         text-align: center
     }
 
+#btn-end-chat {
+    position: absolute;
+    z-index: 20005;
+    width: 50px;
+    height: 50px;
+    top: 0;
+    left: 70px;
+    padding-top: 10px;
+    padding-left: 10px
+}
+
+    #btn-end-chat div {
+        background: rgba(0,0,0,.1);
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        padding-top: 5px;
+        float: left
+    }
+
+        #btn-end-chat div:hover {
+            background: rgba(0,0,0,.3)
+        }
+
+    #btn-end-chat div, .unread-num {
+        border-radius: 50%;
+        color: #fff;
+        text-align: center
+    }
 
 
 
@@ -2376,12 +2405,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     }
 }
 
-select {
-    border: 1px solid #d2d2d2;
-    border-radius: 6px;
-    padding: 4px 5px;
-    margin: 10px 0
-}
+
 
 #replybox {
     border-bottom: 1px solid #ddd;

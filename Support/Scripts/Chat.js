@@ -3,6 +3,7 @@ var ChatUri = server + '/api/Data/Chat/'; // آدرس لیست چت
 var DateUri = server + '/api/Data/GetDate/';
 var UploadChatFileUri = server + '/api/Data/UploadChatFile/'; // آدرس ذخیره لیست پیوست 
 var DocAttachChatUri = server + '/api/Data/DocAttachChat/'; // آدرس لیست پیوست 
+var AddChatUri = server + '/api/Data/AddChat/'; // 
 //localStorage.removeItem("idChat")
 var idChat = localStorage.getItem("idChat");
 
@@ -24,10 +25,12 @@ if (LockInput != "" && LockInput != null) {
     rightItem = "left";
     leftItem = "right";
     mode = 0;
+    $("#btn-end-chat").show();
 }
 else {
     $("#box-chat").hide();
     $("#chat-bell").show();
+    $("#btn-end-chat").hide();
 }
 
 $("#btn-close-chat").click(function () {
@@ -35,7 +38,11 @@ $("#btn-close-chat").click(function () {
     $("#box-chat").hide();
 });
 
+
+
 $("#chat-bell-image-wrapper").click(function () {
+    var idChat = localStorage.getItem("idChat");
+    refresh(idChat, false)
     $("#chat-bell").hide();
     $("#box-chat").show();
     $(".dragandrophandler").scrollTop(1000000);
@@ -48,7 +55,7 @@ $("#btn-max-chat").click(function () {
     } else {
         $("#box-chat").css("width", "380px");
         $("#box-chat").css("height", "620px");
-        $(".dragandrophandler").css("height", "490px");
+        $(".dragandrophandler").css("height", "85%");
     }
 });
 
@@ -59,62 +66,84 @@ $("#chatbox").empty();
 
 //Get DocAttach List
 
+//localStorage.setItem("idChat",22);
+function refresh(id,isLast) {
 
-function refresh() {
+    idChat = id
     $("#chatbox").empty();
-    var ChatObject = {
-        LockNumber: lockNumber,
-        SerialNumber: idChat
-    }
-    res = '';
-    ajaxFunction(ChatUri, 'POST', ChatObject).done(function (data) {
-        for (var i = 0; i < data.length; i++) {
-            item = data[i];
-            dateMin = item.DateMin;
-            var dateText = "";
-            if (dateMin == 0) {
-                dateText = "به تازگی";
-            } else if (dateMin < 60) {
-                dateText = dateMin + " دقیقه پیش";
-            }
-            else if (dateMin >= 60 && dateMin <= 1440) {
-                dateText = Math.round(dateMin / 60) + " ساعت پیش";
-            }
-            else {
-                dateText = Math.round(dateMin / 1440) + " روز پیش";
-            }
-
-            res +=
-                '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '" data-tmp="48476959" data-pmtype="t"> ' +
-                '<div class="dc-text" rel="tooltip" data-container="body">';
-
-            if (item.Body.search("!!AttachFile!!") >= 0) {
-                fileName = item.Body.split(',')[1]
-                res += '<a class="ChatDownloadFile" idBand="' + item.Id + '"  onclick="ChatDownloadFile(this)">';
-                res +=
-                    '<img src="/Content/img/Icon_Blue/Download.png" width="28" style="margin-left:10px">' +
-                    '<span>' + fileName + '</span>';
-                res += '</a>'
-            }
-            else {
-                res += item.Body
-            }
-            res +=
-                '</div>' +
-                '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>' +
-                '</div>';
-
-
+    if (idChat != null) {
+        var ChatObject = {
+            LockNumber: lockNumber,
+            SerialNumber: idChat
         }
-        $("#chatbox").append(res);
-        $(".dragandrophandler").scrollTop(1000000);
-    });
+        res = '';
+        ajaxFunction(ChatUri, 'POST', ChatObject).done(function (data) {
+            endChat = data.filter(key => key.Status == 1);
+            if (endChat.length > 0 && isLast == false) {
+                idChat = null;
+                localStorage.removeItem("idChat");
+            }
+            else {
+
+                for (var i = 0; i < data.length; i++) {
+                    item = data[i];
+                    dateMin = item.DateMin;
+                    var dateText = "";
+                    if (dateMin == 0) {
+                        dateText = "به تازگی";
+                    } else if (dateMin < 60) {
+                        dateText = dateMin + " دقیقه پیش";
+                    }
+                    else if (dateMin >= 60 && dateMin <= 1440) {
+                        dateText = Math.round(dateMin / 60) + " ساعت پیش";
+                    }
+                    else {
+                        dateText = Math.round(dateMin / 1440) + " روز پیش";
+                    }
+
+                    res +=
+                        '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '"> ' +
+                        '<div class="dc-text" rel="tooltip" data-container="body">';
+
+                    if (item.Body.search("!!AttachFile!!") >= 0) {
+                        fileName = item.Body.split(',')[1]
+                        res += '<a class="ChatDownloadFile" idBand="' + item.Id + '"  onclick="ChatDownloadFile(this)">';
+                        res +=
+                            '<img src="/Content/img/Icon_Blue/Download.png" width="28" style="margin-left:10px">' +
+                            '<span>' + fileName + '</span>';
+                        res += '</a>'
+                    }
+                    else {
+                        res += item.Body
+                    }
+                    res +=
+                        '</div>' +
+                        '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>' +
+                        '</div>';
+                }
+
+                $("#chatbox").append(res);
+            }
+            $(".dragandrophandler").scrollTop(1000000);
+
+            $("#box-send").show();  
+            if (isLast == true) {
+                $("#box-send").hide();  
+            }
+        });
+    }
 }
 
-if (idChat != null) {
-    refresh();
-    setInterval(refresh, 6000);
-}
+
+refresh(idChat,false);
+//setInterval(refresh(idChat), 3000);
+
+
+setInterval(() => {
+    refresh(idChat, false)
+}, 300000);
+
+
 
 $("#ChatMessage").keyup(function (e) {
     if (e.keyCode == 13) {
@@ -178,8 +207,6 @@ function ChatSend() {
     }
 
 
-
-    var AddChatUri = server + '/api/Data/AddChat/'; // 
     var AddChatObject = {
         LockNumber: lockNumber,
         SerialNumber: idChat,
@@ -191,7 +218,7 @@ function ChatSend() {
     }
     ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
         serialNumber = data;
-        refresh();
+        refresh(idChat, false);
         $("#ChatMessage").val("");
     });
 }
@@ -262,6 +289,37 @@ function ChatDownloadFile(e) {
 }
 
 
+
+$("#btn-end-chat").click(function () {
+    Swal.fire({
+        title: 'چت پایان یافته شود ؟',
+        type: 'info',
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        cancelButtonText: 'خیر',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'بله'
+    }).then((result) => {
+        if (result.value) {
+            if (idChat != null) {
+                var AddChatObject = {
+                    LockNumber: lockNumber,
+                    SerialNumber: idChat,
+                    Mode: mode,
+                    Status: 1,
+                    ReadSt: 0,
+                    UserCode: userCodeChat,
+                    Body: "پایان یافته",
+                }
+                ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
+                    serialNumber = data;
+                });
+            }
+
+        }
+    })
+
+});
 
 /*
 var DocAttachBoxListObject = {
