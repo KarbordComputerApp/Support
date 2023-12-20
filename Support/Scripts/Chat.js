@@ -165,6 +165,10 @@ function refresh(id,isLast) {
             }
         });
     }
+    if (isLast == false) {
+        $("#box-send").show();
+    }
+
 }
 
 $("#ChatMessage").keyup(function (e) {
