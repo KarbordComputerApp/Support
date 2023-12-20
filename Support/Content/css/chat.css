@@ -902,11 +902,9 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
     .fileinput.input-group > * {
         position: relative;
-        z-index: 2
     }
 
     .fileinput.input-group > .btn-file {
-        z-index: 1
     }
 
 .fileinput-new .input-group .btn-file, .fileinput-new.input-group .btn-file {
@@ -964,19 +962,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     line-height: 1.4
 }
 
-.box-chat-content {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    margin: 0;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
-    color: rgba(0,0,0,.87)
-}
 
-    .box-chat-content .card-actions .btn {
-        padding-left: 12px;
-        padding-right: 12px
-    }
 
 @media (max-width: 767px) {
     .fileinput {
@@ -1007,7 +993,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 }
 
 .loading {
-    z-index: 10;
+    
     top: 0;
     color: #28b6d5;
     display: none;
@@ -1015,14 +1001,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     background: #fff
 }
 
-.box-chat-content {
-    overflow: hidden;
-    height: calc(100vh - 22px);
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column
-}
 
 .box-footer {
     width: 100%;
@@ -1061,8 +1039,8 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
         bottom: 2px
     }
 
-.box-chat-content .box-body {
-    position: relative;
+.box-body {
+    /* position: relative; */
     overflow-x: hidden;
     padding: 0;
     height: calc(100vh - 200px);
@@ -1091,11 +1069,11 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     height: 32px;
     object-fit: cover;
     position: absolute;
-    z-index: 6;
+    
     bottom: 6px
 }
 
-.box-chat-content .right > .dc-text {
+ .right > .dc-text {
     background: #fff;
     color: #444
 }
@@ -1137,7 +1115,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     text-decoration: underline
 }
 
-.box-chat-content .right > .dc-text:after, .box-chat-content .right > .dc-text:before {
+ .right > .dc-text:after, .right > .dc-text:before {
     border-left-color: #f3f4f7
 }
 
@@ -1160,7 +1138,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 .dc-text:before {
     content: " ";
     position: absolute;
-    z-index: 2;
+    
     left: -4px;
     background: #f3f3f3;
     border-bottom-right-radius: 30px
@@ -1169,13 +1147,13 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 .dc-text:after {
     content: " ";
     position: absolute;
-    z-index: 3;
+    
     left: 4px;
     border-bottom-right-radius: 10px
 }
 
 .right .dc-text:before {
-    z-index: 3;
+    
     right: -4px;
     left: auto;
     border-radius: 0;
@@ -1193,7 +1171,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 }
 
 .right .dc-text:after {
-    z-index: 4;
+    
     right: -36px;
     left: auto;
     border-radius: 0;
@@ -1274,12 +1252,10 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
         position: absolute;
         top: 19px;
         right: 2%;
-        z-index: 0
     }
 
     .notify_date div {
         top: 10px;
-        z-index: 0
     }
 
         .notify_date div span {
@@ -1354,7 +1330,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     font-size: 14px;
     color: #333;
     display: none;
-    z-index: 10
 }
 
     .dragandrophandlerbg i {
@@ -1516,7 +1491,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 #box-chat .box-header {
     background: #f5df68;
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
-    z-index: 5
 }
 
 #box-chat .box-body {
@@ -1531,7 +1505,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 .avatar span {
     position: absolute;
-    z-index: 6;
+    
     top: 4px;
     right: 0;
     width: 44px;
@@ -1545,7 +1519,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     width: 40px;
     height: 40px
 }
-
+z-index
 #box-chat .avatar span:nth-child(2) img {
     opacity: .9
 }
@@ -1555,17 +1529,17 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 }
 
 #box-chat .avatar span:nth-child(2) {
-    z-index: 5;
+    
     right: 22px
 }
 
 #box-chat .avatar span:nth-child(3) {
-    z-index: 4;
+    
     right: 42px
 }
 
 #box-chat .avatar span:nth-child(4) {
-    z-index: 3;
+    
     right: 62px;
     background: rgba(255,255,255,.2);
     border: 0;
@@ -1592,12 +1566,14 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     font-size: 12px
 }
 
-#box-chat .box-body, #box-chat .chatboxi .box-chat-content {
-    height: 490px;/*calc(100vh);*/
+/**/
+#box-chat .box-body, #box-chat .chatboxi  {
+    height: 490px; 
+  /*  height: 100vh; /*calc(100vh);*/
 }
 
 #box-chat .box-footer .form-group {
-    width: calc(100% - 72px)
+    width: calc(100% - 80px)
 }
 
 #box-chat .fix-contentchat {
@@ -1615,15 +1591,15 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 }
 
 #box-chat .box-footer {
-    position: relative
+    /*position: relative*/
 }
 
 #box-chat #chatbox {
-    height: fit-content;
-    /*min-height: calc(100vh - 215px);*/
-    padding-top: 15px;
-    position: relative;
-    overflow-x: hidden
+    height: -webkit-fill-available;
+    padding: 10px;
+    overflow-x: hidden;
+    background-color: #f3f3f3;
+    font-size:14px
 }
 
 #box-chat .dc-img {
@@ -1701,7 +1677,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     font-size: 12px;
     background: #f44336;
     position: absolute;
-    z-index: 10;
+    
     right: 50px;
     top: 5px;
     width: 20px;
@@ -1735,13 +1711,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
         margin-top: 5px
     }
 
-#box-chat {
-    overflow: hidden;
-    border-radius: 8px;
-    height: 100%;
-    box-shadow: rgba(0,0,0,.25) 0 0 15px;
-    margin: 15px
-}
 
 #btn-close-chat div, .unread-num {
     border-radius: 50%;
@@ -1752,9 +1721,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 #btn-close-chat {
     position: absolute;
-    z-index: 20005;
-    width: 50px;
-    height: 50px;
     top: 0;
     left: 0;
     padding-top: 10px;
@@ -1782,11 +1748,8 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 #btn-max-chat {
     position: absolute;
-    z-index: 20005;
-    width: 50px;
-    height: 50px;
     top: 0;
-    left: 35px;
+    left: 25px;
     padding-top: 10px;
     padding-left: 10px
 }
@@ -1812,11 +1775,8 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 #btn-end-chat {
     position: absolute;
-    z-index: 20005;
-    width: 50px;
-    height: 50px;
     top: 0;
-    left: 70px;
+    left: 55px;
     padding-top: 10px;
     padding-left: 10px
 }
@@ -1871,9 +1831,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
         transform: scale(1.1)
     }
 
-.pull-right {
-    float: right
-}
+
 
 #emoji {
     -webkit-box-shadow: 0 -5px 20px rgba(0,0,0,.13);
@@ -1886,7 +1844,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     -ms-user-select: none;
     user-select: none;
     position: absolute;
-    z-index: 5;
+    
     bottom: 60px;
     right: 0;
     background: #fff
@@ -1951,11 +1909,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     animation-duration: .4s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both
-}
-
-#box-chat {
-    direction: rtl;
-    display: none
 }
 
 
@@ -2223,7 +2176,6 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 #mic.pressmic, .mydlsound, .picprev span {
     position: absolute;
-    z-index: 10
 }
 
 #mic.pressmic {
@@ -2272,7 +2224,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 }
 
 .picprev span {
-    z-index: 5;
+    
     left: 6px;
     bottom: 10px;
     font-size: 11px;
@@ -2560,7 +2512,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 .uploader-circle {
     position: absolute;
-    z-index: 2;
+    
     top: 0;
     left: 0;
     border-radius: 50%;
@@ -2574,7 +2526,7 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 
 .uploader-stop {
     padding: 7px;
-    z-index: 5;
+    
     cursor: pointer
 }
 
@@ -2627,10 +2579,12 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     margin: 0;
     border-radius: 0;
     bottom: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 
 #box-chat .box-footer .hasmic .form-group {
-    width: calc(100% - 107px)
+    width: calc(100% - 80px)
 }
 
 #box-chat .left .dc-text,
@@ -2701,11 +2655,15 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
 }
 
 #box-chat {
-    border-radius: 8px;
     width: 380px;
-    margin: 15px;
-    height: 620px;
-    display: block;
+    height: 70vh;
     position: absolute;
-    bottom: 0px
+    bottom: 0px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: rgba(0,0,0,.25) 0 0 15px;
+    margin: 15px;
+    direction: rtl;
 }
+
+

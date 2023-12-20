@@ -1,5 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
+    $("#chat-bell").hide();
+    $("#box-chat").hide();
     var LogVideosUri = server + '/api/Data/LogVideos/';
 
     $(".LeftButtomMenu").hide();
@@ -58,9 +60,10 @@
         LockNumber: lockNumber,
         IP: ipw,
         CallProg: 'Web',
-        Spec: "Link"
+        Spec: Link,
+        Act: 12
     }
-    ajaxFunction(LogVideosUri, 'POST', LogVideosObject, true).done( function (data) {
+    ajaxFunction(LogVideosUri, 'POST', LogVideosObject, true).done(function (data) {
         if (isAparat) {
             $("#F_Video").attr("src", Link);
         }
@@ -74,7 +77,7 @@
     });
 
 
-    
+
 };
 
 

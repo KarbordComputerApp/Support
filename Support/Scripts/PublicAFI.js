@@ -55,9 +55,12 @@ function getHasContract() {
                 $("#B_Videos").attr('disabled', 'disabled');
                 $("#Index_TextTiket").hide();
                 $("#Index_Pic_line1").hide();
+                $("#chat-bell").hide();
+
             } else if (access == 1) {
                 $("#t_HasContract").text("قرارداد پشتیبانی شما تا تاریخ " + endDate + " معتبر است");
-                $("#t_HasContract").css("color", "#128d35")
+                $("#t_HasContract").css("color", "#128d35");
+                $("#chat-bell").show();
             }
 
         }

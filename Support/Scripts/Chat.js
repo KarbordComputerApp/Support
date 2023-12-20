@@ -15,53 +15,84 @@ var leftItem = "left";
 var rightItem = "right";
 var mode = 1;
 
+var timer;
+
+$("#chatbox").empty();
+$("#chat-bell").hide();
+$('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/min.png');
+
+$("#chat-bell").show();
+
+$("#box-chat").hide();
+
 if (LockInput != "" && LockInput != null) {
+    //panel admin
     idChat = $("#IdChat").data("value");
     userCodeChat = $("#UserCode").data("value");
     lockNumber = LockInput;
     $(".continerHead").hide();
     $("#chat-bell").hide();
+
     isUserChat = true;
     rightItem = "left";
     leftItem = "right";
     mode = 0;
     $("#btn-end-chat").show();
+    $("#box-chat").show();
+
+    refresh(idChat, false)
+    timer = setInterval(() => { refresh(idChat, false) }, 10000);
+    CalcHeight();
 }
 else {
-    $("#box-chat").hide();
+    //panel user
     $("#chat-bell").show();
     $("#btn-end-chat").hide();
+    refresh(idChat, false);
 }
 
 $("#btn-close-chat").click(function () {
     $("#chat-bell").show();
     $("#box-chat").hide();
+    clearInterval(timer);
 });
 
 
 
-$("#chat-bell-image-wrapper").click(function () {
+function CalcHeight() {
+    all = $("#box-chat").css('height').replace('px', '');
+    head = $(".box-header").css('height').replace('px', '');
+    footer = $("#box-send").css('height').replace('px', '');
+
+    footer = $("#box-send").css('display') == 'none' ? 0 : footer
+
+    body = parseInt(all) - (parseInt(head) + parseInt(footer));
+    $("#chatbox").css('height', body + 2)
+    $("#chatbox").scrollTop(1000000);
+}
+
+
+$("#chat-bell").click(function () {
     var idChat = localStorage.getItem("idChat");
-    refresh(idChat, false)
     $("#chat-bell").hide();
     $("#box-chat").show();
-    $(".dragandrophandler").scrollTop(1000000);
+    refresh(idChat, false)
+    timer = setInterval(() => { refresh(idChat, false) }, 5000);
+    CalcHeight();
 });
 
 $("#btn-max-chat").click(function () {
     if ($("#box-chat").css("width") == "380px") {
         $("#box-chat").css("width", "-webkit-fill-available");
-        $("#box-chat").css("height", "auto");
+        $("#box-chat").css("height", "95vh");
+        $('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/max.png');
     } else {
         $("#box-chat").css("width", "380px");
-        $("#box-chat").css("height", "620px");
-        $(".dragandrophandler").css("height", "85%");
+        $("#box-chat").css("height", "70vh");
+        $('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/min.png');
     }
+    CalcHeight();
 });
-
-$("#chatbox").empty();
-
-
 
 
 //Get DocAttach List
@@ -70,6 +101,8 @@ $("#chatbox").empty();
 function refresh(id,isLast) {
 
     idChat = id
+
+    $("#box-send").hide(); 
     $("#chatbox").empty();
     if (idChat != null) {
         var ChatObject = {
@@ -124,8 +157,8 @@ function refresh(id,isLast) {
 
                 $("#chatbox").append(res);
             }
-            $(".dragandrophandler").scrollTop(1000000);
 
+            $("#chatbox").scrollTop(1000000);
             $("#box-send").show();  
             if (isLast == true) {
                 $("#box-send").hide();  
@@ -134,17 +167,6 @@ function refresh(id,isLast) {
     }
 }
 
-
-refresh(idChat,false);
-//setInterval(refresh(idChat), 3000);
-
-
-setInterval(() => {
-    refresh(idChat, false)
-}, 30000);
-
-
-
 $("#ChatMessage").keyup(function (e) {
     if (e.keyCode == 13) {
         ChatSend();
@@ -152,11 +174,23 @@ $("#ChatMessage").keyup(function (e) {
 })
 $("#ChatSend").click(function () {
     ChatSend();
-
 });
 
 
 function ChatSend() {
+
+    var hasContract = localStorage.getItem("HasContract");
+    if (hasContract != "1") {
+        return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
+    }
+
+    if (lockNumber == '10000' || lockNumber == '10003') {
+
+    }
+    else {
+        return showNotification('دسترسی ندارید', 0);
+    }
+
     var message = $("#ChatMessage").val();
     if (message == "") {
         return showNotification('پیام را وارد کنید', 0);
@@ -229,6 +263,19 @@ $("#ChatAttach").change(function (e) {
     var name = file.name;
     var size = file.size;
 
+    var hasContract = localStorage.getItem("HasContract");
+
+    if (lockNumber == '10000' || lockNumber == '10003') {
+
+    }
+    else {
+        return showNotification('دسترسی ندارید', 0);
+    }
+
+    if (lockNumber != '10000' && lockNumber != '10003') {
+        return showNotification('دسترسی ندارید', 0);
+    }
+
     if (idChat == null) {
         return showNotification('چت را با پیام متنی شروع کنید', 0);
     }
@@ -267,7 +314,7 @@ $("#ChatAttach").change(function (e) {
     formData.append('Atch', file);
 
     ajaxFunctionUploadTiket(UploadChatFileUri, formData, false).done(function (response) {
-
+        refresh(idChat, false)
     })
 });
 

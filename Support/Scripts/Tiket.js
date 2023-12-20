@@ -435,11 +435,12 @@
     }
 
     self.ViewChat = function (Band) {
-        refresh(Band.SerialNumber,true);
+        refresh(Band.SerialNumber, true);
         $("#chat-bell").hide();
         $("#box-chat").show();
+        CalcHeight();
         $(".dragandrophandler").scrollTop(1000000);
-
+        clearInterval(timer);
     }
 
 

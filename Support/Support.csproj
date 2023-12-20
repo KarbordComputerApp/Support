@@ -333,6 +333,9 @@
     <Content Include="Content\fonts\Vazir-FD-WOLReport.ttf" />
     <Content Include="Content\img\android.png" />
     <Content Include="Content\img\attach.png" />
+    <Content Include="Content\img\Icon_Blue\max.png" />
+    <Content Include="Content\img\Icon_Blue\min.png" />
+    <Content Include="Content\img\Icon_Blue\stop.png" />
     <Content Include="Content\img\Icon_White\chat.png" />
     <Content Include="Content\img\dolar.png" />
     <Content Include="Content\img\download.svg" />

@@ -13,7 +13,7 @@
 
         ipw = localStorage.getItem("IPW");
 
-        LoginUri = server + '/api/Data/Login/'; 
+        LoginUri = server + '/api/Data/Login/';
 
         var LoginObject = {
             LockNumber: lockNumber,
@@ -22,7 +22,7 @@
             CallProg: 'Web'
         }
 
-        ajaxFunction(LoginUri, 'POST', LoginObject,false).done(function (data) {
+        ajaxFunction(LoginUri, 'POST', LoginObject, false).done(function (data) {
             if (data.length > 0) {
                 localStorage.setItem("IdUser", data[0].Id);
                 localStorage.setItem("lockNumber", lockNumber);
@@ -39,12 +39,20 @@
                 localStorage.setItem("Address", data[0].Address);
                 localStorage.setItem("Pic", data[0].Pic);
 
+                var LastIdChatUri = server + '/api/Data/LastIdChat/'; // آخرین شماره چت
+                var LastIdChatObject = {
+                    LockNumber: lockNumber
+                }
+                ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
+                    localStorage.setItem("idChat", data);
+                })
+
                 var LockNumbersObject = {
                     LockNumber: lockNumber
                 }
 
-                LockNumbersUri = server + '/api/Data/LockNumbers/'; 
-                ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject,false).done(function (dataLock) {
+                LockNumbersUri = server + '/api/Data/LockNumbers/';
+                ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
                     if (dataLock.length > 0) {
                         cName = dataLock[0].CompanyName.split("-");
                         localStorage.setItem("CompanyName", cName[0]);
@@ -57,9 +65,9 @@
                     }
                 })
 
-                
+
             }
-            else { 
+            else {
                 return showNotification('شماره قفل یا کلمه عبور اشتباه است', 0);
             }
         });
@@ -67,7 +75,7 @@
 
     self.RecoveryPassword = function LoginUser() {
         lockNumber = $("#user").val();
-       
+
         if (lockNumber === "" || lockNumber === null) {
             return showNotification('شماره قفل را وارد کنید', 0);
         }
@@ -92,7 +100,7 @@
 
 
 
-    
+
 };
 
 

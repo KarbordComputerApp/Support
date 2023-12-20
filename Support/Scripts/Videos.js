@@ -20,7 +20,7 @@
             LockNumber: lockNumber,
             FlagLog: true,
             IP: ipw,
-            CallProg: 'Web'
+            CallProg: 'Web',
         }
         ajaxFunction(VideosUri, 'POST', VideosObject, true).done(function (data) {
             self.VideosList(data == null ? [] : data);
@@ -96,7 +96,8 @@
             LockNumber: lockNumber,
             IP: ipw,
             CallProg: 'Web',
-            Spec: band.Description
+            Spec: band.Description,
+            Act:11,
         }
         ajaxFunction(LogVideosUri, 'POST', LogVideosObject, true).done(function (data) {
             if (isAparat) {

@@ -66,6 +66,7 @@ namespace Support.Controllers
         public const int act_Save = 9;
         public const int act_Delete = 10;
         public const int act_ViewLinkAparat_Tiket = 11;
+        public const int act_ViewVideoFormId = 12;
 
 
 
@@ -1412,6 +1413,8 @@ namespace Support.Controllers
 
             public string Spec { get; set; }
 
+            public int Act { get; set; }
+
         }
 
         [Route("api/Data/LogVideos/")]
@@ -1420,7 +1423,7 @@ namespace Support.Controllers
 
             UnitPublic.SaveLog(LogVideosObject.LockNumber,
                 mode_Videos,
-                act_ViewLinkAparat_Tiket,
+                LogVideosObject.Act,  // act_ViewLinkAparat_Tiket
                 0,
                 LogVideosObject.IP,
                 LogVideosObject.CallProg,
@@ -1599,6 +1602,22 @@ namespace Support.Controllers
             db.SaveChanges();
             return Ok(idChat);
         }
+
+
+
+        public class LastIdChatObject
+        {
+            public string LockNumber { get; set; }
+        }
+
+        [Route("api/Data/LastIdChat/")]
+        public async Task<IHttpActionResult> PostLastIdChat(ChatObject c)
+        {
+            string sql = string.Format(@" SELECT max(SerialNumber) as SerialNumber FROM Chat where LockNumber = {0}", c.LockNumber);
+            var list = db.Database.SqlQuery<long>(sql).Single();
+            return Ok(list);
+        }
+
 
 
         public class ChatObject
