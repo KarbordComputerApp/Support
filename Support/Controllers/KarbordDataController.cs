@@ -683,5 +683,28 @@ namespace Support.Controllers
 
             return Ok(p);
         }
+
+
+
+
+        public class EndChatObject
+        {
+            public int LockNumber { get; set; }
+
+            public long SerialNumber { get; set; }
+
+        }
+
+        [Route("api/KarbordData/EndChat")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Post_EndChat(EndChatObject d)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC [dbo].[Web_EndChat] @SerialNumber = {0} select 0 ", d.SerialNumber);
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+            var list = db.Database.SqlQuery<int>(sql);
+            return Ok(list);
+        }
+
+
     }
 }

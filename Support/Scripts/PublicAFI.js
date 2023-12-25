@@ -48,7 +48,7 @@ function getHasContract() {
             if (access == 0) {
                 $("#t_HasContract").text("قرارداد پشتیبانی شما پایان یافته است");
 
-                $("#B_CustomerFiles").attr('disabled', 'disabled');
+                //$("#B_CustomerFiles").attr('disabled', 'disabled');
                 $("#B_Download").attr('disabled', 'disabled');
                 $("#B_FAQ").attr('disabled', 'disabled');
                 $("#B_Tiket").attr('disabled', 'disabled');

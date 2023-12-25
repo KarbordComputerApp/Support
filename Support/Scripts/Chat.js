@@ -4,7 +4,8 @@ var DateUri = server + '/api/Data/GetDate/';
 var UploadChatFileUri = server + '/api/Data/UploadChatFile/'; // آدرس ذخیره لیست پیوست 
 var DocAttachChatUri = server + '/api/Data/DocAttachChat/'; // آدرس لیست پیوست 
 var AddChatUri = server + '/api/Data/AddChat/'; // 
-//localStorage.removeItem("idChat")
+var EndChatUri = server + '/api/KarbordData/EndChat/'; // پایان یافته
+
 var idChat = localStorage.getItem("idChat");
 
 
@@ -73,7 +74,7 @@ function CalcHeight() {
 
 
 $("#chat-bell").click(function () {
-    var idChat = localStorage.getItem("idChat");
+    idChat = localStorage.getItem("idChat");
     $("#chat-bell").hide();
     $("#box-chat").show();
     refresh(idChat, false)
@@ -364,6 +365,15 @@ $("#btn-end-chat").click(function () {
                 }
                 ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
                     serialNumber = data;
+
+                    var EndChatObject = {
+                        LockNumber: lockNumber,
+                        SerialNumber: idChat,
+                    }
+                    ajaxFunction(EndChatUri, 'POST', EndChatObject).done(function (data) {
+                        
+                    });
+
                 });
             }
 

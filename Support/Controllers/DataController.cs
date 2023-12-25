@@ -354,6 +354,7 @@ namespace Support.Controllers
             public int LockNumber { get; set; }
 
             public bool FlagLog { get; set; }
+
             public string IP { get; set; }
 
             public string CallProg { get; set; }
@@ -363,8 +364,18 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
+            var contract = UnitPublic.HasContract(CustomerFilesObject.LockNumber.ToString());
+
+            string lockNo = "0";
+            if (contract != "")
+            {
+                if (contract.Split('-')[0] == "1")
+                {
+                    lockNo = CustomerFilesObject.LockNumber.ToString();
+                }
+            }
             string sql = string.Format(@"select *,(select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload 
-                                         from CustomerFiles as c where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", CustomerFilesObject.LockNumber);
+                                         from CustomerFiles as c where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", lockNo);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
             if (CustomerFilesObject.FlagLog == true)
             {
@@ -1634,8 +1645,8 @@ namespace Support.Controllers
             string sql = string.Format(@"declare @now datetime = getdate()
                                          SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body, DATEDIFF(MINUTE, Date, @now) AS DateMin FROM Chat
                                          where  LockNumber = {0} and SerialNumber = {1}",
-                                         c.LockNumber,c.SerialNumber);
-            var list  = db.Database.SqlQuery<Chat>(sql).ToList();
+                                         c.LockNumber, c.SerialNumber);
+            var list = db.Database.SqlQuery<Chat>(sql).ToList();
             return Ok(list);
         }
 
@@ -1698,7 +1709,7 @@ namespace Support.Controllers
         [Route("api/Data/DocAttachChat/")]
         public async Task<IHttpActionResult> PostDownloadFileChat(DocAttachChatObject c)
         {
-            string sql = string.Format("select IId,SerialNumber,BandNo,FName,Atch FROM DocAttach where SerialNumber = {0} and BandNo={1}", c.SerialNumber,c.BandNo);
+            string sql = string.Format("select IId,SerialNumber,BandNo,FName,Atch FROM DocAttach where SerialNumber = {0} and BandNo={1}", c.SerialNumber, c.BandNo);
             var list = db.Database.SqlQuery<DocAttachChat>(sql);
             return Ok(list);
         }
