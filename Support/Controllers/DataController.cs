@@ -371,11 +371,11 @@ namespace Support.Controllers
             {
                 if (contract.Split('-')[0] == "1")
                 {
-                    lockNo = CustomerFilesObject.LockNumber.ToString();
+                    lockNo = "10000";
                 }
             }
             string sql = string.Format(@"select *,(select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload 
-                                         from CustomerFiles as c where LockNumber in( 10000 , {0} ) and Disabled = 0  order by LockNumber desc , id desc", lockNo);
+                                         from CustomerFiles as c where LockNumber in( {0} , {1} ) and Disabled = 0  order by LockNumber desc , id desc", lockNo, CustomerFilesObject.LockNumber);
             var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
             if (CustomerFilesObject.FlagLog == true)
             {
