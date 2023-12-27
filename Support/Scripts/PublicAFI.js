@@ -18,6 +18,7 @@ var custAccountPass = '@!B913';
 
 var ipw = localStorage.getItem("IPW");
 
+var dateNow_Shamsi;
 
 $("#B_CustAccount").attr('disabled', 'disabled');
 $("#B_Tiket").attr('disabled', 'disabled');
@@ -35,27 +36,41 @@ if ((userType == '1' || userType == '2')) {
     $('#Index_TextTiket').show()
 }
 
+
 var HasContractUri = server + '/api/Data/HasContract/'; // آدرس قرارداد
 
 $("#t_HasContract").text("");
 function getHasContract() {
     ajaxFunction(HasContractUri + lockNumber, 'GET', true).done(function (data) {
         if (data.length > 0) {
+
+            ajaxFunction(server + '/api/Data/GetDate/', 'GET', false).done(function (list) {
+                dateNow_Shamsi = list[0];
+            });
+
             data = data.split('-')
             access = data[0];
             endDate = data.length == 1 || data[1] == "" ? "" : data[1] + " ";
             localStorage.setItem("HasContract", access);
+
             if (access == 0) {
                 $("#t_HasContract").text("قرارداد پشتیبانی شما پایان یافته است");
 
                 //$("#B_CustomerFiles").attr('disabled', 'disabled');
                 $("#B_Download").attr('disabled', 'disabled');
                 $("#B_FAQ").attr('disabled', 'disabled');
-                $("#B_Tiket").attr('disabled', 'disabled');
                 $("#B_Videos").attr('disabled', 'disabled');
                 $("#Index_TextTiket").hide();
                 $("#Index_Pic_line1").hide();
                 $("#chat-bell").hide();
+
+                d1 = new Date(endDate).getTime()/10000;
+                d2 = new Date(dateNow_Shamsi).getTime() / 10000;
+                d = Math.abs(parseInt(d1) - parseInt(d2));
+                d = d / 8640;
+                if (d > 30) {
+                    $("#B_Tiket").attr('disabled', 'disabled');
+                }
 
             } else if (access == 1) {
                 $("#t_HasContract").text("قرارداد پشتیبانی شما تا تاریخ " + endDate + " معتبر است");
@@ -69,6 +84,7 @@ function getHasContract() {
 if (lockNumber != "" && lockNumber != null) {
     getHasContract();
 }
+
 
 
 
