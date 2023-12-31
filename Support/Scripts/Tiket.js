@@ -189,7 +189,6 @@
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
-
             var Object_TicketStatus = {
                 SerialNumber: '',
                 IP: ipw,

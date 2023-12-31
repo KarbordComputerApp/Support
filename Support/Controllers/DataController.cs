@@ -1624,7 +1624,7 @@ namespace Support.Controllers
         [Route("api/Data/LastIdChat/")]
         public async Task<IHttpActionResult> PostLastIdChat(ChatObject c)
         {
-            string sql = string.Format(@" SELECT max(SerialNumber) as SerialNumber FROM Chat where LockNumber = {0}", c.LockNumber);
+            string sql = string.Format(@" SELECT isnull(max(SerialNumber),0) as SerialNumber FROM Chat where LockNumber = {0}", c.LockNumber);
             var list = db.Database.SqlQuery<long>(sql).Single();
             return Ok(list);
         }

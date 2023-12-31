@@ -182,7 +182,7 @@ namespace Support.Controllers
                 Int64 tik = Int64.Parse(data[2]);
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
-        //        if (elapsedSpan.TotalMinutes <= 1)
+                if (elapsedSpan.TotalMinutes <= 1)
                 {
                     ViewBag.Link = UnitPublic.Decrypt(HashLink);
                     ViewBag.LockNumber = lockNumber;

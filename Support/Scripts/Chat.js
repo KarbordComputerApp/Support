@@ -185,7 +185,8 @@ $("#ChatSend").click(function () {
 function ChatSend() {
 
     var hasContract = localStorage.getItem("HasContract");
-    if (hasContract != "1") {
+
+    if (hasContract != "1" && isUserChat == false) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
@@ -269,6 +270,10 @@ $("#ChatAttach").change(function (e) {
     var size = file.size;
 
     var hasContract = localStorage.getItem("HasContract");
+
+    if (hasContract != "1" && isUserChat == false) {
+        return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
+    }
 
     if (lockNumber == '10000' || lockNumber == '10003') {
 

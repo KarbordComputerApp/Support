@@ -2657,7 +2657,7 @@ z-index
 #box-chat {
     width: 380px;
     height: 70vh;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     overflow: hidden;
     border-radius: 8px;
