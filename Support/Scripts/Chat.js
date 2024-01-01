@@ -8,6 +8,7 @@ var EndChatUri = server + '/api/KarbordData/EndChat/'; // پایان یافته
 
 var idChat = localStorage.getItem("idChat");
 
+idChat = idChat == "0" ? null : idChat;
 
 var isUserChat = false;
 var LockInput = $("#LockInput").data("value");
@@ -29,6 +30,7 @@ $("#box-chat").hide();
 if (LockInput != "" && LockInput != null) {
     //panel admin
     idChat = $("#IdChat").data("value");
+    idChat = idChat == "0" ? null : idChat;
     userCodeChat = $("#UserCode").data("value");
     lockNumber = LockInput;
     $(".continerHead").hide();
@@ -75,6 +77,7 @@ function CalcHeight() {
 
 $("#chat-bell").click(function () {
     idChat = localStorage.getItem("idChat");
+    idChat = idChat == "0" ? null : idChat;
     $("#chat-bell").hide();
     $("#box-chat").show();
     refresh(idChat, false)
@@ -102,7 +105,7 @@ $("#btn-max-chat").click(function () {
 function refresh(id, isLast) {
 
     idChat = id
-
+    idChat = idChat == "0" ? null : idChat;
     $("#box-send").hide();
     $("#chatbox").empty();
     if (idChat != null) {
@@ -242,6 +245,7 @@ function ChatSend() {
         }
         ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
             idChat = data;
+            idChat = idChat == "0" ? null : idChat;
             localStorage.setItem("idChat", idChat);
         });
     }
