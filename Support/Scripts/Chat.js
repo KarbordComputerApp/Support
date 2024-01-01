@@ -99,11 +99,11 @@ $("#btn-max-chat").click(function () {
 //Get DocAttach List
 
 //localStorage.setItem("idChat",22);
-function refresh(id,isLast) {
+function refresh(id, isLast) {
 
     idChat = id
 
-    $("#box-send").hide(); 
+    $("#box-send").hide();
     $("#chatbox").empty();
     if (idChat != null) {
         var ChatObject = {
@@ -160,9 +160,9 @@ function refresh(id,isLast) {
             }
 
             $("#chatbox").scrollTop(1000000);
-            $("#box-send").show();  
+            $("#box-send").show();
             if (isLast == true) {
-                $("#box-send").hide();  
+                $("#box-send").hide();
             }
         });
     }
@@ -376,7 +376,7 @@ $("#btn-end-chat").click(function () {
                         SerialNumber: idChat,
                     }
                     ajaxFunction(EndChatUri, 'POST', EndChatObject).done(function (data) {
-                        
+
                     });
 
                 });

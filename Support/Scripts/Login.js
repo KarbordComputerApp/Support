@@ -44,7 +44,7 @@
                     LockNumber: lockNumber
                 }
                 ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
-                    localStorage.setItem("idChat", data);
+                    localStorage.setItem("idChat", data == 0 ? null : data);
                 })
 
                 var LockNumbersObject = {
