@@ -336,7 +336,7 @@
                 var ErjSaveTicket_HI = {
                     SerialNumber: 0,
                     DocDate: DateNow,
-                    UserCode: 'ESTIRI',
+                    UserCode: 'ZAND',
                     Status: "فعال",
                     Spec: "",
                     LockNo: lockNumber,

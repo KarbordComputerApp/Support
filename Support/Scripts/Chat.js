@@ -193,7 +193,7 @@ function ChatSend() {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10003' || lockNumber == '12035') {
+    if (lockNumber == '10000' ||lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
 
     }
     else {
@@ -213,7 +213,7 @@ function ChatSend() {
         var ErjSaveTicket_HI = {
             SerialNumber: 0,
             DocDate: DateNow,
-            UserCode: 'ESTIRI',
+            UserCode: 'ZAND',
             Status: "فعال",
             Spec: "",
             LockNo: lockNumber,
@@ -279,7 +279,7 @@ $("#ChatAttach").change(function (e) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10003' || lockNumber == '12035') {
+    if (lockNumber == '10000' ||lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
 
     }
     else {
