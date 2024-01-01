@@ -193,7 +193,7 @@ function ChatSend() {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10003') {
+    if (lockNumber == '10000' || lockNumber == '10003' || lockNumber == '12035') {
 
     }
     else {
@@ -279,16 +279,16 @@ $("#ChatAttach").change(function (e) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10003') {
+    if (lockNumber == '10000' || lockNumber == '10003' || lockNumber == '12035') {
 
     }
     else {
         return showNotification('دسترسی ندارید', 0);
     }
 
-    if (lockNumber != '10000' && lockNumber != '10003') {
+    /*if (lockNumber != '10000' && lockNumber != '10003' && lockNumber != '12035') {
         return showNotification('دسترسی ندارید', 0);
-    }
+    }*/
 
     if (idChat == null) {
         return showNotification('چت را با پیام متنی شروع کنید', 0);
