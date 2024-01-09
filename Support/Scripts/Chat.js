@@ -421,12 +421,12 @@ function ChatSend() {
 }
 
 $("#ChatAttach").change(function (e) {
-
-    SendAttach();
+    var file = e.target.files[0];
+    SendAttach(file);
 });
 
-function SendAttach() {
-    var file = e.target.files[0];
+function SendAttach(file) {
+    
     var name = file.name;
     var size = file.size;
 
