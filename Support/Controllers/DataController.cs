@@ -1621,11 +1621,18 @@ namespace Support.Controllers
             public string LockNumber { get; set; }
         }
 
+        public class LastIdChat
+        {
+            public long SerialNumber { get; set; }
+
+            public byte? Status { get; set; }
+        }
+
         [Route("api/Data/LastIdChat/")]
         public async Task<IHttpActionResult> PostLastIdChat(ChatObject c)
         {
-            string sql = string.Format(@" SELECT isnull(max(SerialNumber),0) as SerialNumber FROM Chat where LockNumber = {0}", c.LockNumber);
-            var list = db.Database.SqlQuery<long>(sql).Single();
+            string sql = string.Format(@" SELECT top(1) SerialNumber,Status FROM Chat where SerialNumber = (select isnull(max(SerialNumber),0) FROM Chat  where LockNumber = {0}) order by id desc", c.LockNumber);
+            var list = db.Database.SqlQuery<LastIdChat>(sql).Single();
             return Ok(list);
         }
 
@@ -1637,6 +1644,8 @@ namespace Support.Controllers
 
             public long SerialNumber { get; set; }
 
+            public long IdMessage { get; set; }
+
         }
 
         [Route("api/Data/Chat/")]
@@ -1644,8 +1653,12 @@ namespace Support.Controllers
         {
             string sql = string.Format(@"declare @now datetime = getdate()
                                          SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body, DATEDIFF(MINUTE, Date, @now) AS DateMin FROM Chat
-                                         where  LockNumber = {0} and SerialNumber = {1}",
+                                         where  LockNumber = {0} and SerialNumber = {1}",//",
                                          c.LockNumber, c.SerialNumber);
+            if (c.IdMessage > 0)
+            {
+                sql += " and Id > " + c.IdMessage.ToString();
+            }
             var list = db.Database.SqlQuery<Chat>(sql).ToList();
             return Ok(list);
         }
@@ -1713,6 +1726,25 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<DocAttachChat>(sql);
             return Ok(list);
         }
+
+
+        public class DeleteChatObject
+        {
+            public string Id { get; set; }
+
+            public string IsAttach { get; set; }
+
+        }
+
+
+        [Route("api/Data/DeleteChat/")]
+        public async Task<IHttpActionResult> PostDeleteChat(DeleteChatObject c)
+        {
+            string sql = string.Format(@"delete Chat where id = {0} select 0", c.Id);
+            var list = db.Database.SqlQuery<int>(sql).ToList();
+            return Ok(list);
+        }
+
 
 
         /*public async Task<IHttpActionResult> PostLogin1(LoginObject LoginObject)

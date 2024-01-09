@@ -4,22 +4,30 @@ var DateUri = server + '/api/Data/GetDate/';
 var UploadChatFileUri = server + '/api/Data/UploadChatFile/'; // آدرس ذخیره لیست پیوست 
 var DocAttachChatUri = server + '/api/Data/DocAttachChat/'; // آدرس لیست پیوست 
 var AddChatUri = server + '/api/Data/AddChat/'; // 
+var DelChatUri = server + '/api/Data/DeleteChat/'; // 
 var EndChatUri = server + '/api/KarbordData/EndChat/'; // پایان یافته
+var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها 
+
+//getDataChat();
 
 var idChat = localStorage.getItem("idChat");
 
+var isLast = false;
+
 idChat = idChat == "0" ? null : idChat;
 
-var isUserChat = false;
+var isAdminChat = false;
 var LockInput = $("#LockInput").data("value");
 var userCodeChat = 'User'
 var leftItem = "left";
 var rightItem = "right";
 var mode = 1;
-
+var maxIdMessage = 0;
 var timer;
+var timerLastIdChat;
 
 $("#chatbox").empty();
+$("#motaghaziChat").hide();
 $("#chat-bell").hide();
 $('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/min.png');
 
@@ -31,19 +39,39 @@ if (LockInput != "" && LockInput != null) {
     //panel admin
     idChat = $("#IdChat").data("value");
     idChat = idChat == "0" ? null : idChat;
+
     userCodeChat = $("#UserCode").data("value");
     lockNumber = LockInput;
     $(".continerHead").hide();
     $("#chat-bell").hide();
 
-    isUserChat = true;
+    isAdminChat = true;
     rightItem = "left";
     leftItem = "right";
     mode = 0;
     $("#btn-end-chat").show();
     $("#box-chat").show();
 
-    refresh(idChat, false)
+    var ErjDocXKObject = {
+        SerialNumber: idChat,
+        LockNo: lockNumber,
+        ModeCode: '204',
+        FlagLog: false,
+        IP: ipw,
+        CallProg: 'Web',
+        LoginLink: false
+    }
+    ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
+        if (data.length > 0) {
+            var motaghazi = data[0].Motaghazi;
+            var docDate = data[0].DocDate;
+            $("#L_MotaghaziChat").text(motaghazi);
+        }
+       
+    });
+
+    isLast = false;
+    refresh(idChat, isLast);
     timer = setInterval(() => { refresh(idChat, false) }, 10000);
     CalcHeight();
 }
@@ -51,7 +79,15 @@ else {
     //panel user
     $("#chat-bell").show();
     $("#btn-end-chat").hide();
-    refresh(idChat, false);
+    timerLastIdChat = setInterval(() => {
+        getDataChat();
+        if (idChat == null) {
+            $("#box-send").show();
+            $("#chatbox").empty();
+        }
+    }, 100000);
+    isLast = false;
+    refresh(idChat, isLast);
 }
 
 $("#btn-close-chat").click(function () {
@@ -76,11 +112,30 @@ function CalcHeight() {
 
 
 $("#chat-bell").click(function () {
+    $("#motaghaziChat").hide();
+    $("#motaghaziChat").val("");
+
+    if (idChat == null) {
+        getDataChat();
+    }
+
+    if (idChat == null) {
+        $("#motaghaziChat").show();
+        $("#motaghaziChat").removeAttr('disabled');
+    }
+
     idChat = localStorage.getItem("idChat");
     idChat = idChat == "0" ? null : idChat;
     $("#chat-bell").hide();
     $("#box-chat").show();
-    refresh(idChat, false)
+
+    if (isLast == true) {
+        $("#chatbox").empty();
+        isLast = false;
+        maxIdMessage = 0;
+    }
+
+    refresh(idChat, isLast);
     timer = setInterval(() => { refresh(idChat, false) }, 5000);
     CalcHeight();
 });
@@ -102,25 +157,50 @@ $("#btn-max-chat").click(function () {
 //Get DocAttach List
 
 //localStorage.setItem("idChat",22);
-function refresh(id, isLast) {
 
+
+function refresh(id, isLast) {
     idChat = id
     idChat = idChat == "0" ? null : idChat;
-    $("#box-send").hide();
-    $("#chatbox").empty();
+
+    if (isLast == true) {
+        $("#box-send").hide();
+    }
+
+    if (isAdminChat == true && id == null) {
+        $("#box-send").hide();
+        $("#btn-end-chat").hide();
+    }
+    //$("#box-send").hide();
+    //$("#chatbox").empty();
+    //maxIdMessage = localStorage.getItem("MaxIdMessage");
+    //maxIdMessage = maxIdMessage == "null" || maxIdMessage == null ? 0 : maxIdMessage;
+
     if (idChat != null) {
         var ChatObject = {
             LockNumber: lockNumber,
-            SerialNumber: idChat
+            SerialNumber: idChat,
+            IdMessage: maxIdMessage,
         }
         res = '';
         ajaxFunction(ChatUri, 'POST', ChatObject).done(function (data) {
-            endChat = data.filter(key => key.Status == 1);
-            if (endChat.length > 0 && isLast == false) {
-                idChat = null;
-                localStorage.removeItem("idChat");
-            }
-            else {
+            $("#box-send").show();
+            if (data.length > 0) {
+
+                maxIdMessage = data[data.length - 1].Id;
+                //localStorage.setItem("MaxIdMessage", maxIdMessage);
+
+                //data.filter(key => key.id == 1);
+                endChat = data.filter(key => key.Status == 1);
+
+                if (endChat.length > 0) {
+                    idChat = null;
+                    localStorage.removeItem("idChat");
+                    $("#box-send").hide();
+                    $("#btn-end-chat").hide();
+                    clearInterval(timer);
+                }
+
 
                 for (var i = 0; i < data.length; i++) {
                     item = data[i];
@@ -139,8 +219,13 @@ function refresh(id, isLast) {
                     }
 
                     res +=
-                        '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '"> ' +
-                        '<div class="dc-text" rel="tooltip" data-container="body">';
+                        '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '"> ';
+
+                    if ((item.Mode == 1 && leftItem == 'left') || (item.Mode == 0 && leftItem == 'right')) {
+                        res += '<img class="deleteChatImg" value="' + item.Id + '" src="/Content/img/Icon_blue/delete.png" width="25" style="padding-top: 10px;padding-right: 5px;display: none;" >';
+                    }
+
+                    res += '<div class="dc-text" rel="tooltip" data-container="body">';
 
                     if (item.Body.search("!!AttachFile!!") >= 0) {
                         fileName = item.Body.split(',')[1]
@@ -153,27 +238,87 @@ function refresh(id, isLast) {
                     else {
                         res += item.Body
                     }
+
                     res +=
-                        '</div>' +
-                        '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>' +
                         '</div>';
+
+                    if (item.Mode == 0) {
+                        dateText = item.UserCode
+                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>';
+                    }
+                    res += '</div>';
                 }
 
                 $("#chatbox").append(res);
-            }
 
-            $("#chatbox").scrollTop(1000000);
-            $("#box-send").show();
-            if (isLast == true) {
-                $("#box-send").hide();
+
+                $("#chatbox").scrollTop(1000000);
+
             }
         });
     }
-    if (isLast == false) {
-        $("#box-send").show();
-    }
+
 
 }
+
+/*
+$('.slideInleft.right').hover(
+    function () {
+        a = $(this).find('.deleteChatImg');
+        if (a.length > 0)
+            a.show();
+    },
+
+    function () {
+        a = $(this).find('.deleteChatImg');
+        if (a.length > 0)
+            a.hide();
+    }
+);*/
+/*
+
+$("#chatbox").on("mouseenter", ".slideInleft.right", function () {
+    $(this).find('.deleteChatImg').show();
+});
+
+$("#chatbox").on("mouseleave", ".slideInleft.right", function () {
+    $(this).find('.deleteChatImg').hide();
+});
+
+
+
+$("chatbox").on("click", ".slideInleft.right.deleteChatImg", function (event) {
+    if (!confirm('Are you sure?')) return false;
+    $(this).parent().remove();
+    return true;
+});
+
+
+
+$(".deleteChatImg").click(function (e) {
+    var idDel = $(this).attr("value");
+    element = this.offsetParent;
+    Swal.fire({
+        title: 'پیام حذف شود ؟',
+        type: 'info',
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        cancelButtonText: 'خیر',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'بله'
+    }).then((result) => {
+        if (result.value) {
+            var DeleteChatObject = {
+                Id: idDel,
+                IsAttach: 0
+            }
+            ajaxFunction(DelChatUri, 'POST', DeleteChatObject).done(function (data) {
+                element.remove();
+            });
+        }
+    })
+})
+*/
 
 $("#ChatMessage").keyup(function (e) {
     if (e.keyCode == 13) {
@@ -189,11 +334,11 @@ function ChatSend() {
 
     var hasContract = localStorage.getItem("HasContract");
 
-    if (hasContract != "1" && isUserChat == false) {
+    if (hasContract != "1" && isAdminChat == false) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' ||lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
+    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
 
     }
     else {
@@ -205,6 +350,12 @@ function ChatSend() {
         return showNotification('پیام را وارد کنید', 0);
     }
     if (idChat == null) {
+
+        var motaghazi = $("#motaghaziChat").val();
+        if (motaghazi == "") {
+            return showNotification('نام درخواست کننده را وارد کنید', 0);
+        }
+
         ajaxFunction(DateUri, 'GET', false).done(function (data) {
             DateNow = data[0];
         });
@@ -217,7 +368,7 @@ function ChatSend() {
             Status: "فعال",
             Spec: "",
             LockNo: lockNumber,
-            Text: message,
+            Text: 'چت : ' + message,
             F01: '',
             F02: '',
             F03: '',
@@ -238,7 +389,7 @@ function ChatSend() {
             F18: '',
             F19: '',
             F20: '',
-            Motaghazi: "چت",
+            Motaghazi: motaghazi,
             IP: ipw,
             CallProg: 'Web',
             LoginLink: loginLink
@@ -247,6 +398,7 @@ function ChatSend() {
             idChat = data;
             idChat = idChat == "0" ? null : idChat;
             localStorage.setItem("idChat", idChat);
+            $("#motaghaziChat").attr('disabled', 'disabled');
         });
     }
 
@@ -262,24 +414,29 @@ function ChatSend() {
     }
     ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
         serialNumber = data;
-        refresh(idChat, false);
+        isLast = false;
+        refresh(idChat, isLast);
         $("#ChatMessage").val("");
     });
 }
 
 $("#ChatAttach").change(function (e) {
-    var dataFile;
+
+    SendAttach();
+});
+
+function SendAttach() {
     var file = e.target.files[0];
     var name = file.name;
     var size = file.size;
 
     var hasContract = localStorage.getItem("HasContract");
 
-    if (hasContract != "1" && isUserChat == false) {
+    if (hasContract != "1" && isAdminChat == false) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' ||lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
+    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
 
     }
     else {
@@ -328,9 +485,10 @@ $("#ChatAttach").change(function (e) {
     formData.append('Atch', file);
 
     ajaxFunctionUploadTiket(UploadChatFileUri, formData, false).done(function (response) {
-        refresh(idChat, false)
+        isLast = false;
+        refresh(idChat, isLast);
     })
-});
+}
 
 
 
@@ -383,6 +541,8 @@ $("#btn-end-chat").click(function () {
 
                     });
 
+                    isLast = false;
+                    refresh(idChat, isLast);
                 });
             }
 

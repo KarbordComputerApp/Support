@@ -42,11 +42,6 @@ namespace Support.Controllers
         public const int act_NewTiketByLink = 7;
         public const int act_ViewTiketByLink = 8;
 
-        public class Object_TicketStatus
-        {
-            public string SerialNumber { get; set; }
-        }
-
 
         // GET: api/KarbordData/Date تاریخ سرور
         [Route("api/KarbordData/Date")]
@@ -70,6 +65,12 @@ namespace Support.Controllers
 
 
 
+        public class Object_TicketStatus
+        {
+            public string SerialNumber { get; set; }
+
+            public string LockNumber { get; set; }
+        }
 
 
         [Route("api/KarbordData/Web_TicketStatus")]
@@ -233,6 +234,8 @@ namespace Support.Controllers
 
         public class Object_ErjDocXK
         {
+            public long SerialNumber { get; set; }
+
             public int ModeCode { get; set; }
 
             public string LockNo { get; set; }
@@ -244,13 +247,20 @@ namespace Support.Controllers
             public string CallProg { get; set; }
 
             public bool LoginLink { get; set; }
+
         }
 
 
         [Route("api/KarbordData/Web_ErjDocXK")]
         public async Task<IHttpActionResult> PostWeb_ErjDocXK(Object_ErjDocXK Object_ErjDocXK)
         {
-            string sql = string.Format("select * from dbo.Web_ErjDocXK({0},'{1}') order by DocDate desc , SerialNumber desc", Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
+            string sql = string.Format("select * from dbo.Web_ErjDocXK({0},'{1}') ", Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
+            if (Object_ErjDocXK.SerialNumber > 0)
+            {
+                sql += " where SerialNumber = " + Object_ErjDocXK.SerialNumber.ToString();
+            }
+            sql += " order by DocDate desc , SerialNumber desc";
+
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);

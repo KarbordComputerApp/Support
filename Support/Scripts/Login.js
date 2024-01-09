@@ -39,13 +39,11 @@
                 localStorage.setItem("Address", data[0].Address);
                 localStorage.setItem("Pic", data[0].Pic);
 
-                var LastIdChatUri = server + '/api/Data/LastIdChat/'; // آخرین شماره چت
-                var LastIdChatObject = {
-                    LockNumber: lockNumber
-                }
-                ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
-                    localStorage.setItem("idChat", data);
-                })
+
+
+
+
+                getDataChat();
 
                 var LockNumbersObject = {
                     LockNumber: lockNumber

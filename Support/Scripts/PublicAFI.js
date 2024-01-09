@@ -64,7 +64,7 @@ function getHasContract() {
                 $("#Index_Pic_line1").hide();
                 $("#chat-bell").hide();
 
-                d1 = new Date(endDate).getTime()/10000;
+                d1 = new Date(endDate).getTime() / 10000;
                 d2 = new Date(dateNow_Shamsi).getTime() / 10000;
                 d = Math.abs(parseInt(d1) - parseInt(d2));
                 d = d / 8640;
@@ -85,9 +85,19 @@ if (lockNumber != "" && lockNumber != null) {
     getHasContract();
 }
 
-
-
-
+function getDataChat() {
+    var LastIdChatUri = server + '/api/Data/LastIdChat/'; // آخرین شماره چت
+    var LastIdChatObject = {
+        LockNumber: lockNumber
+    }
+    ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
+        localStorage.setItem("idChat", data.Status == 1 ? 0 : data.SerialNumber);
+        if (data.Status == 1 ) {
+            $("#box-send").show();
+            $("#chatbox").empty();
+        }
+    })
+}
 
 var Web_CountErjDocXKUri = server + '/api/KarbordData/Web_CountErjDocXK/'; // تعداد تیکت خوانده نشده
 function GetCountErjDocXK() {

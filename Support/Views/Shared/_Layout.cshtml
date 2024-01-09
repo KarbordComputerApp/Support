@@ -210,6 +210,8 @@
     -->
 
 
+
+
     <div id="box-chat" class="fadeInUp">
 
         <div class="box-header">
@@ -219,7 +221,7 @@
             </div>
 
             <div id="btn-end-chat" title="پایان یافته">
-                <img src="~/Content/img/Icon_Blue/stop.png" width="14"  />
+                <img src="~/Content/img/Icon_Blue/stop.png" width="14" />
             </div>
 
             <div id="btn-close-chat" title="بستن">
@@ -230,7 +232,7 @@
 
             <div class="row">
                 <img src="~/Content/img/LogoMin.png" alt="avatar" width="40" height="40">
-                <p style="font-size: 15px;top: 11px;position: relative;padding-right: 10px;">کارشناس پشتیبانی</p>
+                <p id="L_MotaghaziChat" style="font-size: 15px;top: 11px;position: relative;padding-right: 10px;">کارشناس پشتیبانی</p>
             </div>
 
         </div>
@@ -238,7 +240,9 @@
 
         <div id="chatbox"></div>
 
+
         <div id="box-send" class="hasmic box-footer">
+            <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
             <div class="form-group is-empty">
                 <textarea maxlength="2000" id="ChatMessage" type="text" placeholder="پیامی بنویسید..." class="form-controlChat" style="overflow: hidden; overflow-wrap: break-word; height: 40px;"></textarea>
                 <span class="material-input"></span>
@@ -259,7 +263,6 @@
                     </svg>
                 </a>
             </div>
-
         </div>
 
     </div>

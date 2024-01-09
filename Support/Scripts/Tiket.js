@@ -434,7 +434,12 @@
     }
 
     self.ViewChat = function (Band) {
-        refresh(Band.SerialNumber, true);
+        maxIdMessage = 0;
+        $("#box-send").hide();
+        $("#chatbox").empty();
+        isLast = true;
+        refresh(Band.SerialNumber, isLast);
+
         $("#chat-bell").hide();
         $("#box-chat").show();
         CalcHeight();
@@ -723,6 +728,11 @@
 
     self.radif = function (index) {
         return index + 1;
+    }
+
+    self.IsChat = function (text) {
+        return text.split(":")[0] == "چت "
+
     }
 
 

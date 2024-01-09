@@ -92,7 +92,7 @@
                         <img src="~/Content/img/Icon_Blue/attach.png" width="30" />
                     </a>
                     
-                    <a data-bind="click: $root.ViewChat, visible: Motaghazi == 'چت'" style="text-align: right;" title="تاریخچه چت">
+                    <a data-bind="click: $root.ViewChat, visible: $root.IsChat(Text)" style="text-align: right;" title="تاریخچه چت">
                         <img src="~/Content/img/icon_Blue/chat.png" width="26" />
                     </a>
                 </td>
