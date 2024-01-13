@@ -40,8 +40,8 @@
                 localStorage.setItem("Pic", data[0].Pic);
 
 
-
-
+                localStorage.removeItem("UsersChat");
+                GetRepFromUsers();
 
                 getDataChat();
 

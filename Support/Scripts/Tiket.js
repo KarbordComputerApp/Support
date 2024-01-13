@@ -191,6 +191,7 @@
 
             var Object_TicketStatus = {
                 SerialNumber: '',
+                LockNumber: lockNumber,
                 IP: ipw,
                 CallProg: 'Web'
             }
@@ -729,12 +730,6 @@
     self.radif = function (index) {
         return index + 1;
     }
-
-    self.IsChat = function (text) {
-        return text.split(":")[0] == "چت "
-
-    }
-
 
 
     self.SearchKeyDown = function (viewModel, e) {

@@ -7,6 +7,8 @@ var AddChatUri = server + '/api/Data/AddChat/'; //
 var DelChatUri = server + '/api/Data/DeleteChat/'; // 
 var EndChatUri = server + '/api/KarbordData/EndChat/'; // پایان یافته
 var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها 
+var UpdateChatDownloadUri = server + '/api/KarbordData/UpdateChatDownload/';
+var LockNumbersUri = server + '/api/Data/LockNumbers/';
 
 //getDataChat();
 
@@ -35,6 +37,10 @@ $("#chat-bell").show();
 
 $("#box-chat").hide();
 
+
+
+
+
 if (LockInput != "" && LockInput != null) {
     //panel admin
     idChat = $("#IdChat").data("value");
@@ -44,6 +50,8 @@ if (LockInput != "" && LockInput != null) {
     lockNumber = LockInput;
     $(".continerHead").hide();
     $("#chat-bell").hide();
+    $("#ActiveAttach").show();
+    $("#P_AttachChat").show();
 
     isAdminChat = true;
     rightItem = "left";
@@ -52,23 +60,10 @@ if (LockInput != "" && LockInput != null) {
     $("#btn-end-chat").show();
     $("#box-chat").show();
 
-    var ErjDocXKObject = {
-        SerialNumber: idChat,
-        LockNo: lockNumber,
-        ModeCode: '204',
-        FlagLog: false,
-        IP: ipw,
-        CallProg: 'Web',
-        LoginLink: false
-    }
-    ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
-        if (data.length > 0) {
-            var motaghazi = data[0].Motaghazi;
-            var docDate = data[0].DocDate;
-            $("#L_MotaghaziChat").text(motaghazi);
-        }
-       
-    });
+    GetRepFromUsers();
+    getCompanyName();
+
+    $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat"));
 
     isLast = false;
     refresh(idChat, isLast);
@@ -77,14 +72,12 @@ if (LockInput != "" && LockInput != null) {
 }
 else {
     //panel user
+    $("#ActiveAttach").hide();
     $("#chat-bell").show();
     $("#btn-end-chat").hide();
+
     timerLastIdChat = setInterval(() => {
         getDataChat();
-        if (idChat == null) {
-            $("#box-send").show();
-            $("#chatbox").empty();
-        }
     }, 100000);
     isLast = false;
     refresh(idChat, isLast);
@@ -95,7 +88,6 @@ $("#btn-close-chat").click(function () {
     $("#box-chat").hide();
     clearInterval(timer);
 });
-
 
 
 function CalcHeight() {
@@ -110,6 +102,47 @@ function CalcHeight() {
     $("#chatbox").scrollTop(1000000);
 }
 
+function SetUpdateChatDownload(value) {
+
+    var UpdateChatDownload_Object = {
+        SerialNumber: idChat,
+        ChatDownload: value
+    }
+    ajaxFunction(UpdateChatDownloadUri, 'POST', UpdateChatDownload_Object).done(function (data) {
+        var a = data;
+    });
+}
+
+function getDataTiket(id) {
+    $("#P_AttachChat").show();
+    if (isAdminChat == false)
+        $("#P_AttachChat").hide();
+
+    var ErjDocXKObject = {
+        SerialNumber: id,
+        LockNo: lockNumber,
+        ModeCode: '204',
+        FlagLog: false,
+        IP: ipw,
+        CallProg: 'Web',
+        LoginLink: false
+    }
+    ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
+        if (data.length > 0) {
+            localStorage.setItem("MotaghaziChat", data[0].Motaghazi);
+            var chatDownload = data[0].ChatDownload;
+            $("#ActiveAttachChat").prop('checked', chatDownload);
+            if (chatDownload == true) {
+                $("#P_AttachChat").show();
+            }
+
+            //var docDate = data[0].DocDate;
+        }
+    });
+}
+
+
+
 
 $("#chat-bell").click(function () {
     $("#motaghaziChat").hide();
@@ -119,13 +152,16 @@ $("#chat-bell").click(function () {
         getDataChat();
     }
 
+    idChat = localStorage.getItem("idChat");
+    idChat = idChat == "0" ? null : idChat;
+
     if (idChat == null) {
         $("#motaghaziChat").show();
         $("#motaghaziChat").removeAttr('disabled');
+        $("#chatbox").empty();
+        $("#box-send").show();
     }
 
-    idChat = localStorage.getItem("idChat");
-    idChat = idChat == "0" ? null : idChat;
     $("#chat-bell").hide();
     $("#box-chat").show();
 
@@ -163,6 +199,8 @@ function refresh(id, isLast) {
     idChat = id
     idChat = idChat == "0" ? null : idChat;
 
+    getDataTiket(idChat);
+
     if (isLast == true) {
         $("#box-send").hide();
     }
@@ -171,10 +209,6 @@ function refresh(id, isLast) {
         $("#box-send").hide();
         $("#btn-end-chat").hide();
     }
-    //$("#box-send").hide();
-    //$("#chatbox").empty();
-    //maxIdMessage = localStorage.getItem("MaxIdMessage");
-    //maxIdMessage = maxIdMessage == "null" || maxIdMessage == null ? 0 : maxIdMessage;
 
     if (idChat != null) {
         var ChatObject = {
@@ -243,7 +277,7 @@ function refresh(id, isLast) {
                         '</div>';
 
                     if (item.Mode == 0) {
-                        dateText = item.UserCode
+                        dateText = SetNameUser(item.UserCode)
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>';
                     }
                     res += '</div>';
@@ -257,7 +291,6 @@ function refresh(id, isLast) {
             }
         });
     }
-
 
 }
 
@@ -368,7 +401,7 @@ function ChatSend() {
             Status: "فعال",
             Spec: "",
             LockNo: lockNumber,
-            Text: 'چت : ' + message,
+            Text:  message,
             F01: '',
             F02: '',
             F03: '',
@@ -426,7 +459,7 @@ $("#ChatAttach").change(function (e) {
 });
 
 function SendAttach(file) {
-    
+
     var name = file.name;
     var size = file.size;
 
@@ -486,7 +519,11 @@ function SendAttach(file) {
 
     ajaxFunctionUploadTiket(UploadChatFileUri, formData, false).done(function (response) {
         isLast = false;
+        if (isAdminChat == false) {
+            SetUpdateChatDownload(false);
+        }
         refresh(idChat, isLast);
+
     })
 }
 
@@ -550,6 +587,13 @@ $("#btn-end-chat").click(function () {
     })
 
 });
+
+$('#ActiveAttachChat').change(function () {
+    var check = $('#ActiveAttachChat').is(':checked');
+    SetUpdateChatDownload(check);
+});
+
+
 
 /*
 var DocAttachBoxListObject = {

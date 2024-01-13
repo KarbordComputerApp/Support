@@ -74,11 +74,15 @@ namespace Support.Controllers
 
 
         [Route("api/KarbordData/Web_TicketStatus")]
-        public async Task<IHttpActionResult> PostWeb_TicketStatus(Object_TicketStatus Object_TicketStatus)
+        public async Task<IHttpActionResult> PostWeb_TicketStatus(Object_TicketStatus c)
         {
             string sql = string.Format(@"declare @serialnumber nvarchar(100) = '{0}'
-                                         select * from Web_TicketStatus where 1 = 1 and  (@serialnumber = '' or serialnumber = @serialnumber)",
-                                         Object_TicketStatus.SerialNumber);
+                                         select * from Web_TicketStatus where (@serialnumber = '' or serialnumber = @serialnumber) ",
+                                         c.SerialNumber);
+            if (c.LockNumber != null)
+            {
+                sql += " and LockNumber = " + c.LockNumber;
+            }
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<Web_TicketStatus>(sql);
@@ -714,6 +718,54 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<int>(sql);
             return Ok(list);
         }
+
+        public class RepFromUsersObject
+        {
+            public string userCode { get; set; }
+
+        }
+
+
+        public partial class Web_RepFromUsers
+        {
+            public string Code { get; set; }
+
+            public string Name { get; set; }
+
+        }
+
+
+        // Post: api/Web_Data/Web_RepFromUsers   ارجاع شونده/ارجاع دهنده
+        [Route("api/KarbordData/Web_RepFromUsers")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_RepFromUsers(RepFromUsersObject RepFromUsersObject)
+        {
+            string sql = string.Format(@"Select * from Web_RepFromUsers('{0}')", RepFromUsersObject.userCode);
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+            var list = db.Database.SqlQuery<Web_RepFromUsers>(sql);
+            return Ok(list);
+        }
+
+
+        public class UpdateChatDownload_Object
+        {
+            public long SerialNumber { get; set; }
+
+            public bool ChatDownload { get; set; }
+        }
+
+        // Post: api/KarbordData/UpdateChatDownload ارسال فایل توسط کاربر  
+        [Route("api/KarbordData/UpdateChatDownload/")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostUpdateChatDownload(UpdateChatDownload_Object c)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateChatDownload @SerialNumber = {0} ,@ChatDownload = {1} select 1 ", c.SerialNumber,c.ChatDownload);
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+            var res = db.Database.SqlQuery<int>(sql);
+            return Ok(res);
+        }
+
 
 
     }

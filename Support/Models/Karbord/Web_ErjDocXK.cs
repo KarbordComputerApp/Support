@@ -41,5 +41,9 @@ namespace Support.Models
 
         public bool? ResultRead { get; set; }
 
+        public bool? ChatDownload { get; set; }
+
+        public int ChatCount { get; set; }
+
     }
 }

@@ -8,7 +8,7 @@ var userType = localStorage.getItem("UserType");
 var forceToChangePass = localStorage.getItem("ForceToChangePass");
 var fullName = firstName + ' ' + lastName;
 var companyName = localStorage.getItem("CompanyName");
-
+var usersChat;
 
 var ticketUser = 'Ticket';
 var ticketPass = '@!B912';
@@ -85,19 +85,7 @@ if (lockNumber != "" && lockNumber != null) {
     getHasContract();
 }
 
-function getDataChat() {
-    var LastIdChatUri = server + '/api/Data/LastIdChat/'; // آخرین شماره چت
-    var LastIdChatObject = {
-        LockNumber: lockNumber
-    }
-    ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
-        localStorage.setItem("idChat", data.Status == 1 ? 0 : data.SerialNumber);
-        if (data.Status == 1 ) {
-            $("#box-send").show();
-            $("#chatbox").empty();
-        }
-    })
-}
+
 
 var Web_CountErjDocXKUri = server + '/api/KarbordData/Web_CountErjDocXK/'; // تعداد تیکت خوانده نشده
 function GetCountErjDocXK() {
@@ -119,6 +107,69 @@ function GetCountErjDocXK() {
         });
     }
 }
+
+var RepFromUsersUri = server + '/api/KarbordData/Web_RepFromUsers/'; // لیست کاربران
+function GetRepFromUsers() {
+    var RepFromUsersObject = {
+        userCode: 'ace'
+    }
+
+    ajaxFunction(RepFromUsersUri, 'POST', RepFromUsersObject, false).done(function (data) {
+        localStorage.setItem("UsersChat", JSON.stringify(data));
+        usersChat = JSON.parse(UsersChat);
+    });
+}
+
+var UsersChat = localStorage.getItem("UsersChat");
+if (UsersChat == null) {
+    GetRepFromUsers();
+}
+else {
+    usersChat = JSON.parse(UsersChat);
+}
+
+function SetNameUser(userCode) {
+    var a = userCode.toUpperCase();
+    var res = usersChat.filter(
+        key => key.Code == userCode.toUpperCase());
+    if (res.length > 0) {
+        return res[0].Name
+    }
+    return userCode;
+}
+
+
+var companyName = '';
+
+function getCompanyName() {
+    var LockNumbersObject = {
+        LockNumber: lockNumber,
+        IP: ipw,
+        CallProg: 'Web'
+    }
+    ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
+        if (dataLock.length > 0) {
+            localStorage.setItem("CompanyNameChat", dataLock[0].CompanyName.split("-")[0]);
+        }
+    });
+}
+
+
+function getDataChat() {
+    var LastIdChatUri = server + '/api/Data/LastIdChat/'; // آخرین شماره چت
+    var LastIdChatObject = {
+        LockNumber: lockNumber
+    }
+    ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
+        localStorage.removeItem("idChat");
+        if (data.length > 0) {
+            var id = data[0].Status == 1 ? 0 : data[0].SerialNumber
+            localStorage.setItem("idChat", id);
+        }
+    })
+}
+
+
 
 setInterval(RefreshCountErjDocXK, 60000);
 

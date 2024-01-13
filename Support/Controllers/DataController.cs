@@ -1632,7 +1632,7 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostLastIdChat(ChatObject c)
         {
             string sql = string.Format(@" SELECT top(1) SerialNumber,Status FROM Chat where SerialNumber = (select isnull(max(SerialNumber),0) FROM Chat  where LockNumber = {0}) order by id desc", c.LockNumber);
-            var list = db.Database.SqlQuery<LastIdChat>(sql).Single();
+            var list = db.Database.SqlQuery<LastIdChat>(sql).ToList();
             return Ok(list);
         }
 
