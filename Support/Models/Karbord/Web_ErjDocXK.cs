@@ -43,7 +43,6 @@ namespace Support.Models
 
         public bool? ChatDownload { get; set; }
 
-        public int ChatCount { get; set; }
 
     }
 }

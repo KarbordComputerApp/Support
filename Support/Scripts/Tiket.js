@@ -52,6 +52,8 @@
     var ErjDocAttach_DelUri = server + '/api/KarbordData/ErjDocAttach_Del/'; // حذف پیوست
     var Ticket_UpdateResultUri = server + '/api/KarbordData/Ticket_UpdateResult/'; // خواندن نتیجه تیکت
 
+    var ChatCountTiketUri = server + '/api/Data/ChatCountTiket/';
+
 
     var serialNumberAttach = 0;
     var serialNumber = 0;
@@ -198,15 +200,39 @@
             ajaxFunction(TicketStatusUri, 'Post', Object_TicketStatus, false).done(function (dataTicketStatus) {
 
                 for (var i = 0; i < dataDocXK.length; i++) {
-
+                    dataDocXK[i].ChatCount = 0;
                     for (var j = 0; j < dataTicketStatus.length; j++) {
                         if (dataDocXK[i].SerialNumber == dataTicketStatus[j].SerialNumber)
                             dataDocXK[i].Status = dataTicketStatus[j].TicketStatusSt;
                     }
                 }
 
-                self.ErjDocXKList(dataDocXK);
+                //self.ErjDocXKList(dataDocXK);
             });
+
+
+
+
+            var ChatCountTiketObject = {
+                LockNumber: lockNumber,
+            }
+            ajaxFunction(ChatCountTiketUri, 'Post', ChatCountTiketObject, false).done(function (dataChatCount) {
+
+                for (var i = 0; i < dataDocXK.length; i++) {
+                    for (var j = 0; j < dataChatCount.length; j++) {
+                        if (dataDocXK[i].SerialNumber == dataChatCount[j].SerialNumber)
+                            dataDocXK[i].ChatCount = dataChatCount[j].ChatCount;
+                    }
+                }
+
+                
+            });
+
+            self.ErjDocXKList(dataDocXK);
+
+
+
+
         });
     }
 

@@ -1747,6 +1747,33 @@ namespace Support.Controllers
 
 
 
+        public class ChatCountTiketObject
+        {
+            public string LockNumber { get; set; }
+
+        }
+
+
+        public class ChatCountTiket
+        {
+            public long SerialNumber { get; set; }
+
+            public int ChatCount { get; set; }
+
+        }
+
+
+        [Route("api/Data/ChatCountTiket/")]
+        public async Task<IHttpActionResult> PostChatCountTiket(ChatCountTiketObject c)
+        {
+            string sql = string.Format(@"select SerialNumber,count(id) as ChatCount from chat where LockNumber = {0} group by SerialNumber ", c.LockNumber);
+            var list = db.Database.SqlQuery<ChatCountTiket>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
+
         /*public async Task<IHttpActionResult> PostLogin1(LoginObject LoginObject)
         {
             string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", LoginObject.LockNumber, EncodePassword(LoginObject.Pass));
