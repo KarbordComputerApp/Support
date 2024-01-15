@@ -30,12 +30,15 @@ var timerLastIdChat;
 
 $("#chatbox").empty();
 $("#motaghaziChat").hide();
+$("#Captcha").hide();
 $("#chat-bell").hide();
 $('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/min.png');
 
 $("#chat-bell").show();
 
 $("#box-chat").hide();
+
+
 
 
 
@@ -63,10 +66,12 @@ if (LockInput != "" && LockInput != null) {
     GetRepFromUsers();
     getCompanyName();
 
-    $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat"));
-
+ 
     isLast = false;
     refresh(idChat, isLast);
+    $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + localStorage.getItem("MotaghaziChat") );
+
+
     timer = setInterval(() => { refresh(idChat, false) }, 10000);
     CalcHeight();
 }
@@ -143,10 +148,28 @@ function getDataTiket(id) {
 
 
 
+function CreateCaptcha() {
+    let uniquechar = "";
+    const randomchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 1; i < 5; i++) {
+        uniquechar += randomchar.charAt(
+            Math.random() * randomchar.length)
+    }
+    $("#CaptchaData").val(uniquechar) ;
+}
+
+
+$("#RefreshCaptcha").click(function () {
+    $("#CaptchaVal").val("");
+    CreateCaptcha();
+});
 
 $("#chat-bell").click(function () {
     $("#motaghaziChat").hide();
     $("#motaghaziChat").val("");
+
+    $("#Captcha").hide("");
+    $("#CaptchaVal").val("");
 
     if (idChat == null) {
         getDataChat();
@@ -156,6 +179,10 @@ $("#chat-bell").click(function () {
     idChat = idChat == "0" ? null : idChat;
 
     if (idChat == null) {
+        CreateCaptcha();
+        $("#Captcha").show();
+        $("#CaptchaVal").removeAttr('disabled');
+
         $("#motaghaziChat").show();
         $("#motaghaziChat").removeAttr('disabled');
         $("#chatbox").empty();
@@ -383,6 +410,13 @@ function ChatSend() {
         return showNotification('پیام را وارد کنید', 0);
     }
     if (idChat == null) {
+        captchaData = $("#CaptchaData").val();
+        captchaVal = $("#CaptchaVal").val();
+
+        if (captchaData != captchaVal) {
+            CreateCaptcha();
+            return showNotification('لطفا کلمه امنیتی را با دقت وارد نمایید', 0);
+        }
 
         var motaghazi = $("#motaghaziChat").val();
         if (motaghazi == "") {
@@ -432,6 +466,7 @@ function ChatSend() {
             idChat = idChat == "0" ? null : idChat;
             localStorage.setItem("idChat", idChat);
             $("#motaghaziChat").attr('disabled', 'disabled');
+            $("#CaptchaVal").attr('disabled', 'disabled');
         });
     }
 

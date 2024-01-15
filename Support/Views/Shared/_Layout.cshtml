@@ -238,8 +238,15 @@
 
 
         <div id="box-send" class="hasmic box-footer">
+
+            <div id="Captcha" class="row">
+                <input type="text" id="CaptchaData" style="text-align: center;font-size:18px;text-decoration:underline" readonly selectable="False" class="col-4">
+                <img src="~/Content/img/Icon_Blue/refresh.png" id="RefreshCaptcha" width="24" height="24" style="margin:10px" />
+                <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px"  class="col" placeholder="کد امنیتی را وارد کنید">
+            </div>
+
             <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
-            <div class="row" id="ActiveAttach" >
+            <div class="row" id="ActiveAttach">
                 <input id="ActiveAttachChat" type="checkbox" style="width: 16px;margin-left: 5px;margin-bottom: 0px;margin-right: 5px;" />
                 <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
             </div>
