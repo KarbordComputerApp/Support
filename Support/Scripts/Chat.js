@@ -168,7 +168,7 @@ $("#chat-bell").click(function () {
     $("#motaghaziChat").hide();
     $("#motaghaziChat").val("");
 
-    $("#Captcha").hide("");
+    $("#Captcha").hide();
     $("#CaptchaVal").val("");
 
     if (idChat == null) {
@@ -415,7 +415,7 @@ function ChatSend() {
 
         if (captchaData != captchaVal) {
             CreateCaptcha();
-            return showNotification('لطفا کلمه امنیتی را با دقت وارد نمایید', 0);
+            return showNotification('لطفا کد امنیتی را با دقت وارد نمایید', 0);
         }
 
         var motaghazi = $("#motaghaziChat").val();
@@ -465,8 +465,11 @@ function ChatSend() {
             idChat = data;
             idChat = idChat == "0" ? null : idChat;
             localStorage.setItem("idChat", idChat);
-            $("#motaghaziChat").attr('disabled', 'disabled');
-            $("#CaptchaVal").attr('disabled', 'disabled');
+            $("#motaghaziChat").hide();
+            $("#Captcha").hide()
+            CalcHeight();
+            //$("#motaghaziChat").attr('disabled', 'disabled');
+            //$("#CaptchaVal").attr('disabled', 'disabled');
         });
     }
 
