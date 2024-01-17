@@ -166,7 +166,7 @@ $("#RefreshCaptcha").click(function () {
 
 $("#chat-bell").click(function () {
     $("#motaghaziChat").hide();
-    $("#motaghaziChat").val("");
+    //$("#motaghaziChat").val("");
 
     $("#Captcha").hide();
     $("#CaptchaVal").val("");
