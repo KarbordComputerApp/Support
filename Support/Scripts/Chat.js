@@ -63,13 +63,17 @@ if (LockInput != "" && LockInput != null) {
     $("#btn-end-chat").show();
     $("#box-chat").show();
 
+    if (ipw == "" || ipw == "null" || ipw == null) {
+        getIP();
+    }
+
     GetRepFromUsers();
     getCompanyName();
 
- 
+
     isLast = false;
     refresh(idChat, isLast);
-    $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + localStorage.getItem("MotaghaziChat") );
+    $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + localStorage.getItem("MotaghaziChat"));
 
 
     timer = setInterval(() => { refresh(idChat, false) }, 10000);
@@ -155,7 +159,7 @@ function CreateCaptcha() {
         uniquechar += randomchar.charAt(
             Math.random() * randomchar.length)
     }
-    $("#CaptchaData").val(uniquechar) ;
+    $("#CaptchaData").val(uniquechar);
 }
 
 
@@ -297,13 +301,39 @@ function refresh(id, isLast) {
                         res += '</a>'
                     }
                     else {
-                        res += item.Body
+
+                     
+                       
+
+                        isLink = item.Body.search("www.") > 0 || item.Body.search("http://") > 0 || item.Body.search("https://") > 0 || item.Body.search("185.208.174.64") > 0
+                        if (isLink) {
+                            isVideo = item.Body.toLowerCase();
+                            isVideo = isVideo.search("/content/video/") > 0;
+
+                            if (isVideo) {
+                               
+                                res += '<a href="#" name = "' + item.Body +'" onclick="ShowVideoChat(this)">';
+                                res += '<span>ویدیو آموزشی</span>';
+                                res += '</a>'
+                            } else {
+                                res += '<a href="' + item.Body + '" target="_blank" >';
+                                res += '<span>' + item.Body + '</span>';
+                                res += '</a>'
+                            }
+                        }
+
+                        else {
+                            res += '<span>' + item.Body + '</span>';
+                        }
+
+
+
                     }
 
                     res +=
                         '</div>';
 
-                    if (item.Mode == 0) {
+                    if (item.Mode == 0 && isAdminChat ) {
                         dateText = SetNameUser(item.UserCode)
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>';
                     }
@@ -398,7 +428,7 @@ function ChatSend() {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
+    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '11281') {
 
     }
     else {
@@ -435,7 +465,7 @@ function ChatSend() {
             Status: "فعال",
             Spec: "",
             LockNo: lockNumber,
-            Text:  message,
+            Text: message,
             F01: '',
             F02: '',
             F03: '',
@@ -507,14 +537,14 @@ function SendAttach(file) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '12035') {
+    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '11281') {
 
     }
     else {
         return showNotification('دسترسی ندارید', 0);
     }
 
-    /*if (lockNumber != '10000' && lockNumber != '10003' && lockNumber != '12035') {
+    /*if (lockNumber != '10000' && lockNumber != '10003' && lockNumber != '11281') {
         return showNotification('دسترسی ندارید', 0);
     }*/
 
@@ -582,6 +612,42 @@ function ChatDownloadFile(e) {
     });
 }
 
+
+var videoclip = document.getElementById('videoclipChat');
+var videosource = document.getElementById('mp4videoChat');
+
+
+function ShowVideoChat(e) {
+
+    var href = $(e).attr("href");
+    var name = $(e).attr("name");
+
+    var LogLinkTiketUri = server + '/api/Data/LogLinkTiket/';
+    var LogLinkTiketObject = {
+        LockNumber: lockNumber,
+        IP: ipw,
+        CallProg: 'Web',
+        Link: name
+    }
+    ajaxFunction(LogLinkTiketUri, 'POST', LogLinkTiketObject, false).done(function (data) {
+        if (href == "#") {
+            videoclip.pause();
+            videosource.setAttribute('src', name);
+            videoclip.load();
+            videoclip.play();
+            $("#Title_VideoChat").text("ویدیو آموزشی");
+            $("#modal-VideoChat").modal('show');
+        }
+    });
+
+
+}
+
+
+$('#modal-VideoChat').on('hide.bs.modal', function () {
+    videoclip.pause();
+    videoclip.currentTime = 0
+});
 
 
 $("#btn-end-chat").click(function () {

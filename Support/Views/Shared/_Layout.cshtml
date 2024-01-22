@@ -242,7 +242,7 @@
             <div id="Captcha" class="row">
                 <input type="text" id="CaptchaData" style="text-align: center;font-size:18px;text-decoration:underline" readonly selectable="False" class="col-4">
                 <img src="~/Content/img/Icon_Blue/refresh.png" id="RefreshCaptcha" width="24" height="24" style="margin:10px" />
-                <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px"  class="col" placeholder="کد امنیتی را وارد کنید">
+                <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px" class="col" placeholder="کد امنیتی را وارد کنید">
             </div>
 
             <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
@@ -331,6 +331,30 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="modal-VideoChat" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" dir="ltr" data-backdrop="static" data-keyboard="false" style="z-index: 10000;">
+        <div class="modal-dialog" style="max-width:750px;max-height:500px">
+            <div class="modal-content">
+                <div class="modal-header" style="direction:rtl">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="خروج">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 id="Title_VideoChat" class="modal-title"></h4>
+                    <a id=""></a>
+                </div>
+                <div class="modal-body">
+                    <video id="videoclipChat" controls autoplay controlsList="nodownload" oncontextmenu="return false;" style="width: 100%;">
+                        <source id="mp4videoChat" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 
 
 
