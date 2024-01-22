@@ -12,6 +12,16 @@ var LockNumbersUri = server + '/api/Data/LockNumbers/';
 
 //getDataChat();
 
+var lockChat = [
+    "10000", "10001", "10002", "10003",
+    "11764",
+    "14137",
+    "12984",
+    "13591",
+    "11342"
+];
+
+
 var idChat = localStorage.getItem("idChat");
 
 var isLast = false;
@@ -226,6 +236,48 @@ $("#btn-max-chat").click(function () {
 //localStorage.setItem("idChat",22);
 
 
+$(document).ready(function () {
+
+});
+
+function newExcitingAlerts () {
+   /* 
+      var myWindow = window.open('','zzz','width=600,height=700');
+      myWindow.document.write('test');
+    myWindow.focus();
+*/
+
+
+  /*  var child = window.open('Index', 'child');
+    window.external.comeback = function () {
+        var back = confirm('Are you sure you want to comback?');
+        if (back) {
+            child.close();
+        } else {
+            child.focus();
+        }
+    }
+    */
+/*
+    browser.runtime.onMessage.addListener((message, sender) => {
+        console.log('Active Tab ID: ', sender.tab.id);
+    });
+
+    chrome.tabs.getSelected(null, function (tab) {
+        console.log(tab);
+    });
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        console.log(tabs[0]);
+    });
+
+    var myWindow0 = window;
+    myWindow0.focus();
+    */
+};
+
+
+
+
 function refresh(id, isLast) {
     idChat = id
     idChat = idChat == "0" ? null : idChat;
@@ -302,8 +354,8 @@ function refresh(id, isLast) {
                     }
                     else {
 
-                     
-                       
+
+
 
                         isLink = item.Body.search("www.") > 0 || item.Body.search("http://") > 0 || item.Body.search("https://") > 0 || item.Body.search("185.208.174.64") > 0
                         if (isLink) {
@@ -311,8 +363,8 @@ function refresh(id, isLast) {
                             isVideo = isVideo.search("/content/video/") > 0;
 
                             if (isVideo) {
-                               
-                                res += '<a href="#" name = "' + item.Body +'" onclick="ShowVideoChat(this)">';
+
+                                res += '<a href="#" name = "' + item.Body + '" onclick="ShowVideoChat(this)">';
                                 res += '<span>ویدیو آموزشی</span>';
                                 res += '</a>'
                             } else {
@@ -333,7 +385,7 @@ function refresh(id, isLast) {
                     res +=
                         '</div>';
 
-                    if (item.Mode == 0 && isAdminChat ) {
+                    if (item.Mode == 0 && isAdminChat) {
                         dateText = SetNameUser(item.UserCode)
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>';
                     }
@@ -420,6 +472,7 @@ $("#ChatSend").click(function () {
 });
 
 
+
 function ChatSend() {
 
     var hasContract = localStorage.getItem("HasContract");
@@ -428,7 +481,8 @@ function ChatSend() {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '11281') {
+
+    if (lockChat.includes(lockNumber)) {
 
     }
     else {
@@ -436,7 +490,8 @@ function ChatSend() {
     }
 
     var message = $("#ChatMessage").val();
-    if (message == "") {
+    if (message.trim() == "") {
+        $("#ChatMessage").val("");
         return showNotification('پیام را وارد کنید', 0);
     }
     if (idChat == null) {
@@ -537,16 +592,13 @@ function SendAttach(file) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockNumber == '10000' || lockNumber == '10001' || lockNumber == '10003' || lockNumber == '11281') {
+    if (lockChat.includes(lockNumber)) {
 
     }
     else {
         return showNotification('دسترسی ندارید', 0);
     }
 
-    /*if (lockNumber != '10000' && lockNumber != '10003' && lockNumber != '11281') {
-        return showNotification('دسترسی ندارید', 0);
-    }*/
 
     if (idChat == null) {
         return showNotification('چت را با پیام متنی شروع کنید', 0);
@@ -698,17 +750,18 @@ $('#ActiveAttachChat').change(function () {
 });
 
 
-
-/*
+        
+        
+        /*
 var DocAttachBoxListObject = {
-    Id: item.IId,
-    ByData: 1,
-    IP: ipw,
-    CallProg: 'Web'
-}
-
+                Id: item.IId,
+            ByData: 1,
+            IP: ipw,
+            CallProg: 'Web'
+        }
+        
 ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
     var sampleArr = base64ToArrayBuffer(data[0].Atch);
-    saveByteArray(data[0].FName, sampleArr);
-});
+            saveByteArray(data[0].FName, sampleArr);
+        });
  */

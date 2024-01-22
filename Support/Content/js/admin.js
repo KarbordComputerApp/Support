@@ -98,13 +98,13 @@ $.MyAdmin = {}, $.MyAdmin.options = {
         $.fn.selectpicker && $("select:not(.ms)").selectpicker()
     }
 };
-var edge = "Microsoft Edge",
-    ie10 = "Internet Explorer 10",
-    ie11 = "Internet Explorer 11",
-    opera = "Opera",
-    firefox = "Mozilla Firefox",
-    chrome = "Google Chrome",
-    safari = "Safari";
+var _edge = "Microsoft Edge",
+    _ie10 = "Internet Explorer 10",
+    _ie11 = "Internet Explorer 11",
+    _opera = "Opera",
+    _firefox = "Mozilla Firefox",
+    _chrome = "Google Chrome",
+    _safari = "Safari";
 
 function skinChanger() {
     $(".right-sidebar .demo-choose-skin li").on("click", function () {
@@ -169,11 +169,11 @@ $.MyAdmin.browser = {
     },
     getBrowser: function () {
         var e = navigator.userAgent.toLowerCase();
-        return /edge/i.test(e) ? edge : /rv:11/i.test(e) ? ie11 : /msie 10/i.test(e) ? ie10 : /opr/i.test(e) ? opera : /chrome/i.test(e) ? chrome : /firefox/i.test(e) ? firefox : navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? safari : void 0
+        return /edge/i.test(e) ? _edge : /rv:11/i.test(e) ? _ie11: /msie 10/i.test(e) ? _ie10 : /opr/i.test(e) ? _opera: /chrome/i.test(e) ? _chrome : /firefox/i.test(e) ? _firefox: navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? _safari : void 0
     },
     getClassName: function () {
         var e = this.getBrowser();
-        return e === edge ? "edge" : e === ie11 ? "ie11" : e === ie10 ? "ie10" : e === opera ? "opera" : e === chrome ? "chrome" : e === firefox ? "firefox" : e === safari ? "safari" : ""
+        return e === _edge ? "edge" : e === _ie11? "ie11" : e === _ie10 ? "ie10" : e === _opera? "opera" : e === _chrome ? "chrome" : e === _firefox? "firefox" : e === _safari ? "safari" : ""
     }
 }, $(".rightSetting .btn-sidebar-light").on("click", function () {
     $("body").removeClass("menu_dark logo-black"), $("body").addClass("logo-white");
