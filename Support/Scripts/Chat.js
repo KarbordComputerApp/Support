@@ -281,8 +281,9 @@ $("#btn-max-chat").click(function () {
 function refresh(id, isLast) {
     idChat = id
     idChat = idChat == "0" ? null : idChat;
-
-    getDataTiket(idChat);
+    if (idChat > 0) {
+        getDataTiket(idChat);
+    }
 
     if (isLast == true) {
         $("#box-send").hide();
