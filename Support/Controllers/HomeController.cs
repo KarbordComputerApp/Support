@@ -115,7 +115,7 @@ namespace Support.Controllers
             return View();
         }
 
-        //http://localhost:52798/Home/Tiket?LockNumber=10000&Pass=ADf5243hh2059dghQpAdq42114
+        //http://localhost:52798/Home/Tiket?LockNumber=4OClgAD-oIye-PdN;nDoEH6Avbd8LoGiBeMZvsL8KRk=
 
         public ActionResult Tiket(string LockNumber, string Pass)
         {
@@ -148,6 +148,18 @@ namespace Support.Controllers
                         long elapsedTicks = currentDate - tik;
                         TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 
+#if (DEBUG)
+                        string sql = string.Format(@"select * from Users where (LockNumber = {0})", lockNumber);
+                        var list = db.Database.SqlQuery<Users>(sql).First();
+                        if (list.UserType == 1 || list.UserType == 2)
+                        {
+                            ViewBag.LockNumber = lockNumber;
+                        }
+                        else
+                        {
+                            ViewBag.LockNumber = "NotAccess";
+                        }
+#else
                         if (elapsedSpan.TotalMinutes <= 1)
                         {
                             string sql = string.Format(@"select * from Users where (LockNumber = {0})", lockNumber);
@@ -161,6 +173,7 @@ namespace Support.Controllers
                                 ViewBag.LockNumber = "NotAccess";
                             }
                         }
+#endif
                     }
                 }
             }
@@ -170,7 +183,7 @@ namespace Support.Controllers
 
         //http://localhost:52798/api/Data/CheckVideoFormId/1/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
         //http://localhost:52798/Home/VideoFormId?HashLink=RnRjZ6pO2xlDkNOb641a8saAXdSngF1qycRKhFU0vZEn84JBwWWaP9n6IW4oj5VqwHapxFS5zB;RtEHnqKnaJA==&&Token=4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
-        public ActionResult VideoFormId(string HashLink , string Token)
+        public ActionResult VideoFormId(string HashLink, string Token)
         {
             long currentDate = DateTime.Now.Ticks;
 
@@ -205,13 +218,20 @@ namespace Support.Controllers
                 Int64 tik = Int64.Parse(data[2]);
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
-                //if (elapsedSpan.TotalMinutes <= 1)
+#if (DEBUG)
+                ViewBag.ChatId = ChatId;
+                ViewBag.LockNumber = lockNumber;
+                ViewBag.UserCode = UserCode;
+#else
+                if (elapsedSpan.TotalMinutes <= 1)
                 {
                     ViewBag.ChatId = ChatId;
                     ViewBag.LockNumber = lockNumber;
                     ViewBag.UserCode = UserCode;
                 }
+#endif
             }
+
             return View();
         }
 

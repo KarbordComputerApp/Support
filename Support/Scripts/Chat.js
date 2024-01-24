@@ -21,15 +21,23 @@ var lockChat = [
     "11342"
 ];
 
+var focusPage;
+
+
+var orgTitle = document.title;
+var animatedTitle = "پیام جدید " + orgTitle;
 
 var idChat = localStorage.getItem("idChat");
 
 var isLast = false;
+var timerNotifation = null;
+var timerNotifationPage = null;
 
 idChat = idChat == "0" ? null : idChat;
 
 var isAdminChat = false;
 var LockInput = $("#LockInput").data("value");
+
 var userCodeChat = 'User'
 var leftItem = "left";
 var rightItem = "right";
@@ -55,42 +63,58 @@ $("#box-chat").hide();
 
 
 if (LockInput != "" && LockInput != null) {
-    //panel admin
+
+
     idChat = $("#IdChat").data("value");
-    idChat = idChat == "0" ? null : idChat;
+    if (idChat != null) {  //panel admin
+        idChat = idChat == "0" ? null : idChat;
 
-    userCodeChat = $("#UserCode").data("value");
-    lockNumber = LockInput;
-    $(".continerHead").hide();
-    $("#chat-bell").hide();
-    $("#ActiveAttach").show();
-    $("#P_AttachChat").show();
+        userCodeChat = $("#UserCode").data("value");
+        lockNumber = LockInput;
+        $(".continerHead").hide();
+        $("#chat-bell").hide();
+        $("#ActiveAttach").show();
+        $("#P_AttachChat").show();
 
-    isAdminChat = true;
-    rightItem = "left";
-    leftItem = "right";
-    mode = 0;
-    $("#btn-end-chat").show();
-    $("#box-chat").show();
+        isAdminChat = true;
+        rightItem = "left";
+        leftItem = "right";
+        mode = 0;
+        $("#btn-end-chat").show();
+        $("#box-chat").show();
 
-    if (ipw == "" || ipw == "null" || ipw == null) {
-        getIP();
+        if (ipw == "" || ipw == "null" || ipw == null) {
+            getIP();
+        }
+
+        GetRepFromUsers();
+        getCompanyName();
+
+        isLast = false;
+        refresh(idChat, isLast);
+        $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + localStorage.getItem("MotaghaziChat"));
+
+
+
+        var orgTitle = localStorage.getItem("CompanyNameChat");
+        var animatedTitle = "پیام جدید از " + orgTitle;
+
+        document.title = orgTitle;
+
+
+        timer = setInterval(() => { refresh(idChat, false) }, 10000);
+        CalcHeight();
     }
-
-    GetRepFromUsers();
-    getCompanyName();
-
-
-    isLast = false;
-    refresh(idChat, isLast);
-    $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + localStorage.getItem("MotaghaziChat"));
-
-
-    timer = setInterval(() => { refresh(idChat, false) }, 10000);
-    CalcHeight();
+    else { //TiketLink
+        if (lockNumber == "" || lockNumber == null) {
+            lockNumber = LockInput;
+        }
+        getHasContract();
+    }
 }
 else {
     //panel user
+
     $("#ActiveAttach").hide();
     $("#chat-bell").show();
     $("#btn-end-chat").hide();
@@ -100,6 +124,20 @@ else {
     }, 100000);
     isLast = false;
     refresh(idChat, isLast);
+}
+
+
+
+
+
+
+
+
+
+
+
+if (lockNumber == "" || lockNumber == null) {
+    //  window.location.href = localStorage.getItem("urlLogin");
 }
 
 $("#btn-close-chat").click(function () {
@@ -236,44 +274,6 @@ $("#btn-max-chat").click(function () {
 //localStorage.setItem("idChat",22);
 
 
-$(document).ready(function () {
-
-});
-
-function newExcitingAlerts () {
-   /* 
-      var myWindow = window.open('','zzz','width=600,height=700');
-      myWindow.document.write('test');
-    myWindow.focus();
-*/
-
-
-  /*  var child = window.open('Index', 'child');
-    window.external.comeback = function () {
-        var back = confirm('Are you sure you want to comback?');
-        if (back) {
-            child.close();
-        } else {
-            child.focus();
-        }
-    }
-    */
-/*
-    browser.runtime.onMessage.addListener((message, sender) => {
-        console.log('Active Tab ID: ', sender.tab.id);
-    });
-
-    chrome.tabs.getSelected(null, function (tab) {
-        console.log(tab);
-    });
-    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        console.log(tabs[0]);
-    });
-
-    var myWindow0 = window;
-    myWindow0.focus();
-    */
-};
 
 
 
@@ -317,7 +317,9 @@ function refresh(id, isLast) {
                     $("#btn-end-chat").hide();
                     clearInterval(timer);
                 }
-
+                if (focusPage == false) {
+                    NotifationChat(data[0].Body);
+                }
 
                 for (var i = 0; i < data.length; i++) {
                     item = data[i];
@@ -472,6 +474,8 @@ $("#ChatSend").click(function () {
 });
 
 
+//localStorage.removeItem("HasContract");
+
 
 function ChatSend() {
 
@@ -482,7 +486,7 @@ function ChatSend() {
     }
 
 
-    if (lockChat.includes(lockNumber)) {
+    if (lockChat.includes(lockNumber.toString())) {
 
     }
     else {
@@ -592,7 +596,7 @@ function SendAttach(file) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockChat.includes(lockNumber)) {
+    if (lockChat.includes(lockNumber.toString())) {
 
     }
     else {
@@ -750,8 +754,95 @@ $('#ActiveAttachChat').change(function () {
 });
 
 
-        
-        
+var myWindow;
+
+$(window).focus(function () {
+    focusPage = true;
+    clearInterval(timerNotifation);
+    clearInterval(timerNotifationPage);
+    document.title = orgTitle;
+    if (myWindow != null) {
+        myWindow = null;
+    }
+
+});
+
+$(window).blur(function () {
+    focusPage = false;
+});
+
+
+
+
+function NotifationChat(value) {
+    startAnimation();
+    CreatePageNotifation(value);
+
+    timerNotifation = setInterval(startAnimation, 200);
+    timerNotifationPage =
+        setInterval(() => { CreatePageNotifation(value) }, 1000);
+
+    var currentState = false;
+    function startAnimation() {
+        document.title = currentState ? orgTitle : animatedTitle;
+        currentState = !currentState;
+    }
+
+
+    function CreatePageNotifation(value) {
+        if (myWindow == null) {
+            const windowFeatures = "left=0,top=0,width=300,height=100";
+            myWindow = window.open("", 'Notifation', windowFeatures);
+        }
+
+        myWindow.document.body.innerHTML = null;
+        myWindow.document.title = orgTitle;
+        myWindow.document.write(value);
+        myWindow.focus();
+    }
+}
+
+
+
+
+function newExcitingAlerts() {
+    /* 
+       var myWindow = window.open('','zzz','width=600,height=700');
+       myWindow.document.write('test');
+     myWindow.focus();
+ */
+
+
+    /*  var child = window.open('Index', 'child');
+      window.external.comeback = function () {
+          var back = confirm('Are you sure you want to comback?');
+          if (back) {
+              child.close();
+          } else {
+              child.focus();
+          }
+      }زن
+      */
+    /*
+        browser.runtime.onMessage.addListener((message, sender) => {
+            console.log('Active Tab ID: ', sender.tab.id);
+        });
+    
+        chrome.tabs.getSelected(null, function (tab) {
+            console.log(tab);
+        });
+        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+            console.log(tabs[0]);
+        });
+    
+        var myWindow0 = window;
+        myWindow0.focus();
+        */
+};
+
+
+
+
         /*
 var DocAttachBoxListObject = {
                 Id: item.IId,

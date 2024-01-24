@@ -108,6 +108,7 @@ function GetCountErjDocXK() {
     }
 }
 
+
 var RepFromUsersUri = server + '/api/KarbordData/Web_RepFromUsers/'; // لیست کاربران
 function GetRepFromUsers() {
     var RepFromUsersObject = {
@@ -116,7 +117,7 @@ function GetRepFromUsers() {
 
     ajaxFunction(RepFromUsersUri, 'POST', RepFromUsersObject, false).done(function (data) {
         localStorage.setItem("UsersChat", JSON.stringify(data));
-        usersChat = JSON.parse(UsersChat);
+        usersChat = data;
     });
 }
 
