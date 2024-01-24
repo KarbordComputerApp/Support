@@ -318,7 +318,7 @@ function refresh(id, isLast) {
                     $("#btn-end-chat").hide();
                     clearInterval(timer);
                 }
-                if (focusPage == false) {
+                if (focusPage == false && isAdminChat) {
                     NotifationChat(data[0].Body);
                 }
 
@@ -781,7 +781,7 @@ function NotifationChat(value) {
 
     timerNotifation = setInterval(startAnimation, 200);
     timerNotifationPage =
-        setInterval(() => { CreatePageNotifation(value) }, 1000);
+        setInterval(() => { CreatePageNotifation(value) }, 10000);
 
     var currentState = false;
     function startAnimation() {
