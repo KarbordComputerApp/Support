@@ -126,6 +126,40 @@ namespace Support.Controllers
 
 
 
+        [Route("api/Data/CountGroupSendSamane/{LockNumber}")]
+        public async Task<IHttpActionResult> GetAddGroupLogSamane(string LockNumber)
+        {
+            string sql = string.Format(@"select distinct count(GroupNo) as CountGroup from GroupLog where LockNumber = {0}", LockNumber);
+            var list = db.Database.SqlQuery<int>(sql).Single();
+            return Ok(list);
+        }
+
+
+        public class AddGroupLogSamaneObject
+        {
+            public string LockNumber { get; set; }
+
+            public int Group { get; set; }
+
+        }
+
+
+        [Route("api/Data/AddGroupLogSamane/")]
+        public async Task<IHttpActionResult> PostAddGroupLogSamane(AddGroupLogSamaneObject c)
+        {
+            string sql = string.Format(@"declare @countGroup int
+                                         select @countGroup = count(GroupNo) from GroupLog where LockNumber = {0} and GroupNo = {1} 
+                                         if (@countGroup = 0)
+                                             insert into GroupLog(LockNumber,GroupNo) values({0},{1})",
+                                       c.LockNumber,c.Group);
+            var list1 = db.Database.SqlQuery<int>(sql).Single();
+            db.SaveChanges();
+            return Ok("0");
+        }
+
+
+
+
 
         public class ChangePasswordObject
         {
@@ -1770,6 +1804,10 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<ChatCountTiket>(sql).ToList();
             return Ok(list);
         }
+
+
+
+
 
 
 
