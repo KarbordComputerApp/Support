@@ -203,7 +203,7 @@ function getDataTiket(id) {
 function CreateCaptcha() {
     let uniquechar = "";
     const randomchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 6; i++) {
         uniquechar += randomchar.charAt(
             Math.random() * randomchar.length)
     }
@@ -499,85 +499,97 @@ function ChatSend() {
         $("#ChatMessage").val("");
         return showNotification('پیام را وارد کنید', 0);
     }
+
+
     if (idChat == null) {
-        captchaData = $("#CaptchaData").val();
-        captchaVal = $("#CaptchaVal").val();
-
-        if (captchaData != captchaVal) {
-            CreateCaptcha();
-            return showNotification('لطفا کد امنیتی را با دقت وارد نمایید', 0);
+        $("#modal-NewChat").modal("show");
+    }
+    else {
+        var AddChatObject = {
+            LockNumber: lockNumber,
+            SerialNumber: idChat,
+            Mode: mode,
+            Status: 0,
+            ReadSt: 0,
+            UserCode: userCodeChat,
+            Body: message,
         }
-
-        var motaghazi = $("#motaghaziChat").val();
-        if (motaghazi == "") {
-            return showNotification('نام درخواست کننده را وارد کنید', 0);
-        }
-
-        ajaxFunction(DateUri, 'GET', false).done(function (data) {
-            DateNow = data[0];
-        });
-
-        var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
-        var ErjSaveTicket_HI = {
-            SerialNumber: 0,
-            DocDate: DateNow,
-            UserCode: 'ZAND',
-            Status: "فعال",
-            Spec: "",
-            LockNo: lockNumber,
-            Text: message,
-            F01: '',
-            F02: '',
-            F03: '',
-            F04: '',
-            F05: '',
-            F06: '',
-            F07: '',
-            F08: '',
-            F09: '',
-            F10: '',
-            F11: '',
-            F12: '',
-            F13: '',
-            F14: '',
-            F15: '',
-            F16: '',
-            F17: '',
-            F18: '',
-            F19: '',
-            F20: '',
-            Motaghazi: motaghazi,
-            IP: ipw,
-            CallProg: 'Web',
-            LoginLink: loginLink
-        }
-        ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
-            idChat = data;
-            idChat = idChat == "0" ? null : idChat;
-            localStorage.setItem("idChat", idChat);
-            $("#motaghaziChat").hide();
-            $("#Captcha").hide()
-            CalcHeight();
-            //$("#motaghaziChat").attr('disabled', 'disabled');
-            //$("#CaptchaVal").attr('disabled', 'disabled');
+        ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
+            serialNumber = data;
+            isLast = false;
+            refresh(idChat, isLast);
+            $("#ChatMessage").val("");
         });
     }
+}
 
+$("#SendNewChat").click(function () {
+    NewChat();
+})
 
-    var AddChatObject = {
-        LockNumber: lockNumber,
-        SerialNumber: idChat,
-        Mode: mode,
-        Status: 0,
-        ReadSt: 0,
-        UserCode: userCodeChat,
-        Body: message,
+function NewChat() {
+    captchaData = $("#CaptchaData").val();
+    captchaVal = $("#CaptchaVal").val();
+
+    var motaghazi = $("#motaghaziChat").val();
+    if (motaghazi == "") {
+        return showNotification('نام درخواست کننده را وارد کنید', 0);
     }
-    ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
-        serialNumber = data;
-        isLast = false;
-        refresh(idChat, isLast);
-        $("#ChatMessage").val("");
+
+    if (captchaData.toLowerCase() != captchaVal.toLowerCase()) {
+        CreateCaptcha();
+        return showNotification('لطفا کد امنیتی را با دقت وارد نمایید', 0);
+    }
+
+    var message = $("#ChatMessage").val();
+
+    ajaxFunction(DateUri, 'GET', false).done(function (data) {
+        DateNow = data[0];
+    });
+
+    var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
+    var ErjSaveTicket_HI = {
+        SerialNumber: 0,
+        DocDate: DateNow,
+        UserCode: 'ZAND',
+        Status: "فعال",
+        Spec: "",
+        LockNo: lockNumber,
+        Text: message,
+        F01: '',
+        F02: '',
+        F03: '',
+        F04: '',
+        F05: '',
+        F06: '',
+        F07: '',
+        F08: '',
+        F09: '',
+        F10: '',
+        F11: '',
+        F12: '',
+        F13: '',
+        F14: '',
+        F15: '',
+        F16: '',
+        F17: '',
+        F18: '',
+        F19: '',
+        F20: '',
+        Motaghazi: motaghazi,
+        IP: ipw,
+        CallProg: 'Web',
+        LoginLink: loginLink
+    }
+    ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
+        idChat = data;
+        idChat = idChat == "0" ? null : idChat;
+        localStorage.setItem("idChat", idChat);
+       // $("#motaghaziChat").hide();
+        //$("#Captcha").hide()
+        //CalcHeight();
+        ChatSend();
+        $("#modal-NewChat").modal("hide");
     });
 }
 

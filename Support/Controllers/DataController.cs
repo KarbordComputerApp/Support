@@ -125,12 +125,21 @@ namespace Support.Controllers
         }
 
 
+        public class GroupSendSamane
+        {
+            public string LockNumber { get; set; }
+
+            public byte GroupNo { get; set; }
+
+            public long Samane_Inno { get; set; }
+
+        }
 
         [Route("api/Data/CountGroupSendSamane/{LockNumber}")]
-        public async Task<IHttpActionResult> GetAddGroupLogSamane(string LockNumber)
+        public async Task<IHttpActionResult> GetGroupLogSamane(string LockNumber)
         {
-            string sql = string.Format(@"select distinct count(GroupNo) as CountGroup from GroupLog where LockNumber = {0}", LockNumber);
-            var list = db.Database.SqlQuery<int>(sql).Single();
+            string sql = string.Format(@"select * from GroupLog where LockNumber = {0}", LockNumber);
+            var list = db.Database.SqlQuery<GroupSendSamane>(sql).ToList();
             return Ok(list);
         }
 
@@ -139,7 +148,7 @@ namespace Support.Controllers
         {
             public string LockNumber { get; set; }
 
-            public int Group { get; set; }
+            public byte GroupNo { get; set; }
 
         }
 
@@ -148,15 +157,17 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostAddGroupLogSamane(AddGroupLogSamaneObject c)
         {
             string sql = string.Format(@"declare @countGroup int
-                                         select @countGroup = count(GroupNo) from GroupLog where LockNumber = {0} and GroupNo = {1} 
+                                         select @countGroup = count(GroupNo) from GroupLog where LockNumber = '{0}' and GroupNo = {1} 
                                          if (@countGroup = 0)
-                                             insert into GroupLog(LockNumber,GroupNo) values({0},{1})",
-                                       c.LockNumber,c.Group);
-            var list1 = db.Database.SqlQuery<int>(sql).Single();
+                                             insert into GroupLog(LockNumber,GroupNo,Samane_Inno) values('{0}',{1},1710880200)
+                                         else
+                                             update GroupLog set Samane_Inno = (select (Samane_Inno + 1)  from GroupLog  where LockNumber = '{0}' and GroupNo = {1}) where LockNumber = '{0}' and GroupNo = {1} 
+                                         select Samane_Inno from  GroupLog where LockNumber = '{0}' and GroupNo = {1}  ",
+                                       c.LockNumber, c.GroupNo);
+            var list = db.Database.SqlQuery<long>(sql).Single();
             db.SaveChanges();
-            return Ok("0");
+            return Ok(list);
         }
-
 
 
 

@@ -240,18 +240,6 @@
 
         <div id="box-send" class="hasmic box-footer">
 
-            <div id="Captcha" class="row">
-                <input type="text" id="CaptchaData" style="text-align: center;font-size:18px;text-decoration:underline" readonly selectable="False" class="col-4">
-                <img src="~/Content/img/Icon_Blue/refresh.png" id="RefreshCaptcha" width="24" height="24" style="margin:10px" />
-                <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px" class="col" placeholder="کد امنیتی را وارد کنید">
-            </div>
-
-            <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
-            <div class="row" id="ActiveAttach">
-                <input id="ActiveAttachChat" type="checkbox" style="width: 16px;margin-left: 5px;margin-bottom: 0px;margin-right: 5px;" />
-                <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
-            </div>
-
             <div class="form-group is-empty">
                 <input id="ChatMessage" type="text" placeholder="پیامی بنویسید..." style="margin-bottom: 0px;font-size: 14px;" />
                 <span class="material-input"></span>
@@ -277,6 +265,65 @@
         </div>
 
     </div>
+
+
+
+    <div class="modal fade" id="modal-NewChat" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" id="modal-dialogComm" style="top: 150px;">
+            <div class="modal-content" style="font-size:14px">
+                <div class="modal-header" style="padding-bottom: 0px;">
+                    <div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 class="modal-title" id="titleComm">درخواست چت</h4>
+                    <div>
+
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                    <div style="border: 1px solid #b5d9f9;border-radius: 25px;padding: 20px;margin: 10px;background-color: #d7ecff;">
+                        <p>
+                             با توجه به زدن کلید چت یک تیکت به بخش پشتیبانی کاربرد کامپیوتر ارسال می شود و شما در صف متقاضیان سرویس قرار می گیرید در اولین فرصت کارشناسان مربوطه به شما پاسخ می دهند.
+                        </p>
+                        <p style="margin-bottom: 0px;">
+                            لطفا چت خود را نبندید و منتظر پاسخ کارشناس باشید.
+                        </p>
+                    </div>
+                    
+                    <div style="border:1px solid black;border-radius: 25px;padding: 20px;margin: 10px;">
+                        <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
+                        <div class="row" id="ActiveAttach">
+                            <input id="ActiveAttachChat" type="checkbox" style="width: 16px;margin-left: 5px;margin-bottom: 0px;margin-right: 5px;" />
+                            <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
+                        </div>
+
+                        <div id="Captcha" class="row">
+                            <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px;margin-left:10px;direction: ltr;" class="col" placeholder="کد امنیتی را وارد کنید">
+                            <input type="text" id="CaptchaData" style="text-align: center;font-size:18px;text-decoration:underline;border-bottom: 0px;border: 1px solid #b5d9f9;border-radius: 25px;background-color: #d7ecff;" readonly selectable="False" class="col-4">
+                            <img src="~/Content/img/Icon_Blue/refresh.png" id="RefreshCaptcha" width="24" height="24" style="margin:10px 10px 10px 0px" />
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="row  form-inline ">
+                        <div class="col-md pull-left">
+                            <a id="SendNewChat" class="btn btn-warning B_Main col-md-4" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left;height: 40px;">ثبت</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
 
     <div class="modal fade" id="modal-Report" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" dir="ltr" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
