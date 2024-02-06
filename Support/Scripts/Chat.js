@@ -6,10 +6,11 @@ var DocAttachChatUri = server + '/api/Data/DocAttachChat/'; // آدرس لیست
 var AddChatUri = server + '/api/Data/AddChat/'; // 
 var DelChatUri = server + '/api/Data/DeleteChat/'; // 
 var EndChatUri = server + '/api/KarbordData/EndChat/'; // پایان یافته
+var ChatQueueUri = server + '/api/KarbordData/ChatQueue/'; // تعداد افراد در انتظار چت 
 var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها 
 var UpdateChatDownloadUri = server + '/api/KarbordData/UpdateChatDownload/';
 var LockNumbersUri = server + '/api/Data/LockNumbers/';
-
+var activeChatQueue = false;
 //getDataChat();
 
 var lockChat = [
@@ -47,8 +48,6 @@ var timer;
 var timerLastIdChat;
 
 $("#chatbox").empty();
-$("#motaghaziChat").hide();
-$("#Captcha").hide();
 $("#chat-bell").hide();
 $('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/min.png');
 
@@ -217,11 +216,6 @@ $("#RefreshCaptcha").click(function () {
 });
 
 $("#chat-bell").click(function () {
-    $("#motaghaziChat").hide();
-    //$("#motaghaziChat").val("");
-
-    $("#Captcha").hide();
-    $("#CaptchaVal").val("");
 
     if (idChat == null) {
         getDataChat();
@@ -230,19 +224,21 @@ $("#chat-bell").click(function () {
     idChat = localStorage.getItem("idChat");
     idChat = idChat == "0" ? null : idChat;
 
-    if (idChat == null) {
-        CreateCaptcha();
-        $("#Captcha").show();
-        $("#CaptchaVal").removeAttr('disabled');
 
-        $("#motaghaziChat").show();
-        $("#motaghaziChat").removeAttr('disabled');
-        $("#chatbox").empty();
-        $("#box-send").show();
+    if (isAdminChat) {
+        $("#box-chat").show();
+        $("#chat-bell").hide();
+    } else {
+        if (idChat == null) {
+            CreateCaptcha();
+            $("#modal-NewChat").modal("show");
+            $("#chatbox").empty();
+        } else {
+            $("#box-chat").show();
+            $("#chat-bell").hide();
+        }
     }
-
-    $("#chat-bell").hide();
-    $("#box-chat").show();
+   
 
     if (isLast == true) {
         $("#chatbox").empty();
@@ -293,6 +289,7 @@ function refresh(id, isLast) {
         $("#box-send").hide();
         $("#btn-end-chat").hide();
     }
+    $("#box-notification").hide();
 
     if (idChat != null) {
         var ChatObject = {
@@ -301,6 +298,7 @@ function refresh(id, isLast) {
             IdMessage: maxIdMessage,
         }
         res = '';
+
         ajaxFunction(ChatUri, 'POST', ChatObject).done(function (data) {
             $("#box-send").show();
             if (data.length > 0) {
@@ -310,6 +308,21 @@ function refresh(id, isLast) {
 
                 //data.filter(key => key.id == 1);
                 endChat = data.filter(key => key.Status == 1);
+
+                if (data.length > 0) {
+                    dataAvtive = data.filter(key => key.Mode == 0);
+                    if (dataAvtive.length > 0) {
+                        activeChatQueue = false;
+                    } else {
+                        activeChatQueue = true;
+
+                        if (data[0].Body == "!!@NewChat@!!" && data.length == 1) {
+                            activeChatQueue = false;
+                        }
+                    }
+                }
+
+                data = data.filter(key => key.Body != "!!@NewChat@!!");
 
                 if (endChat.length > 0) {
                     idChat = null;
@@ -402,6 +415,16 @@ function refresh(id, isLast) {
 
             }
         });
+
+        if (isAdminChat == false && activeChatQueue == true) {
+            ajaxFunction(ChatQueueUri + '/' + idChat, 'GET', false).done(function (data) {
+                if (data > 0) {
+                    $("#box-notification").show();
+                    $("#l-notification").text("شما نفر " + data + " در صف انتظار هستید. لطفا منتظر بمانید...")
+                }
+            });
+        }
+
     }
 
 }
@@ -467,18 +490,18 @@ $(".deleteChatImg").click(function (e) {
 
 $("#ChatMessage").keyup(function (e) {
     if (e.keyCode == 13) {
-        ChatSend();
+        ChatSend(false);
     }
 })
 $("#ChatSend").click(function () {
-    ChatSend();
+    ChatSend(false);
 });
 
 
 //localStorage.removeItem("HasContract");
 
 
-function ChatSend() {
+function ChatSend(firstSend) {
 
     var hasContract = localStorage.getItem("HasContract");
 
@@ -494,7 +517,7 @@ function ChatSend() {
         return showNotification('دسترسی ندارید', 0);
     }
 
-    var message = $("#ChatMessage").val();
+    var message = firstSend == true ? "!!@NewChat@!!" : $("#ChatMessage").val();
     if (message.trim() == "") {
         $("#ChatMessage").val("");
         return showNotification('پیام را وارد کنید', 0);
@@ -502,9 +525,14 @@ function ChatSend() {
 
 
     if (idChat == null) {
-        $("#modal-NewChat").modal("show");
+
     }
     else {
+        motaghaziChat = localStorage.getItem("MotaghaziChat");
+        if (motaghaziChat == "") {
+            motaghaziChat == "UserChat"
+        }
+        userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
         var AddChatObject = {
             LockNumber: lockNumber,
             SerialNumber: idChat,
@@ -541,7 +569,7 @@ function NewChat() {
         return showNotification('لطفا کد امنیتی را با دقت وارد نمایید', 0);
     }
 
-    var message = $("#ChatMessage").val();
+    var message = "";
 
     ajaxFunction(DateUri, 'GET', false).done(function (data) {
         DateNow = data[0];
@@ -579,17 +607,20 @@ function NewChat() {
         Motaghazi: motaghazi,
         IP: ipw,
         CallProg: 'Web',
-        LoginLink: loginLink
+        LoginLink: loginLink,
+        ChatMode: 1
     }
     ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
         idChat = data;
         idChat = idChat == "0" ? null : idChat;
         localStorage.setItem("idChat", idChat);
-       // $("#motaghaziChat").hide();
+        // $("#motaghaziChat").hide();
         //$("#Captcha").hide()
         //CalcHeight();
-        ChatSend();
+        ChatSend(true);
         $("#modal-NewChat").modal("hide");
+        $("#box-chat").show();
+        $("#chat-bell").hide();
     });
 }
 

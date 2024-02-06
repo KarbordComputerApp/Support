@@ -39,6 +39,15 @@ if ((userType == '1' || userType == '2')) {
 
 var HasContractUri = server + '/api/Data/HasContract/'; // آدرس قرارداد
 
+var MachineId = localStorage.getItem("MachineIdKarbord_Support");
+
+if (MachineId == null || MachineId == '') {
+    var d = new Date();
+    id = d.getDate() + d.getTime();
+    localStorage.setItem("MachineIdKarbord_Support", id);
+}
+
+
 $("#t_HasContract").text("");
 function getHasContract() {
     ajaxFunction(HasContractUri + lockNumber, 'GET', true).done(function (data) {

@@ -391,7 +391,8 @@
                     Motaghazi: fm_Select + motaghazi,
                     IP: ipw,
                     CallProg: 'Web',
-                    LoginLink: loginLink
+                    LoginLink: loginLink,
+                    ChatMode: 0
                 }
                 ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
                     serialNumber = data;

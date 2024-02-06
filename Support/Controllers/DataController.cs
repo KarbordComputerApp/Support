@@ -131,7 +131,7 @@ namespace Support.Controllers
 
             public byte GroupNo { get; set; }
 
-            public long Samane_Inno { get; set; }
+            //public long Samane_Inno { get; set; }
 
         }
 
@@ -159,10 +159,8 @@ namespace Support.Controllers
             string sql = string.Format(@"declare @countGroup int
                                          select @countGroup = count(GroupNo) from GroupLog where LockNumber = '{0}' and GroupNo = {1} 
                                          if (@countGroup = 0)
-                                             insert into GroupLog(LockNumber,GroupNo,Samane_Inno) values('{0}',{1},1710880200)
-                                         else
-                                             update GroupLog set Samane_Inno = (select (Samane_Inno + 1)  from GroupLog  where LockNumber = '{0}' and GroupNo = {1}) where LockNumber = '{0}' and GroupNo = {1} 
-                                         select Samane_Inno from  GroupLog where LockNumber = '{0}' and GroupNo = {1}  ",
+                                             insert into GroupLog(LockNumber,GroupNo) values('{0}',{1})
+                                         select 1",
                                        c.LockNumber, c.GroupNo);
             var list = db.Database.SqlQuery<long>(sql).Single();
             db.SaveChanges();
@@ -1646,7 +1644,7 @@ namespace Support.Controllers
         [Route("api/Data/AddChat/")]
         public async Task<IHttpActionResult> PostAddChat(AddChatObject c)
         {
-            string sql = string.Format(@"INSERT INTO Chat(LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Date,Body) VALUES('{0}',{1} ,{2} ,{3} ,{4}, '{5}', getdate(),N'{6}') select cast(@@IDENTITY as nvarchar(10))",
+            string sql = string.Format(@"INSERT INTO Chat(LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Date,Body) VALUES('{0}',{1} ,{2} ,{3} ,{4}, N'{5}', getdate(),N'{6}') select cast(@@IDENTITY as nvarchar(10))",
                 c.LockNumber,
                 c.SerialNumber,
                 c.Mode,
@@ -1815,6 +1813,9 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<ChatCountTiket>(sql).ToList();
             return Ok(list);
         }
+
+
+
 
 
 

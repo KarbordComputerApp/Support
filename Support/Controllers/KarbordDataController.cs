@@ -152,6 +152,8 @@ namespace Support.Controllers
             public string CallProg { get; set; }
 
             public bool LoginLink { get; set; }
+
+            public byte ChatMode { get; set; }
         }
 
 
@@ -190,6 +192,7 @@ namespace Support.Controllers
 		                                    @F19 = N'{25}',
 		                                    @F20 = N'{26}',
 		                                    @Motaghazi = N'{27}',
+		                                    @ChatMode = {28},
 		                                    @DocNo_Out = @DocNo_Out OUTPUT
                                     SELECT	@DocNo_Out as N'DocNo_Out'",
                                            ErjSaveTicket_HI.SerialNumber,
@@ -219,7 +222,8 @@ namespace Support.Controllers
                                            ErjSaveTicket_HI.F18,
                                            ErjSaveTicket_HI.F19,
                                            ErjSaveTicket_HI.F20,
-                                           ErjSaveTicket_HI.Motaghazi
+                                           ErjSaveTicket_HI.Motaghazi,
+                                           ErjSaveTicket_HI.ChatMode
                                            );
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
@@ -766,6 +770,19 @@ namespace Support.Controllers
             return Ok(res);
         }
 
+
+
+        [Route("api/KarbordData/ChatQueue/{SerialNumber}")]
+        public async Task<IHttpActionResult> GetChatQueue(long SerialNumber)
+        {
+            string sql = string.Format(@"DECLARE	@return_value int
+                                         EXEC	@return_value = [dbo].[Web_ChatQueue]
+		                                        @SerialNumber = {0}
+                                         SELECT	 @return_value", SerialNumber);
+            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
+            var list = db.Database.SqlQuery<int>(sql).Single();
+            return Ok(list);
+        }
 
 
     }

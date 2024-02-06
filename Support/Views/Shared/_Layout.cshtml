@@ -136,81 +136,6 @@
 
 
 
-    <!--
-
-        <div id="box-chat" class="fadeInUp">
-            <div class="box-chat-content">
-                <div id="btn-max-chat" title="تغییر اندازه">
-                    <div>
-                        _
-                    </div>
-                </div>
-
-                <div id="btn-end-chat" title="پایان یافته">
-                    <div>
-                        *
-                    </div>
-                </div>
-
-                <div id="btn-close-chat" title="بستن">
-                    <div>
-                        <svg fill="#ffffff" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="box-header">
-                    <div style="width: 55px; margin-right: -3px;" class="pull-right avatar">
-                        <span>
-                            <img src="~/Content/img/LogoMin.png" alt="avatar" width="40" height="40">
-                        </span>
-                    </div>
-                    <div class="pull-right box-title">
-                        <div class="title-name">کارشناس فروش</div>
-                    </div>
-                </div>
-
-                <div class="box-body dragandrophandler" id="chatbox">
-                    <div class="dc-msg slideInleft left" data-tmp="48476959" data-pmtype="t">
-                        <div class="dc-text" rel="tooltip" data-container="body">سلام وقت بخیر</div>
-                        <div class="timeago_l slideInleft">2 دقیقه پیش</div>
-                    </div>
-
-                    <div class="dc-msg slideInleft right" data-tmp="48476959" data-pmtype="t">
-                        <div class="dc-text" rel="tooltip" data-container="body">سلام وقت بخیر سلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیرسلام وقت بخیر</div>
-                        <div class="timeago_r slideInright">2 دقیقه پیش</div>
-                    </div>
-                </div>
-
-                <div id="box-send" class="hasmic box-footer">
-                    <div class="form-group is-empty">
-                        <textarea maxlength="2000" id="ChatMessage" type="text" placeholder="پیامی بنویسید..." class="form-controlChat" style="overflow: hidden; overflow-wrap: break-word; height: 40px;"></textarea>
-                        <span class="material-input"></span>
-                    </div>
-                    <div id="ChatAttach" class="fix-contentchat" style="margin-top:10px">
-                        <a class="btn btn-simple btn-file" style="box-shadow: none;top: 5px;">
-                            <span class="fileinput-new">
-                                <svg fill="#999999" height="23" viewBox="0 0 24 24" width="23" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"></path>
-                                </svg>
-                            </span>
-                            <input id="upload-input" type="file" name="uploads[]" multiple="">
-                        </a>
-
-                        <a id="ChatSend" class="btn btn-simple btn-send" style="display: inline-block;box-shadow: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="23" height="23" fill="#999999">
-                                <path d="M22,3,1,12l21,9V14L7,12l15-2Z"></path>
-                            </svg>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    -->
-
-
 
 
     <div id="box-chat" class="fadeInUp">
@@ -240,6 +165,10 @@
 
         <div id="box-send" class="hasmic box-footer">
 
+            <div id="box-notification">
+                <p id="l-notification" style="font-size: 14px;color: black;margin-bottom: 0px;text-align: center;"></p>
+            </div>
+
             <div class="form-group is-empty">
                 <input id="ChatMessage" type="text" placeholder="پیامی بنویسید..." style="margin-bottom: 0px;font-size: 14px;" />
                 <span class="material-input"></span>
@@ -264,6 +193,7 @@
             </div>
         </div>
 
+
     </div>
 
 
@@ -277,22 +207,19 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <h4 class="modal-title" id="titleComm">درخواست چت</h4>
+                    <h4 class="modal-title" id="titleComm" style="font-size:17px">درخواست چت</h4>
                     <div>
 
                     </div>
 
                 </div>
                 <div class="modal-body">
-                    <div style="border: 1px solid #b5d9f9;border-radius: 25px;padding: 20px;margin: 10px;background-color: #d7ecff;">
-                        <p>
-                             با توجه به زدن کلید چت یک تیکت به بخش پشتیبانی کاربرد کامپیوتر ارسال می شود و شما در صف متقاضیان سرویس قرار می گیرید در اولین فرصت کارشناسان مربوطه به شما پاسخ می دهند.
-                        </p>
-                        <p style="margin-bottom: 0px;">
-                            لطفا چت خود را نبندید و منتظر پاسخ کارشناس باشید.
-                        </p>
+                    <div style="border: 1px solid #c69500;border-radius: 25px;padding: 10px;margin: 10px;background-color: #ffedd4; font-size:17px">
+                        <p>پس از زدن دکمه <span style="background-color:#082b44;color:white;border-radius:25px;padding: 0px 15px 0px 15px;">شروع چت</span> یک تیکت به بخش پشتیبانی شرکت ارسال می شود و شما در صف متقضایان سرویس قرار می گیرید.</p>
+                        <p>لطفا جهت حفظ نوبت خود، صفحه چت را نبندید و منتظر پاسخ کارشناس باشید.</p>
+                        <p style="margin-bottom: 0px;">در اولین فرصت به شما پاسخ داده خواهد شد.</p>
                     </div>
-                    
+
                     <div style="border:1px solid black;border-radius: 25px;padding: 20px;margin: 10px;">
                         <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
                         <div class="row" id="ActiveAttach">
@@ -300,10 +227,12 @@
                             <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
                         </div>
 
-                        <div id="Captcha" class="row">
-                            <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px;margin-left:10px;direction: ltr;" class="col" placeholder="کد امنیتی را وارد کنید">
-                            <input type="text" id="CaptchaData" style="text-align: center;font-size:18px;text-decoration:underline;border-bottom: 0px;border: 1px solid #b5d9f9;border-radius: 25px;background-color: #d7ecff;" readonly selectable="False" class="col-4">
-                            <img src="~/Content/img/Icon_Blue/refresh.png" id="RefreshCaptcha" width="24" height="24" style="margin:10px 10px 10px 0px" />
+                        <div id="Captcha" class="row" style="margin-top: 15px;">
+
+                            <input type="text" id="CaptchaVal" style="text-align: center;font-size:15px;margin-left:10px;direction: ltr;" class="col-4" placeholder="کد امنیتی را وارد کنید">
+
+                            <input type="text" id="CaptchaData" style="text-align: center;font-size:18px;border-bottom: 0px;border: 1px solid #ff9600;border-radius: 25px;" readonly selectable="False" class="col-4">
+                            <img src="~/Content/img/Icon_Blue/refresh.png" id="RefreshCaptcha" width="24" height="24" style="margin:5px 10px 10px 0px" />
                         </div>
                     </div>
 
@@ -311,7 +240,7 @@
                 <div>
                     <div class="row  form-inline ">
                         <div class="col-md pull-left">
-                            <a id="SendNewChat" class="btn btn-warning B_Main col-md-4" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left;height: 40px;">ثبت</a>
+                            <a id="SendNewChat" class="btn btn-warning B_Main col-md-4" style="border-radius: 25px;background-color: #082b44 !important;margin-bottom: 0px;float:left;height: 40px;font-size: 17px;padding-top: 7px;">شروع چت</a>
                         </div>
                     </div>
                 </div>
@@ -401,6 +330,9 @@
 
         </div>
     </div>
+
+
+
 
 
 
