@@ -149,7 +149,6 @@ function SetNameUser(userCode) {
 }
 
 
-var companyName = '';
 
 function getCompanyName() {
     var LockNumbersObject = {
@@ -159,7 +158,8 @@ function getCompanyName() {
     }
     ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
         if (dataLock.length > 0) {
-            localStorage.setItem("CompanyNameChat", dataLock[0].CompanyName.split("-")[0]);
+            companyName = dataLock[0].CompanyName.split("-")[0];
+            localStorage.setItem("CompanyNameChat", companyName);
         }
     });
 }

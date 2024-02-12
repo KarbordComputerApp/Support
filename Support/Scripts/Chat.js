@@ -251,9 +251,10 @@ $("#chat-bell").click(function () {
     } else {
         if (idChat == null) {
             CreateCaptcha();
+            $("#motaghaziChat").val("");
+            $("#CaptchaVal").val("");
             $("#modal-NewChat").modal("show");
             $("#chatbox").empty();
-
         } else if (otherUserChat) {
            Swal.fire({
                 title: "",

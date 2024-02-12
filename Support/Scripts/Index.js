@@ -67,6 +67,7 @@
     //    $('#B_Tiket').removeAttr('disabled', 'disabled');
     //}
 
+    companyName = localStorage.getItem("CompanyName");
 
     $('#FullName').text(companyName);
 
