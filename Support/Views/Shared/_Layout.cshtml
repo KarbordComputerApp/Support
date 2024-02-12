@@ -168,6 +168,11 @@
             <div id="box-notification">
                 <p id="l-notification" style="font-size: 14px;color: black;margin-bottom: 0px;text-align: center;"></p>
             </div>
+            <div class="row" id="ActiveAttach">
+                <input id="ActiveAttachChat" type="checkbox" style="width: 16px;margin-left: 5px;margin-bottom: 0px;margin-right: 5px;" />
+                <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
+            </div>
+
 
             <div class="form-group is-empty">
                 <input id="ChatMessage" type="text" placeholder="پیامی بنویسید..." style="margin-bottom: 0px;font-size: 14px;" />
@@ -214,18 +219,14 @@
 
                 </div>
                 <div class="modal-body">
-                    <div style="border: 1px solid #c69500;border-radius: 25px;padding: 10px;margin: 10px;background-color: #ffedd4; font-size:17px">
-                        <p>پس از زدن دکمه <span style="background-color:#082b44;color:white;border-radius:25px;padding: 0px 15px 0px 15px;">شروع چت</span> یک تیکت به بخش پشتیبانی شرکت ارسال می شود و شما در صف متقضایان سرویس قرار می گیرید.</p>
+                    <div id="P_NewChatInfo" style="border: 1px solid #c69500;border-radius: 25px;padding: 10px;margin: 10px;background-color: #ffedd4; font-size:17px">
+                        <p>پس از زدن دکمه <span style="background-color:#082b44;color:white;border-radius:25px;padding: 0px 15px 0px 15px;">شروع چت</span> یک تیکت به بخش پشتیبانی شرکت ارسال می شود و شما در صف متقاضیان سرویس قرار می گیرید.</p>
                         <p>لطفا جهت حفظ نوبت خود، صفحه چت را نبندید و منتظر پاسخ کارشناس باشید.</p>
                         <p style="margin-bottom: 0px;">در اولین فرصت به شما پاسخ داده خواهد شد.</p>
                     </div>
 
                     <div style="border:1px solid black;border-radius: 25px;padding: 20px;margin: 10px;">
                         <input id="motaghaziChat" type="text" style="font-size:14px;" placeholder="نام درخواست کننده">
-                        <div class="row" id="ActiveAttach">
-                            <input id="ActiveAttachChat" type="checkbox" style="width: 16px;margin-left: 5px;margin-bottom: 0px;margin-right: 5px;" />
-                            <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
-                        </div>
 
                         <div id="Captcha" class="row" style="margin-top: 15px;">
 
@@ -277,7 +278,7 @@
 
 
     <div class="modal fade" id="modal-Comm" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" id="modal-dialogComm" style="top: 150px;">
+        <div class="modal-dialog" id="modal-dialogComm" style="top: 50px;">
             <div class="modal-content" style="font-size:14px">
                 <div class="modal-header" style="padding-bottom: 0px;">
                     <div>

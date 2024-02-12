@@ -22,7 +22,17 @@ var lockChat = [
     "11342"
 ];
 
+
+//localStorage.removeItem("MotaghaziChat");
+
 var focusPage;
+
+var machineIdKarbord_Support = localStorage.getItem("MachineIdKarbord_Support");
+var motaghaziChat;
+var motaghaziChatTiket = "";
+var otherUserChat = null;
+//localStorage.getItem("MotaghaziChat");
+
 
 
 var orgTitle = document.title;
@@ -91,7 +101,7 @@ if (LockInput != "" && LockInput != null) {
 
         isLast = false;
         refresh(idChat, isLast);
-        $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + localStorage.getItem("MotaghaziChat"));
+        $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + motaghaziChat);
 
 
 
@@ -155,7 +165,7 @@ function CalcHeight() {
 
     body = parseInt(all) - (parseInt(head) + parseInt(footer));
     $("#chatbox").css('height', body + 2)
-    $("#chatbox").scrollTop(1000000);
+    $("#chatbox").scrollTop(100000000);
 }
 
 function SetUpdateChatDownload(value) {
@@ -185,14 +195,24 @@ function getDataTiket(id) {
     }
     ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
         if (data.length > 0) {
-            localStorage.setItem("MotaghaziChat", data[0].Motaghazi);
+            //localStorage.setItem("MotaghaziChat", data[0].Motaghazi);
             var chatDownload = data[0].ChatDownload;
             $("#ActiveAttachChat").prop('checked', chatDownload);
             if (chatDownload == true) {
                 $("#P_AttachChat").show();
             }
 
-            //var docDate = data[0].DocDate;
+            motaghaziChatTiket = data[0].Motaghazi;
+
+            if (isAdminChat) {
+                motaghaziChat = motaghaziChatTiket;
+            }
+            else {
+                motaghaziChat = localStorage.getItem("MotaghaziChat");
+            }
+            otherUserChat = motaghaziChatTiket != motaghaziChat;
+
+
         }
     });
 }
@@ -223,7 +243,7 @@ $("#chat-bell").click(function () {
 
     idChat = localStorage.getItem("idChat");
     idChat = idChat == "0" ? null : idChat;
-
+    $("#P_NewChatInfo").show();
 
     if (isAdminChat) {
         $("#box-chat").show();
@@ -233,12 +253,34 @@ $("#chat-bell").click(function () {
             CreateCaptcha();
             $("#modal-NewChat").modal("show");
             $("#chatbox").empty();
-        } else {
+
+        } else if (otherUserChat) {
+           Swal.fire({
+                title: "",
+                text: "در حال حاضر چت با " + motaghaziChatTiket + " در حال انجام است " + "آیا به چت اضافه می شوید ؟",
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'خیر',
+                allowOutsideClick: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'بله'
+            }).then((result) => {
+                if (result.value) {
+                    CreateCaptcha();
+                    $("#P_NewChatInfo").hide();
+                    $("#motaghaziChat").val("");
+                    $("#CaptchaVal").val("");
+                    $("#modal-NewChat").modal("show");
+                }
+            })
+        }
+        else {
             $("#box-chat").show();
             $("#chat-bell").hide();
         }
     }
-   
+
 
     if (isLast == true) {
         $("#chatbox").empty();
@@ -401,9 +443,15 @@ function refresh(id, isLast) {
                     res +=
                         '</div>';
 
-                    if (item.Mode == 0 && isAdminChat) {
-                        dateText = SetNameUser(item.UserCode)
+                    if (isAdminChat) {
+                        dateText = item.Mode == 1 ? item.UserCode : SetNameUser(item.UserCode);
+
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>';
+                    }
+                    else {
+                        if (item.Mode == 1) {
+                            res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + item.UserCode + '</div>';
+                        }
                     }
                     res += '</div>';
                 }
@@ -411,7 +459,7 @@ function refresh(id, isLast) {
                 $("#chatbox").append(res);
 
 
-                $("#chatbox").scrollTop(1000000);
+                $("#chatbox").scrollTop(100000000);
 
             }
         });
@@ -420,7 +468,7 @@ function refresh(id, isLast) {
             ajaxFunction(ChatQueueUri + '/' + idChat, 'GET', false).done(function (data) {
                 if (data > 0) {
                     $("#box-notification").show();
-                    $("#l-notification").text("شما نفر " + data + " در صف انتظار هستید. لطفا منتظر بمانید...")
+                    $("#l-notification").text("شما نفر " + (data + 1) + " در صف انتظار هستید. لطفا منتظر بمانید...")
                 }
             });
         }
@@ -528,7 +576,7 @@ function ChatSend(firstSend) {
 
     }
     else {
-        motaghaziChat = localStorage.getItem("MotaghaziChat");
+
         if (motaghaziChat == "") {
             motaghaziChat == "UserChat"
         }
@@ -555,6 +603,8 @@ $("#SendNewChat").click(function () {
     NewChat();
 })
 
+machineIdKarbord_Support = localStorage.getItem("MachineIdKarbord_Support");
+
 function NewChat() {
     captchaData = $("#CaptchaData").val();
     captchaVal = $("#CaptchaVal").val();
@@ -563,6 +613,9 @@ function NewChat() {
     if (motaghazi == "") {
         return showNotification('نام درخواست کننده را وارد کنید', 0);
     }
+
+    localStorage.setItem("MotaghaziChat", motaghazi);
+    motaghaziChat = motaghazi;
 
     if (captchaData.toLowerCase() != captchaVal.toLowerCase()) {
         CreateCaptcha();
@@ -610,18 +663,23 @@ function NewChat() {
         LoginLink: loginLink,
         ChatMode: 1
     }
-    ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
-        idChat = data;
-        idChat = idChat == "0" ? null : idChat;
-        localStorage.setItem("idChat", idChat);
-        // $("#motaghaziChat").hide();
-        //$("#Captcha").hide()
-        //CalcHeight();
-        ChatSend(true);
-        $("#modal-NewChat").modal("hide");
-        $("#box-chat").show();
-        $("#chat-bell").hide();
-    });
+    if (otherUserChat == null) {
+        ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
+            idChat = data;
+            idChat = idChat == "0" ? null : idChat;
+            localStorage.setItem("idChat", idChat);
+            // $("#motaghaziChat").hide();
+            //$("#Captcha").hide()
+            //CalcHeight();
+
+            ChatSend(true);
+        });
+    }
+
+    $("#modal-NewChat").modal("hide");
+    $("#box-chat").show();
+    CalcHeight();
+    $("#chat-bell").hide();
 }
 
 $("#ChatAttach").change(function (e) {
@@ -663,6 +721,11 @@ function SendAttach(file) {
 
     fileData = name.split(".");
     fileName = fileData[0];
+
+    if (motaghaziChat == "") {
+        motaghaziChat == "UserChat"
+    }
+    userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
 
 
     var AddChatUri = server + '/api/Data/AddChat/'; // 
