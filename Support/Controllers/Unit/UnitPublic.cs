@@ -37,7 +37,7 @@ namespace Support.Controllers.Unit
 
         public static string sql_Name_Ticket = MyIni.Read("SqlServerName", "TicketDatabase");
         public static string sql_DatabaseName_Ticket = MyIni.Read("DatabaseName", "TicketDatabase");
-        public static string sql_UserName_Ticket = MyIni.Read("SqlUserName", "TicketDatabase");
+        public static string sql_UserName_Ticket = MyIni.Read("SqlUserName", "TicketDatabase"); 
         public static string sql_Password_Ticket = MyIni.Read("SqlPassword", "TicketDatabase");
 
         public static string sql_Group_Ticket = sql_DatabaseName_Ticket.Substring(8, 2);
