@@ -48,7 +48,7 @@ namespace Support.Controllers.Unit
         public static string sql_Name_CustAccount = MyIni.Read("SqlServerName", "CustAccountDatabase");
         public static string sql_DatabaseName_CustAccount = MyIni.Read("DatabaseName", "CustAccountDatabase");
         public static string sql_UserName_CustAccount = MyIni.Read("SqlUserName", "CustAccountDatabase");
-        public static string sql_Password_CustAccount = MyIni.Read("SqlPassword", "CustAccountDatabase");
+        public static string sql_Password_CustAccount = MyIni.Read("SqlPassword", "CustAccountDatabase"); 
 
         public static string sql_Group_CustAccount = sql_DatabaseName_CustAccount.Substring(8, 2);
 
