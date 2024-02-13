@@ -22,6 +22,7 @@
     $("#Karbord-INV6").hide();
     $("#Karbord-PAY6").hide();
     $("#Karbord-ERJ1").hide();
+    $("#Karbord-MVL5").hide();
 
     $("#P_Api").hide();
 
@@ -39,6 +40,7 @@
             $("#Karbord-FCT6").show();
             $("#Karbord-INV6").show();
             $("#Karbord-PAY6").show();
+            $("#Karbord-MVL5").show();
             //$("#Karbord-ERJ1").show();
         }
         //VIDEO_AFI2-VIDEO_AFI3-VIDEO_ACC6-VIDEO_CSH5-VIDEO_FCT6-VIDEO_INV6-VIDEO_PAY6-VIDEO_ERJ1-API-
@@ -50,6 +52,7 @@
         if (jQuery.inArray("VIDEO_FCT6", trs) !== -1) $("#Karbord-FCT6").show();
         if (jQuery.inArray("VIDEO_INV6", trs) !== -1) $("#Karbord-INV6").show();
         if (jQuery.inArray("VIDEO_PAY6", trs) !== -1) $("#Karbord-PAY6").show();
+        if (jQuery.inArray("VIDEO_MVL5", trs) !== -1) $("#Karbord-MVL5").show();
         //if (jQuery.inArray("VIDEO_ERJ1", trs) !== -1) $("#Karbord-ERJ1").show();
 
     }
@@ -100,6 +103,12 @@
         a.href = downloadVideoUri + "Karbord-ERJ1";
         a.click();
     });
+
+    $("#Karbord-MVL5").click(function () {
+        a.href = downloadVideoUri + "Karbord-MVL5";
+        a.click();
+    });
+
 };
 
 

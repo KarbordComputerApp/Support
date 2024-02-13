@@ -556,20 +556,6 @@ $("#ChatSend").click(function () {
 
 function ChatSend(firstSend) {
 
-    var hasContract = localStorage.getItem("HasContract");
-
-    if (hasContract != "1" && isAdminChat == false) {
-        return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
-    }
-
-
-    if (lockChat.includes(lockNumber.toString())) {
-
-    }
-    else {
-        return showNotification('دسترسی ندارید', 0);
-    }
-
     var message = firstSend == true ? "!!@NewChat@!!" : $("#ChatMessage").val();
     if (message.trim() == "") {
         $("#ChatMessage").val("");
@@ -608,9 +594,30 @@ $("#SendNewChat").click(function () {
     NewChat();
 })
 
+$("#SendNewChat").keyup(function (e) {
+    if (e.keyCode == 13) {
+        NewChat();
+    }
+})
+
 machineIdKarbord_Support = localStorage.getItem("MachineIdKarbord_Support");
 
 function NewChat() {
+    var hasContract = localStorage.getItem("HasContract");
+
+    if (hasContract != "1" && isAdminChat == false) {
+        return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
+    }
+
+
+    if (lockChat.includes(lockNumber.toString())) {
+
+    }
+    else {
+        return showNotification('دسترسی ندارید', 0);
+    }
+
+
     captchaData = $("#CaptchaData").val();
     captchaVal = $("#CaptchaVal").val();
 
@@ -637,7 +644,7 @@ function NewChat() {
     var ErjSaveTicket_HI = {
         SerialNumber: 0,
         DocDate: DateNow,
-        UserCode: 'ZAND',
+        UserCode: 'ESTIRI',
         Status: "فعال",
         Spec: "",
         LockNo: lockNumber,

@@ -1366,7 +1366,7 @@ namespace Support.Controllers
             var trsList = trsDownload.Split('-');
 
             bool access = false;
-            //VIDEO_AFI2-VIDEO_AFI3-VIDEO_ACC6-VIDEO_CSH5-VIDEO_FCT6-VIDEO_INV6-VIDEO_PAY6-VIDEO_ERJ1-API-
+            //VIDEO_AFI2-VIDEO_AFI3-VIDEO_ACC6-VIDEO_CSH5-VIDEO_FCT6-VIDEO_INV6-VIDEO_PAY6-VIDEO_ERJ1-API-VIDEO_MVL5
             var allVideo = "VIDEO";
             string ounVideo = "";
 
@@ -1415,6 +1415,12 @@ namespace Support.Controllers
             else if (VideoName == "Karbord-ERJ1")
             {
                 ounVideo = "VIDEO_ERJ1";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
+            else if (VideoName == "Karbord-MVL5")
+            {
+                ounVideo = "VIDEO_MVL5";
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
