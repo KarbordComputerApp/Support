@@ -13,6 +13,7 @@ var LockNumbersUri = server + '/api/Data/LockNumbers/';
 var activeChatQueue = false;
 //getDataChat();
 
+/*
 var lockChat = [
     "10000", "10001", "10002", "10003",
     "11764",
@@ -25,7 +26,7 @@ var lockChat = [
     "14213",
     "14224"
 ];
-
+*/
 
 //localStorage.removeItem("MotaghaziChat");
 
@@ -610,12 +611,12 @@ function NewChat() {
     }
 
 
-    if (lockChat.includes(lockNumber.toString())) {
+   /* if (lockChat.includes(lockNumber.toString())) {
 
     }
     else {
         return showNotification('دسترسی ندارید', 0);
-    }
+    }*/
 
 
     captchaData = $("#CaptchaData").val();
@@ -710,12 +711,12 @@ function SendAttach(file) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-    if (lockChat.includes(lockNumber.toString())) {
+   /* if (lockChat.includes(lockNumber.toString())) {
 
     }
     else {
         return showNotification('دسترسی ندارید', 0);
-    }
+    }*/
 
 
     if (idChat == null) {
