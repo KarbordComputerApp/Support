@@ -427,17 +427,17 @@ namespace Support.Controllers
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand("Web_DocAttach_Save", connection);
+            SqlCommand cmd = new SqlCommand("Web_ErjDocAttach_Save", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@ProgName", ProgName);
-            cmd.Parameters.AddWithValue("@ModeCode", ModeCode);
-            cmd.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            cmd.Parameters.AddWithValue("@BandNo", BandNo);
-            cmd.Parameters.AddWithValue("@Code", Code);
-            cmd.Parameters.AddWithValue("@Comm", Comm);
-            cmd.Parameters.AddWithValue("@FName", FName);
-            cmd.Parameters.AddWithValue("@Atch", filebyte);
+            //cmd.Parameters.AddWithValue("@ProgName_", ProgName);
+            cmd.Parameters.AddWithValue("@ModeCode_", ModeCode);
+            cmd.Parameters.AddWithValue("@SerialNumber_", SerialNumber);
+            cmd.Parameters.AddWithValue("@BandNo_", BandNo);
+            cmd.Parameters.AddWithValue("@Code_", Code);
+            cmd.Parameters.AddWithValue("@Comm_", Comm);
+            cmd.Parameters.AddWithValue("@FName_", FName);
+            cmd.Parameters.AddWithValue("@Atch_", filebyte);
 
             cmd.ExecuteNonQuery();
             connection.Close();
