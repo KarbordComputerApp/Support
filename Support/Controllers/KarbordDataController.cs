@@ -43,24 +43,26 @@ namespace Support.Controllers
         public const int act_ViewTiketByLink = 8;
 
 
+        KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
+
+
         // GET: api/KarbordData/Date تاریخ سرور
         [Route("api/KarbordData/Date")]
         public async Task<IHttpActionResult> GetWeb_Date()
         {
             string sql = string.Format(@"select dbo.Web_CurrentShamsiDate() as tarikh");
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Config);
             var list = db.Database.SqlQuery<string>(sql);
             return Ok(list);
         }
 
-        // GET: api/KarbordData/Group گروه ها
-        [Route("api/KarbordData/Group")]
-        public async Task<IHttpActionResult> GetWeb_Group()
-        {
-            var Person = new { GroupTicket = UnitPublic.sql_Group_Ticket, GroupCustAccount = UnitPublic.sql_Group_CustAccount };
-            return Ok(Person);
-        }
+        /*   // GET: api/KarbordData/Group گروه ها
+           [Route("api/KarbordData/Group")]
+           public async Task<IHttpActionResult> GetWeb_Group()
+           {
+               var Person = new { GroupTicket = UnitPublic.sql_Group_Ticket, GroupCustAccount = UnitPublic.sql_Group_CustAccount };
+               return Ok(Person);
+           }*/
 
 
 
@@ -84,7 +86,6 @@ namespace Support.Controllers
                 sql += " and LockNumber = " + c.LockNumber;
             }
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<Web_TicketStatus>(sql);
             return Ok(list);
         }
@@ -227,8 +228,6 @@ namespace Support.Controllers
                                            );
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
 
@@ -270,7 +269,6 @@ namespace Support.Controllers
             sql += " order by DocDate desc , SerialNumber desc";
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
             if (Object_ErjDocXK.FlagLog == true)
             {
@@ -295,7 +293,6 @@ namespace Support.Controllers
         {
             string sql = string.Format("select count(1) as countRead from dbo.Web_ErjDocXK({0},'{1}')  where ResultRead = 1", Object_CountErjDocXK.ModeCode, Object_CountErjDocXK.LockNo);
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<int>(sql);
             return Ok(list);
         }
@@ -313,7 +310,6 @@ namespace Support.Controllers
         {
             string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateResult @SerialNumber = {0} select 1 ", Object_Ticket_UpdateResult.SerialNumber);
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var res = db.Database.SqlQuery<int>(sql);
             return Ok(res);
         }
@@ -362,7 +358,6 @@ namespace Support.Controllers
                                               DocAttachObject.BandNo,
                                               DocAttachObject.ByData);
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Config);
             var list = db.Database.SqlQuery<Web_DocAttach>(sql);
             return Ok(list);
 
@@ -426,7 +421,10 @@ namespace Support.Controllers
 
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            SqlConnection connection = new SqlConnection(UnitPublic.ConnectionString_Ticket);
+
+            var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["KarbordComputer_SupportModel"].ConnectionString;
+
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
 
             SqlCommand cmd = new SqlCommand("Web_DocAttach_Save", connection);
@@ -502,7 +500,6 @@ namespace Support.Controllers
             string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC [dbo].[Web_CustAccount] @LockNo = '{0}' ", CustAccountObject.LockNo);
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
             var list = db.Database.SqlQuery<CustAccount>(sql);
             if (CustAccountObject.FlagLog == true)
             {
@@ -545,7 +542,6 @@ namespace Support.Controllers
 
             sql += " SELECT  'Return Value' = @return_value";
 
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
             var list = db.Database.SqlQuery<int>(sql);
             return Ok(list);
         }
@@ -578,7 +574,6 @@ namespace Support.Controllers
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
 
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_CustAccount);
             var list = db.Database.SqlQuery<Web_FDocP>(sql);
             UnitPublic.SaveLog(FDocP_CustAcountObject.LockNumber, mode_CustAccount, act_Print, FDocP_CustAcountObject.SerialNumber, FDocP_CustAcountObject.IP, FDocP_CustAcountObject.CallProg, "");
             return Ok(list);
@@ -633,18 +628,15 @@ namespace Support.Controllers
             string sql = string.Format(CultureInfo.InvariantCulture,
                                        @"EXEC [dbo].[Web_DocAttach]
                                               @ProgName = N'FCT5',
-                                              @Group = N'{0}',
-                                              @Year = N'{1}',
+                                              @Year = N'{0}',
                                               @DMode = N'2',
-                                              @SerialNumber = {2},
-                                              @BandNo = {3},
+                                              @SerialNumber = {1},
+                                              @BandNo = {2},
                                               @ByData = 1",
-                                              UnitPublic.sql_Group_CustAccount,
                                               DownloadContractObject.Year,
                                               DownloadContractObject.SerialNumber,
                                               DownloadContractObject.BandNo
                                               );
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Config);
             var list = db.Database.SqlQuery<Web_DocAttach>(sql);
             byte[] atch = list.First().Atch;
             string filename = list.First().FName;
@@ -718,7 +710,6 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> Post_EndChat(EndChatObject d)
         {
             string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC [dbo].[Web_EndChat] @SerialNumber = {0} select 0 ", d.SerialNumber);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<int>(sql);
             return Ok(list);
         }
@@ -745,7 +736,6 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostWeb_RepFromUsers(RepFromUsersObject RepFromUsersObject)
         {
             string sql = string.Format(@"Select * from Web_RepFromUsers('{0}')", RepFromUsersObject.userCode);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<Web_RepFromUsers>(sql);
             return Ok(list);
         }
@@ -763,9 +753,8 @@ namespace Support.Controllers
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PostUpdateChatDownload(UpdateChatDownload_Object c)
         {
-            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateChatDownload @SerialNumber = {0} ,@ChatDownload = {1} select 1 ", c.SerialNumber,c.ChatDownload);
+            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateChatDownload @SerialNumber = {0} ,@ChatDownload = {1} select 1 ", c.SerialNumber, c.ChatDownload);
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var res = db.Database.SqlQuery<int>(sql);
             return Ok(res);
         }
@@ -779,7 +768,6 @@ namespace Support.Controllers
                                          EXEC	@return_value = [dbo].[Web_ChatQueue]
 		                                        @SerialNumber = {0}
                                          SELECT	 @return_value", SerialNumber);
-            KarbordModel db = new KarbordModel(UnitPublic.ConnectionString_Ticket);
             var list = db.Database.SqlQuery<int>(sql).Single();
             return Ok(list);
         }

@@ -35,38 +35,21 @@ namespace Support.Controllers.Unit
 
         static IniFile MyIni = new IniFile(IniPath);
 
-        public static string sql_Name_Ticket = MyIni.Read("SqlServerName", "TicketDatabase");
-        public static string sql_DatabaseName_Ticket = MyIni.Read("DatabaseName", "TicketDatabase");
-        public static string sql_UserName_Ticket = MyIni.Read("SqlUserName", "TicketDatabase"); 
-        public static string sql_Password_Ticket = MyIni.Read("SqlPassword", "TicketDatabase");
+       /* public static string sql_Name_Support = MyIni.Read("SqlServerName", "TicketDatabase");
+        public static string sql_DatabaseName_Support = MyIni.Read("DatabaseName", "TicketDatabase");
+        public static string sql_UserName_Support = MyIni.Read("SqlUserName", "TicketDatabase"); 
+        public static string sql_Password_Support = MyIni.Read("SqlPassword", "TicketDatabase");
 
-        public static string sql_Group_Ticket = sql_DatabaseName_Ticket.Substring(8, 2);
-
-        public static string ConnectionString_Ticket = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
-                                                       sql_Name_Ticket, sql_DatabaseName_Ticket, sql_UserName_Ticket, sql_Password_Ticket);
-
-        public static string sql_Name_CustAccount = MyIni.Read("SqlServerName", "CustAccountDatabase");
-        public static string sql_DatabaseName_CustAccount = MyIni.Read("DatabaseName", "CustAccountDatabase");
-        public static string sql_UserName_CustAccount = MyIni.Read("SqlUserName", "CustAccountDatabase");
-        public static string sql_Password_CustAccount = MyIni.Read("SqlPassword", "CustAccountDatabase"); 
-
-        public static string sql_Group_CustAccount = sql_DatabaseName_CustAccount.Substring(8, 2);
-
-        public static string ConnectionString_CustAccount = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
-                                                           sql_Name_CustAccount, sql_DatabaseName_CustAccount, sql_UserName_CustAccount, sql_Password_CustAccount);
-
-        public static string ConnectionString_Config = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
-                                                       sql_Name_Ticket, "Ace_WebConfig", sql_UserName_Ticket, sql_Password_Ticket);
-
-
-
+        public static string ConnectionString_Support = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
+                                                       sql_Name_Support, sql_DatabaseName_Support, sql_UserName_Support, sql_Password_Support);
+*/
 
         public static void SaveLog(int lockNumber, int mode, int act, long serialNumber, string ip, string callprog, string spec)
         {
-            SupportModel dbSupport = new SupportModel();
+            SupportModel db = new SupportModel();
             string sql = string.Format(@"insert into Log_Data (lockNumber,idact,idmode,serialnumber,ip,callprog,spec) values ({0},{1},{2},{3},N'{4}',N'{5}',N'{6}') select 0",
                                          lockNumber, act, mode, serialNumber, ip, callprog, spec);
-            int res = dbSupport.Database.SqlQuery<int>(sql).Single();
+            int res = db.Database.SqlQuery<int>(sql).Single();
         }
 
 
@@ -251,7 +234,7 @@ namespace Support.Controllers.Unit
 
         public static string HasContract(string lockNo)
         {
-            KarbordModel dbConfig = new KarbordModel(UnitPublic.ConnectionString_Config);
+            KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
             string sql = string.Format(@"DECLARE	@return_value int,
 		                                            @EndDate nvarchar(10)
 
@@ -259,7 +242,7 @@ namespace Support.Controllers.Unit
 		                                            @LockNumber = N'{0}',
 		                                            @EndDate = @EndDate OUTPUT
                                             SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate", lockNo);
-            var list = dbConfig.Database.SqlQuery<string>(sql).Single();
+            var list = db.Database.SqlQuery<string>(sql).Single();
             return list;
         }
 

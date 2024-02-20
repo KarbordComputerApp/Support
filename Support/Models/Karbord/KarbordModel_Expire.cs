@@ -5,11 +5,11 @@ namespace Support.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class KarbordModel : DbContext
+    public partial class KarbordModel_Expire : DbContext
     {
-        public KarbordModel(string connectionString) : base(connectionString)
+        public KarbordModel_Expire(string connectionString) : base(connectionString)
         {
-            Database.SetInitializer<KarbordModel>(null);
+            Database.SetInitializer<KarbordModel_Expire>(null);
             SetConnectionString(connectionString);
         }
 

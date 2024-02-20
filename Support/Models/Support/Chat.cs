@@ -24,8 +24,8 @@ namespace Support.Models
 
         public string UserCode { get; set; }
 
-        public int? DateMin { get; set; }
-
         public string Body { get; set; }
+
+        public string TimeSend { get; set; }
     }
 }

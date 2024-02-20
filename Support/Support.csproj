@@ -163,7 +163,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Karbord\free.cs" />
-    <Compile Include="Models\Karbord\KarbordModel.cs" />
+    <Compile Include="Models\Karbord\KarbordModel_Expire.cs" />
+    <Compile Include="Models\Karbord\KarbordComputer_SupportModel.cs" />
     <Compile Include="Models\Karbord\Web_DocAttach.cs" />
     <Compile Include="Models\Karbord\Web_ErjDocXK.cs" />
     <Compile Include="Models\Karbord\Web_FDocP.cs" />

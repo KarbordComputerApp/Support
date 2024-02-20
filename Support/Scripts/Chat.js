@@ -385,19 +385,7 @@ function refresh(id, isLast) {
 
                 for (var i = 0; i < data.length; i++) {
                     item = data[i];
-                    dateMin = item.DateMin;
-                    var dateText = "";
-                    if (dateMin == 0) {
-                        dateText = "به تازگی";
-                    } else if (dateMin < 60) {
-                        dateText = dateMin + " دقیقه پیش";
-                    }
-                    else if (dateMin >= 60 && dateMin <= 1440) {
-                        dateText = Math.round(dateMin / 60) + " ساعت پیش";
-                    }
-                    else {
-                        dateText = Math.round(dateMin / 1440) + " روز پیش";
-                    }
+                    timeSend = item.TimeSend;
 
                     res +=
                         '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '"> ';
@@ -452,12 +440,12 @@ function refresh(id, isLast) {
                     if (isAdminChat) {
                         dateText = item.Mode == 1 ? item.UserCode : SetNameUser(item.UserCode);
 
-                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '</div>';
+                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '<span style="margin-right:5px; margin-left:5px">' + timeSend + '</span>' +'</div>';
                     }
                     else {
-                        if (item.Mode == 1) {
-                            res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + item.UserCode + '</div>';
-                        }
+                       
+                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + '<span style="margin-left: 5px">' + timeSend + '</span>' + (item.Mode == 1 ? item.UserCode : "")  + '</div>';
+                        
                     }
                     res += '</div>';
                 }

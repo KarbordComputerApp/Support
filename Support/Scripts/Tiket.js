@@ -1,10 +1,10 @@
 ﻿var ViewModel = function () {
     var self = this;
     var flagSend = false;
-    var group_Tiket = localStorage.getItem("Group_Ticket");
-    if (group_Tiket.length == 1) {
-        group_Tiket = '0' + group_Tiket;
-    }
+    //var group_Tiket = localStorage.getItem("Group_Ticket");
+    //if (group_Tiket.length == 1) {
+    //    group_Tiket = '0' + group_Tiket;
+    //}
 
     var loginLink = false;
     $("#Index_TextLogo").text('تیکت پشتیبانی');
@@ -37,9 +37,9 @@
     }
 
 
-    if (lockNumber == null || group_Tiket == null) {
-        window.location.href = localStorage.getItem("urlLogin");
-    }
+    //if (lockNumber == null || group_Tiket == null) {
+    //    window.location.href = localStorage.getItem("urlLogin");
+    //}
 
 
     self.ErjDocXKList = ko.observableArray([]); // لیست گزارش  
@@ -247,7 +247,7 @@
         var DocAttachObject = {
             ProgName: 'ERJ1',
             ModeCode: '102',
-            Group: group_Tiket,
+            //Group: group_Tiket,
             Year: '0000',
             SerialNumber: serial,
             BandNo: 0,
@@ -601,7 +601,7 @@
                 var DownloadAttachObject = {
                     ProgName: 'Erj1',
                     ModeCode: '102',
-                    Group: group_Tiket,
+                    //Group: group_Tiket,
                     Year: '0000',
                     SerialNumber: item.SerialNumber,
                     BandNo: item.BandNo,

@@ -1700,9 +1700,8 @@ namespace Support.Controllers
         [Route("api/Data/Chat/")]
         public async Task<IHttpActionResult> PostChat(ChatObject c)
         {
-            string sql = string.Format(@"declare @now datetime = getdate()
-                                         SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body, DATEDIFF(MINUTE, Date, @now) AS DateMin FROM Chat
-                                         where  LockNumber = {0} and SerialNumber = {1}",//",
+            string sql = string.Format(@"SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body,format(date, 'HH:MM') as TimeSend FROM Chat
+                                         where  LockNumber = {0} and SerialNumber = {1}",
                                          c.LockNumber, c.SerialNumber);
             if (c.IdMessage > 0)
             {
