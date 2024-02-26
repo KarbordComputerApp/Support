@@ -20,7 +20,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "124";
+        public static string titleVerNumber = "126";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";

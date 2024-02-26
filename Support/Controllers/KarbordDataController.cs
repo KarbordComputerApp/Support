@@ -342,7 +342,7 @@ namespace Support.Controllers
             string sql = string.Format(CultureInfo.InvariantCulture,
                                        @"EXEC [dbo].[Web_DocAttach]
                                               @ProgName = N'{0}',
-                                              @Group = N'{1}',
+                                              @Group = N'',
                                               @Year = N'{2}',
                                               @DMode = N'{3}',
                                               @SerialNumber = {4},
@@ -351,8 +351,6 @@ namespace Support.Controllers
                                               DocAttachObject.ProgName,
                                               DocAttachObject.Group,
                                               DocAttachObject.Year,
-                                              //UnitPublic.sql_Group_Ticket,
-                                              //"0000",
                                               DocAttachObject.ModeCode,
                                               DocAttachObject.SerialNumber,
                                               DocAttachObject.BandNo,

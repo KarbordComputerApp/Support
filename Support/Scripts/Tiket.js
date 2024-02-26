@@ -599,7 +599,7 @@
 
 
                 var DownloadAttachObject = {
-                    ProgName: 'Erj1',
+                    ProgName: 'ERJ1',
                     ModeCode: '102',
                     //Group: group_Tiket,
                     Year: '0000',

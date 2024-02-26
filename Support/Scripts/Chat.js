@@ -10,7 +10,7 @@ var ChatQueueUri = server + '/api/KarbordData/ChatQueue/'; // تعداد افر�
 var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها 
 var UpdateChatDownloadUri = server + '/api/KarbordData/UpdateChatDownload/';
 var LockNumbersUri = server + '/api/Data/LockNumbers/';
-var activeChatQueue = false;
+var activeChatQueue = null;
 //getDataChat();
 
 /*
@@ -320,7 +320,7 @@ $("#btn-max-chat").click(function () {
 
 
 
-
+var show
 
 function refresh(id, isLast) {
     idChat = id
@@ -350,14 +350,13 @@ function refresh(id, isLast) {
         ajaxFunction(ChatUri, 'POST', ChatObject).done(function (data) {
             $("#box-send").show();
             if (data.length > 0) {
-
                 maxIdMessage = data[data.length - 1].Id;
                 //localStorage.setItem("MaxIdMessage", maxIdMessage);
 
                 //data.filter(key => key.id == 1);
                 endChat = data.filter(key => key.Status == 1);
 
-                if (data.length > 0) {
+                if (data.length > 0 && activeChatQueue != false ) {
                     dataAvtive = data.filter(key => key.Mode == 0);
                     if (dataAvtive.length > 0) {
                         activeChatQueue = false;
@@ -365,7 +364,7 @@ function refresh(id, isLast) {
                         activeChatQueue = true;
 
                         if (data[0].Body == "!!@NewChat@!!" && data.length == 1) {
-                            activeChatQueue = false;
+                            activeChatQueue = null;
                         }
                     }
                 }
@@ -374,6 +373,7 @@ function refresh(id, isLast) {
 
                 if (endChat.length > 0) {
                     idChat = null;
+                    activeChatQueue = null;
                     localStorage.removeItem("idChat");
                     $("#box-send").hide();
                     $("#btn-end-chat").hide();
