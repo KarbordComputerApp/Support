@@ -343,7 +343,7 @@ namespace Support.Controllers
                                 union all
                                 select id,Title,Description,Body,SortId,link,FormId ,IsPublic from Videos 
                                 where IsPublic = 1 or 
-                                      (IsPublic = 0 and id in (select Name from Ace_WebConfig.dbo.Web_SplitString((select replace(TrsVideo,'-',',') from Users where LockNumber = {0})) where name <> '' ))
+                                      (IsPublic = 0 and id in (select Name from dbo.Web_SplitString((select replace(TrsVideo,'-',',') from Users where LockNumber = {0})) where name <> '' ))
                                 order by title , SortId", VideosObject.LockNumber);
             var list = db.Database.SqlQuery<Videos>(sql).ToList();
 
