@@ -12,7 +12,10 @@
     var LockInput = $("#LockInput").data("value");
     var PassInput = $("#PassInput").data("value");
 
-    if (LockInput == 'NotAccess') {
+
+    var hasContract = localStorage.getItem("HasContract");
+
+    if (LockInput == 'NotAccess' || hasContract == "0") {
         alert('شما به این بخش دسترسی ندارید');
         window.location.href = localStorage.getItem("urlLogin");
     }
