@@ -75,11 +75,10 @@ $("#box-chat").hide();
 
 
 
-
 if (LockInput != "" && LockInput != null) {
 
-
     idChat = $("#IdChat").data("value");
+
     if (idChat != null) {  //panel admin
         idChat = idChat == "0" ? null : idChat;
 
@@ -120,15 +119,21 @@ if (LockInput != "" && LockInput != null) {
         CalcHeight();
     }
     else { //TiketLink
+
         if (lockNumber == "" || lockNumber == null) {
             lockNumber = LockInput;
         }
         getHasContract();
+        UserPanel();
     }
 }
 else {
     //panel user
+    UserPanel();
 
+}
+
+function UserPanel() {
     $("#ActiveAttach").hide();
     $("#chat-bell").show();
     $("#btn-end-chat").hide();

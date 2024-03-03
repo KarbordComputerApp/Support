@@ -1056,9 +1056,6 @@ namespace Support.Controllers
 
 
 
-
-
-
         // Get: api/Data/GetToken   
         [Route("api/Data/Token/{lockNumber}")]
         public async Task<IHttpActionResult> GetToken(string lockNumber)
