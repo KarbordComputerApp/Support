@@ -394,6 +394,7 @@ function refresh(id, isLast) {
                     $("#box-send").hide();
                     $("#btn-end-chat").hide();
                     clearInterval(timer);
+                    otherUserChat = null;
                 }
                 if (focusPage == false && isAdminChat) {
                     NotifationChat(data[0].Body);
