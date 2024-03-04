@@ -1697,7 +1697,7 @@ namespace Support.Controllers
         [Route("api/Data/Chat/")]
         public async Task<IHttpActionResult> PostChat(ChatObject c)
         {
-            string sql = string.Format(@"SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body,format(date, 'HH:MM') as TimeSend FROM Chat
+            string sql = string.Format(@"SELECT Id,LockNumber,SerialNumber,Mode,Status,ReadSt,UserCode,Body,format(date, 'HH:mm') as TimeSend FROM Chat
                                          where  LockNumber = {0} and SerialNumber = {1}",
                                          c.LockNumber, c.SerialNumber);
             if (c.IdMessage > 0)
@@ -1812,6 +1812,15 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> PostChatCountTiket(ChatCountTiketObject c)
         {
             string sql = string.Format(@"select SerialNumber,count(id) as ChatCount from chat where LockNumber = {0} group by SerialNumber ", c.LockNumber);
+
+
+            /*string sql = @"select SerialNumber,count(id) as ChatCount from chat ";
+            if (c.LockNumber != "000091")
+            {
+                sql += string.Format(" where LockNumber = {0} ", c.LockNumber);
+            }
+            sql += " group by SerialNumber ";*/
+
             var list = db.Database.SqlQuery<ChatCountTiket>(sql).ToList();
             return Ok(list);
         }

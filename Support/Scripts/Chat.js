@@ -123,8 +123,18 @@ if (LockInput != "" && LockInput != null) {
         if (lockNumber == "" || lockNumber == null) {
             lockNumber = LockInput;
         }
-        getHasContract();
-        UserPanel();
+
+        if (lockNumber == "000091") {
+            $("#ActiveAttach").hide();
+            $("#chat-bell").hide();
+            $("#btn-end-chat").hide();
+            $("#AddNewErjDocXK").hide();
+            $(".LeftButtomMenu").hide();
+        }
+        else {
+            getHasContract();
+            UserPanel();
+        }
     }
 }
 else {
@@ -134,6 +144,7 @@ else {
 }
 
 function UserPanel() {
+
     $("#ActiveAttach").hide();
     $("#chat-bell").show();
     $("#btn-end-chat").hide();

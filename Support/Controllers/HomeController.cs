@@ -236,5 +236,22 @@ namespace Support.Controllers
         }
 
 
+
+
+        //http://localhost:52798/Home/TiketKarbord?Pass=Karbord123
+
+        public ActionResult TiketKarbord(string Pass)
+        {
+            if (Pass == "Karbord123")
+            {
+                  ViewBag.LockNumber = "000091";
+            }
+            return View("Tiket");
+        }
+
+
     }
+
+
 }
+

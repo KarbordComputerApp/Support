@@ -185,18 +185,19 @@
     //Get ErjDocXK 
     function getErjDocXK(log) {
         var ErjDocXKObject = {
-            LockNo: lockNumber,
+            LockNo: lockNumber == "000091" ? "" : lockNumber ,
             ModeCode: '204',
-            FlagLog: log,
+            FlagLog: lockNumber == "000091" ? false :  log,
             IP: ipw,
             CallProg: 'Web',
             LoginLink: loginLink
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
+
             var Object_TicketStatus = {
                 SerialNumber: '',
-                LockNumber: lockNumber,
+                LockNumber: lockNumber == "000091" ? null : lockNumber ,
                 IP: ipw,
                 CallProg: 'Web'
             }
