@@ -776,7 +776,9 @@
 
 
 
-
+    self.ViewCoName = function (Band) {
+        return loginLink
+    }
 
 };
 

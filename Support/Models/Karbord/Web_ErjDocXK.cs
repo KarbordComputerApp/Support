@@ -43,6 +43,6 @@ namespace Support.Models
 
         public bool? ChatDownload { get; set; }
 
-
+        public string CoName { get; set; }
     }
 }

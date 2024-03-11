@@ -5,7 +5,7 @@
     var loginAccount = "NRlhOcngQl7BwNOhU104";
     $("#Index_TextLogo").text('صورتحساب های من');
 
-    if (lockNumber == null || group_CustAccount == null) {
+    if (lockNumber == null) {
         window.location.href = localStorage.getItem("urlLogin");
     }
 
