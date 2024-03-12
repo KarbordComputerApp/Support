@@ -776,7 +776,7 @@
 
 
 
-    self.ViewCoName = function (Band) {
+    self.ViewCustName = function (Band) {
         return loginLink
     }
 

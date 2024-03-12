@@ -61,8 +61,11 @@
                 <th>
                     <span>تاریخ</span>
                 </th>
-                <th  data-bind="visible: $root.ViewCoName()">
-                    <span>نام شرکت</span>
+                <th  data-bind="visible: $root.ViewCustName()">
+                    <span>شماره قفل</span>
+                </th>
+                <th  data-bind="visible: $root.ViewCustName()">
+                    <span>نام مشتری</span>
                 </th>
                 <th>
                     <span>وضعیت</span>
@@ -85,7 +88,8 @@
                 <td data-bind="text: $root.radif($index())" style="border-radius: 0 30px 30px 0;"></td>
                 <td data-bind="text: DocNo" class="notApp"></td>
                 <td data-bind="text: DocDate"></td>
-                <td data-bind="text: CoName, visible: $root.ViewCoName()"></td>
+                <td data-bind="text: LockNo, visible: $root.ViewCustName()"></td>
+                <td data-bind="text: CustName, visible: $root.ViewCustName()"></td>
                 <td data-bind="text: Status , style: {color: Status == 'پايان يافته' ? 'green' : Status == 'در دست کارشناس' ? 'blue' : Status == 'باطل' ? 'red' :  null}"></td>
                 <td data-bind="text: Text, click: $root.ViewText" style="width:35%" class="ellipsis"></td>
                 <td data-bind="text: Motaghazi" class="notApp"></td>
