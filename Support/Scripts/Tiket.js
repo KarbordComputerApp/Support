@@ -777,7 +777,8 @@
 
 
     self.ViewCustName = function (Band) {
-        return loginLink
+        
+        return LockInput == '000091';
     }
 
 };
