@@ -411,7 +411,9 @@ function refresh(id, isLast) {
                         res += '<img class="deleteChatImg" value="' + item.Id + '" src="/Content/img/Icon_blue/delete.png" width="25" style="padding-top: 10px;padding-right: 5px;display: none;" >';
                     }
 
-                    res += '<div class="dc-text" rel="tooltip" data-container="body">';
+
+                    res += '<div class="' + (item.Status == 1 ? 'dc-endchat' : 'dc-text') + '" rel="tooltip" data-container="body">';
+
 
                     if (item.Body.search("!!AttachFile!!") >= 0) {
                         fileName = item.Body.split(',')[1]
@@ -421,10 +423,13 @@ function refresh(id, isLast) {
                             '<span>' + fileName + '</span>';
                         res += '</a>'
                     }
+                    else if (item.Status == 1) {
+                        res += '<div class="dox-endchat">' +
+                            '<p style="text-align: center">این چت به یایان رسید</p>' +
+                            '<p style="text-align: center">روز خوبی را برای شما آرزومندیم</p>' +
+                            '</div>';
+                    }
                     else {
-
-
-
 
                         isLink = item.Body.search("www.") > 0 || item.Body.search("http://") > 0 || item.Body.search("https://") > 0 || item.Body.search("185.208.174.64") > 0
                         if (isLink) {
@@ -460,7 +465,6 @@ function refresh(id, isLast) {
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '<span style="margin-right:5px; margin-left:5px">' + timeSend + '</span>' +'</div>';
                     }
                     else {
-                       
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + '<span style="margin-left: 5px">' + timeSend + '</span>' + (item.Mode == 1 ? item.UserCode : "")  + '</div>';
                         
                     }

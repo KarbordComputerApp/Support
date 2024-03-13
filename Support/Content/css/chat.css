@@ -1082,6 +1082,8 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     fill: #555
 }
 
+
+
 .dc-text {
     border-radius: 22px;
     position: relative;
@@ -1097,6 +1099,24 @@ a:active, a:focus, button::-moz-focus-inner, button:active, button:focus, button
     max-width: calc(100% - 75px)
 }
 
+
+.dox-endchat {
+    height: 55px;
+    width: 200px;
+}
+.dc-endchat {
+    border-radius: 22px;
+    position: relative;
+    padding: 11px 15px;
+    background: #eb8121;
+    color: #fff;
+    border: 0;
+    margin: 0 0 5px 8px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    display: inline-block;
+    float: left;
+}
 
 
 .right .dc-text {
