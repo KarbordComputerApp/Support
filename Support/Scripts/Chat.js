@@ -212,7 +212,8 @@ function getDataTiket(id) {
         FlagLog: false,
         IP: ipw,
         CallProg: 'Web',
-        LoginLink: false
+        LoginLink: false,
+        top: null,
     }
     ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
         if (data.length > 0) {
@@ -277,7 +278,7 @@ $("#chat-bell").click(function () {
             $("#modal-NewChat").modal("show");
             $("#chatbox").empty();
         } else if (otherUserChat) {
-           Swal.fire({
+            Swal.fire({
                 title: "",
                 text: "در حال حاضر چت با " + motaghaziChatTiket + " در حال انجام است " + "آیا به چت اضافه می شوید ؟",
                 type: 'warning',
@@ -372,7 +373,7 @@ function refresh(id, isLast) {
                 //data.filter(key => key.id == 1);
                 endChat = data.filter(key => key.Status == 1);
 
-                if (data.length > 0 && activeChatQueue != false ) {
+                if (data.length > 0 && activeChatQueue != false) {
                     dataAvtive = data.filter(key => key.Mode == 0);
                     if (dataAvtive.length > 0) {
                         activeChatQueue = false;
@@ -462,11 +463,11 @@ function refresh(id, isLast) {
                     if (isAdminChat) {
                         dateText = item.Mode == 1 ? item.UserCode : SetNameUser(item.UserCode);
 
-                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '<span style="margin-right:5px; margin-left:5px">' + timeSend + '</span>' +'</div>';
+                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '<span style="margin-right:5px; margin-left:5px">' + timeSend + '</span>' + '</div>';
                     }
                     else {
-                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + '<span style="margin-left: 5px">' + timeSend + '</span>' + (item.Mode == 1 ? item.UserCode : "")  + '</div>';
-                        
+                        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + '<span style="margin-left: 5px">' + timeSend + '</span>' + (item.Mode == 1 ? item.UserCode : "") + '</div>';
+
                     }
                     res += '</div>';
                 }
@@ -620,12 +621,12 @@ function NewChat() {
     }
 
 
-   /* if (lockChat.includes(lockNumber.toString())) {
-
-    }
-    else {
-        return showNotification('دسترسی ندارید', 0);
-    }*/
+    /* if (lockChat.includes(lockNumber.toString())) {
+ 
+     }
+     else {
+         return showNotification('دسترسی ندارید', 0);
+     }*/
 
 
     captchaData = $("#CaptchaData").val();
@@ -720,12 +721,12 @@ function SendAttach(file) {
         return showNotification('قرارداد شما پایان یافته است و امکان چت را ندارید', 0);
     }
 
-   /* if (lockChat.includes(lockNumber.toString())) {
-
-    }
-    else {
-        return showNotification('دسترسی ندارید', 0);
-    }*/
+    /* if (lockChat.includes(lockNumber.toString())) {
+ 
+     }
+     else {
+         return showNotification('دسترسی ندارید', 0);
+     }*/
 
 
     if (idChat == null) {

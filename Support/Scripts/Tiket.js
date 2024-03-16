@@ -185,19 +185,20 @@
     //Get ErjDocXK 
     function getErjDocXK(log) {
         var ErjDocXKObject = {
-            LockNo: lockNumber == "000091" ? "" : lockNumber ,
+            LockNo: lockNumber == "000091" ? "" : lockNumber,
             ModeCode: '204',
-            FlagLog: lockNumber == "000091" ? false :  log,
+            FlagLog: lockNumber == "000091" ? false : log,
             IP: ipw,
             CallProg: 'Web',
-            LoginLink: loginLink
+            LoginLink: loginLink,
+            top: loginLink == true ? 1000 : null,
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
 
             var Object_TicketStatus = {
                 SerialNumber: '',
-                LockNumber: lockNumber == "000091" ? null : lockNumber ,
+                LockNumber: lockNumber == "000091" ? null : lockNumber,
                 IP: ipw,
                 CallProg: 'Web'
             }
@@ -229,7 +230,7 @@
                     }
                 }
 
-                
+
             });
 
             self.ErjDocXKList(dataDocXK);
@@ -777,7 +778,7 @@
 
 
     self.ViewCustName = function (Band) {
-        
+
         return LockInput == '000091';
     }
 

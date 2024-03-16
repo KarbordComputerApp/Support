@@ -255,13 +255,21 @@ namespace Support.Controllers
 
             public bool LoginLink { get; set; }
 
+            public int? top { get; set; }
+
         }
 
 
         [Route("api/KarbordData/Web_ErjDocXK")]
         public async Task<IHttpActionResult> PostWeb_ErjDocXK(Object_ErjDocXK Object_ErjDocXK)
         {
-            string sql = string.Format("select * from dbo.Web_ErjDocXK({0},'{1}') ", Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
+            string sql = "select ";
+
+            if (Object_ErjDocXK.top != null)
+                sql += " top (" + Object_ErjDocXK.top.ToString() + ") ";
+
+            sql += string.Format(" * from dbo.Web_ErjDocXK({0},'{1}') ",  Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
+
             if (Object_ErjDocXK.SerialNumber > 0)
             {
                 sql += " where SerialNumber = " + Object_ErjDocXK.SerialNumber.ToString();
