@@ -214,6 +214,7 @@ function getDataTiket(id) {
         CallProg: 'Web',
         LoginLink: false,
         top: null,
+        Status: null,
     }
     ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
         if (data.length > 0) {

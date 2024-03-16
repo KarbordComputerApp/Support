@@ -257,6 +257,8 @@ namespace Support.Controllers
 
             public int? top { get; set; }
 
+            public string Status  { get; set; }
+
         }
 
 
@@ -268,12 +270,18 @@ namespace Support.Controllers
             if (Object_ErjDocXK.top != null)
                 sql += " top (" + Object_ErjDocXK.top.ToString() + ") ";
 
-            sql += string.Format(" * from dbo.Web_ErjDocXK({0},'{1}') ",  Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
+            sql += string.Format(" * from dbo.Web_ErjDocXK({0},'{1}') where 1 = 1  ",  Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
 
             if (Object_ErjDocXK.SerialNumber > 0)
             {
-                sql += " where SerialNumber = " + Object_ErjDocXK.SerialNumber.ToString();
+                sql += " and SerialNumber = " + Object_ErjDocXK.SerialNumber.ToString();
             }
+
+            if (Object_ErjDocXK.Status != null && Object_ErjDocXK.Status != "")
+            {
+                sql += string.Format(" and Status = '{0}'", Object_ErjDocXK.Status.ToString());
+            }
+
             sql += " order by DocDate desc , SerialNumber desc";
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);

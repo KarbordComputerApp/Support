@@ -191,7 +191,8 @@
             IP: ipw,
             CallProg: 'Web',
             LoginLink: loginLink,
-            top: loginLink == true ? 1000 : null,
+            top: null,
+            Status: lockNumber == "000091" ? "فعال" : null,
         }
         ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
 
