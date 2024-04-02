@@ -14,8 +14,9 @@
 
 
     var hasContract = localStorage.getItem("HasContract");
+    var accessTiket = localStorage.getItem("AccessTiket");
 
-    if (LockInput == 'NotAccess' || hasContract == "0") {
+    if ((LockInput == 'NotAccess' || hasContract == "0") && accessTiket == "0") {
         alert('شما به این بخش دسترسی ندارید');
         window.location.href = localStorage.getItem("urlLogin");
     }

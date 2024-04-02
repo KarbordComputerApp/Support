@@ -1,5 +1,6 @@
 ﻿var server = 'http://localhost:52798';
 //var server = 'http://192.168.0.106:1000';
+//var server = 'http://185.208.174.64:8001';
 
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
@@ -62,6 +63,8 @@ function getHasContract() {
             endDate = data.length == 1 || data[1] == "" ? "" : data[1] + " ";
             localStorage.setItem("HasContract", access);
 
+            localStorage.setItem("AccessTiket", "1");
+
             if (access == 0) {
                 $("#t_HasContract").text("قرارداد پشتیبانی شما پایان یافته است");
 
@@ -77,11 +80,14 @@ function getHasContract() {
                 d2 = new Date(dateNow_Shamsi).getTime() / 10000;
                 d = Math.abs(parseInt(d1) - parseInt(d2));
                 d = d / 8640;
+
                 if (d > 30) {
                     $("#B_Tiket").attr('disabled', 'disabled');
+                    localStorage.setItem("AccessTiket", "0");
                 }
 
             } else if (access == 1) {
+                localStorage.setItem("AccessTiket", "1");
                 $("#t_HasContract").text("قرارداد پشتیبانی شما تا تاریخ " + endDate + " معتبر است");
                 $("#t_HasContract").css("color", "#128d35");
                 $("#chat-bell").show();
