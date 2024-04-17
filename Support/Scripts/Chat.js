@@ -553,6 +553,9 @@ $(".deleteChatImg").click(function (e) {
 })
 */
 
+$("#Eshkalat_End").hide();
+
+
 $("#ChatMessage").keyup(function (e) {
     if (e.keyCode == 13) {
         ChatSend(false);
@@ -580,9 +583,17 @@ $("#Eshkalat_ClientId").click(function () {
     ShowVideoEshkal(link, caption);
 });
 
+$("#Eshkalat_End").click(function () {
+    caption = "اشکال برطرف شد";
+    ChatSend(false, caption);
+    $("#box-Eshkalat").hide();
+    $("#Eshkalat_End").hide();
+    CalcHeight();
+});
+
 
 function ShowVideoEshkal(link, caption) {
-    caption = caption.substr(2, caption.length);
+    caption = caption.substr(3, caption.length);
     var LogLinkTiketUri = server + '/api/Data/LogLinkTiket/';
     var LogLinkTiketObject = {
         LockNumber: lockNumber,
@@ -597,7 +608,8 @@ function ShowVideoEshkal(link, caption) {
         videoclip.play();
         $("#Title_VideoChat").text(caption);
         $("#modal-VideoChat").modal('show');
-        ChatSend(false,"نمایش ویدیو " + caption);
+        $("#Eshkalat_End").show();
+        ChatSend(false,"نمایش ویدیو: " + caption);
     });
 }
 
