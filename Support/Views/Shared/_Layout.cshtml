@@ -121,9 +121,22 @@
 
     </div>
 
+    <!--  <div id="B_Eshkalat" class="feedback-btn">
+          <p class="feedback-txt">اشکالات پر تکرار</p>
+      </div>-->
+
+
     <div class="continerMain">
+
+
         <div class="container-fluid">
+
+
+
+
             @RenderBody()
+
+
 
             <div id="chat-bell">
                 <a id="chat-bell-image-wrapper">
@@ -168,6 +181,41 @@
             <div id="box-notification">
                 <p id="l-notification" style="font-size: 14px;color: black;margin-bottom: 0px;text-align: center;"></p>
             </div>
+
+
+
+
+            <div id="box-Eshkalat" style="text-align: right;margin: 6px;border: 1px solid black;border-radius: 25px;padding: 10px;">
+                <p>اشکال شما چیست ؟</p>
+
+                <div class="col-12">
+                    <a id="Eshkalat_Tekrari" role="button" style="color: black; cursor: pointer;">
+                        <img src="/Content/img/play-icon.png" style="height: 16px;margin-left: 2px;margin-right: 10px;">
+                        <span tyle="font-size: 14px;">1- ابطال فاکتور تکراری در سامانه مودیان</span>
+                    </a>
+                </div>
+                <div class="col-12" style="margin-top:10px">
+                    <a id="Eshkalat_ClientId" role="button" style="color: black; cursor: pointer;">
+                        <img src="/Content/img/play-icon.png" style="height: 16px;margin-left: 2px;margin-right: 10px;">
+                        <span tyle="font-size: 14px;">2- فعال سازی شناسه یکتا در سامانه مودیان</span>
+                    </a>
+                </div>
+                <div class="col-12" style="margin-top:10px">
+                    <a id="Eshkalat_Other" role="button" style="color: black; cursor: pointer;">
+                        <img src="/Content/img/Icon_Blue/edit.png" style="height: 16px;margin-left: 2px;margin-right: 10px;">
+                        <span tyle="font-size: 14px;">3- سایر موارد</span>
+                    </a>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
             <div class="row" id="ActiveAttach">
                 <input id="ActiveAttachChat" type="checkbox" style="width: 16px;margin-left: 5px;margin-bottom: 0px;margin-right: 5px;" />
                 <label for="ActiveAttachChat" style="margin-top:7px;margin-bottom:0px">فعال کردن ارسال فایل</label>
@@ -331,6 +379,7 @@
 
         </div>
     </div>
+
 
 
 

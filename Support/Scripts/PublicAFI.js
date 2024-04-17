@@ -486,7 +486,6 @@ $("#Close").click(function () {
 
 
 
-
 var viewer = null;
 var designer = null;
 var options = null;

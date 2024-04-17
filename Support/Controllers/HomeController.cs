@@ -237,18 +237,20 @@ namespace Support.Controllers
 
 
 
+        /*
+         * لینک نمایش تیکت ها در تعطیلات نوروز
+         * شماره قفل 000091 موجود در برنامه برای این منظور تعریف شده است
+                //http://localhost:52798/Home/TiketKarbord?Pass=Karbord123
 
-        //http://localhost:52798/Home/TiketKarbord?Pass=Karbord123
-
-        public ActionResult TiketKarbord(string Pass)
-        {
-            if (Pass == "Karbord123")
-            {
-                  ViewBag.LockNumber = "000091";
-            }
-            return View("Tiket");
-        }
-
+                public ActionResult TiketKarbord(string Pass)
+                {
+                    if (Pass == "Karbord123")
+                    {
+                          ViewBag.LockNumber = "000091";
+                    }
+                    return View("Tiket");
+                }
+                */
 
     }
 

@@ -72,9 +72,6 @@ $("#box-chat").hide();
 
 
 
-
-
-
 if (LockInput != "" && LockInput != null) {
 
     idChat = $("#IdChat").data("value");
@@ -93,6 +90,9 @@ if (LockInput != "" && LockInput != null) {
         rightItem = "left";
         leftItem = "right";
         mode = 0;
+
+        $("#box-Eshkalat").hide();
+
         $("#btn-end-chat").show();
         $("#box-chat").show();
 
@@ -562,13 +562,53 @@ $("#ChatSend").click(function () {
     ChatSend(false);
 });
 
+$("#Eshkalat_Other").click(function () {
+    $("#box-Eshkalat").hide();
+    $("#ChatMessage").focus();
+    CalcHeight();
+});
+
+$("#Eshkalat_Tekrari").click(function () {
+    caption = $(this.lastElementChild).text();
+    link = "http://185.208.174.64:8001/Content/Video/Sending_double_invoices.mp4";
+    ShowVideoEshkal(link, caption);
+});
+
+$("#Eshkalat_ClientId").click(function () {
+    caption = $(this.lastElementChild).text();
+    link = "http://185.208.174.64:8001/Content/Video/Upload_Public_key.mp4";
+    ShowVideoEshkal(link, caption);
+});
+
+
+function ShowVideoEshkal(link, caption) {
+    caption = caption.substr(2, caption.length);
+    var LogLinkTiketUri = server + '/api/Data/LogLinkTiket/';
+    var LogLinkTiketObject = {
+        LockNumber: lockNumber,
+        IP: ipw,
+        CallProg: 'Web',
+        Link: link
+    };
+    ajaxFunction(LogLinkTiketUri, 'POST', LogLinkTiketObject, false).done(function (data) {
+        videoclip.pause();
+        videosource.setAttribute('src', link);
+        videoclip.load();
+        videoclip.play();
+        $("#Title_VideoChat").text(caption);
+        $("#modal-VideoChat").modal('show');
+        ChatSend(false,"نمایش ویدیو " + caption);
+    });
+}
+
+
 
 //localStorage.removeItem("HasContract");
 
 
-function ChatSend(firstSend) {
+function ChatSend(firstSend,mess) {
 
-    var message = firstSend == true ? "!!@NewChat@!!" : $("#ChatMessage").val();
+    var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
     if (message.trim() == "") {
         $("#ChatMessage").val("");
         return showNotification('پیام را وارد کنید', 0);

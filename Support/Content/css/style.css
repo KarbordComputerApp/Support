@@ -22802,3 +22802,43 @@ button.showHidePass {
     }
 }
 
+
+
+
+.feedback-btn {
+    position: fixed;
+    width: 45px;
+    height: 120px;
+    background: #eb8121;
+    top: 45%;
+    right: 0;
+    border-left: 2px solid #fff;
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    box-shadow: 1px 1px 3px #000;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-out;
+    z-index: 1;
+}
+
+    .feedback-btn:hover {
+        width: 60px;
+    }
+
+.feedback-txt {
+    width: max-content;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    position: absolute;
+    left: -30px;
+    top: 48px;
+    color: #fff;
+    transition: 0.2s ease-out;
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: black
+}
+
