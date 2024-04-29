@@ -10,6 +10,8 @@ var ChatQueueUri = server + '/api/KarbordData/ChatQueue/'; // تعداد افر�
 var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها 
 var UpdateChatDownloadUri = server + '/api/KarbordData/UpdateChatDownload/';
 var LockNumbersUri = server + '/api/Data/LockNumbers/';
+var HasMainTenanceUri = server + '/api/Data/HasMainTenance/';
+
 var activeChatQueue = null;
 //getDataChat();
 
@@ -200,6 +202,7 @@ function SetUpdateChatDownload(value) {
     });
 }
 
+
 function getDataTiket(id) {
     $("#P_AttachChat").show();
     if (isAdminChat == false)
@@ -272,37 +275,45 @@ $("#chat-bell").click(function () {
         $("#box-chat").show();
         $("#chat-bell").hide();
     } else {
-        if (idChat == null) {
-            CreateCaptcha();
-            $("#motaghaziChat").val("");
-            $("#CaptchaVal").val("");
-            $("#modal-NewChat").modal("show");
-            $("#chatbox").empty();
-        } else if (otherUserChat) {
-            Swal.fire({
-                title: "",
-                text: "در حال حاضر چت با " + motaghaziChatTiket + " در حال انجام است " + "آیا به چت اضافه می شوید ؟",
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
-                cancelButtonText: 'خیر',
-                allowOutsideClick: false,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'بله'
-            }).then((result) => {
-                if (result.value) {
+        ajaxFunction(HasMainTenanceUri + lockNumber, 'GET').done(function (data) {
+
+            if (data == "") {
+                if (idChat == null) {
                     CreateCaptcha();
-                    $("#P_NewChatInfo").hide();
                     $("#motaghaziChat").val("");
                     $("#CaptchaVal").val("");
                     $("#modal-NewChat").modal("show");
+                    $("#chatbox").empty();
+                } else if (otherUserChat) {
+                    Swal.fire({
+                        title: "",
+                        text: "در حال حاضر چت با " + motaghaziChatTiket + " در حال انجام است " + "آیا به چت اضافه می شوید ؟",
+                        type: 'warning',
+                        showCancelButton: true,
+                        cancelButtonColor: '#3085d6',
+                        cancelButtonText: 'خیر',
+                        allowOutsideClick: false,
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'بله'
+                    }).then((result) => {
+                        if (result.value) {
+                            CreateCaptcha();
+                            $("#P_NewChatInfo").hide();
+                            $("#motaghaziChat").val("");
+                            $("#CaptchaVal").val("");
+                            $("#modal-NewChat").modal("show");
+                        }
+                    })
                 }
-            })
-        }
-        else {
-            $("#box-chat").show();
-            $("#chat-bell").hide();
-        }
+                else {
+                    $("#box-chat").show();
+                    $("#chat-bell").hide();
+                }
+            } else {
+                return showNotification(data, 0);
+            }
+        });
+
     }
 
 
@@ -609,7 +620,7 @@ function ShowVideoEshkal(link, caption) {
         $("#Title_VideoChat").text(caption);
         $("#modal-VideoChat").modal('show');
         $("#Eshkalat_End").show();
-        ChatSend(false,"نمایش ویدیو: " + caption);
+        ChatSend(false, "نمایش ویدیو: " + caption);
     });
 }
 
@@ -618,7 +629,7 @@ function ShowVideoEshkal(link, caption) {
 //localStorage.removeItem("HasContract");
 
 
-function ChatSend(firstSend,mess) {
+function ChatSend(firstSend, mess) {
 
     var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
     if (message.trim() == "") {

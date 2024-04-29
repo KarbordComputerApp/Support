@@ -32,6 +32,7 @@
                 localStorage.setItem("UserType", data[0].UserType);
                 localStorage.setItem("ForceToChangePass", data[0].ForceToChangePass);
                 localStorage.setItem("TrsDownload", data[0].TrsDownload);
+                localStorage.setItem("MainTenanceCode", data[0].MainTenanceCode);
 
                 localStorage.setItem("Name", data[0].Name);
                 localStorage.setItem("Tel", data[0].Tel);

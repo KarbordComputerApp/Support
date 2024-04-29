@@ -1047,6 +1047,14 @@ namespace Support.Controllers
         }
 
 
+        [Route("api/Data/HasMainTenance/{lockNo}")]
+        public async Task<IHttpActionResult> GetHasMainTenance(string lockNo)
+        {
+            string sql = string.Format("select dbo.HasMainTenance({0}) as Tenance", lockNo);
+            var list = db.Database.SqlQuery<string>(sql).ToList();
+            return Ok(list);
+        }
+
 
         [Route("api/Data/HasContract/{lockNo}")]
         public async Task<IHttpActionResult> GetHasContract(string lockNo)

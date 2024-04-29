@@ -35,6 +35,8 @@ namespace Support.Models
 
         public string SamaneTrs { get; set; }
 
+        //public int? MainTenanceCode { get; set; }
+
         /*public string Name { get; set; }
 
         public string Tel { get; set; }

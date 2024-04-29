@@ -45,5 +45,7 @@ namespace Support.Models
 
         public byte[] Pic { get; set; }
 
+        public byte? MainTenanceCode { get; set; }
+
     }
 }
