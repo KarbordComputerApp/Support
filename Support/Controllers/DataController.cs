@@ -1160,26 +1160,26 @@ namespace Support.Controllers
 
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
-                    string contract = UnitPublic.HasContract(lockNumber);
-                    if (contract != "")
+                    string sql = string.Format(@"select top(1) * from Videos where FormId = '{0}'", FormId);
+                    var list = db.Database.SqlQuery<Videos>(sql).ToList();
+                    if (list.Count > 0)
                     {
-                        if (contract.Split('-')[0] == "1")
+                        string contract = UnitPublic.HasContract(lockNumber);
+                        if (contract != "")
                         {
-                            string sql = string.Format(@"select top(1) * from Videos where FormId = '{0}'", FormId);
-                            var list = db.Database.SqlQuery<Videos>(sql).ToList();
-                            if (list.Count > 0)
+                            if (contract.Split('-')[0] == "1")
                             {
                                 return Ok("/Home/VideoFormId?HashLink=" + UnitPublic.Encrypt(list[0].Link) + "&&Token=" + Token);
                             }
                             else
                             {
-                                return Ok("NotFound");
+                                return Ok("NotAccess-" + contract.Split('-')[1]);
                             }
                         }
-                        else
-                        {
-                            return Ok("NotAccess");
-                        }
+                    }
+                    else
+                    {
+                        return Ok("NotFound");
                     }
                 }
             }
