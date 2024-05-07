@@ -359,10 +359,27 @@ namespace Support.Controllers
         [Route("api/Data/AceMessages/")]
         public async Task<IHttpActionResult> GetAceMessages()
         {
-            string sql = string.Format(@"select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0  order by id desc");
+            string sql = string.Format(@"select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 order by id desc");
             var list = db.Database.SqlQuery<AceMessages>(sql).ToList();
             return Ok(list);
         }
+
+
+        [Route("api/Data/AceMessagesSitt/{type}")]
+        public async Task<IHttpActionResult> GetAceMessagesSitt(string type)
+        {
+            string sql = string.Format(@"select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 ");
+
+            if (type != "0")
+            {
+                sql += " and Type = " + type;
+            }
+            sql += " order by id desc";
+            var list = db.Database.SqlQuery<AceMessages>(sql).ToList();
+            return Ok(list);
+        }
+
+
 
 
         public class FinancialDocumentsObject
@@ -1110,29 +1127,30 @@ namespace Support.Controllers
 
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
-                    string contract = UnitPublic.HasContract(lockNumber);
-                    if (contract != "")
-                    {
-                        if (contract.Split('-')[0] == "1")
-                        {
-                            string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath , (select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload FROM CustomerFiles as c 
+                    string sql = string.Format(@"SELECT Id, LockNumber, dbo.MiladiToShamsi(UploadDate) as Date, FileName, FilePath , (select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload FROM CustomerFiles as c 
                                                     where id = (select id from ((select ROW_NUMBER() over (order by id desc) ro , id from CustomerFiles where LockNumber = {0} and filepath like '%.exe' )) as b where ro = {1})",
                                          lockNumber, Row);
-                            var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
-                            if (list.Count > 0)
+                    var list = db.Database.SqlQuery<LastCustomerFiles>(sql).ToList();
+                    if (list.Count > 0)
+                    {
+
+                        string contract = UnitPublic.HasContract(lockNumber);
+                        if (contract != "")
+                        {
+                            if (contract.Split('-')[0] == "1")
                             {
                                 var l = list.Single();
                                 return Ok(l.Id.ToString() + ',' + l.LockNumber.ToString() + ',' + l.Date + ',' + l.FileName + ',' + l.FilePath + ',' + l.CountDownload.ToString());
                             }
                             else
                             {
-                                return Ok("NotFound");
+                                return Ok("NotAccess-" + contract.Split('-')[1]);
                             }
                         }
-                        else
-                        {
-                            return Ok("NotAccess");
-                        }
+                    }
+                    else
+                    {
+                        return Ok("NotAccess");
                     }
                 }
             }

@@ -257,7 +257,7 @@ namespace Support.Controllers
 
             public int? top { get; set; }
 
-            public string Status  { get; set; }
+            public string Status { get; set; }
 
         }
 
@@ -270,7 +270,7 @@ namespace Support.Controllers
             if (Object_ErjDocXK.top != null)
                 sql += " top (" + Object_ErjDocXK.top.ToString() + ") ";
 
-            sql += string.Format(" * from dbo.Web_ErjDocXK({0},'{1}') where 1 = 1  ",  Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
+            sql += string.Format(" * from dbo.Web_ErjDocXK({0},'{1}') where 1 = 1  ", Object_ErjDocXK.ModeCode, Object_ErjDocXK.LockNo);
 
             if (Object_ErjDocXK.SerialNumber > 0)
             {
@@ -786,6 +786,19 @@ namespace Support.Controllers
             return Ok(list);
         }
 
+      /*  public class Web_ErjStatus
+        {
+            public int OrderFld { get; set; }
+            public string Status { get; set; }
+        }
+
+        [Route("api/KarbordData/ErjStatus/")]
+        public async Task<IHttpActionResult> GetWeb_ErjStatus()
+        {
+            string sql = string.Format(@"Select * from Web_ErjStatus");
+            var list = db.Database.SqlQuery<Web_ErjStatus>(sql);
+            return Ok(list);
+        }*/
 
     }
 }

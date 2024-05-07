@@ -31,7 +31,7 @@
     self.AceMessagesList = ko.observableArray([]);
 
     function getAceMessagesList() {
-        ajaxFunction(AceMessagesUri, 'GET', true).done(function (data) {
+        ajaxFunction(AceMessagesUri , 'GET', true).done(function (data) {
             var list = '';
             for (var i = 0; i < data.length; i++) {
                 list += `<div style=" background-color:#128d35;padding: 5px 20px 5px 20px;border-radius: 25px;margin-bottom: 5px;">
