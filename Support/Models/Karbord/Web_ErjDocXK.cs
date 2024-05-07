@@ -44,5 +44,9 @@ namespace Support.Models
         public bool? ChatDownload { get; set; }
 
         public string CustName { get; set; }
+
+        public string Spec { get; set; }
+
+        public byte DocRead { get; set; }
     }
 }

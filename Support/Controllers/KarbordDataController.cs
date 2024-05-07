@@ -66,6 +66,55 @@ namespace Support.Controllers
 
 
 
+        public class LoginObject
+        {
+            public string userName { get; set; }
+
+            public string pass { get; set; }
+
+            public string param1 { get; set; }
+
+            public string param2 { get; set; }
+
+        }
+
+
+        public class LoginData
+        {
+            public int Value { get; set; }
+
+            public string Name { get; set; }
+
+            public string VstrCode { get; set; }
+
+        }
+
+        // Post: api/Web_Data/ اطلاعات لاگین   
+        [Route("api/KarbordData/Login")]
+        public async Task<IHttpActionResult> PostWeb_Login(LoginObject LoginObject)
+        {
+            if (LoginObject.pass == "null")
+                LoginObject.pass = "";
+            string sql = string.Format(@"DECLARE @return_value int,
+                                                 @name nvarchar(100),
+		                                         @vstrcode nvarchar(100)
+
+                                         EXEC    @return_value = [dbo].[Web_Login]
+                                                 @Code1 = '{0}',
+		                                         @UserCode = N'{1}',
+                                                 @Code2 = '{2}',
+		                                         @Psw = N'{3}',
+                                                 @Name = @name OUTPUT,
+		                                         @vstrcode = @VstrCode OUTPUT
+                                         SELECT  @return_value as Value, @Name as Name ,  @vstrcode as VstrCode",
+                                         LoginObject.param1, LoginObject.userName, LoginObject.param2, LoginObject.pass);
+            var list = db.Database.SqlQuery<LoginData>(sql).ToList();
+            return Ok(list);
+        }
+
+
+
+
 
         public class Object_TicketStatus
         {
@@ -786,7 +835,12 @@ namespace Support.Controllers
             return Ok(list);
         }
 
-      /*  public class Web_ErjStatus
+
+
+
+
+
+        public class Web_ErjStatus
         {
             public int OrderFld { get; set; }
             public string Status { get; set; }
@@ -798,7 +852,7 @@ namespace Support.Controllers
             string sql = string.Format(@"Select * from Web_ErjStatus");
             var list = db.Database.SqlQuery<Web_ErjStatus>(sql);
             return Ok(list);
-        }*/
+        }
 
     }
 }
