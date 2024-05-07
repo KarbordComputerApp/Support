@@ -630,8 +630,8 @@ function ShowVideoEshkal(link, caption) {
 
 
 function ChatSend(firstSend, mess) {
-    ajaxFunction(HasMainTenanceUri + lockNumber, 'GET').done(function (data) {
-        if (data == "") {
+    //ajaxFunction(HasMainTenanceUri + lockNumber, 'GET').done(function (data) {
+        //if (data == "") {
             var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
             if (message.trim() == "") {
                 $("#ChatMessage").val("");
@@ -663,11 +663,11 @@ function ChatSend(firstSend, mess) {
                     $("#ChatMessage").val("");
                 });
             }
-        }
-        else {
-            return showNotification(data, 0);
-        }
-    });
+        //}
+        //else {
+        //    return showNotification(data, 0);
+       // }
+    //});
 }
 
 $("#SendNewChat").click(function () {
