@@ -630,39 +630,44 @@ function ShowVideoEshkal(link, caption) {
 
 
 function ChatSend(firstSend, mess) {
+    ajaxFunction(HasMainTenanceUri + lockNumber, 'GET').done(function (data) {
+        if (data == "") {
+            var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
+            if (message.trim() == "") {
+                $("#ChatMessage").val("");
+                return showNotification('پیام را وارد کنید', 0);
+            }
 
-    var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
-    if (message.trim() == "") {
-        $("#ChatMessage").val("");
-        return showNotification('پیام را وارد کنید', 0);
-    }
+            if (idChat == null) {
 
+            }
+            else {
 
-    if (idChat == null) {
-
-    }
-    else {
-
-        if (motaghaziChat == "") {
-            motaghaziChat == "UserChat"
+                if (motaghaziChat == "") {
+                    motaghaziChat == "UserChat"
+                }
+                userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
+                var AddChatObject = {
+                    LockNumber: lockNumber,
+                    SerialNumber: idChat,
+                    Mode: mode,
+                    Status: 0,
+                    ReadSt: 0,
+                    UserCode: userCodeChat,
+                    Body: message,
+                }
+                ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
+                    serialNumber = data;
+                    isLast = false;
+                    refresh(idChat, isLast);
+                    $("#ChatMessage").val("");
+                });
+            }
         }
-        userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
-        var AddChatObject = {
-            LockNumber: lockNumber,
-            SerialNumber: idChat,
-            Mode: mode,
-            Status: 0,
-            ReadSt: 0,
-            UserCode: userCodeChat,
-            Body: message,
+        else {
+            return showNotification(data, 0);
         }
-        ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
-            serialNumber = data;
-            isLast = false;
-            refresh(idChat, isLast);
-            $("#ChatMessage").val("");
-        });
-    }
+    });
 }
 
 $("#SendNewChat").click(function () {
