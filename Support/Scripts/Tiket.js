@@ -51,7 +51,7 @@
     var ErjDocXKUri = server + '/api/KarbordData/Web_ErjDocXK/'; // آدرس تیکت ها  
     var TicketStatusUri = server + '/api/KarbordData/Web_TicketStatus/'; // آدرس وضعیت تیکت ها 
     var DocAttachUri = server + '/api/KarbordData/DocAttach/'; // آدرس لیست پیوست 
-    var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
+    var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس ذخیره تیکت  
     var ErjDocAttach_SaveUri = server + '/api/KarbordData/UploadFile/'; // ذخیره پیوست
     var ErjDocAttach_DelUri = server + '/api/KarbordData/ErjDocAttach_Del/'; // حذف پیوست
     var Ticket_UpdateResultUri = server + '/api/KarbordData/Ticket_UpdateResult/'; // خواندن نتیجه تیکت

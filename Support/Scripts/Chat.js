@@ -410,7 +410,7 @@ function refresh(id, isLast) {
                     otherUserChat = null;
                 }
                 if (focusPage == false && isAdminChat) {
-                    NotifationChat(data[0].Body);
+                   // NotifationChat(data[0].Body);
                 }
 
                 for (var i = 0; i < data.length; i++) {
@@ -720,7 +720,7 @@ function NewChat() {
         DateNow = data[0];
     });
 
-    var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس  دانلود پیوست 
+    var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس ذخیره تیکت 
     var ErjSaveTicket_HI = {
         SerialNumber: 0,
         DocDate: DateNow,
