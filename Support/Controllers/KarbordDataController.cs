@@ -338,7 +338,6 @@ namespace Support.Controllers
 
             sql += " order by DocDate desc , SerialNumber desc";
 
-            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
             if (Object_ErjDocXK.FlagLog == true)
             {
@@ -1493,7 +1492,7 @@ namespace Support.Controllers
 
             sql += " order by DocDate desc , SerialNumber desc";
 
-            var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
+            var list = db.Database.SqlQuery<Web_ErjDocXH_F>(sql);
             return Ok(list);
         }
 

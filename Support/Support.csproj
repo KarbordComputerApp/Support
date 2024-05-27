@@ -192,6 +192,7 @@
     <Compile Include="Models\Karbord\Web_ErjDocK.cs" />
     <Compile Include="Models\Karbord\Web_ErjDocB_Last.cs" />
     <Compile Include="Models\Karbord\Web_ErjDocH.cs" />
+    <Compile Include="Models\Karbord\Web_ErjDocXH_F.cs" />
     <Compile Include="Models\Karbord\Web_ErjDocXK.cs" />
     <Compile Include="Models\Karbord\Web_FDocP.cs" />
     <Compile Include="Models\Karbord\Web_TicketStatus.cs" />
