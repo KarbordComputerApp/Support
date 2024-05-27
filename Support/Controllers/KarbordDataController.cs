@@ -89,7 +89,7 @@ namespace Support.Controllers
 
         }
 
-        // Post: api/Web_Data/ اطلاعات لاگین   
+        // Post: api/KarbordData/ اطلاعات لاگین   
         [Route("api/KarbordData/Login")]
         public async Task<IHttpActionResult> PostWeb_Login(LoginObject LoginObject)
         {
@@ -204,6 +204,9 @@ namespace Support.Controllers
             public bool LoginLink { get; set; }
 
             public byte ChatMode { get; set; }
+
+            public bool ChatActive { get; set; }
+
         }
 
 
@@ -243,6 +246,7 @@ namespace Support.Controllers
 		                                    @F20 = N'{26}',
 		                                    @Motaghazi = N'{27}',
 		                                    @ChatMode = {28},
+		                                    @ChatActive = {29},
 		                                    @DocNo_Out = @DocNo_Out OUTPUT
                                     SELECT	@DocNo_Out as N'DocNo_Out'",
                                            ErjSaveTicket_HI.SerialNumber,
@@ -273,7 +277,8 @@ namespace Support.Controllers
                                            ErjSaveTicket_HI.F19,
                                            ErjSaveTicket_HI.F20,
                                            ErjSaveTicket_HI.Motaghazi,
-                                           ErjSaveTicket_HI.ChatMode
+                                           ErjSaveTicket_HI.ChatMode,
+                                           ErjSaveTicket_HI.ChatActive
                                            );
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
@@ -793,7 +798,7 @@ namespace Support.Controllers
         }
 
 
-        // Post: api/Web_Data/Web_RepFromUsers   ارجاع شونده/ارجاع دهنده
+        // Post: api/KarbordData/Web_RepFromUsers   ارجاع شونده/ارجاع دهنده
         [Route("api/KarbordData/Web_RepFromUsers")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PostWeb_RepFromUsers(RepFromUsersObject RepFromUsersObject)
@@ -853,6 +858,783 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<Web_ErjStatus>(sql);
             return Ok(list);
         }
+
+
+        public class ErjUsersObject
+        {
+            public string userCode { get; set; }
+
+            public long SerialNumber { get; set; }
+        }
+
+
+        public partial class Web_ErjUsers
+        {
+            public string Code { get; set; }
+
+            public string Name { get; set; }
+
+            public string Spec { get; set; }
+        }
+
+
+        // Post: api/KarbordData/Web_ErjUsers   ارجاع شونده/ارجاع دهنده
+        [Route("api/KarbordData/Web_ErjUsers/")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjUsers(ErjUsersObject ErjUsersObject)
+        {
+            string sql = string.Format(@"Select * from Web_ErjUsers('{0}',{1}) order by SrchOrder Desc,Name Asc", ErjUsersObject.userCode, ErjUsersObject.SerialNumber);
+            var list = db.Database.SqlQuery<Web_ErjUsers>(sql);
+            return Ok(list);
+        }
+
+
+
+        public class Web_ErjSaveTicket_BSave
+        {
+            public long SerialNumber { get; set; }
+
+            public string Natijeh { get; set; }
+
+            public string FromUserCode { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string RjDate { get; set; }
+
+            public string RjTime { get; set; }
+
+            public string RjMhltDate { get; set; }
+
+            public int BandNo { get; set; }
+
+            public int SrMode { get; set; }
+
+            public string RjStatus { get; set; }
+
+            public int? FarayandCode { get; set; }
+        }
+
+
+        // POST: api/KarbordData/ErjSaveTicket_BSave
+        [Route("api/KarbordData/ErjSaveTicket_BSave/")]
+        public async Task<IHttpActionResult> PostErjSaveTicket_BSave(Web_ErjSaveTicket_BSave d)
+        {
+            string sql = string.Format(
+                        @" DECLARE	@return_value int,
+		                            @BandNo nvarchar(10)
+                            EXEC	@return_value = [dbo].[Web_ErjSaveTicket_BSave]
+		                            @SerialNumber = {0},
+		                            @BandNo = {1} ,
+		                            @Natijeh = N'{2}',
+		                            @FromUserCode = N'{3}',
+		                            @ToUserCode = N'{4}',
+		                            @RjDate = N'{5}',
+		                            @RjTime = {6},
+		                            @RjMhltDate = N'{7}',
+                                    @SrMode = {8},
+                                    @RjStatus = '{9}',
+                                    @FarayandCode = {10}
+                            SELECT	@BandNo as N'@BandNo' ",
+                        d.SerialNumber,
+                        d.BandNo,
+                        UnitPublic.ConvertTextWebToWin(d.Natijeh ?? ""),
+                        d.FromUserCode,
+                        d.ToUserCode,
+                        d.RjDate,
+                        d.RjTime,
+                        d.RjMhltDate,
+                        d.SrMode,
+                        d.RjStatus,
+                        d.FarayandCode ?? 0
+                        );
+
+            string list = db.Database.SqlQuery<string>(sql).Single();
+            if (!string.IsNullOrEmpty(list))
+            {
+                await db.SaveChangesAsync();
+            }
+            return Ok(list);
+        }
+
+
+        public class Web_ErjDocXErja
+        {
+            public long SerialNumber { get; set; }
+
+            public int? BandNo { get; set; }
+
+            public int? DocBMode { get; set; }
+
+            public string RjComm { get; set; }
+
+            public string RjDate { get; set; }
+
+            public string RjStatus { get; set; }
+
+            public string RjTimeSt { get; set; }
+
+            public string FromUserCode { get; set; }
+
+            public string FromUserName { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string ToUserName { get; set; }
+
+            public string RjReadSt { get; set; }
+
+            public string RooneveshtUsers { get; set; }
+
+            public string FarayandName { get; set; }
+        }
+
+        public class ErjDocXErja
+        {
+            public long SerialNumber { get; set; }
+        }
+
+        // Post: api/KarbordData/Web_ErjDocXErja  ریز ارجاعات تیکت ها  
+        [Route("api/KarbordData/Web_ErjDocXErja/")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjDocXErja(ErjDocXErja ErjDocXErja)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                         @"select top (10000) * FROM  Web_ErjDocXErja({0}) AS ErjDocErja where 1 = 1 order by BandNo,DocBMode "
+                         , ErjDocXErja.SerialNumber);
+
+            var list = db.Database.SqlQuery<Web_ErjDocXErja>(sql);
+            return Ok(list);
+        }
+
+
+
+
+        public class ErjDocHObject
+        {
+            public byte Mode { get; set; }
+
+            public string UserCode { get; set; }
+
+            public int select { get; set; }
+
+            public bool accessSanad { get; set; }
+
+            public string Sal { get; set; }
+
+            public string Status { get; set; }
+
+            public string DocNo { get; set; }
+
+            public string Sort { get; set; }
+
+            public string ModeSort { get; set; }
+
+        }
+
+
+        // Post: api/KarbordData/ErjDocH  فهرست پرونده ها  
+        [Route("api/KarbordData/ErjDocH")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjDocH(ErjDocHObject ErjDocHObject)
+        {
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                            @"declare @Sal nvarchar(10) = '{0}'
+                               declare @Status nvarchar(30) = N'{1}'
+                               declare @DocNo nvarchar(50) = '{2}' ",
+                             ErjDocHObject.Sal,
+                             ErjDocHObject.Status,
+                             ErjDocHObject.DocNo);
+
+            sql += "select ";
+            if (ErjDocHObject.select == 0)
+                sql += " top(100) ";
+
+            sql += string.Format(CultureInfo.InvariantCulture,
+                        @" * FROM  Web_ErjDocH_F({0},'{1}') AS ErjDocH where 
+                              (@sal = ''  or substring(docdate, 1, 4) = @Sal) and
+                              (@Status = ''  or Status = @Status) and
+                              (@DocNo = ''  or DocNo = @DocNo) ",
+                          ErjDocHObject.Mode, dataAccount[2]);
+            if (ErjDocHObject.accessSanad == false)
+                sql += " and Eghdam = '" + ErjDocHObject.UserCode + "' ";
+
+            sql += " order by ";
+
+            if (ErjDocHObject.Sort == "" || ErjDocHObject.Sort == null)
+            {
+                ErjDocHObject.Sort = "DocDate Desc,DocNo Desc";
+            }
+            else if (ErjDocHObject.Sort == "DocDate")
+            {
+                if (ErjDocHObject.ModeSort == "ASC")
+                    ErjDocHObject.Sort = "DocDate Asc,DocNo Asc";
+                else
+                    ErjDocHObject.Sort = "DocDate Desc,DocNo Desc";
+            }
+            else if (ErjDocHObject.Sort == "Status")
+            {
+                if (ErjDocHObject.ModeSort == "ASC")
+                    ErjDocHObject.Sort = "Status Asc, DocDate Asc,DocNo Asc";
+                else
+                    ErjDocHObject.Sort = "Status Desc, DocDate Desc,DocNo Desc";
+            }
+            else
+            {
+                ErjDocHObject.Sort = ErjDocHObject.Sort + " " + ErjDocHObject.ModeSort;
+            }
+
+            sql += ErjDocHObject.Sort;
+
+
+            var list = db.Database.SqlQuery<Web_ErjDocH>(sql);
+            return Ok(list);
+
+        }
+
+
+
+        public class Web_ErjDocErja
+        {
+            public long SerialNumber { get; set; }
+
+            public int? BandNo { get; set; }
+
+            public int? DocBMode { get; set; }
+
+            public string RjComm { get; set; }
+
+            public string RjDate { get; set; }
+
+            public string RjStatus { get; set; }
+
+            public string RjTimeSt { get; set; }
+
+            public string FromUserCode { get; set; }
+
+            public string FromUserName { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string ToUserName { get; set; }
+
+            public string RjReadSt { get; set; }
+
+            public string RooneveshtUsers { get; set; }
+
+            public string FarayandName { get; set; }
+        }
+
+        public class ErjDocErja
+        {
+            public long SerialNumber { get; set; }
+        }
+
+        // Post: api/KarbordData/ErjDocErja  ریز ارجاعات  
+        [Route("api/KarbordData/ErjDocErja")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjDocErja(ErjDocErja ErjDocErja)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                         @"select top (10000)  * FROM  Web_ErjDocErja({0}) AS ErjDocErja where 1 = 1 order by BandNo,DocBMode "
+                         , ErjDocErja.SerialNumber);
+            var list = db.Database.SqlQuery<Web_ErjDocErja>(sql);
+            return Ok(list);
+
+        }
+
+        public class ErjResultObject
+        {
+            public string SerialNumber { get; set; }
+
+            public string DocBMode { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public int? BandNo { get; set; }
+        }
+
+
+        public partial class Web_ErjResult
+        {
+            public int DocBMode { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string ToUserName { get; set; }
+
+            public long SerialNumber { get; set; }
+
+            public int? BandNo { get; set; }
+
+            public string RjResult { get; set; }
+        }
+
+        // Post: api/KarbordData/Web_ErjResult   نتیجه در اتوماسیون
+        [Route("api/KarbordData/ErjResult")]
+        public async Task<IHttpActionResult> PostWeb_ErjResult(ErjResultObject ErjResultObject)
+        {
+            string sql = string.Format(@"Select * from Web_ErjResult where SerialNumber = {0}", ErjResultObject.SerialNumber);
+
+            if (ErjResultObject.BandNo != null)
+            {
+
+                sql += string.Format(@" and  BandNo = {0} ", ErjResultObject.BandNo);
+            }
+
+            if (ErjResultObject.DocBMode != null)
+                sql += string.Format(@" and  DocBMode = {0} and ToUserCode = '{1}'",
+                     ErjResultObject.DocBMode,
+                     ErjResultObject.DocBMode == "0" ? "" : ErjResultObject.ToUserCode
+                    );
+
+            var list = db.Database.SqlQuery<Web_ErjResult>(sql);
+            return Ok(list);
+
+        }
+
+
+
+
+        public class ErjCustObject
+        {
+            public string userCode { get; set; }
+
+            public byte Mode { get; set; }
+        }
+
+
+        public partial class Web_ErjCust
+        {
+            public string Code { get; set; }
+
+            public string Name { get; set; }
+
+            public string Spec { get; set; }
+        }
+
+
+        //  Post: api/KarbordData/ErjCust لیست مشتریان ارجاعات
+
+        [Route("api/KarbordData/ErjCust")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostErjCust(ErjCustObject ErjCustObject)
+        {
+            string sql = string.Format(@"Select code,name,spec from Web_ErjCust_F({0},'{1}')",
+                   ErjCustObject.Mode, ErjCustObject.userCode);
+
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            var list = db.Database.SqlQuery<Web_ErjCust>(sql);
+            return Ok(list);
+        }
+
+        public partial class Web_Khdt
+        {
+
+            public int Code { get; set; }
+
+            public string Name { get; set; }
+
+            public string Spec { get; set; }
+
+            public byte HasTime { get; set; }
+        }
+
+
+        //  GET: api/KarbordData/Khdt
+
+        [Route("api/KarbordData/Khdt")]
+        public async Task<IHttpActionResult> GetWeb_Khdt()
+        {
+            string sql = string.Format(@"Select * from Web_Khdt");
+
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            var list = db.Database.SqlQuery<Web_Khdt>(sql);
+            return Ok(list);
+        }
+
+
+        public partial class Web_Mahramaneh
+        {
+            public int Code { get; set; }
+
+            public string Name { get; set; }
+        }
+
+        // GET: api/KarbordData/Mahramaneh   محرمانه یا نوع در اتوماسیون
+        [Route("api/KarbordData/Mahramaneh")]
+        public async Task<IHttpActionResult> GetWeb_Mahramaneh()
+        {
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            string sql = string.Format(@"Select * from Web_Mahramaneh('{0}')", dataAccount[2]);
+            var list = db.Database.SqlQuery<Web_Mahramaneh>(sql);
+            return Ok(list);
+        }
+
+
+
+
+
+
+
+        public class Web_RjStatus
+        {
+            public string Name { get; set; }
+        }
+
+        // GET: api/KarbordData/RjStatus لیست وضعیت ارجاع  
+        [Route("api/KarbordData/RjStatus")]
+        public async Task<IHttpActionResult> GetWeb_RjStatus()
+        {
+            string sql = string.Format(@"Select * from Web_RjStatus");
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            var list = db.Database.SqlQuery<Web_RjStatus>(sql);
+            return Ok(list);
+        }
+
+
+
+
+
+
+        public class ErjDocB_Last
+        {
+            public string erjaMode { get; set; }
+
+            public string docBMode { get; set; }
+
+            public string fromUserCode { get; set; }
+
+            public string toUserCode { get; set; }
+
+            public string srchSt { get; set; }
+
+            public string azDocDate { get; set; }
+
+            public string taDocDate { get; set; }
+
+            public string azRjDate { get; set; }
+
+            public string taRjDate { get; set; }
+
+            public string azMhltDate { get; set; }
+
+            public string taMhltDate { get; set; }
+
+            public string status { get; set; }
+
+            public string custCode { get; set; }
+
+            public string khdtCode { get; set; }
+        }
+
+        // Post: api/KarbordData/ErjDocB_Last گزارش فهرست ارجاعات  
+        [Route("api/KarbordData/ErjDocB_Last")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjDocB_Last(ErjDocB_Last ErjDocB_Last)
+        {
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                        @"select  top (10000) * FROM  Web_ErjDocB_Last({0}, {1},'{2}','{3}','{4}','{5}') AS ErjDocB_Last where 1 = 1 "
+                        , ErjDocB_Last.erjaMode
+                        , ErjDocB_Last.docBMode
+                        , ErjDocB_Last.fromUserCode
+                        , ErjDocB_Last.toUserCode
+                        , ErjDocB_Last.srchSt
+                        , dataAccount[2]);
+
+            if (ErjDocB_Last.azDocDate != "")
+                sql += string.Format(" and DocDate >= '{0}' ", ErjDocB_Last.azDocDate);
+
+            if (ErjDocB_Last.taDocDate != "")
+                sql += string.Format(" and DocDate <= '{0}' ", ErjDocB_Last.taDocDate);
+
+            if (ErjDocB_Last.azRjDate != "")
+                sql += string.Format(" and RjDate >= '{0}' ", ErjDocB_Last.azRjDate);
+
+            if (ErjDocB_Last.taRjDate != "")
+                sql += string.Format(" and RjDate <= '{0}' ", ErjDocB_Last.taRjDate);
+
+            if (ErjDocB_Last.azMhltDate != "")
+                sql += string.Format(" and MhltDate >= '{0}' ", ErjDocB_Last.azMhltDate);
+
+            if (ErjDocB_Last.taMhltDate != "")
+                sql += string.Format(" and MhltDate <= '{0}' ", ErjDocB_Last.taMhltDate);
+
+            if (ErjDocB_Last.status != "")
+                sql += string.Format(" and Status = '{0}' ", ErjDocB_Last.status);
+
+
+            sql += UnitPublic.SpiltCodeAnd("KhdtCode", ErjDocB_Last.khdtCode);
+            sql += UnitPublic.SpiltCodeAnd("CustCode", ErjDocB_Last.custCode);
+
+            if (ErjDocB_Last.erjaMode == "1")
+                sql += "order by SortRjStatus";
+            else
+                sql += "order by SortRjDate";
+
+
+            var list = db.Database.SqlQuery<Web_ErjDocB_Last>(sql);
+            return Ok(list);
+        }
+
+
+
+
+        public class ErjDocKObject
+        {
+            public string userName { get; set; }
+
+            public string userMode { get; set; }
+
+            public string azTarikh { get; set; }
+
+            public string taTarikh { get; set; }
+
+            public string Status { get; set; }
+
+            public string CustCode { get; set; }
+
+            public string KhdtCode { get; set; }
+
+            public string SrchSt { get; set; } // جستجو برای
+
+            public long SerialNumber { get; set; }
+
+        }
+
+
+        // Post: api/KarbordData/ErjDocK گزارش فهرست پرونده ها  
+        [Route("api/KarbordData/ErjDocK")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjDocK(ErjDocKObject ErjDocKObject)
+        {
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                          @"select top (10000)  * FROM  Web_ErjDocK('{0}','{1}') AS ErjDocK where 1 = 1 and ShowDocTrs = 1 ",
+                          ErjDocKObject.SrchSt, dataAccount[2]);
+
+            if (ErjDocKObject.azTarikh != "")
+                sql += string.Format(" and DocDate >= '{0}' ", ErjDocKObject.azTarikh);
+
+            if (ErjDocKObject.taTarikh != "")
+                sql += string.Format(" and DocDate <= '{0}' ", ErjDocKObject.taTarikh);
+
+
+            if (ErjDocKObject.Status != "")
+                sql += string.Format(" and Status = '{0}' ", ErjDocKObject.Status);
+
+
+            sql += UnitPublic.SpiltCodeAnd("CustCode", ErjDocKObject.CustCode);
+            sql += UnitPublic.SpiltCodeAnd("KhdtCode", ErjDocKObject.KhdtCode);
+
+            if (ErjDocKObject.SerialNumber > 0)
+                sql += " and SerialNumber = " + ErjDocKObject.SerialNumber;
+
+
+            var list = db.Database.SqlQuery<Web_ErjDocK>(sql);
+            return Ok(list);
+
+        }
+
+
+
+
+
+
+
+
+        
+        public class Object_ErjDocXH
+        {
+            public long SerialNumber { get; set; }
+
+            public int ModeCode { get; set; }
+
+            public string UserCode { get; set; }
+
+            public string IP { get; set; }
+
+            public string CallProg { get; set; }
+
+            public bool LoginLink { get; set; }
+
+            public int? top { get; set; }
+
+            public string Status { get; set; }
+
+        }
+
+
+        [Route("api/KarbordData/Web_ErjDocXH")]
+        public async Task<IHttpActionResult> PostWeb_ErjDocXH(Object_ErjDocXH Object_ErjDocXH)
+        {
+            string sql = "select ";
+
+            if (Object_ErjDocXH.top != null)
+                sql += " top (" + Object_ErjDocXH.top.ToString() + ") ";
+
+            sql += string.Format(@" *
+                                   from dbo.Web_ErjDocXH_F({0},'{1}') where 1 = 1  ",
+                                   Object_ErjDocXH.ModeCode,
+                                   Object_ErjDocXH.UserCode);
+
+            if (Object_ErjDocXH.SerialNumber > 0)
+            {
+                sql += " and SerialNumber = " + Object_ErjDocXH.SerialNumber.ToString();
+            }
+
+            if (Object_ErjDocXH.Status != null && Object_ErjDocXH.Status != "")
+            {
+                sql += string.Format(" and Status = '{0}'", Object_ErjDocXH.Status.ToString());
+            }
+
+            sql += " order by DocDate desc , SerialNumber desc";
+
+            var list = db.Database.SqlQuery<Web_ErjDocXK>(sql);
+            return Ok(list);
+        }
+
+
+
+
+        public class ErjDocXB_Last
+        {
+            public string erjaMode { get; set; }
+
+            public string docBMode { get; set; }
+
+            public string fromUserCode { get; set; }
+
+            public string toUserCode { get; set; }
+
+            public string srchSt { get; set; }
+
+            public string azDocDate { get; set; }
+
+            public string taDocDate { get; set; }
+
+            public string azRjDate { get; set; }
+
+            public string taRjDate { get; set; }
+
+            public string azMhltDate { get; set; }
+
+            public string taMhltDate { get; set; }
+
+            public string status { get; set; }
+
+            public string custCode { get; set; }
+
+            public string khdtCode { get; set; }
+        }
+
+        // Post: api/KarbordData/ErjDocXB_Last گزارش فهرست ارجاعات  
+        [Route("api/KarbordData/ErjDocXB_Last")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_ErjDocXB_Last(ErjDocXB_Last ErjDocXB_Last)
+        {
+            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                        @"select  top (10000) * FROM  Web_ErjDocXB_Last({0}, {1},'{2}','{3}','{4}','{5}') AS ErjDocXB_Last where 1 = 1 "
+                        , ErjDocXB_Last.erjaMode
+                        , ErjDocXB_Last.docBMode
+                        , ErjDocXB_Last.fromUserCode
+                        , ErjDocXB_Last.toUserCode
+                        , ErjDocXB_Last.srchSt
+                        , dataAccount[2]);
+
+            if (ErjDocXB_Last.azDocDate != "")
+                sql += string.Format(" and DocDate >= '{0}' ", ErjDocXB_Last.azDocDate);
+
+            if (ErjDocXB_Last.taDocDate != "")
+                sql += string.Format(" and DocDate <= '{0}' ", ErjDocXB_Last.taDocDate);
+
+            if (ErjDocXB_Last.azRjDate != "")
+                sql += string.Format(" and RjDate >= '{0}' ", ErjDocXB_Last.azRjDate);
+
+            if (ErjDocXB_Last.taRjDate != "")
+                sql += string.Format(" and RjDate <= '{0}' ", ErjDocXB_Last.taRjDate);
+
+            if (ErjDocXB_Last.azMhltDate != "")
+                sql += string.Format(" and MhltDate >= '{0}' ", ErjDocXB_Last.azMhltDate);
+
+            if (ErjDocXB_Last.taMhltDate != "")
+                sql += string.Format(" and MhltDate <= '{0}' ", ErjDocXB_Last.taMhltDate);
+
+            if (ErjDocXB_Last.status != "")
+                sql += string.Format(" and Status = '{0}' ", ErjDocXB_Last.status);
+
+
+            sql += UnitPublic.SpiltCodeAnd("KhdtCode", ErjDocXB_Last.khdtCode);
+            sql += UnitPublic.SpiltCodeAnd("CustCode", ErjDocXB_Last.custCode);
+
+            if (ErjDocXB_Last.erjaMode == "1")
+                sql += "order by SortRjStatus";
+            else
+                sql += "order by SortRjDate";
+
+
+            var list = db.Database.SqlQuery<Web_ErjDocXB_Last>(sql);
+            return Ok(list);
+        }
+
+
+        public class ErjXResultObject
+        {
+            public string SerialNumber { get; set; }
+
+            public string DocBMode { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public int? BandNo { get; set; }
+        }
+
+
+        public partial class Web_ErjXResult
+        {
+            public int DocBMode { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string ToUserName { get; set; }
+
+            public long SerialNumber { get; set; }
+
+            public int? BandNo { get; set; }
+
+            public string RjResult { get; set; }
+        }
+
+        // Post: api/KarbordData/Web_ErjXResult   نتیجه در اتوماسیون
+        [Route("api/KarbordData/ErjXResult")]
+        public async Task<IHttpActionResult> PostWeb_ErjXResult(ErjXResultObject ErjXResultObject)
+        {
+            string sql = string.Format(@"Select * from Web_ErjXResult where SerialNumber = {0}", ErjXResultObject.SerialNumber);
+
+            if (ErjXResultObject.BandNo != null)
+            {
+
+                sql += string.Format(@" and  BandNo = {0} ", ErjXResultObject.BandNo);
+            }
+
+            if (ErjXResultObject.DocBMode != null)
+                sql += string.Format(@" and  DocBMode = {0} and ToUserCode = '{1}'",
+                     ErjXResultObject.DocBMode,
+                     ErjXResultObject.DocBMode == "0" ? "" : ErjXResultObject.ToUserCode
+                    );
+
+            var list = db.Database.SqlQuery<Web_ErjXResult>(sql);
+            return Ok(list);
+
+        }
+
+
+
+
 
     }
 }

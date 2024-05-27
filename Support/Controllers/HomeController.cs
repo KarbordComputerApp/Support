@@ -99,13 +99,16 @@ namespace Support.Controllers
                     if (data.Length == 3)
                     {
                         string lockNumber = data[0];
-                        Int64 tik = Int64.Parse(data[2]);
-                        long elapsedTicks = currentDate - tik;
-                        TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
-
-                        if (elapsedSpan.TotalMinutes <= 1)
+                        if (UnitPublic.ValidationLockNo(lockNumber))
                         {
-                            ViewBag.LockNumber = lockNumber;
+                            Int64 tik = Int64.Parse(data[2]);
+                            long elapsedTicks = currentDate - tik;
+                            TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                            if (elapsedSpan.TotalMinutes <= 1)
+                            {
+                                ViewBag.LockNumber = lockNumber;
+                            }
                         }
                     }
                 }
@@ -120,9 +123,9 @@ namespace Support.Controllers
         public ActionResult Tiket(string LockNumber, string Pass)
         {
             SupportModel db = new SupportModel();
+            ViewBag.LockNumber = "";
             if (LockNumber != null)
             {
-                ViewBag.LockNumber = "";
                 if (Pass == "ADf5243hh2059dghQpAdq42114")
                 {
                     string sql = string.Format(@"select * from Users where (LockNumber = {0})", LockNumber);
@@ -130,10 +133,6 @@ namespace Support.Controllers
                     if (list.UserType == 1 || list.UserType == 2)
                     {
                         ViewBag.LockNumber = LockNumber;
-                    }
-                    else
-                    {
-                        ViewBag.LockNumber = "NotAccess";
                     }
                 }
                 else
@@ -147,30 +146,50 @@ namespace Support.Controllers
                         Int64 tik = Int64.Parse(data[2]);
                         long elapsedTicks = currentDate - tik;
                         TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
-
 #if (DEBUG)
-                        string sql = string.Format(@"select * from Users where (LockNumber = {0})", lockNumber);
-                        var list = db.Database.SqlQuery<Users>(sql).First();
-                        if (list.UserType == 1 || list.UserType == 2)
-                        {
-                            ViewBag.LockNumber = lockNumber;
-                        }
-                        else
-                        {
-                            ViewBag.LockNumber = "NotAccess";
-                        }
-#else
-                        if (elapsedSpan.TotalMinutes <= 1)
+                        if (UnitPublic.ValidationLockNo(lockNumber))
                         {
                             string sql = string.Format(@"select * from Users where (LockNumber = {0})", lockNumber);
                             var list = db.Database.SqlQuery<Users>(sql).First();
                             if (list.UserType == 1 || list.UserType == 2)
                             {
-                                ViewBag.LockNumber = lockNumber;
+                                string contract = UnitPublic.HasContract(lockNumber);
+                                if (contract != "")
+                                {
+                                    if (contract.Split('-')[0] == "1")
+                                    {
+                                        ViewBag.LockNumber = lockNumber;
+                                    }
+                                    else
+                                    {
+                                        ViewBag.LockNumber = "NotAccess";
+                                    }
+                                }
                             }
-                            else
+                        }
+                        
+#else
+                        if (elapsedSpan.TotalMinutes <= 1)
+                        {
+                            if (UnitPublic.ValidationLockNo(lockNumber))
                             {
-                                ViewBag.LockNumber = "NotAccess";
+                                string sql = string.Format(@"select * from Users where (LockNumber = {0})", lockNumber);
+                                var list = db.Database.SqlQuery<Users>(sql).First();
+                                if (list.UserType == 1 || list.UserType == 2)
+                                {
+                                    string contract = UnitPublic.HasContract(lockNumber);
+                                    if (contract != "")
+                                    {
+                                        if (contract.Split('-')[0] == "1")
+                                        {
+                                            ViewBag.LockNumber = lockNumber;
+                                        }
+                                        else
+                                        {
+                                            ViewBag.LockNumber = "NotAccess";
+                                        }
+                                    }
+                                }
                             }
                         }
 #endif
@@ -195,10 +214,28 @@ namespace Support.Controllers
                 Int64 tik = Int64.Parse(data[2]);
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                ViewBag.Link = "";
+                ViewBag.LockNumber = "";
+
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
-                    ViewBag.Link = UnitPublic.Decrypt(HashLink);
-                    ViewBag.LockNumber = lockNumber;
+                    if (UnitPublic.ValidationLockNo(lockNumber))
+                    {
+                        string contract = UnitPublic.HasContract(lockNumber);
+                        if (contract != "")
+                        {
+                            if (contract.Split('-')[0] == "1")
+                            {
+                                ViewBag.Link = UnitPublic.Decrypt(HashLink);
+                                ViewBag.LockNumber = lockNumber;
+                            }
+                            else
+                            {
+                                ViewBag.LockNumber = "NotAccess";
+                            }
+                        }
+                    }
                 }
             }
             return View();

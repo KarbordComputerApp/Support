@@ -70,6 +70,7 @@
 
 
 
+
     function getDateServer() {
         if (server != null) {
             var DateUri = server + '/api/KarbordData/Date/'; // آدرس  تاریخ سرور
@@ -185,68 +186,61 @@
 
     //Get ErjDocXK 
     function getErjDocXK(log) {
-        var ErjDocXKObject = {
-            LockNo: lockNumber == "000091" ? "" : lockNumber,
-            ModeCode: '204',
-            FlagLog: lockNumber == "000091" ? false : log,
-            IP: ipw,
-            CallProg: 'Web',
-            LoginLink: loginLink,
-            top: null,
-            Status: lockNumber == "000091" ? "فعال" : null,
-        }
-        ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
-
-
-            var Object_TicketStatus = {
-                SerialNumber: '',
-                LockNumber: lockNumber == "000091" ? null : lockNumber,
+        if (lockNumber != "" && lockNumber != "null" && lockNumber != null) {
+            var ErjDocXKObject = {
+                //LockNo: lockNumber == "000091" ? "" : lockNumber,
+                LockNo: lockNumber,
+                ModeCode: '204',
+                FlagLog: lockNumber == "000091" ? false : log,
                 IP: ipw,
-                CallProg: 'Web'
+                CallProg: 'Web',
+                LoginLink: loginLink,
+                top: null,
+                Status: lockNumber == "000091" ? "فعال" : null,
             }
-            ajaxFunction(TicketStatusUri, 'Post', Object_TicketStatus, false).done(function (dataTicketStatus) {
-
-                for (var i = 0; i < dataDocXK.length; i++) {
-                    dataDocXK[i].ChatCount = 0;
-                    for (var j = 0; j < dataTicketStatus.length; j++) {
-                        if (dataDocXK[i].SerialNumber == dataTicketStatus[j].SerialNumber)
-                            dataDocXK[i].Status = dataTicketStatus[j].TicketStatusSt;
-                    }
+            ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (dataDocXK) {
+                var Object_TicketStatus = {
+                    SerialNumber: '',
+                    LockNumber: lockNumber,
+                    //LockNumber: lockNumber == "000091" ? null : lockNumber,
+                    IP: ipw,
+                    CallProg: 'Web'
                 }
+                ajaxFunction(TicketStatusUri, 'Post', Object_TicketStatus, false).done(function (dataTicketStatus) {
 
-                //self.ErjDocXKList(dataDocXK);
-            });
-
-
-
-
-            var ChatCountTiketObject = {
-                LockNumber: lockNumber,
-            }
-            ajaxFunction(ChatCountTiketUri, 'Post', ChatCountTiketObject, false).done(function (dataChatCount) {
-
-                for (var i = 0; i < dataDocXK.length; i++) {
-                    for (var j = 0; j < dataChatCount.length; j++) {
-                        if (dataDocXK[i].SerialNumber == dataChatCount[j].SerialNumber)
-                            dataDocXK[i].ChatCount = dataChatCount[j].ChatCount;
+                    for (var i = 0; i < dataDocXK.length; i++) {
+                        dataDocXK[i].ChatCount = 0;
+                        for (var j = 0; j < dataTicketStatus.length; j++) {
+                            if (dataDocXK[i].SerialNumber == dataTicketStatus[j].SerialNumber)
+                                dataDocXK[i].Status = dataTicketStatus[j].TicketStatusSt;
+                        }
                     }
+
+                    //self.ErjDocXKList(dataDocXK);
+                });
+
+                var ChatCountTiketObject = {
+                    LockNumber: lockNumber,
                 }
+                ajaxFunction(ChatCountTiketUri, 'Post', ChatCountTiketObject, false).done(function (dataChatCount) {
+                    for (var i = 0; i < dataDocXK.length; i++) {
+                        for (var j = 0; j < dataChatCount.length; j++) {
+                            if (dataDocXK[i].SerialNumber == dataChatCount[j].SerialNumber)
+                                dataDocXK[i].ChatCount = dataChatCount[j].ChatCount;
+                        }
+                    }
+                });
 
-
+                self.ErjDocXKList(dataDocXK);
             });
-
-            self.ErjDocXKList(dataDocXK);
-
-
-
-
-        });
+        }
+        else {
+            alert(lockNumber);
+            window.location.href = localStorage.getItem("urlLogin");
+        }
     }
 
     getErjDocXK(true);
-
-
-
 
 
     //Get DocAttach List
@@ -348,9 +342,9 @@
     //Add   ذخیره تیکت
     async function SaveErjDocXK() {
         if (flagSend == false) {
+            getDateServer();
             natijeh = $("#Result").val();
             motaghazi = $("#motaghazi").val();
-
 
             $("#FM_Select").val() == 'M' ? fm_Select = 'آقای ' : fm_Select = 'خانم '
 
@@ -780,7 +774,6 @@
 
 
     self.ViewCustName = function (Band) {
-
         return LockInput == '000091';
     }
 

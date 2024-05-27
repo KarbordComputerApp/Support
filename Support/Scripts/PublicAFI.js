@@ -60,7 +60,7 @@ function getHasContract() {
 
             data = data.split('-')
             access = data[0];
-            endDate = data.length == 1 || data[1] == "" ? "" : data[1] + " ";
+            endDate = data.length == 1 || data[1] == "" ? "" : data[1] ;
             localStorage.setItem("HasContract", access);
 
             localStorage.setItem("AccessTiket", "1");
@@ -76,10 +76,17 @@ function getHasContract() {
                 $("#Index_Pic_line1").hide();
                 $("#chat-bell").hide();
 
-                d1 = new Date(endDate).getTime() / 10000;
-                d2 = new Date(dateNow_Shamsi).getTime() / 10000;
-                d = Math.abs(parseInt(d1) - parseInt(d2));
-                d = d / 8640;
+                //d1 = new Date(endDate).getTime() / 10000;
+                //d2 = new Date(dateNow_Shamsi).getTime() / 10000;
+                //d = Math.abs(parseInt(d1) - parseInt(d2));
+                //d = d / 8640;
+
+                var eDate = endDate.split('/')
+                var nDate = dateNow_Shamsi.split('/')
+
+                var a = new persianDate([parseInt(eDate[0]), parseInt(eDate[1]), parseInt(eDate[2])]);
+                var b = new persianDate([parseInt(nDate[0]), parseInt(nDate[1]), parseInt(nDate[2])]);
+                var d = b.diff(a, 'days'); 
 
                 if (d > 30) {
                     $("#B_Tiket").attr('disabled', 'disabled');
@@ -99,8 +106,6 @@ function getHasContract() {
 if (lockNumber != "" && lockNumber != null) {
     getHasContract();
 }
-
-
 
 var Web_CountErjDocXKUri = server + '/api/KarbordData/Web_CountErjDocXK/'; // تعداد تیکت خوانده نشده
 function GetCountErjDocXK() {
@@ -365,16 +370,16 @@ function ajaxFunctionAccount(uri, method, sync, data) {
         async: sync == null ? false : sync,
         beforeSend: function () {
             if (sync == true) {
-                $('#loadingsite').attr('class', 'page-proccess-wrapper');
-                $('#loadingsite').css('display', 'block');
+               // $('#loadingsite').attr('class', 'page-proccess-wrapper');
+               // $('#loadingsite').css('display', 'block');
             }
         },
         cache: false,
         timeout: 30000,
         complete: function () {
             if (sync == true) {
-                $('#loadingsite').css('display', 'none');
-                $('#loadingsite').attr('class', 'page-loader-wrapper');
+               // $('#loadingsite').css('display', 'none');
+               // $('#loadingsite').attr('class', 'page-loader-wrapper');
             }
         },
         contentType: 'application/json',
@@ -656,7 +661,7 @@ function getIP() {
     sessionStorage.IPW = "Error Get IP";
     ipw = "Error Get IP";
 
-    ajaxFunctionAccount('http://ip-api.com/json/', 'GET').done(function (data) {
+    ajaxFunctionAccount('http://ip-api.com/json/', 'GET',true).done(function (data) {
         //a = sessionStorage.MacAddress;
         //b = sessionStorage.IP4Address;
         localStorage.setItem("IPW", data.query);

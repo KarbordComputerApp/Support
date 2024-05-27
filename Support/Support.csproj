@@ -188,6 +188,10 @@
     <Compile Include="Models\Karbord\KarbordModel_Expire.cs" />
     <Compile Include="Models\Karbord\KarbordComputer_SupportModel.cs" />
     <Compile Include="Models\Karbord\Web_DocAttach.cs" />
+    <Compile Include="Models\Karbord\Web_ErjDocXB_Last.cs" />
+    <Compile Include="Models\Karbord\Web_ErjDocK.cs" />
+    <Compile Include="Models\Karbord\Web_ErjDocB_Last.cs" />
+    <Compile Include="Models\Karbord\Web_ErjDocH.cs" />
     <Compile Include="Models\Karbord\Web_ErjDocXK.cs" />
     <Compile Include="Models\Karbord\Web_FDocP.cs" />
     <Compile Include="Models\Karbord\Web_TicketStatus.cs" />
@@ -749,6 +753,7 @@
     <Content Include="Content\js\notifications.js" />
     <Content Include="Content\js\num2persian-min.js" />
     <Content Include="Content\js\pages.js" />
+    <Content Include="Content\js\persian-date.min.js" />
     <Content Include="Content\js\require.js" />
     <Content Include="Content\js\sortable-nestable.js" />
     <Content Include="Content\js\sparkline-data.js" />

@@ -1444,6 +1444,12 @@ namespace Support.Controllers
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
+            else if (VideoName == "Karbord-CRS1")
+            {
+                ounVideo = "VIDEO_CRS1";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
 
             if (access)
             {

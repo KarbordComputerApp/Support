@@ -20,7 +20,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "144";
+        public static string titleVerNumber = "145";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";
@@ -35,14 +35,18 @@ namespace Support.Controllers.Unit
 
         static IniFile MyIni = new IniFile(IniPath);
 
-       /* public static string sql_Name_Support = MyIni.Read("SqlServerName", "TicketDatabase");
-        public static string sql_DatabaseName_Support = MyIni.Read("DatabaseName", "TicketDatabase");
-        public static string sql_UserName_Support = MyIni.Read("SqlUserName", "TicketDatabase"); 
-        public static string sql_Password_Support = MyIni.Read("SqlPassword", "TicketDatabase");
+        static int fromLock = Convert.ToInt32(MyIni.Read("from", "Lock"));
+        static int toLock = Convert.ToInt32(MyIni.Read("to", "Lock"));
 
-        public static string ConnectionString_Support = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
-                                                       sql_Name_Support, sql_DatabaseName_Support, sql_UserName_Support, sql_Password_Support);
-*/
+
+        /* public static string sql_Name_Support = MyIni.Read("SqlServerName", "TicketDatabase");
+         public static string sql_DatabaseName_Support = MyIni.Read("DatabaseName", "TicketDatabase");
+         public static string sql_UserName_Support = MyIni.Read("SqlUserName", "TicketDatabase"); 
+         public static string sql_Password_Support = MyIni.Read("SqlPassword", "TicketDatabase");
+
+         public static string ConnectionString_Support = String.Format(@"data source = {0};initial catalog = {1};persist security info = True;user id = {2}; password = {3}; multipleactiveresultsets = True; application name = EntityFramework",
+                                                        sql_Name_Support, sql_DatabaseName_Support, sql_UserName_Support, sql_Password_Support);
+ */
 
         public static void SaveLog(int lockNumber, int mode, int act, long serialNumber, string ip, string callprog, string spec)
         {
@@ -244,6 +248,36 @@ namespace Support.Controllers.Unit
                                             SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate", lockNo);
             var list = db.Database.SqlQuery<string>(sql).Single();
             return list;
+        }
+
+
+        public static string SpiltCodeAnd(string field, string code)
+        {
+            string sql = "";
+            if (code != "" && code != null)
+            {
+                sql += " and ( ";
+                string[] Code = code.Split('*');
+                for (int i = 0; i < Code.Length; i++)
+                {
+                    if (i < Code.Length - 1)
+                        sql += string.Format("  {0} = N'{1}' Or ", field, Code[i]);
+                    else
+                        sql += string.Format("  {0} = N'{1}' )", field, Code[i]);
+                }
+            }
+            return sql;
+        }
+
+
+        public static bool ValidationLockNo(string lockNo)
+        {
+            if (lockNo != "")
+            {
+                int l = Convert.ToInt32(lockNo);
+                return l >= fromLock && l <= toLock;
+            }
+            return false;
         }
 
     }
