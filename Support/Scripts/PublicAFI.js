@@ -60,7 +60,7 @@ function getHasContract() {
 
             data = data.split('-')
             access = data[0];
-            endDate = data.length == 1 || data[1] == "" ? "" : data[1] ;
+            endDate = data.length == 1 || data[1] == "" ? "" : data[1];
             localStorage.setItem("HasContract", access);
 
             localStorage.setItem("AccessTiket", "1");
@@ -86,7 +86,7 @@ function getHasContract() {
 
                 var a = new persianDate([parseInt(eDate[0]), parseInt(eDate[1]), parseInt(eDate[2])]);
                 var b = new persianDate([parseInt(nDate[0]), parseInt(nDate[1]), parseInt(nDate[2])]);
-                var d = b.diff(a, 'days'); 
+                var d = b.diff(a, 'days');
 
                 if (d > 30) {
                     $("#B_Tiket").attr('disabled', 'disabled');
@@ -370,16 +370,16 @@ function ajaxFunctionAccount(uri, method, sync, data) {
         async: sync == null ? false : sync,
         beforeSend: function () {
             if (sync == true) {
-               // $('#loadingsite').attr('class', 'page-proccess-wrapper');
-               // $('#loadingsite').css('display', 'block');
+                // $('#loadingsite').attr('class', 'page-proccess-wrapper');
+                // $('#loadingsite').css('display', 'block');
             }
         },
         cache: false,
         timeout: 30000,
         complete: function () {
             if (sync == true) {
-               // $('#loadingsite').css('display', 'none');
-               // $('#loadingsite').attr('class', 'page-loader-wrapper');
+                // $('#loadingsite').css('display', 'none');
+                // $('#loadingsite').attr('class', 'page-loader-wrapper');
             }
         },
         contentType: 'application/json',
@@ -661,7 +661,7 @@ function getIP() {
     sessionStorage.IPW = "Error Get IP";
     ipw = "Error Get IP";
 
-    ajaxFunctionAccount('http://ip-api.com/json/', 'GET',true).done(function (data) {
+    ajaxFunctionAccount('http://ip-api.com/json/', 'GET', true).done(function (data) {
         //a = sessionStorage.MacAddress;
         //b = sessionStorage.IP4Address;
         localStorage.setItem("IPW", data.query);

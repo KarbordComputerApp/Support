@@ -44,7 +44,7 @@ var otherUserChat = null;
 
 var orgTitle = document.title;
 var animatedTitle = "پیام جدید " + orgTitle;
-
+//localStorage.removeItem("idChat")
 var idChat = localStorage.getItem("idChat");
 
 var isLast = false;
@@ -145,6 +145,10 @@ else {
 
 }
 
+if (lockNumber == "" || lockNumber == null) {
+    window.location.href = localStorage.getItem("urlLogin");
+}
+
 function UserPanel() {
 
     $("#ActiveAttach").hide();
@@ -163,14 +167,6 @@ function UserPanel() {
 
 
 
-
-
-
-
-
-if (lockNumber == "" || lockNumber == null) {
-    //  window.location.href = localStorage.getItem("urlLogin");
-}
 
 $("#btn-close-chat").click(function () {
     $("#chat-bell").show();

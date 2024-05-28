@@ -256,6 +256,7 @@ namespace Support.Controllers
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 #if (DEBUG)
+
                 ViewBag.ChatId = ChatId;
                 ViewBag.LockNumber = lockNumber;
                 ViewBag.UserCode = UserCode;
