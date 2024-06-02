@@ -14,7 +14,14 @@
         loginLink = true;
         getIP();
         localStorage.removeItem("lockNumber");
-        lockNumber = LockInput;
+
+        if (LockInput == "NotAccess") {
+            alert($("#t_HasContract").text());
+            window.location.href = localStorage.getItem("urlLogin");
+        } else {
+            lockNumber = LockInput;
+        }
+
 
         LockNumbersUri = server + '/api/Data/LockNumbers/';
 

@@ -6,7 +6,6 @@
     //    group_Tiket = '0' + group_Tiket;
     //}
 
-    var loginLink = false;
     $("#Index_TextLogo").text('تیکت پشتیبانی');
 
     var LockInput = $("#LockInput").data("value");

@@ -132,7 +132,7 @@ namespace Support.Controllers
                     var list = db.Database.SqlQuery<Users>(sql).First(); // اگر 1 یا 2 بود به تیکت دسترسی دارد
                     if (list.UserType == 1 || list.UserType == 2)
                     {
-                        ViewBag.LockNumber = LockNumber;
+                        ViewBag.LockNumber = LockNumber.ToString();
                     }
                 }
                 else
@@ -153,21 +153,10 @@ namespace Support.Controllers
                             var list = db.Database.SqlQuery<Users>(sql).First();
                             if (list.UserType == 1 || list.UserType == 2)
                             {
-                                string contract = UnitPublic.HasContract(lockNumber);
-                                if (contract != "")
-                                {
-                                    if (contract.Split('-')[0] == "1")
-                                    {
-                                        ViewBag.LockNumber = lockNumber;
-                                    }
-                                    else
-                                    {
-                                        ViewBag.LockNumber = "NotAccess";
-                                    }
-                                }
+                                ViewBag.LockNumber = lockNumber.ToString();
                             }
                         }
-                        
+
 #else
                         if (elapsedSpan.TotalMinutes <= 1)
                         {
@@ -177,18 +166,7 @@ namespace Support.Controllers
                                 var list = db.Database.SqlQuery<Users>(sql).First();
                                 if (list.UserType == 1 || list.UserType == 2)
                                 {
-                                    string contract = UnitPublic.HasContract(lockNumber);
-                                    if (contract != "")
-                                    {
-                                        if (contract.Split('-')[0] == "1")
-                                        {
-                                            ViewBag.LockNumber = lockNumber;
-                                        }
-                                        else
-                                        {
-                                            ViewBag.LockNumber = "NotAccess";
-                                        }
-                                    }
+                                    ViewBag.LockNumber = lockNumber.ToString();
                                 }
                             }
                         }
@@ -218,7 +196,29 @@ namespace Support.Controllers
                 ViewBag.Link = "";
                 ViewBag.LockNumber = "";
 
-                if (elapsedSpan.TotalMinutes <= 1)
+
+
+#if (DEBUG)
+
+                if (UnitPublic.ValidationLockNo(lockNumber))
+                {
+                    string contract = UnitPublic.HasContract(lockNumber);
+                    if (contract != "")
+                    {
+                        if (contract.Split('-')[0] == "1")
+                        {
+                            ViewBag.Link = UnitPublic.Decrypt(HashLink);
+                            ViewBag.LockNumber = lockNumber;
+                        }
+                        else
+                        {
+                            ViewBag.LockNumber = "NotAccess";
+                        }
+                    }
+                }
+
+#else
+if (elapsedSpan.TotalMinutes <= 1)
                 {
                     if (UnitPublic.ValidationLockNo(lockNumber))
                     {
@@ -237,6 +237,11 @@ namespace Support.Controllers
                         }
                     }
                 }
+#endif
+
+
+
+
             }
             return View();
         }

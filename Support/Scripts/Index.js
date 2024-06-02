@@ -47,6 +47,22 @@
 
 
 
+    var AceMessagesChatUri = server + '/api/Data/AceMessagesChat/';
+
+    function getAceMessagesChatList() {
+        ajaxFunction(AceMessagesChatUri, 'GET', true).done(function (data) {
+            if (data.length > 0) {
+                localStorage.setItem("AceMessagesChat", JSON.stringify(data));
+            } else {
+                localStorage.removeItem("AceMessagesChat");
+            }
+        });
+    }
+    getAceMessagesChatList();
+
+
+
+
     $('#Index_TextLogo').css("color", "#dcdcdc");
     $('#Index_TextBack').css("color", "#dcdcdc");
 

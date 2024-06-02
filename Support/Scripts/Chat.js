@@ -1,4 +1,4 @@
-﻿var loginLink = true;
+﻿//var loginLink = true;
 var ChatUri = server + '/api/Data/Chat/'; // آدرس لیست چت 
 var DateUri = server + '/api/Data/GetDate/';
 var UploadChatFileUri = server + '/api/Data/UploadChatFile/'; // آدرس ذخیره لیست پیوست 
@@ -80,6 +80,7 @@ if (LockInput != "" && LockInput != null) {
 
     if (idChat != null) {  //panel admin
         idChat = idChat == "0" ? null : idChat;
+        loginLink = true; 
 
         userCodeChat = $("#UserCode").data("value");
         lockNumber = LockInput;
@@ -134,6 +135,7 @@ if (LockInput != "" && LockInput != null) {
             $(".LeftButtomMenu").hide();
         }
         else {
+
             getHasContract();
             UserPanel();
         }

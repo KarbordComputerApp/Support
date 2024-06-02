@@ -368,12 +368,19 @@ namespace Support.Controllers
         [Route("api/Data/AceMessagesSitt/{type}")]
         public async Task<IHttpActionResult> GetAceMessagesSitt(byte type)
         {
-            string sql = string.Format(@"select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 and Type > {0} order by id desc" , type);
+            string sql = "select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 and Type > 150 and  Type < 200 order by id desc";
             var list = db.Database.SqlQuery<AceMessages>(sql).ToList();
             return Ok(list);
         }
 
-       
+
+        [Route("api/Data/AceMessagesChat/")]
+        public async Task<IHttpActionResult> GetAceMessagesChat()
+        {
+            string sql = "select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 and Type > 200 and  Type < 220 order by id desc";
+            var list = db.Database.SqlQuery<AceMessages>(sql).ToList();
+            return Ok(list);
+        }
 
 
 

@@ -21,6 +21,8 @@ var ipw = localStorage.getItem("IPW");
 
 var dateNow_Shamsi;
 
+var loginLink = false;
+
 $("#B_CustAccount").attr('disabled', 'disabled');
 $("#B_Tiket").attr('disabled', 'disabled');
 $("#B_Videos").attr('disabled', 'disabled');
@@ -64,7 +66,7 @@ function getHasContract() {
             localStorage.setItem("HasContract", access);
 
             localStorage.setItem("AccessTiket", "1");
-
+            loginLink = loginLink;
             if (access == 0) {
                 $("#t_HasContract").text("قرارداد پشتیبانی شما پایان یافته است");
 
@@ -91,6 +93,10 @@ function getHasContract() {
                 if (d > 30) {
                     $("#B_Tiket").attr('disabled', 'disabled');
                     localStorage.setItem("AccessTiket", "0");
+                }
+                if (loginLink && d > 30) {
+                    alert($("#t_HasContract").text());
+                    window.location.href = localStorage.getItem("urlLogin");
                 }
 
             } else if (access == 1) {
