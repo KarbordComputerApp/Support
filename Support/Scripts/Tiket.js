@@ -347,7 +347,9 @@
 
             $("#FM_Select").val() == 'M' ? fm_Select = 'آقای ' : fm_Select = 'خانم '
 
-
+            if (lockNumber == "NotAccess") {
+                return showNotification('خطای ذخیره ' + lockNumber, 0);
+            }
 
             if (natijeh == '' && self.AddAttachList().length > 0)
                 natijeh = 'به پیوست مراجعه شود';

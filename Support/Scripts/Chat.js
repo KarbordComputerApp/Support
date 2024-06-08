@@ -80,7 +80,7 @@ if (LockInput != "" && LockInput != null) {
 
     if (idChat != null) {  //panel admin
         idChat = idChat == "0" ? null : idChat;
-        loginLink = true; 
+        loginLink = true;
 
         userCodeChat = $("#UserCode").data("value");
         lockNumber = LockInput;
@@ -408,7 +408,7 @@ function refresh(id, isLast) {
                     otherUserChat = null;
                 }
                 if (focusPage == false && isAdminChat) {
-                   // NotifationChat(data[0].Body);
+                    // NotifationChat(data[0].Body);
                 }
 
                 for (var i = 0; i < data.length; i++) {
@@ -580,17 +580,6 @@ $("#Eshkalat_Other").click(function () {
     CalcHeight();
 });
 
-$("#Eshkalat_Tekrari").click(function () {
-    caption = $(this.lastElementChild).text();
-    link = "http://185.208.174.64:8001/Content/Video/Sending_double_invoices.mp4";
-    ShowVideoEshkal(link, caption);
-});
-
-$("#Eshkalat_ClientId").click(function () {
-    caption = $(this.lastElementChild).text();
-    link = "http://185.208.174.64:8001/Content/Video/Upload_Public_key.mp4";
-    ShowVideoEshkal(link, caption);
-});
 
 $("#Eshkalat_End").click(function () {
     caption = "اشکال برطرف شد";
@@ -602,7 +591,7 @@ $("#Eshkalat_End").click(function () {
 
 
 function ShowVideoEshkal(link, caption) {
-    caption = caption.substr(3, caption.length);
+    caption = caption.substr(0, caption.length);
     var LogLinkTiketUri = server + '/api/Data/LogLinkTiket/';
     var LogLinkTiketObject = {
         LockNumber: lockNumber,
@@ -622,6 +611,14 @@ function ShowVideoEshkal(link, caption) {
     });
 }
 
+function ShowMessageEshkal(message, caption) {
+    $('#LinkSt').empty();
+    $('#modal-Comm').modal('show');
+    $('#titleComm').text(caption);
+    $('#ResultSt').text(message);
+    $("#Eshkalat_End").show();
+    ChatSend(false, "نمایش توضیحات : " + caption);
+}
 
 
 //localStorage.removeItem("HasContract");
@@ -629,42 +626,42 @@ function ShowVideoEshkal(link, caption) {
 
 function ChatSend(firstSend, mess) {
     //ajaxFunction(HasMainTenanceUri + lockNumber, 'GET').done(function (data) {
-        //if (data == "") {
-            var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
-            if (message.trim() == "") {
-                $("#ChatMessage").val("");
-                return showNotification('پیام را وارد کنید', 0);
-            }
+    //if (data == "") {
+    var message = firstSend == true ? "!!@NewChat@!!" : mess == null ? $("#ChatMessage").val() : mess;
+    if (message.trim() == "") {
+        $("#ChatMessage").val("");
+        return showNotification('پیام را وارد کنید', 0);
+    }
 
-            if (idChat == null) {
+    if (idChat == null) {
 
-            }
-            else {
+    }
+    else {
 
-                if (motaghaziChat == "") {
-                    motaghaziChat == "UserChat"
-                }
-                userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
-                var AddChatObject = {
-                    LockNumber: lockNumber,
-                    SerialNumber: idChat,
-                    Mode: mode,
-                    Status: 0,
-                    ReadSt: 0,
-                    UserCode: userCodeChat,
-                    Body: message,
-                }
-                ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
-                    serialNumber = data;
-                    isLast = false;
-                    refresh(idChat, isLast);
-                    $("#ChatMessage").val("");
-                });
-            }
-        //}
-        //else {
-        //    return showNotification(data, 0);
-       // }
+        if (motaghaziChat == "") {
+            motaghaziChat == "UserChat"
+        }
+        userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
+        var AddChatObject = {
+            LockNumber: lockNumber,
+            SerialNumber: idChat,
+            Mode: mode,
+            Status: 0,
+            ReadSt: 0,
+            UserCode: userCodeChat,
+            Body: message,
+        }
+        ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
+            serialNumber = data;
+            isLast = false;
+            refresh(idChat, isLast);
+            $("#ChatMessage").val("");
+        });
+    }
+    //}
+    //else {
+    //    return showNotification(data, 0);
+    // }
     //});
 }
 
@@ -710,6 +707,10 @@ function NewChat() {
     if (captchaData.toLowerCase() != captchaVal.toLowerCase()) {
         CreateCaptcha();
         return showNotification('لطفا کد امنیتی را با دقت وارد نمایید', 0);
+    }
+
+    if (lockNumber == "NotAccess") {
+        return showNotification('خطای ذخیره ' + lockNumber, 0);
     }
 
     var message = "";
@@ -1000,7 +1001,100 @@ function NotifationChat(value) {
 }
 
 
+var AceMessagesChatUri = server + '/api/Data/AceMessagesChat/';
+var aceMessagesChatList;
 
+function getAceMessagesChatList() {
+    list = localStorage.getItem('AceMessagesChat');
+    if (list != null) {
+        list = JSON.parse(localStorage.getItem('AceMessagesChat'));
+    }
+    else {
+        ajaxFunction(AceMessagesChatUri, 'GET', false).done(function (data) {
+            localStorage.setItem("AceMessagesChat", JSON.stringify(data));
+        });
+    }
+    aceMessagesChatList = list;
+
+    $("#ListEshkal").empty();
+    temp = "";
+    var i = 0;
+    if (list != null) {
+        for (i = 0; i < list.length; i++) {
+            item = list[i];
+
+            isVideo = item.Link != ""
+            icon = isVideo == true ? "/Content/img/play-icon-blue.png" : "/Content/img/icons/question.png";
+
+            type = item.Type;
+            var colorMessage = "black";
+            if (type == 201) colorMessage = "red";
+            else if (type == 202) colorMessage = "blue";
+            else if (type == 203) colorMessage = "magenta";
+            else if (type == 204) colorMessage = "navy";
+            else if (type == 205) colorMessage = "green";
+            else if (type == 206) colorMessage = "brown";
+            else if (type == 207) colorMessage = "limegreen";
+            else if (type == 208) colorMessage = "orangered";
+            else if (type == 209) colorMessage = "darkorange";
+
+            temp += '<div class="col-12" style="margin-bottom:5px">' +
+                '<a id="Eshkalat_Chat' + i + '" role="button" style="color: #0025e7; cursor: pointer;">' +
+                '<img src="' + icon + '" style="height: 16px;margin-left: 4px;margin-right: 0px;">' +
+                '<span style="font-size: 12px;color:' + colorMessage + '">' + item.Hint + '</span>' +
+                '</a></div >';
+
+        }
+
+        $('#ListEshkal').append(temp);
+    }
+    /*
+<div class="col-12">
+    <a id="Eshkalat_Tekrari" role="button" style="color: #0025e7; cursor: pointer;">
+        <img src="/Content/img/play-icon-blue.png" style="height: 16px;margin-left: 2px;margin-right: 10px;">
+        <span tyle="font-size: 14px;">1- ابطال فاکتور تکراری در سامانه مودیان</span>
+    </a>
+</div>
+*/
+}
+getAceMessagesChatList();
+
+$("#Eshkalat_Chat0").click(function () {
+    caption = $(this.lastElementChild).text();
+    item = aceMessagesChatList[0];
+    isVideo = item.Link != "";
+    if (isVideo) {
+        ShowVideoEshkal(item.Link, caption);
+    } else {
+        ShowMessageEshkal(item.Message,caption)
+    }
+})
+
+
+
+
+
+$("#Eshkalat_Chat1").click(function () {
+    caption = $(this.lastElementChild).text();
+    item = aceMessagesChatList[1];
+    isVideo = item.Link != "";
+    if (isVideo) {
+        ShowVideoEshkal(item.Link, caption);
+    } else {
+        ShowMessageEshkal(item.Message, caption)
+    }
+})
+
+$("#Eshkalat_Chat2").click(function () {
+    caption = $(this.lastElementChild).text();
+    item = aceMessagesChatList[2];
+    isVideo = item.Link != "";
+    if (isVideo) {
+        ShowVideoEshkal(item.Link, caption);
+    } else {
+        ShowMessageEshkal(item.Message, caption)
+    }
+})
 
 function newExcitingAlerts() {
     /* 

@@ -31,7 +31,7 @@
     self.AceMessagesList = ko.observableArray([]);
 
     function getAceMessagesList() {
-        ajaxFunction(AceMessagesUri , 'GET', true).done(function (data) {
+        ajaxFunction(AceMessagesUri, 'GET', true).done(function (data) {
             var list = '';
             for (var i = 0; i < data.length; i++) {
                 list += `<div style=" background-color:#128d35;padding: 5px 20px 5px 20px;border-radius: 25px;margin-bottom: 5px;">
@@ -43,24 +43,6 @@
         });
     }
     getAceMessagesList();
-
-
-
-
-    var AceMessagesChatUri = server + '/api/Data/AceMessagesChat/';
-
-    function getAceMessagesChatList() {
-        ajaxFunction(AceMessagesChatUri, 'GET', true).done(function (data) {
-            if (data.length > 0) {
-                localStorage.setItem("AceMessagesChat", JSON.stringify(data));
-            } else {
-                localStorage.removeItem("AceMessagesChat");
-            }
-        });
-    }
-    getAceMessagesChatList();
-
-
 
 
     $('#Index_TextLogo').css("color", "#dcdcdc");

@@ -40,8 +40,8 @@
                 localStorage.setItem("Address", data[0].Address);
                 localStorage.setItem("Pic", data[0].Pic);
 
-
                 localStorage.removeItem("UsersChat");
+                localStorage.removeItem("AceMessagesChat");
                 GetRepFromUsers();
 
                 getDataChat();

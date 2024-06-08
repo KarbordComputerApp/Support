@@ -377,7 +377,7 @@ namespace Support.Controllers
         [Route("api/Data/AceMessagesChat/")]
         public async Task<IHttpActionResult> GetAceMessagesChat()
         {
-            string sql = "select * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 and Type > 200 and  Type < 220 order by id desc";
+            string sql = "select top(3) * from AceMessages where ExtraParam = '' and Active = 1 and Expired = 0 and Type > 200 and  Type < 220 order by id desc";
             var list = db.Database.SqlQuery<AceMessages>(sql).ToList();
             return Ok(list);
         }

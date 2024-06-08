@@ -59,5 +59,11 @@
         public string RjReadSt { get; set; }
 
         public byte DocAttachExists { get; set; }
+
+        public byte? ChatMode { get; set; }
+
+        public bool? ChatActive { get; set; }
+
+        public bool? ChatFinish { get; set; }
     }
 }
