@@ -1012,6 +1012,7 @@ function getAceMessagesChatList() {
     else {
         ajaxFunction(AceMessagesChatUri, 'GET', false).done(function (data) {
             localStorage.setItem("AceMessagesChat", JSON.stringify(data));
+            list = data;
         });
     }
     aceMessagesChatList = list;
