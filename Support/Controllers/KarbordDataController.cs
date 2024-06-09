@@ -1635,5 +1635,24 @@ namespace Support.Controllers
 
 
 
+        public class ErjSaveTicket_DocReadObject
+        {
+            public long SerialNumber { get; set; }
+
+            public string DocReadSt { get; set; }
+
+        }
+
+        // Post: api/KarbordData/ دیده شدن تیکت  
+        [Route("api/KarbordData/ErjSaveTicket_DocRead")]
+        public async Task<IHttpActionResult> PostWeb_ErjSaveTicket_DocRead(ErjSaveTicket_DocReadObject d)
+        {
+            string sql = string.Format(@"EXEC	[dbo].[Web_ErjSaveTicket_DocRead] @SerialNumber = {0}, @DocReadSt = N'{1}' select 0",d.SerialNumber,d.DocReadSt);
+            var value = db.Database.SqlQuery<int>(sql).Single();
+            return Ok(value);
+        }
+
+
+
     }
 }
