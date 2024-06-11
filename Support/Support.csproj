@@ -184,6 +184,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Karbord\DayRH.cs" />
+    <Compile Include="Models\Karbord\DayRB.cs" />
     <Compile Include="Models\Karbord\free.cs" />
     <Compile Include="Models\Karbord\KarbordModel_Expire.cs" />
     <Compile Include="Models\Karbord\KarbordComputer_SupportModel.cs" />

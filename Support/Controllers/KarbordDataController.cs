@@ -1445,7 +1445,7 @@ namespace Support.Controllers
 
 
 
-        
+
         public class Object_ErjDocXH
         {
             public long SerialNumber { get; set; }
@@ -1647,10 +1647,82 @@ namespace Support.Controllers
         [Route("api/KarbordData/ErjSaveTicket_DocRead")]
         public async Task<IHttpActionResult> PostWeb_ErjSaveTicket_DocRead(ErjSaveTicket_DocReadObject d)
         {
-            string sql = string.Format(@"EXEC	[dbo].[Web_ErjSaveTicket_DocRead] @SerialNumber = {0}, @DocReadSt = N'{1}' select 0",d.SerialNumber,d.DocReadSt);
+            string sql = string.Format(@"EXEC	[dbo].[Web_ErjSaveTicket_DocRead] @SerialNumber = {0}, @DocReadSt = N'{1}' select 0", d.SerialNumber, d.DocReadSt);
             var value = db.Database.SqlQuery<int>(sql).Single();
             return Ok(value);
         }
+
+
+
+
+
+
+        public class ErjDayRHObject
+        {
+            public byte Mode { get; set; }
+
+            public string UserCode { get; set; }
+
+            public string Status { get; set; }
+
+            public string DocDate { get; set; }
+
+            public string Eghdam { get; set; }
+
+            public string Tanzim { get; set; }
+        }
+
+
+        // Post: api/KarbordData/Web_ErjDayRH   لیست گزارش کارها
+        [Route("api/KarbordData/ErjDayRH")]
+        public async Task<IHttpActionResult> PostErjDayRH(ErjDayRHObject d)
+        {
+            string sql = string.Format(@"Select * from Web_ErjDayRH_F({0},'{1}') where 1 = 1 ", d.Mode, d.UserCode);
+
+            if (d.Status != "") sql += string.Format(@" and  Status = '{0}' ", d.Status);
+            if (d.DocDate != "") sql += string.Format(@" and  DocDate = '{0}' ", d.DocDate);
+            if (d.Eghdam != "") sql += string.Format(@" and  Eghdam = '{0}' ", d.Eghdam);
+            if (d.Tanzim != "") sql += string.Format(@" and  Tanzim = '{0}' ", d.Tanzim);
+
+            var list = db.Database.SqlQuery<DayRH>(sql);
+            return Ok(list);
+
+        }
+
+        public class ErjDayRBObject
+        {
+            public long SerialNumber { get; set; }
+
+        }
+
+        // Post: api/KarbordData/Web_ErjDayRB   لیست گزارش کارها
+        [Route("api/KarbordData/ErjDayRB")]
+        public async Task<IHttpActionResult> PostErjDayRB(ErjDayRBObject d)
+        {
+            string sql = string.Format(@"Select * from Web_ErjDayRB_F() where SerialNumber = {0} ", d.SerialNumber);
+            var list = db.Database.SqlQuery<DayRB>(sql);
+            return Ok(list);
+
+        }
+
+
+        // دریافت اطلاعات سطح دسترسی کاربر
+        public class AccessUser
+        {
+            public string OrgProgName { get; set; }
+
+            public string TrsName { get; set; }
+        }
+
+        [Route("api/KarbordData/AccessUser/{user}")]
+
+        public async Task<IHttpActionResult> GetWeb_AccessUser(string user)
+        {
+            string sql = string.Format(@"EXEC [dbo].[Web_UserTrs] @UserCode = '{0}'", user);
+            var list = db.Database.SqlQuery<AccessUser>(sql).ToList();
+            return Ok(list);
+        }
+
 
 
 
