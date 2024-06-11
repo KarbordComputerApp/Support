@@ -1464,6 +1464,8 @@ namespace Support.Controllers
 
             public string Status { get; set; }
 
+            public int? ChatMode { get; set; }
+
         }
 
 
@@ -1483,6 +1485,11 @@ namespace Support.Controllers
             if (Object_ErjDocXH.SerialNumber > 0)
             {
                 sql += " and SerialNumber = " + Object_ErjDocXH.SerialNumber.ToString();
+            }
+
+            if (Object_ErjDocXH.ChatMode != null)
+            {
+                sql += " and ChatMode = " + Object_ErjDocXH.ChatMode.ToString();
             }
 
             if (Object_ErjDocXH.Status != null && Object_ErjDocXH.Status != "")
