@@ -77,6 +77,7 @@ $("#box-chat").hide();
 if (LockInput != "" && LockInput != null) {
 
     idChat = $("#IdChat").data("value");
+    localStorage.removeItem("AceMessagesChat");
 
     if (idChat != null) {  //panel admin
         idChat = idChat == "0" ? null : idChat;
