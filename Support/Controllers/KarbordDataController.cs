@@ -1721,11 +1721,11 @@ namespace Support.Controllers
             public string TrsName { get; set; }
         }
 
-        [Route("api/KarbordData/AccessUser/{user}")]
+        [Route("api/KarbordData/AccessUser/{progName}/{user}")]
 
-        public async Task<IHttpActionResult> GetWeb_AccessUser(string user)
+        public async Task<IHttpActionResult> GetWeb_AccessUser(string progName, string user)
         {
-            string sql = string.Format(@"EXEC [dbo].[Web_UserTrs] @UserCode = '{0}'", user);
+            string sql = string.Format(@"EXEC [dbo].[Web_UserTrs] @ProgName = '{0}' , @GroupNo = 0, @UserCode = '{1}'", progName, user);
             var list = db.Database.SqlQuery<AccessUser>(sql).ToList();
             return Ok(list);
         }

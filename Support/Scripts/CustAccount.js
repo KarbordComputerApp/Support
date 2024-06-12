@@ -131,7 +131,7 @@
 
         var DocAttachObject = {
             ProgName: 'FCT5',
-            Group: group_CustAccount,
+            //Group: group_CustAccount,
             Year: list.Year,
             ModeCode: '2',
             SerialNumber: list.SerialNumber,
