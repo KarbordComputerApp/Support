@@ -18,6 +18,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.UI;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Support.Controllers.Unit;
 using Support.Models;
 
@@ -1864,6 +1865,52 @@ namespace Support.Controllers
 
 
 
+        public class MainTenanceBDate
+        {
+            public string Date { get; set; }
+        }
+
+
+        [Route("api/Data/SetHoliDay")]
+        public async Task<IHttpActionResult> GetSetHoliDay()
+        {
+            try
+            {
+                string sql = string.Format(@"SELECT [Date] FROM MainTenanceB where RozType = 0");
+                var list = db.Database.SqlQuery<MainTenanceBDate>(sql).ToList();
+                foreach (var item in list)
+                {
+
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(@"https://holidayapi.ir/jalali/" + item.Date);
+
+                        var task = client.GetAsync(client.BaseAddress).ContinueWith((taskwithresponse) =>
+                        {
+                            var response = taskwithresponse.Result;
+                            Task<string> jsonString = response.Content.ReadAsStringAsync();
+                            jsonString.Wait();
+                            var model = jsonString.Result;
+                            var is_holiday = JObject.Parse(model)["is_holiday"].ToString();
+                            var rozType = is_holiday == "True" ? 1 : 0;
+                            {
+                                sql = string.Format(@"update MainTenanceB set RozType = {0} where [Date] = '{1}' select 0", rozType, item.Date);
+                                var resupdate = db.Database.SqlQuery<int>(sql).Single();
+                            }
+
+                        });
+                        task.Wait();
+                    }
+
+                }
+                return Ok("روزهای تعطیل تنظیم شد");
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message.ToString());
+                throw;
+            }
+        }
 
 
 
