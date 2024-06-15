@@ -1691,6 +1691,8 @@ namespace Support.Controllers
             if (d.Eghdam != "") sql += string.Format(@" and  Eghdam = '{0}' ", d.Eghdam);
             if (d.Tanzim != "") sql += string.Format(@" and  Tanzim = '{0}' ", d.Tanzim);
 
+            sql += " order by Docdate desc , eghdam";
+
             var list = db.Database.SqlQuery<DayRH>(sql);
             return Ok(list);
 
