@@ -1732,6 +1732,40 @@ namespace Support.Controllers
 
 
 
+        public class Web_ErjSaveDoc_RjRead
+        {
+            public int DocBMode { get; set; }
+
+            public long SerialNumber { get; set; }
+
+            public int BandNo { get; set; }
+
+            public string RjReadSt { get; set; }
+        }
+
+        // POST: api/KarbordData/ErjSaveDoc_RjRead
+        [Route("api/KarbordData/ErjSaveDoc_RjRead")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_RjRead(Web_ErjSaveDoc_RjRead Web_ErjSaveDoc_RjRead)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                         @" DECLARE	@return_value int
+                            EXEC	@return_value = [dbo].[Web_ErjSaveDoc_RjRead]
+                                    @DocBMode = {0},		                            
+                                    @SerialNumber = {1},
+		                            @BandNo = {2},
+		                            @RjReadSt = '{3}'
+                            SELECT	'Return Value' = @return_value",
+                        Web_ErjSaveDoc_RjRead.DocBMode,
+                        Web_ErjSaveDoc_RjRead.SerialNumber,
+                        Web_ErjSaveDoc_RjRead.BandNo,
+                        Web_ErjSaveDoc_RjRead.RjReadSt
+                        );
+
+
+            var list = db.Database.SqlQuery<int>(sql).Single();
+            await db.SaveChangesAsync();
+            return Ok(list);
+        }
 
     }
 }
