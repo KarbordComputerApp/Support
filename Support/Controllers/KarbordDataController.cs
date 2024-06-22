@@ -1800,7 +1800,7 @@ namespace Support.Controllers
 #else
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
-                  resSend = UnitPublic.Send_SorenaSms(UserCode, "" , Message);
+                  resSend = UnitPublic.Send_SorenaSms(UserCode, Message);
                 }
 #endif
             }
