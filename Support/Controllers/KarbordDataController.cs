@@ -284,8 +284,13 @@ namespace Support.Controllers
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             var list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
-
-            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, "");
+            string resSend = "";
+            if (ErjSaveTicket_HI.ChatMode == 1)
+            {
+                string mess = string.Format("{0} درخواست چت از", ErjSaveTicket_HI.Motaghazi);
+                resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, mess);
+            }
+            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, resSend);
 
             return Ok(list);
         }
@@ -953,6 +958,10 @@ namespace Support.Controllers
             {
                 await db.SaveChangesAsync();
             }
+
+            string mess = string.Format("{0} درخواست چت از", d.ToUserCode);
+            string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, mess);
+
             return Ok(list);
         }
 
@@ -1768,6 +1777,42 @@ namespace Support.Controllers
             await db.SaveChangesAsync();
             return Ok(list);
         }
+
+
+        //ارسال sms زمان ارجاع چت
+        [Route("api/KarbordData/SendSmsChat/{UserCode}/{Message}/{Token}")]
+        public async Task<IHttpActionResult> GetSendSmsChat(string UserCode, string Message, string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            string resSend = "";
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+#if (DEBUG)
+
+                resSend = UnitPublic.Send_SorenaSms(UserCode, Message);
+
+#else
+                if (elapsedSpan.TotalMinutes <= 1)
+                {
+                  resSend = UnitPublic.Send_SorenaSms(UserCode, "" , Message);
+                }
+#endif
+            }
+
+            return Ok(resSend.ToString());
+
+
+
+        }
+
+
+
 
     }
 }

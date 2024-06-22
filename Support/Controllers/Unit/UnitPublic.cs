@@ -31,12 +31,19 @@ namespace Support.Controllers.Unit
         public static char[] afiAccess;
 
 
-        static string IniPath = HttpContext.Current.Server.MapPath("~/Content/ini/ServerConfig.Ini"); 
+        static string IniPath = HttpContext.Current.Server.MapPath("~/Content/ini/ServerConfig.Ini");
 
         static IniFile MyIni = new IniFile(IniPath);
 
         static int fromLock = Convert.ToInt32(MyIni.Read("from", "Lock"));
         static int toLock = Convert.ToInt32(MyIni.Read("to", "Lock"));
+
+
+        public static int portalCode = Convert.ToInt32(MyIni.Read("PortalCode", "SMS"));
+        public static string userName = MyIni.Read("UserName", "SMS");
+        public static string passWord = MyIni.Read("PassWord", "SMS");
+       // public static string messageFormat = MyIni.Read("MessageFormat", "SMS");
+        //public static string messageFormatErja = MyIni.Read("MessageFormatErja", "SMS");
 
 
         /* public static string sql_Name_Support = MyIni.Read("SqlServerName", "TicketDatabase");
@@ -279,6 +286,32 @@ namespace Support.Controllers.Unit
             }
             return false;
         }
+
+        public static string Send_SorenaSms(string userCode, string message)
+        {
+            try
+            {
+                KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
+                string sql = string.Format(@"select Mobile from Web_Users('') where code = '{0}' ", userCode);
+                var mobile = db.Database.SqlQuery<string>(sql).Single();
+                SorenaSms.sornaserviceSoapClient soapClient = new SorenaSms.sornaserviceSoapClient();
+                var res = soapClient.SingleSMSEngine(
+                    portalCode,
+                    userName,
+                    passWord,
+                    mobile,
+                    message);
+                return res.ToString() + ", mobile = " + mobile.ToString();
+
+            }
+            catch (Exception e)
+            {
+                return e.Message.ToString();
+                throw;
+            }
+        }
+
+
 
     }
 }

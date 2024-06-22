@@ -10,6 +10,7 @@ var forceToChangePass = localStorage.getItem("ForceToChangePass");
 var fullName = firstName + ' ' + lastName;
 var companyName = localStorage.getItem("CompanyName");
 var usersChat;
+var defultUserTiket = 'ZAND';
 
 var ticketUser = 'Ticket';
 var ticketPass = '@!B912';

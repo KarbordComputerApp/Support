@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="getsystemcredit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getsystemcreditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getsystemcreditResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobiles" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MultiSMSEngineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MultiSMSEngineResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngineBlackList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobiles" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngineBlackListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MultiSMSEngineBlackListResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngineshatel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobiles" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngineshatelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MultiSMSEngineshatelResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngine021">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobiles" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MultiSMSEngine021Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MultiSMSEngine021Result" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusSMSEngine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReferenceCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="state_sms" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusSMSEngineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStatusSMSEngineResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngineShatel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngineShatelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SingleSMSEngineShatelResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SingleSMSEngineResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngineBlacklist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngineBlacklistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SingleSMSEngineBlacklistResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngine021">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SingleSMSEngine021Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SingleSMSEngine021Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getsystemcreditSoapIn">
+    <wsdl:part name="parameters" element="tns:getsystemcredit" />
+  </wsdl:message>
+  <wsdl:message name="getsystemcreditSoapOut">
+    <wsdl:part name="parameters" element="tns:getsystemcreditResponse" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngineSoapIn">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngine" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngineSoapOut">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngineResponse" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngineBlackListSoapIn">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngineBlackList" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngineBlackListSoapOut">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngineBlackListResponse" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngineshatelSoapIn">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngineshatel" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngineshatelSoapOut">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngineshatelResponse" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngine021SoapIn">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngine021" />
+  </wsdl:message>
+  <wsdl:message name="MultiSMSEngine021SoapOut">
+    <wsdl:part name="parameters" element="tns:MultiSMSEngine021Response" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusSMSEngineSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStatusSMSEngine" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusSMSEngineSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStatusSMSEngineResponse" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngineShatelSoapIn">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngineShatel" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngineShatelSoapOut">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngineShatelResponse" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngineSoapIn">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngine" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngineSoapOut">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngineResponse" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngineBlacklistSoapIn">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngineBlacklist" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngineBlacklistSoapOut">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngineBlacklistResponse" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngine021SoapIn">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngine021" />
+  </wsdl:message>
+  <wsdl:message name="SingleSMSEngine021SoapOut">
+    <wsdl:part name="parameters" element="tns:SingleSMSEngine021Response" />
+  </wsdl:message>
+  <wsdl:portType name="sornaserviceSoap">
+    <wsdl:operation name="getsystemcredit">
+      <wsdl:input message="tns:getsystemcreditSoapIn" />
+      <wsdl:output message="tns:getsystemcreditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngine">
+      <wsdl:input message="tns:MultiSMSEngineSoapIn" />
+      <wsdl:output message="tns:MultiSMSEngineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngineBlackList">
+      <wsdl:input message="tns:MultiSMSEngineBlackListSoapIn" />
+      <wsdl:output message="tns:MultiSMSEngineBlackListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngineshatel">
+      <wsdl:input message="tns:MultiSMSEngineshatelSoapIn" />
+      <wsdl:output message="tns:MultiSMSEngineshatelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngine021">
+      <wsdl:input message="tns:MultiSMSEngine021SoapIn" />
+      <wsdl:output message="tns:MultiSMSEngine021SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusSMSEngine">
+      <wsdl:input message="tns:GetStatusSMSEngineSoapIn" />
+      <wsdl:output message="tns:GetStatusSMSEngineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngineShatel">
+      <wsdl:input message="tns:SingleSMSEngineShatelSoapIn" />
+      <wsdl:output message="tns:SingleSMSEngineShatelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngine">
+      <wsdl:input message="tns:SingleSMSEngineSoapIn" />
+      <wsdl:output message="tns:SingleSMSEngineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngineBlacklist">
+      <wsdl:input message="tns:SingleSMSEngineBlacklistSoapIn" />
+      <wsdl:output message="tns:SingleSMSEngineBlacklistSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngine021">
+      <wsdl:input message="tns:SingleSMSEngine021SoapIn" />
+      <wsdl:output message="tns:SingleSMSEngine021SoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="sornaserviceSoap" type="tns:sornaserviceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getsystemcredit">
+      <soap:operation soapAction="http://tempuri.org/getsystemcredit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngine">
+      <soap:operation soapAction="http://tempuri.org/MultiSMSEngine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngineBlackList">
+      <soap:operation soapAction="http://tempuri.org/MultiSMSEngineBlackList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngineshatel">
+      <soap:operation soapAction="http://tempuri.org/MultiSMSEngineshatel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngine021">
+      <soap:operation soapAction="http://tempuri.org/MultiSMSEngine021" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusSMSEngine">
+      <soap:operation soapAction="http://tempuri.org/GetStatusSMSEngine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngineShatel">
+      <soap:operation soapAction="http://tempuri.org/SingleSMSEngineShatel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngine">
+      <soap:operation soapAction="http://tempuri.org/SingleSMSEngine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngineBlacklist">
+      <soap:operation soapAction="http://tempuri.org/SingleSMSEngineBlacklist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngine021">
+      <soap:operation soapAction="http://tempuri.org/SingleSMSEngine021" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="sornaserviceSoap12" type="tns:sornaserviceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getsystemcredit">
+      <soap12:operation soapAction="http://tempuri.org/getsystemcredit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngine">
+      <soap12:operation soapAction="http://tempuri.org/MultiSMSEngine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngineBlackList">
+      <soap12:operation soapAction="http://tempuri.org/MultiSMSEngineBlackList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngineshatel">
+      <soap12:operation soapAction="http://tempuri.org/MultiSMSEngineshatel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiSMSEngine021">
+      <soap12:operation soapAction="http://tempuri.org/MultiSMSEngine021" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusSMSEngine">
+      <soap12:operation soapAction="http://tempuri.org/GetStatusSMSEngine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngineShatel">
+      <soap12:operation soapAction="http://tempuri.org/SingleSMSEngineShatel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngine">
+      <soap12:operation soapAction="http://tempuri.org/SingleSMSEngine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngineBlacklist">
+      <soap12:operation soapAction="http://tempuri.org/SingleSMSEngineBlacklist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SingleSMSEngine021">
+      <soap12:operation soapAction="http://tempuri.org/SingleSMSEngine021" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sornaservice">
+    <wsdl:port name="sornaserviceSoap" binding="tns:sornaserviceSoap">
+      <soap:address location="https://sornasms.net/webpublish2/sornaservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="sornaserviceSoap12" binding="tns:sornaserviceSoap12">
+      <soap12:address location="https://sornasms.net/webpublish2/sornaservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
