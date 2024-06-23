@@ -917,6 +917,9 @@ namespace Support.Controllers
             public string RjStatus { get; set; }
 
             public int? FarayandCode { get; set; }
+
+            public string MessageSms { get; set; }
+
         }
 
 
@@ -959,8 +962,8 @@ namespace Support.Controllers
                 await db.SaveChangesAsync();
             }
 
-            string mess = string.Format("{0} درخواست چت از", d.ToUserCode);
-            string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, mess);
+            //string mess = string.Format("{0} درخواست چت از", d.ToUserCode);
+            string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, d.MessageSms);
 
             return Ok(list);
         }
