@@ -1816,6 +1816,376 @@ namespace Support.Controllers
 
 
 
+        public class ErjSaveDoc_HUObject
+        {
+            public long SerialNumber { get; set; }
+
+            public string Tanzim { get; set; }
+
+            public string Status { get; set; }
+
+            public string Spec { get; set; }
+
+            public string DocDesc { get; set; }
+
+            public string EghdamComm { get; set; }
+
+            public string FinalComm { get; set; }
+
+            public string SpecialComm { get; set; }
+
+            public string F01 { get; set; }
+
+            public string F02 { get; set; }
+
+            public string F03 { get; set; }
+
+            public string F04 { get; set; }
+
+            public string F05 { get; set; }
+
+            public string F06 { get; set; }
+
+            public string F07 { get; set; }
+
+            public string F08 { get; set; }
+
+            public string F09 { get; set; }
+
+            public string F10 { get; set; }
+
+            public string F11 { get; set; }
+
+            public string F12 { get; set; }
+
+            public string F13 { get; set; }
+
+            public string F14 { get; set; }
+
+            public string F15 { get; set; }
+
+            public string F16 { get; set; }
+
+            public string F17 { get; set; }
+
+            public string F18 { get; set; }
+
+            public string F19 { get; set; }
+
+            public string F20 { get; set; }
+
+            public string UserCode { get; set; }
+        }
+
+
+
+        // POST: api/KarbordData/ErjSaveDoc_HU
+        [Route("api/KarbordData/ErjSaveDoc_HU/")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_HU(ErjSaveDoc_HUObject ErjSaveDoc_HUObject)
+        {
+            int value = 0;
+            try
+            {
+                string sql = string.Format(
+                     @"DECLARE	@return_value int
+
+                            EXEC	@return_value = [dbo].[Web_ErjSaveDoc_HU]
+                                    @SerialNumber = {0},
+		                            @UserCode = '{1}',
+		                            @Tanzim = '{2}',
+		                            @Status = '{3}',
+		                            @Spec = N'{4}',
+		                            @DocDesc = N'{5}',
+		                            @EghdamComm = N'{6}',
+		                            @FinalComm = N'{7}',
+		                            @SpecialComm = N'{8}',
+		                            @F01 = N'{9}',
+		                            @F02 = N'{10}',
+		                            @F03 = N'{11}',
+		                            @F04 = N'{12}',
+		                            @F05 = N'{13}',
+		                            @F06 = N'{14}',
+		                            @F07 = N'{15}',
+		                            @F08 = N'{16}',
+		                            @F09 = N'{17}',
+		                            @F10 = N'{18}',
+		                            @F11 = N'{19}',
+		                            @F12 = N'{20}',
+		                            @F13 = N'{21}',
+		                            @F14 = N'{22}',
+		                            @F15 = N'{23}',
+		                            @F16 = N'{24}',
+		                            @F17 = N'{25}',
+		                            @F18 = N'{26}',
+		                            @F19 = N'{27}',
+		                            @F20 = N'{28}'
+                            SELECT	'Return Value' = @return_value ",
+                        ErjSaveDoc_HUObject.SerialNumber,
+                        ErjSaveDoc_HUObject.UserCode,
+                        ErjSaveDoc_HUObject.Tanzim,
+                        ErjSaveDoc_HUObject.Status,
+                        ErjSaveDoc_HUObject.Spec,
+                        UnitPublic.ConvertTextWebToWin(ErjSaveDoc_HUObject.DocDesc ?? ""),
+                        UnitPublic.ConvertTextWebToWin(ErjSaveDoc_HUObject.EghdamComm ?? ""),
+                        UnitPublic.ConvertTextWebToWin(ErjSaveDoc_HUObject.FinalComm ?? ""),
+                        UnitPublic.ConvertTextWebToWin(ErjSaveDoc_HUObject.SpecialComm ?? ""),
+                        ErjSaveDoc_HUObject.F01,
+                        ErjSaveDoc_HUObject.F02,
+                        ErjSaveDoc_HUObject.F03,
+                        ErjSaveDoc_HUObject.F04,
+                        ErjSaveDoc_HUObject.F05,
+                        ErjSaveDoc_HUObject.F06,
+                        ErjSaveDoc_HUObject.F07,
+                        ErjSaveDoc_HUObject.F08,
+                        ErjSaveDoc_HUObject.F09,
+                        ErjSaveDoc_HUObject.F10,
+                        ErjSaveDoc_HUObject.F11,
+                        ErjSaveDoc_HUObject.F12,
+                        ErjSaveDoc_HUObject.F13,
+                        ErjSaveDoc_HUObject.F14,
+                        ErjSaveDoc_HUObject.F15,
+                        ErjSaveDoc_HUObject.F16,
+                        ErjSaveDoc_HUObject.F17,
+                        ErjSaveDoc_HUObject.F18,
+                        ErjSaveDoc_HUObject.F19,
+                        ErjSaveDoc_HUObject.F20);
+                value = db.Database.SqlQuery<int>(sql).Single();
+                if (value > 0)
+                {
+                    await db.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            return Ok(value);
+        }
+
+
+
+        public class Web_ErjSaveDoc_HStatus
+        {
+            public long SerialNumber { get; set; }
+
+            public string Status { get; set; }
+        }
+
+
+        // POST: api/KarbordData/ErjSaveDoc_HStatus
+        [Route("api/KarbordData/ErjSaveDoc_HStatus")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_HStatus( Web_ErjSaveDoc_HStatus Web_ErjSaveDoc_HStatus)
+        {
+            string sql = string.Format(
+                        @" DECLARE	@return_value int
+                            EXEC	@return_value = [dbo].[Web_ErjSaveDoc_HStatus]
+		                            @SerialNumber = {0},
+		                            @Status = '{1}'
+                            SELECT	'Return Value' = @return_value",
+                        Web_ErjSaveDoc_HStatus.SerialNumber,
+                        Web_ErjSaveDoc_HStatus.Status
+                        );
+
+            var list = db.Database.SqlQuery<int>(sql).Single();
+            await db.SaveChangesAsync();
+            return Ok(list);
+        }
+
+
+        public class Web_ErjSaveDoc_BSave
+        {
+            public long SerialNumber { get; set; }
+
+            public string Natijeh { get; set; }
+
+            public string FromUserCode { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string RjDate { get; set; }
+
+            public string RjTime { get; set; }
+
+            public string RjMhltDate { get; set; }
+
+            public int BandNo { get; set; }
+
+            public int SrMode { get; set; }
+
+            public string RjStatus { get; set; }
+
+            public int? FarayandCode { get; set; }
+        }
+
+
+        // POST: api/KarbordData/ErjSaveDoc_BSave
+        [Route("api/KarbordData/ErjSaveDoc_BSave")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_BSave( Web_ErjSaveDoc_BSave Web_ErjSaveDoc_BSave)
+        {
+            string sql = string.Format(
+                        @" DECLARE	@return_value int,
+		                            @BandNo nvarchar(10)
+                            EXEC	@return_value = [dbo].[Web_ErjSaveDoc_BSave]
+		                            @SerialNumber = {0},
+		                            @BandNo = {1} ,
+		                            @Natijeh = N'{2}',
+		                            @FromUserCode = N'{3}',
+		                            @ToUserCode = N'{4}',
+		                            @RjDate = N'{5}',
+		                            @RjTime = {6},
+		                            @RjMhltDate = N'{7}',
+                                    @SrMode = {8},
+                                    @RjStatus = '{9}',
+                                    @FarayandCode = {10}
+                            SELECT	@BandNo as N'@BandNo' ",
+                        Web_ErjSaveDoc_BSave.SerialNumber,
+                        Web_ErjSaveDoc_BSave.BandNo,
+                        UnitPublic.ConvertTextWebToWin(Web_ErjSaveDoc_BSave.Natijeh ?? ""),
+                        Web_ErjSaveDoc_BSave.FromUserCode,
+                        Web_ErjSaveDoc_BSave.ToUserCode,
+                        Web_ErjSaveDoc_BSave.RjDate,
+                        Web_ErjSaveDoc_BSave.RjTime,
+                        Web_ErjSaveDoc_BSave.RjMhltDate,
+                        Web_ErjSaveDoc_BSave.SrMode,
+                        Web_ErjSaveDoc_BSave.RjStatus,
+                        Web_ErjSaveDoc_BSave.FarayandCode ?? 0
+                        );
+
+
+                string list = db.Database.SqlQuery<string>(sql).Single();
+                if (!string.IsNullOrEmpty(list))
+                {
+                    await db.SaveChangesAsync();
+                }
+                return Ok(list);
+        }
+
+
+        public class Web_ErjSaveDoc_CSave
+        {
+            public long SerialNumber { get; set; }
+
+            public int BandNo { get; set; }
+
+            public string Natijeh { get; set; }
+
+            public string ToUserCode { get; set; }
+
+            public string RjDate { get; set; }
+
+            public string RjTime { get; set; }
+
+        }
+
+        // POST: api/KarbordData/ErjSaveDoc_CSave
+        [Route("api/KarbordData/ErjSaveDoc_CSave")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_CSave([FromBody]List<Web_ErjSaveDoc_CSave> Web_ErjSaveDoc_CSave)
+        {
+            string value = "";
+            string sql = "";
+
+
+                foreach (var item in Web_ErjSaveDoc_CSave)
+                {
+                    sql = string.Format(CultureInfo.InvariantCulture,
+                         @" DECLARE	@return_value int,
+                                        @BandNo nvarchar(10)
+                               EXEC	@return_value = [dbo].[Web_ErjSaveDoc_CSave]
+		                            @SerialNumber = {0},
+		                            @BandNo = {1},
+		                            @Natijeh = N'{2}',
+		                            @ToUserCode = N'{3}',
+		                            @RjDate = N'{4}',
+                                    @RjTime = {5}
+                               SELECT	@BandNo as N'@BandNo'",
+
+                        item.SerialNumber,
+                        item.BandNo,
+                        UnitPublic.ConvertTextWebToWin(item.Natijeh ?? ""),
+                        item.ToUserCode,
+                        item.RjDate,
+                        item.RjTime);
+                    value = db.Database.SqlQuery<string>(sql).Single();
+                }
+
+                await db.SaveChangesAsync();
+                if (!string.IsNullOrEmpty(value))
+                {
+                    await db.SaveChangesAsync();
+                }
+                return Ok(value);
+        }
+
+
+
+        public class Web_ErjSaveDoc_Rooneveshts
+        {
+            public long SerialNumber { get; set; }
+
+            //public string FromUserCode { get; set; }
+
+            public string ToUserCodes { get; set; }
+
+            public int BandNo { get; set; }
+
+            // public string RjDate { get; set; }
+
+        }
+
+        // POST: api/KarbordData/ErjSaveDoc_Rooneveshts
+        [Route("api/KarbordData/ErjSaveDoc_Rooneveshts")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_Rooneveshts( Web_ErjSaveDoc_Rooneveshts Web_ErjSaveDoc_Rooneveshts)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                        @" DECLARE	@return_value int
+                               EXEC	@return_value = [dbo].[Web_ErjSaveDoc_Rooneveshts]
+		                            @SerialNumber = {0},
+                                    @ToUserCodes = N'{1}',
+                                    @BandNo = {2}
+                           SELECT	'Return Value' = @return_value",
+                       Web_ErjSaveDoc_Rooneveshts.SerialNumber,
+                       Web_ErjSaveDoc_Rooneveshts.ToUserCodes,
+                       Web_ErjSaveDoc_Rooneveshts.BandNo);
+
+
+                var list = db.Database.SqlQuery<int>(sql).Single();
+                await db.SaveChangesAsync();
+                return Ok(list);
+        }
+
+
+
+        public class Web_ErjSaveDoc_CD
+        {
+            public long SerialNumber { get; set; }
+
+            public int BandNo { get; set; }
+        }
+
+        // POST: api/KarbordData/ErjSaveDoc_CD
+        [Route("api/KarbordData/ErjSaveDoc_CD")]
+        public async Task<IHttpActionResult> PostErjSaveDoc_CD( Web_ErjSaveDoc_CD Web_ErjSaveDoc_CD)
+        {
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                 @" DECLARE	@return_value int,
+                                        @BandNo nvarchar(10)
+                               EXEC	@return_value = [dbo].[Web_ErjSaveDoc_CD]
+		                            @SerialNumber = {0},
+		                            @BandNo = {1}
+                               SELECT	@BandNo as N'@BandNo'",
+                Web_ErjSaveDoc_CD.SerialNumber,
+                Web_ErjSaveDoc_CD.BandNo);
+
+
+                var list = db.Database.SqlQuery<string>(sql).Single();
+                await db.SaveChangesAsync();
+                return Ok(list);
+        }
+
+
+
+
 
     }
 }
