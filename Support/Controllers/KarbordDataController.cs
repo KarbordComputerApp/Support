@@ -1673,6 +1673,29 @@ namespace Support.Controllers
 
 
 
+        public class ErjSaveTicket_RjReadObject
+        {
+            public long SerialNumber { get; set; }
+
+            public string RjReadSt { get; set; }
+
+            public int DocBMode { get; set; }
+
+            public int BandNo { get; set; }
+
+        }
+
+        // Post: api/KarbordData/ دیده شدن ارجاع تیکت  
+        [Route("api/KarbordData/ErjSaveTicket_RjRead")]
+        public async Task<IHttpActionResult> PostWeb_ErjSaveTicket_RjRead(ErjSaveTicket_RjReadObject d)
+        {
+            string sql = string.Format(@"EXEC [dbo].[Web_ErjSaveTicket_RjRead] @DocBMode = {0},	@SerialNumber = {1},@BandNo = {2},@RjReadSt = N'{3}' select 0",
+                                       d.DocBMode, d.SerialNumber, d.BandNo, d.RjReadSt);
+            var value = db.Database.SqlQuery<int>(sql).Single();
+            return Ok(value);
+        }
+
+
 
 
 
@@ -1975,7 +1998,7 @@ namespace Support.Controllers
 
         // POST: api/KarbordData/ErjSaveDoc_HStatus
         [Route("api/KarbordData/ErjSaveDoc_HStatus")]
-        public async Task<IHttpActionResult> PostErjSaveDoc_HStatus( Web_ErjSaveDoc_HStatus Web_ErjSaveDoc_HStatus)
+        public async Task<IHttpActionResult> PostErjSaveDoc_HStatus(Web_ErjSaveDoc_HStatus Web_ErjSaveDoc_HStatus)
         {
             string sql = string.Format(
                         @" DECLARE	@return_value int
@@ -2021,7 +2044,7 @@ namespace Support.Controllers
 
         // POST: api/KarbordData/ErjSaveDoc_BSave
         [Route("api/KarbordData/ErjSaveDoc_BSave")]
-        public async Task<IHttpActionResult> PostErjSaveDoc_BSave( Web_ErjSaveDoc_BSave Web_ErjSaveDoc_BSave)
+        public async Task<IHttpActionResult> PostErjSaveDoc_BSave(Web_ErjSaveDoc_BSave Web_ErjSaveDoc_BSave)
         {
             string sql = string.Format(
                         @" DECLARE	@return_value int,
@@ -2053,12 +2076,12 @@ namespace Support.Controllers
                         );
 
 
-                string list = db.Database.SqlQuery<string>(sql).Single();
-                if (!string.IsNullOrEmpty(list))
-                {
-                    await db.SaveChangesAsync();
-                }
-                return Ok(list);
+            string list = db.Database.SqlQuery<string>(sql).Single();
+            if (!string.IsNullOrEmpty(list))
+            {
+                await db.SaveChangesAsync();
+            }
+            return Ok(list);
         }
 
 
@@ -2086,10 +2109,10 @@ namespace Support.Controllers
             string sql = "";
 
 
-                foreach (var item in Web_ErjSaveDoc_CSave)
-                {
-                    sql = string.Format(CultureInfo.InvariantCulture,
-                         @" DECLARE	@return_value int,
+            foreach (var item in Web_ErjSaveDoc_CSave)
+            {
+                sql = string.Format(CultureInfo.InvariantCulture,
+                     @" DECLARE	@return_value int,
                                         @BandNo nvarchar(10)
                                EXEC	@return_value = [dbo].[Web_ErjSaveDoc_CSave]
 		                            @SerialNumber = {0},
@@ -2100,21 +2123,21 @@ namespace Support.Controllers
                                     @RjTime = {5}
                                SELECT	@BandNo as N'@BandNo'",
 
-                        item.SerialNumber,
-                        item.BandNo,
-                        UnitPublic.ConvertTextWebToWin(item.Natijeh ?? ""),
-                        item.ToUserCode,
-                        item.RjDate,
-                        item.RjTime);
-                    value = db.Database.SqlQuery<string>(sql).Single();
-                }
+                    item.SerialNumber,
+                    item.BandNo,
+                    UnitPublic.ConvertTextWebToWin(item.Natijeh ?? ""),
+                    item.ToUserCode,
+                    item.RjDate,
+                    item.RjTime);
+                value = db.Database.SqlQuery<string>(sql).Single();
+            }
 
+            await db.SaveChangesAsync();
+            if (!string.IsNullOrEmpty(value))
+            {
                 await db.SaveChangesAsync();
-                if (!string.IsNullOrEmpty(value))
-                {
-                    await db.SaveChangesAsync();
-                }
-                return Ok(value);
+            }
+            return Ok(value);
         }
 
 
@@ -2135,7 +2158,7 @@ namespace Support.Controllers
 
         // POST: api/KarbordData/ErjSaveDoc_Rooneveshts
         [Route("api/KarbordData/ErjSaveDoc_Rooneveshts")]
-        public async Task<IHttpActionResult> PostErjSaveDoc_Rooneveshts( Web_ErjSaveDoc_Rooneveshts Web_ErjSaveDoc_Rooneveshts)
+        public async Task<IHttpActionResult> PostErjSaveDoc_Rooneveshts(Web_ErjSaveDoc_Rooneveshts Web_ErjSaveDoc_Rooneveshts)
         {
             string sql = string.Format(CultureInfo.InvariantCulture,
                         @" DECLARE	@return_value int
@@ -2149,9 +2172,9 @@ namespace Support.Controllers
                        Web_ErjSaveDoc_Rooneveshts.BandNo);
 
 
-                var list = db.Database.SqlQuery<int>(sql).Single();
-                await db.SaveChangesAsync();
-                return Ok(list);
+            var list = db.Database.SqlQuery<int>(sql).Single();
+            await db.SaveChangesAsync();
+            return Ok(list);
         }
 
 
@@ -2165,7 +2188,7 @@ namespace Support.Controllers
 
         // POST: api/KarbordData/ErjSaveDoc_CD
         [Route("api/KarbordData/ErjSaveDoc_CD")]
-        public async Task<IHttpActionResult> PostErjSaveDoc_CD( Web_ErjSaveDoc_CD Web_ErjSaveDoc_CD)
+        public async Task<IHttpActionResult> PostErjSaveDoc_CD(Web_ErjSaveDoc_CD Web_ErjSaveDoc_CD)
         {
             string sql = string.Format(CultureInfo.InvariantCulture,
                  @" DECLARE	@return_value int,
@@ -2178,9 +2201,9 @@ namespace Support.Controllers
                 Web_ErjSaveDoc_CD.BandNo);
 
 
-                var list = db.Database.SqlQuery<string>(sql).Single();
-                await db.SaveChangesAsync();
-                return Ok(list);
+            var list = db.Database.SqlQuery<string>(sql).Single();
+            await db.SaveChangesAsync();
+            return Ok(list);
         }
 
 
