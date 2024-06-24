@@ -207,6 +207,8 @@ namespace Support.Controllers
 
             public bool ChatActive { get; set; }
 
+            public bool SendSms { get; set; }
+
         }
 
 
@@ -285,10 +287,10 @@ namespace Support.Controllers
             var list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
             string resSend = "";
-            if (ErjSaveTicket_HI.ChatMode == 1)
+            if (ErjSaveTicket_HI.SendSms == true)
             {
                 string mess = "درخواست چت از " + ErjSaveTicket_HI.Motaghazi;
-                resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, mess);
+                resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, "null", mess);
             }
             UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, resSend);
 
@@ -963,7 +965,7 @@ namespace Support.Controllers
             }
 
             //string mess = string.Format("{0} درخواست چت از", d.ToUserCode);
-            string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, d.MessageSms);
+            string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, "null", d.MessageSms);
 
             return Ok(list);
         }
@@ -1804,10 +1806,10 @@ namespace Support.Controllers
             return Ok(list);
         }
 
-
+        //http://localhost:52798/api/KarbordData/SendSmsChat/ace/09354963991/bodymessage/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
         //ارسال sms زمان ارجاع چت
-        [Route("api/KarbordData/SendSmsChat/{UserCode}/{Message}/{Token}")]
-        public async Task<IHttpActionResult> GetSendSmsChat(string UserCode, string Message, string Token)
+        [Route("api/KarbordData/SendSmsChat/{UserCode}/{Mobile}/{Message}/{Token}")]
+        public async Task<IHttpActionResult> GetSendSmsChat(string UserCode, string Mobile, string Message, string Token)
         {
             long currentDate = DateTime.Now.Ticks;
             string resSend = "";
@@ -1821,12 +1823,12 @@ namespace Support.Controllers
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 #if (DEBUG)
 
-                resSend = UnitPublic.Send_SorenaSms(UserCode, Message);
+                resSend = UnitPublic.Send_SorenaSms(UserCode, Mobile, Message);
 
 #else
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
-                  resSend = UnitPublic.Send_SorenaSms(UserCode, Message);
+                  resSend = UnitPublic.Send_SorenaSms(UserCode,Mobile, Message);
                 }
 #endif
             }

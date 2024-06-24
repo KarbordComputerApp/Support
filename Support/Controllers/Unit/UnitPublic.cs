@@ -20,7 +20,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "159";
+        public static string titleVerNumber = "160";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";
@@ -287,13 +287,17 @@ namespace Support.Controllers.Unit
             return false;
         }
 
-        public static string Send_SorenaSms(string userCode, string message)
+        public static string Send_SorenaSms(string userCode, string mobile, string message)
         {
             try
             {
-                KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
-                string sql = string.Format(@"select Mobile from Web_Users('') where code = '{0}' ", userCode);
-                var mobile = db.Database.SqlQuery<string>(sql).Single();
+                if (mobile == "null")
+                {
+                    KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
+                    string sql = string.Format(@"select Mobile from Web_Users('') where code = '{0}' ", userCode);
+                    mobile = db.Database.SqlQuery<string>(sql).Single();
+                }
+                
                 SorenaSms.sornaserviceSoapClient soapClient = new SorenaSms.sornaserviceSoapClient();
                 var res = soapClient.SingleSMSEngine(
                     portalCode,

@@ -753,7 +753,8 @@ function NewChat() {
         IP: ipw,
         CallProg: 'Web',
         LoginLink: loginLink,
-        ChatMode: 1
+        ChatMode: 1,
+        SendSms: true
     }
     if (otherUserChat == null) {
         ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
