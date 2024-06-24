@@ -287,7 +287,7 @@ namespace Support.Controllers
             string resSend = "";
             if (ErjSaveTicket_HI.ChatMode == 1)
             {
-                string mess = string.Format("{0} درخواست چت از", ErjSaveTicket_HI.Motaghazi);
+                string mess = "درخواست چت از " + ErjSaveTicket_HI.Motaghazi;
                 resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, mess);
             }
             UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, resSend);
