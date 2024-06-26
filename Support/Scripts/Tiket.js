@@ -394,7 +394,8 @@
                     IP: ipw,
                     CallProg: 'Web',
                     LoginLink: loginLink,
-                    ChatMode: 0
+                    ChatMode: 0,
+                    DocRead: true
                 }
                 ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
                     serialNumber = data;

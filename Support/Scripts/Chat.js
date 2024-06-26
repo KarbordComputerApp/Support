@@ -754,7 +754,8 @@ function NewChat() {
         CallProg: 'Web',
         LoginLink: loginLink,
         ChatMode: 1,
-        SendSms: true
+        SendSms: true,
+        DocRead: true
     }
     if (otherUserChat == null) {
         ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
