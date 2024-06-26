@@ -209,6 +209,8 @@ namespace Support.Controllers
 
             public bool SendSms { get; set; }
 
+            public bool DocRead { get; set; }
+
         }
 
 
@@ -249,6 +251,7 @@ namespace Support.Controllers
 		                                    @Motaghazi = N'{27}',
 		                                    @ChatMode = {28},
 		                                    @ChatActive = {29},
+		                                    @DocRead = {30},
 		                                    @DocNo_Out = @DocNo_Out OUTPUT
                                     SELECT	@DocNo_Out as N'DocNo_Out'",
                                            ErjSaveTicket_HI.SerialNumber,
@@ -280,7 +283,8 @@ namespace Support.Controllers
                                            ErjSaveTicket_HI.F20,
                                            ErjSaveTicket_HI.Motaghazi,
                                            ErjSaveTicket_HI.ChatMode,
-                                           ErjSaveTicket_HI.ChatActive
+                                           ErjSaveTicket_HI.ChatActive,
+                                           ErjSaveTicket_HI.DocRead == null ? true : ErjSaveTicket_HI.DocRead
                                            );
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
@@ -1805,8 +1809,11 @@ namespace Support.Controllers
             await db.SaveChangesAsync();
             return Ok(list);
         }
+        //با نام کاربر
+        //http://localhost:52798/api/KarbordData/SendSmsChat/ace/null/bodymessage/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=   
 
-        //http://localhost:52798/api/KarbordData/SendSmsChat/ace/09354963991/bodymessage/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+         // با شماره موبایل
+        //http://localhost:52798/api/KarbordData/SendSmsChat/null/09354963991/bodymessage/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
         //ارسال sms زمان ارجاع چت
         [Route("api/KarbordData/SendSmsChat/{UserCode}/{Mobile}/{Message}/{Token}")]
         public async Task<IHttpActionResult> GetSendSmsChat(string UserCode, string Mobile, string Message, string Token)
