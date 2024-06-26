@@ -284,7 +284,7 @@ namespace Support.Controllers
                                            ErjSaveTicket_HI.Motaghazi,
                                            ErjSaveTicket_HI.ChatMode,
                                            ErjSaveTicket_HI.ChatActive,
-                                           ErjSaveTicket_HI.DocRead == null ? true : ErjSaveTicket_HI.DocRead
+                                           ErjSaveTicket_HI.DocRead 
                                            );
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
