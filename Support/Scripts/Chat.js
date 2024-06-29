@@ -721,6 +721,7 @@ function NewChat() {
     });
 
     var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس ذخیره تیکت 
+    var SendMessageSorenaUri = server + '/api/KarbordData/SendMessageSorena/'; 
     var ErjSaveTicket_HI = {
         SerialNumber: 0,
         DocDate: DateNow,
@@ -754,7 +755,7 @@ function NewChat() {
         CallProg: 'Web',
         LoginLink: loginLink,
         ChatMode: 1,
-        SendSms: true,
+        //SendSms: true,
         DocRead: true
     }
     if (otherUserChat == null) {
@@ -767,6 +768,15 @@ function NewChat() {
             //CalcHeight();
 
             ChatSend(true);
+
+            var SendMessageSorenaObject = {
+                UserCode: defultUserTiket,
+                Message: "درخواست چت از " + motaghazi,
+            }
+            ajaxFunction(SendMessageSorenaUri, 'POST', SendMessageSorenaObject).done(function (sorena) {
+                sorena = sorena;
+            });
+
         });
     }
 
@@ -1070,7 +1080,7 @@ $("#Eshkalat_Chat0").click(function () {
     if (isVideo) {
         ShowVideoEshkal(item.Link, caption);
     } else {
-        ShowMessageEshkal(item.Message,caption)
+        ShowMessageEshkal(item.Message, caption)
     }
 })
 

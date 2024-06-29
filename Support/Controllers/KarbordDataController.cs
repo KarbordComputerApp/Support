@@ -207,7 +207,7 @@ namespace Support.Controllers
 
             public bool ChatActive { get; set; }
 
-            public bool SendSms { get; set; }
+            //public bool SendSms { get; set; }
 
             public bool DocRead { get; set; }
 
@@ -284,19 +284,19 @@ namespace Support.Controllers
                                            ErjSaveTicket_HI.Motaghazi,
                                            ErjSaveTicket_HI.ChatMode,
                                            ErjSaveTicket_HI.ChatActive,
-                                           ErjSaveTicket_HI.DocRead 
+                                           ErjSaveTicket_HI.DocRead
                                            );
 
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             var list = db.Database.SqlQuery<int>(sql).Single();
             await db.SaveChangesAsync();
-            string resSend = "";
-            if (ErjSaveTicket_HI.SendSms == true)
-            {
-                string mess = "درخواست چت از " + ErjSaveTicket_HI.Motaghazi;
-                resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, "null", mess);
-            }
-            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, resSend);
+            /* string resSend = "";
+             if (ErjSaveTicket_HI.SendSms == true)
+             {
+                 string mess = "درخواست چت از " + ErjSaveTicket_HI.Motaghazi;
+                 resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, "null", mess);
+             }*/
+            UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, "");
 
             return Ok(list);
         }
@@ -924,7 +924,7 @@ namespace Support.Controllers
 
             public int? FarayandCode { get; set; }
 
-            public string MessageSms { get; set; }
+            //public string MessageSms { get; set; }
 
         }
 
@@ -969,7 +969,7 @@ namespace Support.Controllers
             }
 
             //string mess = string.Format("{0} درخواست چت از", d.ToUserCode);
-            string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, "null", d.MessageSms);
+            //string resSend = UnitPublic.Send_SorenaSms(d.ToUserCode, "null", d.MessageSms);
 
             return Ok(list);
         }
@@ -1812,7 +1812,7 @@ namespace Support.Controllers
         //با نام کاربر
         //http://localhost:52798/api/KarbordData/SendSmsChat/ace/null/bodymessage/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=   
 
-         // با شماره موبایل
+        // با شماره موبایل
         //http://localhost:52798/api/KarbordData/SendSmsChat/null/09354963991/bodymessage/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
         //ارسال sms زمان ارجاع چت
         [Route("api/KarbordData/SendSmsChat/{UserCode}/{Mobile}/{Message}/{Token}")]
@@ -1841,10 +1841,25 @@ namespace Support.Controllers
             }
 
             return Ok(resSend.ToString());
-
-
-
         }
+
+
+        public class SendMessageSorenaObject
+        {
+            public string UserCode { get; set; }
+
+            public string Message { get; set; }
+        }
+
+
+        [Route("api/KarbordData/SendMessageSorena/")]
+        public async Task<IHttpActionResult> Post_SendMessageSorena(SendMessageSorenaObject d)
+        {
+            string resSend = "";
+            resSend = UnitPublic.Send_SorenaSms(d.UserCode, "null", d.Message);
+            return Ok(resSend.ToString());
+        }
+
 
 
 
