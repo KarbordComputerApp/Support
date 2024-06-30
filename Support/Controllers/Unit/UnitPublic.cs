@@ -20,7 +20,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "163";
+        public static string titleVerNumber = "164";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";
@@ -307,6 +307,8 @@ namespace Support.Controllers.Unit
                 {
                     return "message empty";
                 }
+
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
                 SorenaSms.sornaserviceSoapClient soapClient = new SorenaSms.sornaserviceSoapClient();
                 var res = soapClient.SingleSMSEngine(
