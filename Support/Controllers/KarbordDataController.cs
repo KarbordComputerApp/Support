@@ -51,7 +51,16 @@ namespace Support.Controllers
         public async Task<IHttpActionResult> GetWeb_Date()
         {
             string sql = string.Format(@"select dbo.Web_CurrentShamsiDate() as tarikh");
-            var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
+            var list = db.Database.SqlQuery<string>(sql);
+            return Ok(list);
+        }
+
+
+        // GET: api/KarbordData/Time تاریخ سرور
+        [Route("api/KarbordData/Time")]
+        public async Task<IHttpActionResult> GetWeb_Time()
+        {
+            string sql = string.Format(@"select cast(Convert(Time(0), GetDate()) as nvarchar(8)) as Time");
             var list = db.Database.SqlQuery<string>(sql);
             return Ok(list);
         }
@@ -899,6 +908,37 @@ namespace Support.Controllers
         }
 
 
+        public class DocXUsersObject
+        {
+            public int TrsId { get; set; }
+
+            public string UserCode { get; set; }
+
+        }
+
+
+        public partial class Web_DocXUsers
+        {
+            public string Code { get; set; }
+
+            public string Name { get; set; }
+
+        }
+
+
+        // Post: api/KarbordData/Web_DocXUsers   ارجاع شونده/ارجاع دهنده
+        [Route("api/KarbordData/Web_DocXUsers/")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PostWeb_DocXUsers(DocXUsersObject DocXUsersObject)
+        {
+            string sql = string.Format(@"Select * from Web_DocXUsers({0},'{1}') order by Name ", DocXUsersObject.TrsId, DocXUsersObject.UserCode);
+            var list = db.Database.SqlQuery<Web_DocXUsers>(sql);
+            return Ok(list);
+        }
+
+
+
+
 
         public class Web_ErjSaveTicket_BSave
         {
@@ -924,6 +964,8 @@ namespace Support.Controllers
 
             public int? FarayandCode { get; set; }
 
+            public string RjHour { get; set; }
+
             //public string MessageSms { get; set; }
 
         }
@@ -947,7 +989,8 @@ namespace Support.Controllers
 		                            @RjMhltDate = N'{7}',
                                     @SrMode = {8},
                                     @RjStatus = '{9}',
-                                    @FarayandCode = {10}
+                                    @FarayandCode = {10},
+                                    @RjHour = N'{11}'
                             SELECT	@BandNo as N'@BandNo' ",
                         d.SerialNumber,
                         d.BandNo,
@@ -959,7 +1002,8 @@ namespace Support.Controllers
                         d.RjMhltDate,
                         d.SrMode,
                         d.RjStatus,
-                        d.FarayandCode ?? 0
+                        d.FarayandCode ?? 0,
+                        d.RjHour
                         );
 
             string list = db.Database.SqlQuery<string>(sql).Single();
@@ -2063,6 +2107,8 @@ namespace Support.Controllers
             public string RjStatus { get; set; }
 
             public int? FarayandCode { get; set; }
+
+            public string RjHour { get; set; }
         }
 
 
@@ -2084,7 +2130,8 @@ namespace Support.Controllers
 		                            @RjMhltDate = N'{7}',
                                     @SrMode = {8},
                                     @RjStatus = '{9}',
-                                    @FarayandCode = {10}
+                                    @FarayandCode = {10},
+                                    @RjHour = {11},
                             SELECT	@BandNo as N'@BandNo' ",
                         Web_ErjSaveDoc_BSave.SerialNumber,
                         Web_ErjSaveDoc_BSave.BandNo,
@@ -2096,7 +2143,8 @@ namespace Support.Controllers
                         Web_ErjSaveDoc_BSave.RjMhltDate,
                         Web_ErjSaveDoc_BSave.SrMode,
                         Web_ErjSaveDoc_BSave.RjStatus,
-                        Web_ErjSaveDoc_BSave.FarayandCode ?? 0
+                        Web_ErjSaveDoc_BSave.FarayandCode ?? 0,
+                        Web_ErjSaveDoc_BSave.RjHour 
                         );
 
 
@@ -2123,6 +2171,8 @@ namespace Support.Controllers
 
             public string RjTime { get; set; }
 
+            public string RjHour { get; set; }
+
         }
 
         // POST: api/KarbordData/ErjSaveDoc_CSave
@@ -2137,22 +2187,23 @@ namespace Support.Controllers
             {
                 sql = string.Format(CultureInfo.InvariantCulture,
                      @" DECLARE	@return_value int,
-                                        @BandNo nvarchar(10)
+                                @BandNo nvarchar(10)
                                EXEC	@return_value = [dbo].[Web_ErjSaveDoc_CSave]
 		                            @SerialNumber = {0},
 		                            @BandNo = {1},
 		                            @Natijeh = N'{2}',
 		                            @ToUserCode = N'{3}',
 		                            @RjDate = N'{4}',
-                                    @RjTime = {5}
-                               SELECT	@BandNo as N'@BandNo'",
-
+                                    @RjTime = {5},
+                                    @RjHour = '{6}',
+                               SELECT @BandNo as N'@BandNo'",
                     item.SerialNumber,
                     item.BandNo,
                     UnitPublic.ConvertTextWebToWin(item.Natijeh ?? ""),
                     item.ToUserCode,
                     item.RjDate,
-                    item.RjTime);
+                    item.RjTime,
+                    item.RjHour);
                 value = db.Database.SqlQuery<string>(sql).Single();
             }
 

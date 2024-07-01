@@ -74,5 +74,7 @@
 
         public byte? KhdtHasTime { get; set; }
 
+        public string RjHour { get; set; }
+
     }
 }

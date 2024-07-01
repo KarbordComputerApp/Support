@@ -65,5 +65,7 @@
         public bool? ChatActive { get; set; }
 
         public bool? ChatFinish { get; set; }
+
+        public string RjHour { get; set; }
     }
 }
