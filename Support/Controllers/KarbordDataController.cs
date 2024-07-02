@@ -1189,6 +1189,8 @@ namespace Support.Controllers
             public string RooneveshtUsers { get; set; }
 
             public string FarayandName { get; set; }
+
+            public string RjHour { get; set; }
         }
 
         public class ErjDocErja
