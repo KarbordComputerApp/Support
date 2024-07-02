@@ -719,6 +719,7 @@ namespace Support.Controllers
                                               @DMode = N'2',
                                               @SerialNumber = {1},
                                               @BandNo = {2},
+                                              @Group = N'',
                                               @ByData = 1",
                                               DownloadContractObject.Year,
                                               DownloadContractObject.SerialNumber,
