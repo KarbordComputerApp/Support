@@ -20,7 +20,7 @@ namespace Support.Controllers.Unit
     public class UnitPublic
     {
         public static string titleVer = "ورژن تست";
-        public static string titleVerNumber = "168";
+        public static string titleVerNumber = "169";
 
         //public static string titleVer = "ورژن";
         //public static string titleVerNumber = "1024";
@@ -296,6 +296,10 @@ namespace Support.Controllers.Unit
                     KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
                     string sql = string.Format(@"select Mobile from Web_Users('') where code = '{0}' ", userCode);
                     mobile = db.Database.SqlQuery<string>(sql).Single();
+
+                    /*SupportModel dbS = new SupportModel();
+                    sql = string.Format(@"select Mobile from Web_Users('') where code = '{0}' ", userCode);
+                    mobile = db.Database.SqlQuery<string>(sql).Single();*/
                 }
 
                 if (mobile == "" && mobile == null)

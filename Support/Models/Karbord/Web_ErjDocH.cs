@@ -165,6 +165,6 @@
 
         public byte? KhdtHasTime { get; set; }
 
-        
+
     }
 }
