@@ -7,7 +7,7 @@ namespace Support.Controllers.Unit
 {
     public class IniFile
     {
-        string Path; 
+        string Path;  
         string EXE = Assembly.GetExecutingAssembly().GetName().Name;
 
         [DllImport("kernel32", CharSet = CharSet.Unicode)]
