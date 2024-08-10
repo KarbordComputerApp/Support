@@ -2136,7 +2136,7 @@ namespace Support.Controllers
                                     @SrMode = {8},
                                     @RjStatus = '{9}',
                                     @FarayandCode = {10},
-                                    @RjHour = {11},
+                                    @RjHour = '{11}'
                             SELECT	@BandNo as N'@BandNo' ",
                         Web_ErjSaveDoc_BSave.SerialNumber,
                         Web_ErjSaveDoc_BSave.BandNo,
@@ -2200,7 +2200,7 @@ namespace Support.Controllers
 		                            @ToUserCode = N'{3}',
 		                            @RjDate = N'{4}',
                                     @RjTime = {5},
-                                    @RjHour = '{6}',
+                                    @RjHour = '{6}'
                                SELECT @BandNo as N'@BandNo'",
                     item.SerialNumber,
                     item.BandNo,
