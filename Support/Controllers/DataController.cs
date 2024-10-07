@@ -1915,6 +1915,40 @@ namespace Support.Controllers
 
 
 
+        //http://localhost:52798/api/Data/ChatCount/10/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        [Route("api/Data/ChatCount/{SerialNumber}/{Token}")]
+        public async Task<IHttpActionResult> GetChatCount(long SerialNumber, string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            string res = "";
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+                string sql = string.Format(CultureInfo.InvariantCulture, @"Select Count(1) As C From Chat Where SerialNumber= {0}",
+                                                                          SerialNumber);
+#if (DEBUG)
+
+               
+                var value = db.Database.SqlQuery<int>(sql).Single();
+                res = value.ToString();
+
+#else
+                if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    var value = db.Database.SqlQuery<int>(sql).Single();
+                    res = value.ToString();
+                }
+#endif
+            }
+
+            return Ok(res);
+        }
+
 
 
 
