@@ -19,7 +19,7 @@ namespace Support.Models
         public virtual DbSet<Configs> Configs { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<CustomerFileDownloadInfos> CustomerFileDownloadInfos { get; set; }
-        public virtual DbSet<CustomerFiles> CustomerFiles { get; set; }
+        public virtual DbSet<CustomerFile> CustomerFile { get; set; }
         public virtual DbSet<CustomerGroups> CustomerGroups { get; set; }
         public virtual DbSet<CustomerInfos> CustomerInfos { get; set; }
         public virtual DbSet<CustomPages> CustomPages { get; set; }

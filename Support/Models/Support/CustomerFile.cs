@@ -6,7 +6,7 @@ namespace Support.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class CustomerFiles
+    public partial class CustomerFile
     {
         [Key]
         public long Id { get; set; }

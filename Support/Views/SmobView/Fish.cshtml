@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSmob.cshtml";
+}
+
+<center>
+    <p style="font-size: 20px;">فیش حقوق</p>
+</center>
+
+<div class="row">
+    <p id="L_TitleFish"></p>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>شرح</th>
+                <th>مقدار</th>
+            </tr>
+        </thead>
+
+        <tbody data-bind="foreach: Pay_DocBList" data-dismiss="modal" style="cursor: default;">
+            <tr>
+                <td data-bind="text: Name"></td>
+                <td data-bind="text: Type == 1 ? NumberToNumberString(Value) : Value"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/Smob/Fish.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+}
+

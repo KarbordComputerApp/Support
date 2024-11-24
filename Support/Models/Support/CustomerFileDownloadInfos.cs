@@ -19,6 +19,6 @@ namespace Support.Models
         [Column(TypeName = "smalldatetime")]
         public DateTime? DownloadTime { get; set; }
 
-        public virtual CustomerFiles CustomerFiles { get; set; }
+        public virtual CustomerFile CustomerFiles { get; set; }
     }
 }

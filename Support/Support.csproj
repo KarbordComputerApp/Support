@@ -182,6 +182,8 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KarbordDataController.cs" />
+    <Compile Include="Controllers\SmobController.cs" />
+    <Compile Include="Controllers\SmobViewController.cs" />
     <Compile Include="Controllers\Unit\CustomPersianCalendar.cs" />
     <Compile Include="Controllers\Unit\IniFile.cs" />
     <Compile Include="Controllers\Unit\UnitDatabase.cs" />
@@ -190,6 +192,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerFiles\CustomerFilesModel.cs" />
+    <Compile Include="Models\CustomerFiles\Pay_DocB.cs" />
+    <Compile Include="Models\CustomerFiles\Pay_DocH.cs" />
     <Compile Include="Models\Karbord\DayRH.cs" />
     <Compile Include="Models\Karbord\DayRB.cs" />
     <Compile Include="Models\Karbord\free.cs" />
@@ -215,7 +220,7 @@
     <Compile Include="Models\Support\Configs.cs" />
     <Compile Include="Models\Support\Countries.cs" />
     <Compile Include="Models\Support\CustomerFileDownloadInfos.cs" />
-    <Compile Include="Models\Support\CustomerFiles.cs" />
+    <Compile Include="Models\Support\CustomerFile.cs" />
     <Compile Include="Models\Support\CustomerFilesLockNumbers.cs" />
     <Compile Include="Models\Support\CustomerGroups.cs" />
     <Compile Include="Models\Support\CustomerInfos.cs" />
@@ -246,7 +251,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\SorenaSms\configuration91.svcinfo" />
-    <None Include="Connected Services\SorenaSms\configuration.svcinfo" />
+    <None Include="Connected Services\SorenaSms\configuration.svcinfo">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\SorenaSms\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -266,6 +273,7 @@
     <Content Include="Content\css\multi-select.css" />
     <Content Include="Content\css\PersianDateTimePicker.css" />
     <Content Include="Content\css\site.css" />
+    <Content Include="Content\css\StyleSmob.css" />
     <Content Include="Content\css\stimulsoft.designer.office2013.whiteblue.css" />
     <Content Include="Content\css\stimulsoft.viewer.office2013.whiteblue.css" />
     <Content Include="Content\css\style.css" />
@@ -790,6 +798,8 @@
     <Content Include="Scripts\Download.js" />
     <Content Include="Scripts\Chat.js" />
     <Content Include="Scripts\ProgVersions.js" />
+    <Content Include="Scripts\Smob\Fish.js" />
+    <Content Include="Scripts\Smob\PublicSmob.js" />
     <Content Include="Scripts\VideoFormId.js" />
     <Content Include="Scripts\Videos.js" />
     <Content Include="Scripts\MailBox.js" />
@@ -822,6 +832,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\SmobView\Fish.cshtml" />
+    <Content Include="Views\Shared\_LayoutSmob.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

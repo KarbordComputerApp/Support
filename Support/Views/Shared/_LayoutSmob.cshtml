@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="icon" id="dynamic-favicon" type="image/png" href="/Content/img/LogoTop.png">
+    <title id="titlePage">@ViewBag.Title</title>
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/materialize.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)" rel="stylesheet" />
+    <link href="~/Content/js/jquery ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/js/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+    <link href="~/Content/css/stimulsoft.viewer.office2013.whiteblue.css" rel="stylesheet" />
+    <link href="~/Content/css/stimulsoft.designer.office2013.whiteblue.css" rel="stylesheet" />
+    <link href="~/Content/css/StyleSmob.css" rel="stylesheet" />
+</head>
+<body class="light rtlSite" ondragstart="return false;" ondrop="return false;">
+
+
+    <div id="loadingsite" class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30">
+                <img class="loading-img-spin" src="~/Content/loading1.png" width="20" height="20" alt="admin">
+            </div>
+            <p data-bind="text:'لطفا منتظر بمانید'"></p>
+        </div>
+    </div>
+
+
+   <!-- <div class="row continerHead">
+
+        <div class="col LeftButtomMenu">
+            <a href="@Url.Action("Index","Home")" id="Index_TextBack">
+                <img id="Index_Home" src="~/Content/img/Icon_Blue/Home.png" style="height: 30px;" />
+            </a>
+        </div>
+    </div>-->
+
+    <div class="continerMain">
+        @RenderBody()
+    </div>
+
+    <div class="modal fade" id="modal-Report" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true" dir="ltr" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <div style="height:500px;overflow:auto;border: 1px #ddd solid;">
+                    </div>
+                </div>
+                <div style="padding: 0px; margin: 10px;">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="designerContent"></div>
+        <div id="viewerContent"></div>
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+        sessionStorage.versionTitle = '@(Support.Controllers.Unit.UnitPublic.titleVer)';
+    </script>
+
+    <script src="~/Content/js/app.min.js"></script>
+    <script src="~/Content/js/admin.js"></script>
+    <script src="~/Content/js/knockout-3.5.0.js"></script>
+    <script src="~/Content/js/sweet2.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Content/js/persian-date.min.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Scripts/Smob/PublicSmob.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/jalaali.js"></script>
+    <script src="~/Content/js/stimulsoft.reports.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/stimulsoft.viewer.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/stimulsoft.designer.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Content/js/num2persian-min.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    <script src="~/Scripts/shamsi.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+
+
+    @RenderSection("scripts", false)
+
+
+
+</body>
+</html>

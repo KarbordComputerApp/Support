@@ -441,7 +441,7 @@ namespace Support.Controllers
             }
             string sql = string.Format(@"select *,(select count(id) from  CustomerFileDownloadInfos where FileId = c.id ) as CountDownload 
                                          from CustomerFiles as c where LockNumber in( {0} , {1} ) and Disabled = 0  order by LockNumber desc , id desc", lockNo, CustomerFilesObject.LockNumber);
-            var list = db.Database.SqlQuery<CustomerFiles>(sql).ToList();
+            var list = db.Database.SqlQuery<CustomerFile>(sql).ToList();
             if (CustomerFilesObject.FlagLog == true)
             {
                 UnitPublic.SaveLog(CustomerFilesObject.LockNumber, mode_CustomerFiles, act_View, 0, CustomerFilesObject.IP, CustomerFilesObject.CallProg, "");
@@ -539,7 +539,7 @@ namespace Support.Controllers
                 Directory.CreateDirectory(path);
 
             string sql = string.Format(@"select *, 0 as CountDownload from CustomerFiles where id = {0}", idCustomer);
-            var list = db.Database.SqlQuery<CustomerFiles>(sql).Single();
+            var list = db.Database.SqlQuery<CustomerFile>(sql).Single();
 
             string fullFileName = MergePaths(path, list.FilePath);
 
@@ -569,7 +569,7 @@ namespace Support.Controllers
                 Directory.CreateDirectory(path);
 
             string sql = string.Format(@"select *, 0 as CountDownload from CustomerFiles where id = {0}", idCustomer);
-            var list = db.Database.SqlQuery<CustomerFiles>(sql).Single();
+            var list = db.Database.SqlQuery<CustomerFile>(sql).Single();
 
             string fullFileName = MergePaths(path, list.FilePath);
 
@@ -1933,7 +1933,7 @@ namespace Support.Controllers
                                                                           SerialNumber);
 #if (DEBUG)
 
-               
+
                 var value = db.Database.SqlQuery<int>(sql).Single();
                 res = value.ToString();
 
@@ -1951,19 +1951,64 @@ namespace Support.Controllers
 
 
 
-
-        /*public async Task<IHttpActionResult> PostLogin1(LoginObject LoginObject)
+        public class LockInfo
         {
-            string sql = string.Format(@"select * from Users where (LockNumber = {0} and Password = '{1}')", LoginObject.LockNumber, EncodePassword(LoginObject.Pass));
-            var list = db.Database.SqlQuery<UsersLogin>(sql).ToList();
+            public string SamaneTrs { get; set; }
 
-            if (list.Count > 0)
+            public string Access { get; set; }
+        }
+
+
+        //http://localhost:52798/api/Data/LockInfo/4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        [Route("api/Data/LockInfo/{Token}")]
+        public async Task<IHttpActionResult> GetLockInfo(string Token)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            string res = "";
+            LockInfo value;
+            var inputToken = UnitPublic.Decrypt(Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
             {
-                UnitPublic.SaveLog(LoginObject.LockNumber, mode_Login, act_Login, 0, LoginObject.IP, LoginObject.CallProg, "");
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                /*string sql = string.Format(CultureInfo.InvariantCulture, @"declare @LockNumber int = {0}
+                             select  iif((select count(1) from Users where LockNumber = @LockNumber) > 0, 
+                                        (select top(1) N'سامانه مودیان :!!' +  replace(SamaneTrs,'	' , ' - ') from guouhfgr_karbord.dbo.Users where LockNumber = @LockNumber) ,
+			                            N'سامانه مودیان :!!وجود ندارد') as SamaneTrs , 
+                                    iif((select count(1) from karbordapp.dbo.Access where LockNumber = @LockNumber) > 0, 
+			                            (select top(1) N'برنامه های تحت وب:!!' + iif(active = 1 , N'فعال' , N'غیر فعال') + '-' +
+			                                    N'از '+ fromDate + 	N'تا '+ toDate + '-' + CAST(userCount as nvarchar) + N' کاربر'+ '-' + CompanyName 
+			                            from karbordapp.dbo.Access where lockNumber = @LockNumber),
+			                            N'برنامه های تحت وب:!!وجود ندارد') as Access", lockNumber);*/
+
+                string sql = string.Format(CultureInfo.InvariantCulture, @"declare @LockNumber int = {0}
+                             select  iif((select count(1) from Users where LockNumber = @LockNumber) > 0, 
+                                        (select top(1)iif(len(SamaneTrs) <= 4 , '', N'سامانه مودیان :!!' +  replace(SamaneTrs,'	' , ' - ')) from guouhfgr_karbord.dbo.Users where LockNumber = @LockNumber ),
+			                            N'') as SamaneTrs , 
+                                     iif((select count(1) from karbordapp.dbo.Access where LockNumber = @LockNumber) > 0, 
+			                            (select top(1) N'برنامه های تحت وب :!!' + iif(active = 1 , iif(spec = '' , '' , spec + ' - ')  +
+			                                    N'از '+ fromDate + 	N' تا '+ toDate + ' - ' + CAST(userCount as nvarchar) + N' کاربر'+ ' - ' + CompanyName, 
+												 N'غیر فعال' +   iif(spec = '' , '' , ' - '+ spec) + ' - '+ CompanyName) 
+			                            from karbordapp.dbo.Access where lockNumber = @LockNumber),
+			                            N'') as Access", lockNumber);
+#if (DEBUG)
+                    value = db.Database.SqlQuery<LockInfo>(sql).Single();
+                    res = value.SamaneTrs + (value.SamaneTrs == "" || value.SamaneTrs == null ? "" : "!!") + value.Access;
+#else
+                if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    value = db.Database.SqlQuery<LockInfo>(sql).Single();
+                    res = value.SamaneTrs + "!!" + value.Access;
+                }
+#endif
             }
 
-            return Ok(list);
-        }*/
+            return Ok(res);
+        }
 
 
     }
