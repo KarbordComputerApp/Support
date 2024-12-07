@@ -13,6 +13,7 @@
 
 
     function getDecrypt(value) {
+        value = value.substring(0, (value.length - 1)); 
         ajaxFunction(DecryptUri + value, 'GET', false).done(function (data) {
             var data = data.split('&');
             serialNumber = data[0];
