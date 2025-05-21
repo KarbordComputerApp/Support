@@ -429,7 +429,7 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
-            var contract = UnitPublic.HasContract(CustomerFilesObject.LockNumber.ToString());
+            var contract = UnitPublic.HasContract(CustomerFilesObject.LockNumber.ToString(),"","");
 
             string lockNo = "0";
             if (contract != "")
@@ -1078,10 +1078,13 @@ namespace Support.Controllers
         }
 
 
-        [Route("api/Data/HasContract/{lockNo}")]
-        public async Task<IHttpActionResult> GetHasContract(string lockNo)
+        [Route("api/Data/HasContract/{lockNo}/{prog}/{progFeature}")]
+        public async Task<IHttpActionResult> GetHasContract(string lockNo,string prog, string progFeature)
         {
-            return Ok(UnitPublic.HasContract(lockNo));
+            prog = prog.ToString().ToUpper() == "NULL" ? "" : prog;
+            progFeature = progFeature.ToString().ToUpper() == "NULL" ? "" : progFeature;
+
+            return Ok(UnitPublic.HasContract(lockNo, prog, progFeature));
         }
 
 
@@ -1139,7 +1142,7 @@ namespace Support.Controllers
                     if (list.Count > 0)
                     {
 
-                        string contract = UnitPublic.HasContract(lockNumber);
+                        string contract = UnitPublic.HasContract(lockNumber,"","");
                         if (contract != "")
                         {
                             if (contract.Split('-')[0] == "1")
@@ -1187,7 +1190,7 @@ namespace Support.Controllers
                     var list = db.Database.SqlQuery<Videos>(sql).ToList();
                     if (list.Count > 0)
                     {
-                        string contract = UnitPublic.HasContract(lockNumber);
+                        string contract = UnitPublic.HasContract(lockNumber, "", "");
                         if (contract != "")
                         {
                             if (contract.Split('-')[0] == "1")

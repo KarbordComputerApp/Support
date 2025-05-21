@@ -437,7 +437,7 @@ function refresh(id, isLast) {
                     }
                     else if (item.Status == 1) {
                         res += '<div class="dox-endchat">' +
-                            '<p style="text-align: center">این چت به یایان رسید</p>' +
+                            '<p style="text-align: center">این چت به پایان رسید</p>' +
                             '<p style="text-align: center">روز خوبی را برای شما آرزومندیم</p>' +
                             '</div>';
                     }

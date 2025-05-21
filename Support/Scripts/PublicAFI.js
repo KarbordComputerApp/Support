@@ -54,7 +54,7 @@ if (MachineId == null || MachineId == '') {
 
 $("#t_HasContract").text("");
 function getHasContract() {
-    ajaxFunction(HasContractUri + lockNumber, 'GET', true).done(function (data) {
+    ajaxFunction(HasContractUri + lockNumber + "/null/null", 'GET', true).done(function (data) {
         if (data.length > 0) {
 
             ajaxFunction(server + '/api/Data/GetDate/', 'GET', false).done(function (list) {

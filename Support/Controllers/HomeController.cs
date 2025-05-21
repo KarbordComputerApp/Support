@@ -202,7 +202,7 @@ namespace Support.Controllers
 
                 if (UnitPublic.ValidationLockNo(lockNumber))
                 {
-                    string contract = UnitPublic.HasContract(lockNumber);
+                    string contract = UnitPublic.HasContract(lockNumber, "", "");
                     if (contract != "")
                     {
                         if (contract.Split('-')[0] == "1")
@@ -222,7 +222,7 @@ if (elapsedSpan.TotalMinutes <= 1)
                 {
                     if (UnitPublic.ValidationLockNo(lockNumber))
                     {
-                        string contract = UnitPublic.HasContract(lockNumber);
+                        string contract = UnitPublic.HasContract(lockNumber,"", "");
                         if (contract != "")
                         {
                             if (contract.Split('-')[0] == "1")
