@@ -106,7 +106,10 @@ namespace Support.Controllers
                 LoginObject.pass = "";
             string sql = string.Format(@"DECLARE @return_value int,
                                                  @name nvarchar(100),
-		                                         @vstrcode nvarchar(100)
+		                                         @vstrcode nvarchar(100),
+                                                 @InvCode nvarchar(250),
+												 @MkzCode nvarchar(250),
+		                                         @OprCode nvarchar(250)
 
                                          EXEC    @return_value = [dbo].[Web_Login]
                                                  @Code1 = '{0}',
@@ -114,7 +117,10 @@ namespace Support.Controllers
                                                  @Code2 = '{2}',
 		                                         @Psw = N'{3}',
                                                  @Name = @name OUTPUT,
-		                                         @vstrcode = @VstrCode OUTPUT
+		                                         @vstrcode = @VstrCode OUTPUT,
+                                                 @InvCode = @InvCode OUTPUT,
+												 @MkzCode = @MkzCode OUTPUT,
+												 @OprCode = @OprCode OUTPUT
                                          SELECT  @return_value as Value, @Name as Name ,  @vstrcode as VstrCode",
                                          LoginObject.param1, LoginObject.userName, LoginObject.param2, LoginObject.pass);
             var list = db.Database.SqlQuery<LoginData>(sql).ToList();

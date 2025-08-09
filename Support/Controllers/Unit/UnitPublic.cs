@@ -95,7 +95,6 @@ namespace Support.Controllers.Unit
 
         public static string Decrypt(string str)
         {
-
             str = str.Replace("-", "/");
             str = str.Replace(" ", "-");
             str = str.Replace(";", "+");
@@ -245,18 +244,31 @@ namespace Support.Controllers.Unit
 
         public static string HasContract(string lockNo, string prog, string ProgFeature)
         {
-            KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
-            string sql = string.Format(@"DECLARE	@return_value int,
-		                                            @EndDate nvarchar(10)
+            var list = "";
+            /*DateTime endDate = new DateTime(2025, 06, 29);
 
-                                            EXEC	@return_value = [dbo].[Web_HasContract]
-		                                            @LockNumber = N'{0}',
-		                                            @Prog = N'{1}',
-		                                            @ProgFeature = N'{2}',
-		                                            @EndDate = @EndDate OUTPUT
-                                            SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate", lockNo, prog, ProgFeature);
-            var list = db.Database.SqlQuery<string>(sql).Single();
-            return list;
+            if (DateTime.Now < endDate)
+            {
+                list = "1-1404/04/07";
+            }
+            else
+            {*/
+                KarbordComputer_SupportModel db = new KarbordComputer_SupportModel();
+                string sql = string.Format(@"DECLARE	@return_value int,
+                                                     @EndDate nvarchar(10)
+
+                                             EXEC	@return_value = [dbo].[Web_HasContract]
+                                                     @LockNumber = N'{0}',
+                                                     @Prog = N'{1}',
+                                                     @ProgFeature = N'{2}',
+                                                     @EndDate = @EndDate OUTPUT
+                                             SELECT	CONVERT(nvarchar, @return_value) +'-'+ @EndDate", lockNo, prog, ProgFeature);
+                list = db.Database.SqlQuery<string>(sql).Single();
+                return list;
+
+            //}
+            
+            //return list;
         }
 
 

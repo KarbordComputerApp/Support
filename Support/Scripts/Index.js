@@ -14,6 +14,17 @@
     });
 
 
+     var SeeInformation1 = localStorage.getItem("SeeInformation1Karbord_Support");
+    if (SeeInformation1 == null || SeeInformation1 == '') {
+        $("#modal-Information1").modal("show");
+    }
+
+    $("#SeeInformation1").click(function () {
+        localStorage.setItem("SeeInformation1Karbord_Support", "Ok");
+        $("#modal-Information1").modal("hide");
+    });
+
+
 
     image = localStorage.getItem("Pic");
 
