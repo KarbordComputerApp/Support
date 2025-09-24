@@ -429,7 +429,7 @@ namespace Support.Controllers
         [Route("api/Data/CustomerFiles/")]
         public async Task<IHttpActionResult> PostCustomerFiles(CustomerFilesObject CustomerFilesObject)
         {
-            var contract = UnitPublic.HasContract(CustomerFilesObject.LockNumber.ToString(),"","");
+            var contract = UnitPublic.HasContract(CustomerFilesObject.LockNumber.ToString(), "", "");
 
             string lockNo = "0";
             if (contract != "")
@@ -1079,7 +1079,7 @@ namespace Support.Controllers
 
 
         [Route("api/Data/HasContract/{lockNo}/{prog}/{progFeature}")]
-        public async Task<IHttpActionResult> GetHasContract(string lockNo,string prog, string progFeature)
+        public async Task<IHttpActionResult> GetHasContract(string lockNo, string prog, string progFeature)
         {
             prog = prog.ToString().ToUpper() == "NULL" ? "" : prog;
             progFeature = progFeature.ToString().ToUpper() == "NULL" ? "" : progFeature;
@@ -1142,7 +1142,7 @@ namespace Support.Controllers
                     if (list.Count > 0)
                     {
 
-                        string contract = UnitPublic.HasContract(lockNumber,"","");
+                        string contract = UnitPublic.HasContract(lockNumber, "", "");
                         if (contract != "")
                         {
                             if (contract.Split('-')[0] == "1")
@@ -1999,13 +1999,75 @@ namespace Support.Controllers
 			                            from karbordapp.dbo.Access where lockNumber = @LockNumber),
 			                            N'') as Access", lockNumber);
 #if (DEBUG)
-                    value = db.Database.SqlQuery<LockInfo>(sql).Single();
-                    res = value.SamaneTrs + (value.SamaneTrs == "" || value.SamaneTrs == null ? "" : "!!") + value.Access;
+                value = db.Database.SqlQuery<LockInfo>(sql).Single();
+                res = value.SamaneTrs + (value.SamaneTrs == "" || value.SamaneTrs == null ? "" : "!!") + value.Access;
 #else
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
                     value = db.Database.SqlQuery<LockInfo>(sql).Single();
                     res = value.SamaneTrs + "!!" + value.Access;
+                }
+#endif
+            }
+
+            return Ok(res);
+        }
+
+
+
+
+
+
+
+        public class SendActiveCode
+        {
+            public string Token { get; set; }
+
+            public string ActiveCode { get; set; }
+
+        }
+
+        [Route("api/Data/SendActiveCode/")]
+        public async Task<IHttpActionResult> PostSendActiveCode(SendActiveCode d)
+        {
+            long currentDate = DateTime.Now.Ticks;
+            string res = "";
+            var inputToken = UnitPublic.Decrypt(d.Token);
+            var data = inputToken.Split('-');
+            if (data.Length == 3)
+            {
+                string lockNumber = data[0];
+                Int64 tik = Int64.Parse(data[2]);
+                long elapsedTicks = currentDate - tik;
+                TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+
+                string sql = string.Format(
+                    @"if (select count(1) from karbordapp.dbo.ActiveProgram where Code = '{0}') = 0
+                      begin
+                        insert into karbordapp.dbo.ActiveProgram(Code,CreateDate,Status) values ('{0}',GETDATE(),0)
+                        select 0
+                      end
+                      else
+                        select 1", d.ActiveCode);
+#if (DEBUG)
+                try
+                {
+
+
+                var value = db.Database.SqlQuery<Int32>(sql).Single();
+                res = value.ToString();
+                }
+                catch (Exception e)
+                {
+
+                    throw;
+                }
+
+#else
+                if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    var value = db.Database.SqlQuery<int>(sql).Single();
+                    res = value.ToString();
                 }
 #endif
             }
