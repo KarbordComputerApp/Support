@@ -50,6 +50,7 @@ namespace Support.Controllers
             public string LockNumber { get; set; }
             public string Sal { get; set; }
             public string Mah { get; set; }
+            public string Group { get; set; }
             public List<Fish> Fish { get; set; }
         }
 
@@ -62,14 +63,14 @@ namespace Support.Controllers
             {
                 long serialNumber = 0;
                 int ex;
-                string sql = string.Format(@"select SerialNumber from [CustomerFiles].[dbo].[Pay_DocH] where LockNumber = {0} and Sal = {1} and mah = {2}", d.LockNumber, d.Sal, d.Mah);
+                string sql = string.Format(@"select SerialNumber from [CustomerFiles].[dbo].[Pay_DocH] where LockNumber = {0} and Sal = {1} and mah = {2} and [Group] = '{3}'", d.LockNumber, d.Sal, d.Mah, d.Group ?? "");
                 var list = db.Database.SqlQuery<Pay_DocH>(sql).ToList();
                 if (list.Count() == 0)
                 {
                     sql = string.Format(@" declare @serialNumber bigint = (select isnull(max(SerialNumber),0) + 1 from Pay_DocH)
-                                           INSERT INTO[dbo].[Pay_DocH](SerialNumber, LockNumber, Sal, Mah)
-                                           VALUES(@serialNumber ,N'{0}',{1},{2})  select @serialNumber as SerialNumber",
-                                           d.LockNumber, d.Sal, d.Mah);
+                                           INSERT INTO[dbo].[Pay_DocH](SerialNumber, LockNumber, Sal, Mah, [Group])
+                                           VALUES(@serialNumber ,N'{0}',{1},{2},'{3}')  select @serialNumber as SerialNumber",
+                                           d.LockNumber, d.Sal, d.Mah, d.Group ?? "");
                     serialNumber = db.Database.SqlQuery<Int64>(sql).Single();
                 }
                 else
