@@ -3,25 +3,16 @@
 
 
     //localStorage.removeItem("SeeInformationKarbord_Support");
+
     var SeeInformation = localStorage.getItem("SeeInformationKarbord_Support");
     if (SeeInformation == null || SeeInformation == '') {
         $("#modal-Information").modal("show");
+        $("#InformationNote").text("امکان چت به سایت اضافه شد.لطفا برای چت بر روی آیکن چت در پایین صفحه سمت راست کلیک کنید");
     }
 
     $("#SeeInformation").click(function () {
         localStorage.setItem("SeeInformationKarbord_Support", "Ok");
         $("#modal-Information").modal("hide");
-    });
-
-
-     var SeeInformation1 = localStorage.getItem("SeeInformation1Karbord_Support");
-    if (SeeInformation1 == null || SeeInformation1 == '') {
-        $("#modal-Information1").modal("show");
-    }
-
-    $("#SeeInformation1").click(function () {
-        localStorage.setItem("SeeInformation1Karbord_Support", "Ok");
-        $("#modal-Information1").modal("hide");
     });
 
 
@@ -67,8 +58,6 @@
 
 
 
-    var CustomerFilesCountUri = server + '/api/Data/CustomerFilesCount/'; // آدرس فایل
-
 
 
     //$('#B_Tiket').attr('disabled', 'disabled');
@@ -80,16 +69,37 @@
 
     $('#FullName').text(companyName);
 
-    function getCustomerFilesCount() {
+    function getCustomerFiles() {
+        var CustomerFilesUri = server + '/api/Data/CustomerFiles/'; // آدرس فایل
         var CustomerFilesObject = {
-            LockNumber: lockNumber
+            LockNumber: lockNumber,
+            FlagLog: false,
+            IP: ipw,
+            CallProg: 'Web'
         }
-        ajaxFunction(CustomerFilesCountUri, 'POST', CustomerFilesObject, true).done(function (data) {
-            $("#t_CustomerFiles").text('تعداد فایل های موجود : ' + data[0]);
+        ajaxFunction(CustomerFilesUri, 'POST', CustomerFilesObject, true).done(function (data) {
+            if (data.length > 0) {
+                var newList = data.where(c => c.LockNumber == lockNumber && c.CountDownload == 0);
+                if (newList.length > 0) {
+                    $("#modal-NewFile").modal("show");
+                    $("#FileNote").text(newList.length + " فایل بروزرسانی نرم افزار برای شما ارسال شده است . لطفا از بخش دریافت فایل دانلود کنید");
+                }
+            }
         });
     }
-    getCustomerFilesCount();
+    getCustomerFiles();
 
+
+    //var SeeFile = localStorage.getItem("SeeFileKarbord_Support");
+    $("#SeeFile").click(function () {
+        $("#modal-NewFile").modal("hide");
+        //localStorage.setItem("SeeFileKarbord_Support", "Ok");
+    });
+
+    /*if (SeeFile == null || SeeFile == '') {
+        $("#modal-NewFile").modal("show");
+        $("#InformationNote").text("امکان چت به سایت اضافه شد.لطفا برای چت بر روی آیکن چت در پایین صفحه سمت راست کلیک کنید");
+    }*/
 
 
     //GetCountErjDocXK();
