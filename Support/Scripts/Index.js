@@ -69,6 +69,7 @@
 
     $('#FullName').text(companyName);
 
+
     function getCustomerFiles() {
         var CustomerFilesUri = server + '/api/Data/CustomerFiles/'; // آدرس فایل
         var CustomerFilesObject = {
@@ -80,13 +81,17 @@
         ajaxFunction(CustomerFilesUri, 'POST', CustomerFilesObject, true).done(function (data) {
             if (data.length > 0) {
                 var newList = data.where(c => c.LockNumber == lockNumber && c.CountDownload == 0);
-                if (newList.length > 0) {
+                var countFiles = newList.length;
+                if (countFiles > 0) {
+                    $("#t_CustomerFiles").show();
+                    $("#t_CustomerFiles").text(countFiles + " فایل جدید");
                     $("#modal-NewFile").modal("show");
-                    $("#FileNote").text(newList.length + " فایل بروزرسانی نرم افزار برای شما ارسال شده است . لطفا از بخش دریافت فایل دانلود کنید");
+                    $("#FileNote").text(countFiles + " فایل بروزرسانی نرم افزار برای شما ارسال شده است . لطفا از بخش دریافت فایل دانلود کنید");
                 }
             }
         });
     }
+    $("#t_CustomerFiles").hide();
     getCustomerFiles();
 
 
