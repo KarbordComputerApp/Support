@@ -70,41 +70,8 @@
     $('#FullName').text(companyName);
 
 
-    function getCustomerFiles() {
-        var CustomerFilesUri = server + '/api/Data/CustomerFiles/'; // آدرس فایل
-        var CustomerFilesObject = {
-            LockNumber: lockNumber,
-            FlagLog: false,
-            IP: ipw,
-            CallProg: 'Web'
-        }
-        ajaxFunction(CustomerFilesUri, 'POST', CustomerFilesObject, true).done(function (data) {
-            if (data.length > 0) {
-                var newList = data.where(c => c.LockNumber == lockNumber && c.CountDownload == 0);
-                var countFiles = newList.length;
-                if (countFiles > 0) {
-                    $("#t_CustomerFiles").show();
-                    $("#t_CustomerFiles").text(countFiles + " فایل جدید");
-                    $("#modal-NewFile").modal("show");
-                    $("#FileNote").text(countFiles + " فایل بروزرسانی نرم افزار برای شما ارسال شده است . لطفا از بخش دریافت فایل دانلود کنید");
-                }
-            }
-        });
-    }
     $("#t_CustomerFiles").hide();
     getCustomerFiles();
-
-
-    //var SeeFile = localStorage.getItem("SeeFileKarbord_Support");
-    $("#SeeFile").click(function () {
-        $("#modal-NewFile").modal("hide");
-        //localStorage.setItem("SeeFileKarbord_Support", "Ok");
-    });
-
-    /*if (SeeFile == null || SeeFile == '') {
-        $("#modal-NewFile").modal("show");
-        $("#InformationNote").text("امکان چت به سایت اضافه شد.لطفا برای چت بر روی آیکن چت در پایین صفحه سمت راست کلیک کنید");
-    }*/
 
 
     //GetCountErjDocXK();

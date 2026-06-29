@@ -66,8 +66,7 @@
     self.AddAttachList = ko.observableArray([]);
 
 
-
-
+    getCustomerFiles();
 
 
     function getDateServer() {
