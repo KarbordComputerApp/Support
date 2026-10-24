@@ -1,5 +1,4 @@
-﻿//var loginLink = true;
-var ChatUri = server + '/api/Data/Chat/'; // آدرس لیست چت 
+﻿var ChatUri = server + '/api/Data/Chat/'; // آدرس لیست چت 
 var DateUri = server + '/api/Data/GetDate/';
 var UploadChatFileUri = server + '/api/Data/UploadChatFile/'; // آدرس ذخیره لیست پیوست 
 var DocAttachChatUri = server + '/api/Data/DocAttachChat/'; // آدرس لیست پیوست 
@@ -12,50 +11,25 @@ var UpdateChatDownloadUri = server + '/api/KarbordData/UpdateChatDownload/';
 var LockNumbersUri = server + '/api/Data/LockNumbers/';
 var HasMainTenanceUri = server + '/api/Data/HasMainTenance/';
 
-var activeChatQueue = null;
+var machineIdKarbord_Support = localStorage.getItem("MachineIdKarbord_Support");
+
+var motaghaziChatTiket = "";
 //getDataChat();
-
-/*
-var lockChat = [
-    "10000", "10001", "10002", "10003",
-    "11764",
-    "14137",
-    "12984",
-    "13591",
-    "11342",
-    "13124",
-    "14317",
-    "14213",
-    "14224"
-];
-*/
-
-//localStorage.removeItem("MotaghaziChat");
+var dataChat;
+var dataTiket;
 
 var focusPage;
-
-var machineIdKarbord_Support = localStorage.getItem("MachineIdKarbord_Support");
 var motaghaziChat;
-var motaghaziChatTiket = "";
 var otherUserChat = null;
-//localStorage.getItem("MotaghaziChat");
-
-
-
 var orgTitle = document.title;
 var animatedTitle = "پیام جدید " + orgTitle;
-//localStorage.removeItem("idChat")
 var idChat = localStorage.getItem("idChat");
-
 var isLast = false;
-var timerNotifation = null;
-var timerNotifationPage = null;
-
+//var timerNotifation = null;
+//var timerNotifationPage = null;
 idChat = idChat == "0" ? null : idChat;
-
 var isAdminChat = false;
 var LockInput = $("#LockInput").data("value");
-
 var userCodeChat = 'User'
 var leftItem = "left";
 var rightItem = "right";
@@ -67,114 +41,309 @@ var timerLastIdChat;
 $("#chatbox").empty();
 $("#chat-bell").hide();
 $('#ChatSizeIcon').attr('src', '/Content/img/Icon_Blue/min.png');
-
 $("#chat-bell").show();
-
 $("#box-chat").hide();
 
 
-
-if (LockInput != "" && LockInput != null) {
-
-    idChat = $("#IdChat").data("value");
-    localStorage.removeItem("AceMessagesChat");
-
-    if (idChat != null) {  //panel admin
-        idChat = idChat == "0" ? null : idChat;
-        loginLink = true;
-
-        userCodeChat = $("#UserCode").data("value");
-        lockNumber = LockInput;
-        $(".continerHead").hide();
-        $("#chat-bell").hide();
-        $("#ActiveAttach").show();
-        $("#P_AttachChat").show();
-
-        isAdminChat = true;
-        rightItem = "left";
-        leftItem = "right";
-        mode = 0;
-
-        $("#box-Eshkalat").hide();
-
-        $("#btn-end-chat").show();
-        $("#box-chat").show();
-
-        if (ipw == "" || ipw == "null" || ipw == null) {
-            getIP();
+function ActiveSignalR(lockNumber, idChat) {
+    chatHub = $.connection.chatHub;
+    chatHub.client.newMessage = function (message) {
+        AddMessageToChat(message);
+    };
+    $.connection.hub.start()
+        .done(function () {
+            chatHub.server.joinLock((mode == 1 ? lockNumber : "10000"), idChat);
+        })
+        .fail(function (error) {
+            console.error("SignalR connection failed:", error);
+        });
+    function AddMessageToChat(message) {
+        //console.log(message.Body);
+        if (message.ModeNoti == "Chat_Data") {
+            showNotificationChat(message.UserCode,message.Body);
+            AppendChatRow(message);
         }
-
-        GetRepFromUsers();
-        getCompanyName();
-
-        isLast = false;
-        refresh(idChat, isLast);
-        $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + motaghaziChat);
-
-
-
-        var orgTitle = localStorage.getItem("CompanyNameChat");
-        var animatedTitle = "پیام جدید از " + orgTitle;
-
-        document.title = orgTitle;
-
-
-        timer = setInterval(() => { refresh(idChat, false) }, 10000);
-        CalcHeight();
-    }
-    else { //TiketLink
-
-        if (lockNumber == "" || lockNumber == null) {
-            lockNumber = LockInput;
-        }
-
-        if (lockNumber == "000091") {
-            $("#ActiveAttach").hide();
-            $("#chat-bell").hide();
-            $("#btn-end-chat").hide();
-            $("#AddNewErjDocXK").hide();
-            $(".LeftButtomMenu").hide();
-        }
-        else {
-
-            getHasContract();
-            UserPanel();
+        else if (message.ModeNoti == "Chat_ActiveUpload") {
+            if (message.ChatDownload)
+                $("#P_AttachChat").show();
+            else
+                $("#P_AttachChat").hide();
         }
     }
 }
-else {
-    //panel user
-    UserPanel();
 
+function showNotificationChat(title, message) {
+    if (document.visibilityState === "visible" &&
+        document.hasFocus()) {
+        return;
+    }
+
+    if (Notification.permission === "granted") {
+        new Notification(title, {
+            body: message
+        });
+    }
+}
+
+
+async function GetChat(idChat) {
+    var ChatObject = {
+        LockNumber: lockNumber,
+        SerialNumber: idChat,
+    }
+    var res = [];
+    await ajaxFunction(ChatUri, 'POST', ChatObject, true).done(function (data) {
+        res = data;
+    })
+    dataChat = res;
+
+    dataAvtive = dataChat.filter(key => key.Mode == 0);
+    if (dataAvtive.length > 0) {
+        activeChatQueue = dataAvtive.length == 0;
+    }
+    return res;
+}
+
+
+async function GetTiket(id) {
+    var ErjDocXKObject = {
+        SerialNumber: id,
+        LockNo: lockNumber,
+        ModeCode: '204',
+        FlagLog: false,
+        IP: ipw,
+        CallProg: 'Web',
+        LoginLink: false,
+        top: null,
+        Status: null,
+    }
+    var res = [];
+    await ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
+        if (data.length > 0) {
+            $("#ActiveAttachChat").prop('checked', data[0].ChatDownload);
+            motaghaziChatTiket = data[0].Motaghazi;
+            if (isAdminChat) {
+                motaghaziChat = motaghaziChatTiket;
+            }
+            else {
+                motaghaziChat = localStorage.getItem("MotaghaziChat");
+            }
+            otherUserChat = motaghaziChatTiket != motaghaziChat;
+        }
+        res = data;
+    });
+    dataTiket = res;
+    return res;
+}
+
+
+async function getCompanyName() {
+    var LockNumbersObject = {
+        LockNumber: lockNumber,
+        IP: ipw,
+        CallProg: 'Web'
+    }
+    await ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, true).done(function (dataLock) {
+        if (dataLock.length > 0) {
+            companyName = dataLock[0].CompanyName.split("-")[0];
+            localStorage.setItem("CompanyNameChat", companyName);
+        }
+    });
+}
+
+Load();
+async function Load() {
+    if (LockInput != "" && LockInput != null) {
+        idChat = $("#IdChat").data("value");
+        localStorage.removeItem("AceMessagesChat");
+
+        if (idChat != null) {  //panel admin
+            idChat = idChat == "0" ? null : idChat;
+            loginLink = true;
+            userCodeChat = $("#UserCode").data("value");
+            lockNumber = LockInput;
+            ActiveSignalR(lockNumber, idChat);
+            $(".continerHead").hide();
+            $("#chat-bell").hide();
+            $("#ActiveAttach").show();
+            $("#P_AttachChat").show();
+            isAdminChat = true;
+            rightItem = "left";
+            leftItem = "right";
+            mode = 0;
+            $("#box-Eshkalat").hide();
+            $("#btn-end-chat").show();
+            $("#box-chat").show();
+            if (ipw == "" || ipw == "null" || ipw == null) {
+                getIP();
+            }
+            await GetRepFromUsers();
+            await getCompanyName();
+            //await GetChat(idChat);
+            //await GetTiket(idChat);
+            AppendChat();
+
+            $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + motaghaziChat);
+            var orgTitle = localStorage.getItem("CompanyNameChat");
+            var animatedTitle = "پیام جدید از " + orgTitle;
+            document.title = orgTitle;
+            CalcHeight();
+        }
+        else { //TiketLink
+            if (lockNumber == "" || lockNumber == null) {
+                lockNumber = LockInput;
+            }
+            if (lockNumber == "000091") {
+                $("#ActiveAttach").hide();
+                $("#chat-bell").hide();
+                $("#btn-end-chat").hide();
+                $("#AddNewErjDocXK").hide();
+                $(".LeftButtomMenu").hide();
+            }
+            else {
+                getHasContract();
+                UserPanel();
+            }
+        }
+    }
+    else {//panel user
+        $("#P_AttachChat").hide();
+        UserPanel();
+    }
+}
+function UserPanel() {
+    $("#ActiveAttach").hide();
+    $("#chat-bell").show();
+    $("#btn-end-chat").hide();
+    $("#P_AttachChat").hide();
 }
 
 if (lockNumber == "" || lockNumber == null) {
     window.location.href = localStorage.getItem("urlLogin");
 }
 
-function UserPanel() {
 
-    $("#ActiveAttach").hide();
-    $("#chat-bell").show();
-    $("#btn-end-chat").hide();
+function AppendChatRow(item) {
+    timeSend = item.TimeSend;
+    res =
+        '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '"> ';
+    if ((item.Mode == 1 && leftItem == 'left') || (item.Mode == 0 && leftItem == 'right')) {
+        res += '<img class="deleteChatImg" value="' + item.Id + '" src="/Content/img/Icon_blue/delete.png" width="25" style="padding-top: 10px;padding-right: 5px;display: none;" >';
+    }
+    res += '<div class="' + (item.Status == 1 ? 'dc-endchat' : 'dc-text') + '" rel="tooltip" data-container="body">';
+    if (item.Body.search("!!AttachFile!!") >= 0) {
+        fileName = item.Body.split(',')[1]
+        res += '<a class="ChatDownloadFile" idBand="' + item.Id + '"  onclick="ChatDownloadFile(this)">';
+        res +=
+            '<img src="/Content/img/Icon_Blue/Download.png" width="28" style="margin-left:10px">' +
+            '<span>' + fileName + '</span>';
+        res += '</a>'
+    }
+    else if (item.Status == 1) {
+        res += '<div class="dox-endchat">' +
+            '<p style="text-align: center">این چت به پایان رسید</p>' +
+            '<p style="text-align: center">روز خوبی را برای شما آرزومندیم</p>' +
+            '</div>';
+        $("#box-send").hide();
+    }
+    else {
 
-    timerLastIdChat = setInterval(() => {
-        getDataChat();
-    }, 100000);
-    isLast = false;
-    refresh(idChat, isLast);
+        isLink = item.Body.search("www.") > 0 || item.Body.search("http://") > 0 || item.Body.search("https://") > 0 || item.Body.search("185.208.174.64") > 0
+        if (isLink) {
+            isVideo = item.Body.toLowerCase();
+            isVideo = isVideo.search("/content/video/") > 0;
+
+            if (isVideo) {
+
+                res += '<a href="#" name = "' + item.Body + '" onclick="ShowVideoChat(this)">';
+                res += '<span>ویدیو آموزشی</span>';
+                res += '</a>'
+            } else {
+                res += '<a href="' + item.Body + '" target="_blank" >';
+                res += '<span>' + item.Body + '</span>';
+                res += '</a>'
+            }
+        }
+
+        else {
+            res += '<span>' + item.Body + '</span>';
+        }
+    }
+    res += '</div>';
+    if (isAdminChat) {
+        dateText = item.Mode == 1 ? item.UserCode : SetNameUser(item.UserCode);
+        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '<span style="margin-right:5px; margin-left:5px">' + timeSend + '</span>' + '</div>';
+    }
+    else {
+        res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + '<span style="margin-left: 5px">' + timeSend + '</span>' + (item.Mode == 1 ? item.UserCode : "") + '</div>';
+    }
+    res += '</div>';
+
+    $("#chatbox").append(res);
+    $("#chatbox").scrollTop(100000000);
+}
+
+var activeChatQueue = null;
+async function AppendChat(item) {
+    idChat = idChat == "0" ? null : idChat;
+    if (isAdminChat == true && idChat == null) {
+        $("#box-send").hide();
+        $("#btn-end-chat").hide();
+    }
+    $("#box-notification").hide();
+    if (idChat != null) {
+        $("#box-send").show();
+        if (item == null) {
+            //if (dataChat == null) {
+            await GetTiket(idChat);
+            await GetChat(idChat);
+            //}
+            item = dataChat.filter(key => key.Body != "!!@NewChat@!!");;
+        }
+        endChat = item.filter(key => key.Status == 1);
+
+        if (endChat.length > 0) {
+            idChat = null;
+            activeChatQueue = null;
+            localStorage.removeItem("idChat");
+            $("#box-send").hide();
+            $("#btn-end-chat").hide();
+            otherUserChat = null;
+        }
+
+        for (var i = 0; i < item.length; i++) {
+            AppendChatRow(item[i]);
+        }
+
+        if (isAdminChat == false && activeChatQueue == true) {
+            ajaxFunction(ChatQueueUri + '/' + idChat, 'GET', false).done(function (data) {
+                if (data > 0) {
+                    $("#box-notification").show();
+                    $("#l-notification").text("شما نفر " + (data + 1) + " در صف انتظار هستید. لطفا منتظر بمانید...")
+                }
+            });
+        }
+
+    }
 }
 
 
 
 
 
+/*
+$("#ActiveNotification").click(function () {
+    window.open(
+        'https://notification.karbordcomputerapp.ir/',
+        '_blank',
+        'width=450,height=70'
+    );
+});*/
 
 
 $("#btn-close-chat").click(function () {
     $("#chat-bell").show();
     $("#box-chat").hide();
-    clearInterval(timer);
 });
 
 
@@ -191,56 +360,17 @@ function CalcHeight() {
 }
 
 function SetUpdateChatDownload(value) {
-
     var UpdateChatDownload_Object = {
         SerialNumber: idChat,
+        LockNumber: lockNumber,
         ChatDownload: value
     }
     ajaxFunction(UpdateChatDownloadUri, 'POST', UpdateChatDownload_Object).done(function (data) {
-        var a = data;
+         $('#ActiveAttachChat').is(':checked');
+        // goto signalr
     });
 }
 
-
-function getDataTiket(id) {
-    $("#P_AttachChat").show();
-    if (isAdminChat == false)
-        $("#P_AttachChat").hide();
-
-    var ErjDocXKObject = {
-        SerialNumber: id,
-        LockNo: lockNumber,
-        ModeCode: '204',
-        FlagLog: false,
-        IP: ipw,
-        CallProg: 'Web',
-        LoginLink: false,
-        top: null,
-        Status: null,
-    }
-    ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
-        if (data.length > 0) {
-            //localStorage.setItem("MotaghaziChat", data[0].Motaghazi);
-            var chatDownload = data[0].ChatDownload;
-            $("#ActiveAttachChat").prop('checked', chatDownload);
-            if (chatDownload == true) {
-                $("#P_AttachChat").show();
-            }
-
-            motaghaziChatTiket = data[0].Motaghazi;
-
-            if (isAdminChat) {
-                motaghaziChat = motaghaziChatTiket;
-            }
-            else {
-                motaghaziChat = localStorage.getItem("MotaghaziChat");
-            }
-            otherUserChat = motaghaziChatTiket != motaghaziChat;
-
-
-        }
-    });
-}
 
 
 
@@ -260,8 +390,10 @@ $("#RefreshCaptcha").click(function () {
     CreateCaptcha();
 });
 
-$("#chat-bell").click(function () {
 
+
+
+$("#chat-bell").click(function () {
     if (idChat == null) {
         getDataChat();
     }
@@ -275,7 +407,6 @@ $("#chat-bell").click(function () {
         $("#chat-bell").hide();
     } else {
         ajaxFunction(HasMainTenanceUri + lockNumber, 'GET').done(function (data) {
-
             if (data == "") {
                 if (idChat == null) {
                     CreateCaptcha();
@@ -316,14 +447,15 @@ $("#chat-bell").click(function () {
     }
 
 
-    if (isLast == true) {
+    /*if (isLast == true) {
         $("#chatbox").empty();
         isLast = false;
         maxIdMessage = 0;
-    }
+    }*/
+    AppendChat();
 
-    refresh(idChat, isLast);
-    timer = setInterval(() => { refresh(idChat, false) }, 5000);
+    //refresh(idChat, isLast);
+    //timer = setInterval(() => { refresh(idChat, false) }, 5000);
     CalcHeight();
 });
 
@@ -348,25 +480,34 @@ $("#btn-max-chat").click(function () {
 
 
 
-var show
 
+
+
+$("#chat-bell").click(async function () {
+    ActiveSignalR(lockNumber, idChat);
+})
+
+
+var show
+/*
 function refresh(id, isLast) {
+    var dataChat = await GetChat(idChat);
     idChat = id
     idChat = idChat == "0" ? null : idChat;
     if (idChat > 0) {
         getDataTiket(idChat);
     }
-
+ 
     if (isLast == true) {
         $("#box-send").hide();
     }
-
+ 
     if (isAdminChat == true && id == null) {
         $("#box-send").hide();
         $("#btn-end-chat").hide();
     }
     $("#box-notification").hide();
-
+ 
     if (idChat != null) {
         var ChatObject = {
             LockNumber: lockNumber,
@@ -374,31 +515,25 @@ function refresh(id, isLast) {
             IdMessage: maxIdMessage,
         }
         res = '';
-
+ 
         ajaxFunction(ChatUri, 'POST', ChatObject).done(function (data) {
             $("#box-send").show();
             if (data.length > 0) {
                 maxIdMessage = data[data.length - 1].Id;
-                //localStorage.setItem("MaxIdMessage", maxIdMessage);
-
-                //data.filter(key => key.id == 1);
                 endChat = data.filter(key => key.Status == 1);
-
                 if (data.length > 0 && activeChatQueue != false) {
                     dataAvtive = data.filter(key => key.Mode == 0);
                     if (dataAvtive.length > 0) {
                         activeChatQueue = false;
                     } else {
                         activeChatQueue = true;
-
                         if (data[0].Body == "!!@NewChat@!!" && data.length == 1) {
                             activeChatQueue = null;
                         }
                     }
                 }
-
+ 
                 data = data.filter(key => key.Body != "!!@NewChat@!!");
-
                 if (endChat.length > 0) {
                     idChat = null;
                     activeChatQueue = null;
@@ -409,24 +544,17 @@ function refresh(id, isLast) {
                     otherUserChat = null;
                 }
                 if (focusPage == false && isAdminChat) {
-                    // NotifationChat(data[0].Body);
                 }
-
+ 
                 for (var i = 0; i < data.length; i++) {
                     item = data[i];
                     timeSend = item.TimeSend;
-
                     res +=
                         '<div class="dc-msg slideInleft ' + (item.Mode == 0 ? leftItem : rightItem) + '"> ';
-
                     if ((item.Mode == 1 && leftItem == 'left') || (item.Mode == 0 && leftItem == 'right')) {
                         res += '<img class="deleteChatImg" value="' + item.Id + '" src="/Content/img/Icon_blue/delete.png" width="25" style="padding-top: 10px;padding-right: 5px;display: none;" >';
                     }
-
-
                     res += '<div class="' + (item.Status == 1 ? 'dc-endchat' : 'dc-text') + '" rel="tooltip" data-container="body">';
-
-
                     if (item.Body.search("!!AttachFile!!") >= 0) {
                         fileName = item.Body.split(',')[1]
                         res += '<a class="ChatDownloadFile" idBand="' + item.Id + '"  onclick="ChatDownloadFile(this)">';
@@ -442,14 +570,14 @@ function refresh(id, isLast) {
                             '</div>';
                     }
                     else {
-
+ 
                         isLink = item.Body.search("www.") > 0 || item.Body.search("http://") > 0 || item.Body.search("https://") > 0 || item.Body.search("185.208.174.64") > 0
                         if (isLink) {
                             isVideo = item.Body.toLowerCase();
                             isVideo = isVideo.search("/content/video/") > 0;
-
+ 
                             if (isVideo) {
-
+ 
                                 res += '<a href="#" name = "' + item.Body + '" onclick="ShowVideoChat(this)">';
                                 res += '<span>ویدیو آموزشی</span>';
                                 res += '</a>'
@@ -459,38 +587,26 @@ function refresh(id, isLast) {
                                 res += '</a>'
                             }
                         }
-
+ 
                         else {
                             res += '<span>' + item.Body + '</span>';
                         }
-
-
-
                     }
-
-                    res +=
-                        '</div>';
-
+                    res += '</div>';
                     if (isAdminChat) {
                         dateText = item.Mode == 1 ? item.UserCode : SetNameUser(item.UserCode);
-
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + dateText + '<span style="margin-right:5px; margin-left:5px">' + timeSend + '</span>' + '</div>';
                     }
                     else {
                         res += '<div class="timeago_' + (item.Mode == 0 ? leftItem : rightItem) + ' slideIn' + (item.Mode == 0 ? leftItem : rightItem) + '">' + '<span style="margin-left: 5px">' + timeSend + '</span>' + (item.Mode == 1 ? item.UserCode : "") + '</div>';
-
                     }
                     res += '</div>';
                 }
-
                 $("#chatbox").append(res);
-
-
                 $("#chatbox").scrollTop(100000000);
-
             }
         });
-
+ 
         if (isAdminChat == false && activeChatQueue == true) {
             ajaxFunction(ChatQueueUri + '/' + idChat, 'GET', false).done(function (data) {
                 if (data > 0) {
@@ -499,11 +615,9 @@ function refresh(id, isLast) {
                 }
             });
         }
-
     }
-
 }
-
+*/
 /*
 $('.slideInleft.right').hover(
     function () {
@@ -511,7 +625,7 @@ $('.slideInleft.right').hover(
         if (a.length > 0)
             a.show();
     },
-
+ 
     function () {
         a = $(this).find('.deleteChatImg');
         if (a.length > 0)
@@ -519,25 +633,25 @@ $('.slideInleft.right').hover(
     }
 );*/
 /*
-
+ 
 $("#chatbox").on("mouseenter", ".slideInleft.right", function () {
     $(this).find('.deleteChatImg').show();
 });
-
+ 
 $("#chatbox").on("mouseleave", ".slideInleft.right", function () {
     $(this).find('.deleteChatImg').hide();
 });
-
-
-
+ 
+ 
+ 
 $("chatbox").on("click", ".slideInleft.right.deleteChatImg", function (event) {
     if (!confirm('Are you sure?')) return false;
     $(this).parent().remove();
     return true;
 });
-
-
-
+ 
+ 
+ 
 $(".deleteChatImg").click(function (e) {
     var idDel = $(this).attr("value");
     element = this.offsetParent;
@@ -638,7 +752,6 @@ function ChatSend(firstSend, mess) {
 
     }
     else {
-
         if (motaghaziChat == "") {
             motaghaziChat == "UserChat"
         }
@@ -654,16 +767,16 @@ function ChatSend(firstSend, mess) {
         }
         ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
             serialNumber = data;
-            isLast = false;
-            refresh(idChat, isLast);
+            if (firstSend == false) {
+                var now = new Date();
+                var time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                AddChatObject.Id = data;
+                AddChatObject.TimeSend = time;
+                AppendChatRow(AddChatObject);
+            }
             $("#ChatMessage").val("");
         });
     }
-    //}
-    //else {
-    //    return showNotification(data, 0);
-    // }
-    //});
 }
 
 $("#SendNewChat").click(function () {
@@ -721,7 +834,7 @@ function NewChat() {
     });
 
     var ErjSaveTicketUri = server + '/api/KarbordData/ErjSaveTicket_HI/'; // آدرس ذخیره تیکت 
-    var SendMessageSorenaUri = server + '/api/KarbordData/SendMessageSorena/'; 
+    var SendMessageSorenaUri = server + '/api/KarbordData/SendMessageSorena/';
     var ErjSaveTicket_HI = {
         SerialNumber: 0,
         DocDate: DateNow,
@@ -832,7 +945,6 @@ function SendAttach(file) {
     userCodeChat = isAdminChat == true ? userCodeChat : motaghaziChat;
 
 
-    var AddChatUri = server + '/api/Data/AddChat/'; // 
     var AddChatObject = {
         LockNumber: lockNumber,
         SerialNumber: idChat,
@@ -841,6 +953,7 @@ function SendAttach(file) {
         ReadSt: 0,
         UserCode: userCodeChat,
         Body: "!!AttachFile!!," + name,
+        SystemName: MachineIdNoti,
     }
     ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
         serialNumber = data;
@@ -857,7 +970,7 @@ function SendAttach(file) {
         if (isAdminChat == false) {
             SetUpdateChatDownload(false);
         }
-        refresh(idChat, isLast);
+        //refresh(idChat, isLast);
 
     })
 }
@@ -950,7 +1063,7 @@ $("#btn-end-chat").click(function () {
                     });
 
                     isLast = false;
-                    refresh(idChat, isLast);
+                    //refresh(idChat, isLast);
                 });
             }
 
@@ -964,13 +1077,13 @@ $('#ActiveAttachChat').change(function () {
     SetUpdateChatDownload(check);
 });
 
-
+/*
 var myWindow;
 
 $(window).focus(function () {
     focusPage = true;
-    clearInterval(timerNotifation);
-    clearInterval(timerNotifationPage);
+   // clearInterval(timerNotifation);
+   // clearInterval(timerNotifationPage);
     document.title = orgTitle;
     if (myWindow != null) {
         myWindow = null;
@@ -1013,7 +1126,7 @@ function NotifationChat(value) {
     }
 }
 
-
+*/
 var AceMessagesChatUri = server + '/api/Data/AceMessagesChat/';
 var aceMessagesChatList;
 
@@ -1110,54 +1223,53 @@ $("#Eshkalat_Chat2").click(function () {
     }
 })
 
+/*
 function newExcitingAlerts() {
-    /* 
-       var myWindow = window.open('','zzz','width=600,height=700');
-       myWindow.document.write('test');
-     myWindow.focus();
- */
-
-
-    /*  var child = window.open('Index', 'child');
-      window.external.comeback = function () {
-          var back = confirm('Are you sure you want to comback?');
-          if (back) {
-              child.close();
-          } else {
-              child.focus();
-          }
-      }زن
-      */
-    /*
-        browser.runtime.onMessage.addListener((message, sender) => {
-            console.log('Active Tab ID: ', sender.tab.id);
-        });
-    
-        chrome.tabs.getSelected(null, function (tab) {
-            console.log(tab);
-        });
-        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            console.log(tabs[0]);
-        });
-    
-        var myWindow0 = window;
-        myWindow0.focus();
-        */
 };
 
 
+$("#noti-bell").click(function () {
+    url = serverNoti + "Home/Index?lockNumber=" + lockNumber + "&&SystemName=" + MachineIdNoti
+    window.open(url, '_blank', 'width=450,height=300');
+});
+*/
 
+/*
+function getDataTiket(id) {
+    $("#P_AttachChat").show();
+    if (isAdminChat == false)
+        $("#P_AttachChat").hide();
 
-        /*
-var DocAttachBoxListObject = {
-                Id: item.IId,
-            ByData: 1,
-            IP: ipw,
-            CallProg: 'Web'
+    var ErjDocXKObject = {
+        SerialNumber: id,
+        LockNo: lockNumber,
+        ModeCode: '204',
+        FlagLog: false,
+        IP: ipw,
+        CallProg: 'Web',
+        LoginLink: false,
+        top: null,
+        Status: null,
+    }
+    ajaxFunction(ErjDocXKUri, 'Post', ErjDocXKObject).done(function (data) {
+        if (data.length > 0) {
+            //localStorage.setItem("MotaghaziChat", data[0].Motaghazi);
+            var chatDownload = data[0].ChatDownload;
+            $("#ActiveAttachChat").prop('checked', chatDownload);
+            if (chatDownload == true) {
+                $("#P_AttachChat").show();
+            }
+
+            motaghaziChatTiket = data[0].Motaghazi;
+
+            if (isAdminChat) {
+                motaghaziChat = motaghaziChatTiket;
+            }
+            else {
+                motaghaziChat = localStorage.getItem("MotaghaziChat");
+            }
+            otherUserChat = motaghaziChatTiket != motaghaziChat;
         }
-        
-ajaxFunction(DocAttachBoxListUri, 'POST', DocAttachBoxListObject).done(function (data) {
-    var sampleArr = base64ToArrayBuffer(data[0].Atch);
-            saveByteArray(data[0].FName, sampleArr);
-        });
- */
+    });
+}
+*/

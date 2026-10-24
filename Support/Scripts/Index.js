@@ -1,8 +1,6 @@
 ﻿var ViewModel = function () {
     var self = this;
-
-
-    //localStorage.removeItem("SeeInformationKarbord_Support");
+    //localStorage.removeItem("SeeInformation01Karbord_Support");
 
     var SeeInformation = localStorage.getItem("SeeInformationKarbord_Support");
     if (SeeInformation == null || SeeInformation == '') {
@@ -14,6 +12,23 @@
         localStorage.setItem("SeeInformationKarbord_Support", "Ok");
         $("#modal-Information").modal("hide");
     });
+
+
+    var SeeInformation01 = localStorage.getItem("SeeInformation01Karbord_Support");
+    if (SeeInformation01 == null || SeeInformation01 == '') {
+        $("#modal-Information01").modal("show");
+        $("#Information01Note").html(
+            "مشتریان محترم" + "<br> "+
+            "از این پس می توانید جهت برقراری ارتباطی امن تر و سریعتر با شرکت، از نرم افزار اختصاصی KarbordDesk استفاده نمایید." +
+            "این نرم افزار به صورت رایگان در اختیار مشتریان گرامی قرار دارد. جهت دریافت نرم افزار، به قسمت «دریافت فایل» مراجعه فرمایید."
+            );
+    }
+
+    $("#SeeInformation01").click(function () {
+        localStorage.setItem("SeeInformation01Karbord_Support", "Ok");
+        $("#modal-Information01").modal("hide");
+    });
+
 
 
 
@@ -73,26 +88,44 @@
     $("#t_CustomerFiles").hide();
     getCustomerFiles();
 
-
     //GetCountErjDocXK();
 
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js")
+            .then(function (registration) {
+                showNotification("Service Worker ثبت شد.",1);
+                console.log("Service Worker ثبت شد.");
+                console.log(registration);
+            })
+            .catch(function (error) {
+                showNotification("Service Worker Error:" + error, 0);
+            });
+    }
 
+    $(document).ready(async function () {
+        if (!("Notification" in window)) {
+            showNotification("مرورگر شما نوتیفیکشن را پشتیبانی نمی‌کند.", 0);
+        }
 
-
-    /* $("#p_information").show();
-     $("#LastPadding").hide();
- 
-     if (window.matchMedia('(max-width: 767px)').matches) {
-         $("#LastPadding").show();
-         $("#p_information").hide();
-         $("#p_CustomerFiles").hide();
-         $("#p_UploadFiles").hide();
-         $("#p_FinancialDocuments").hide();
-         $("#p_FAQ").hide();
- 
-     }*/
-
-
+        var per = Notification.permission;
+        if (per == "granted") {
+            showNotification("سرویس نوتیفیکشن در حال اجرا",1);
+        }
+        else {
+            if (per == "default") {
+                showNotification("جهت فعال سازی نوتیفیکشن دکمه Allow را انتخاب کنید",3);
+                permission = await Notification.requestPermission();
+                if (permission == "granted") {
+                    await EnableNotification();
+                }
+            }
+            else {
+                showNotification(
+                    "دسترسی اعلان‌ها مسدود شده است. برای فعال‌سازی، روی علامت قفل کنار آدرس سایت کلیک کنید، وارد Site settings شوید و گزینه Notifications را روی Allow قرار دهید؛ سپس صفحه را مجدداً بارگذاری کنید.",3);
+                //$("#btnEnable").Show();
+            }
+        }
+    });
 
 };
 ko.applyBindings(new ViewModel());

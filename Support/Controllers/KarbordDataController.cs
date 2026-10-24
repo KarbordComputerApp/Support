@@ -839,6 +839,8 @@ namespace Support.Controllers
         {
             public long SerialNumber { get; set; }
 
+            public int LockNumber { get; set; }
+
             public bool ChatDownload { get; set; }
         }
 
@@ -847,9 +849,20 @@ namespace Support.Controllers
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PostUpdateChatDownload(UpdateChatDownload_Object c)
         {
-            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateChatDownload @SerialNumber = {0} ,@ChatDownload = {1} select 1 ", c.SerialNumber, c.ChatDownload);
+            string sql = string.Format(CultureInfo.InvariantCulture, @"EXEC Web_ErjSaveTicket_UpdateChatDownload @SerialNumber = {0} ,@ChatDownload = {1} select 1 ",
+                c.SerialNumber,
+                c.ChatDownload);
             var dataAccount = UnitDatabase.ReadUserPassHeader(this.Request.Headers);
             var res = db.Database.SqlQuery<int>(sql);
+
+            ChatHub.NotifyNewMessage(
+                c.LockNumber.ToString(),
+                c.SerialNumber,
+                new
+                {
+                    ModeNoti = "Chat_ActiveUpload",
+                    ChatDownload = c.ChatDownload
+                });
             return Ok(res);
         }
 

@@ -1,6 +1,10 @@
 ﻿var server = 'http://localhost:52798';
+//var server = 'https://support.karbordcomputerapp.in';
+
 //var server = 'http://192.168.0.106:1000';
 //var server = 'http://185.208.174.64:8001';
+
+
 
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
@@ -11,6 +15,7 @@ var fullName = firstName + ' ' + lastName;
 var companyName = localStorage.getItem("CompanyName");
 var usersChat;
 var defultUserTiket = 'ZAND';
+var chatHub;
 
 var ticketUser = 'Ticket';
 var ticketPass = '@!B912';
@@ -44,11 +49,18 @@ if ((userType == '1' || userType == '2')) {
 var HasContractUri = server + '/api/Data/HasContract/'; // آدرس قرارداد
 
 var MachineId = localStorage.getItem("MachineIdKarbord_Support");
+var MachineIdNoti = localStorage.getItem("MachineIdKarbord_SupportNoti");
 
 if (MachineId == null || MachineId == '') {
     var d = new Date();
     id = d.getDate() + d.getTime();
     localStorage.setItem("MachineIdKarbord_Support", id);
+}
+
+if (MachineIdNoti == null || MachineIdNoti == '') {
+    var d = new Date();
+    id = d.getDate() + d.getTime() + lockNumber;
+    localStorage.setItem("MachineIdKarbord_SupportNoti", id);
 }
 
 
@@ -136,12 +148,12 @@ function GetCountErjDocXK() {
 }
 
 
-var RepFromUsersUri = server + '/api/KarbordData/Web_RepFromUsers/'; // لیست کاربران
+
 function GetRepFromUsers() {
+    var RepFromUsersUri = server + '/api/KarbordData/Web_RepFromUsers/'; // لیست کاربران
     var RepFromUsersObject = {
         userCode: 'ace'
     }
-
     ajaxFunction(RepFromUsersUri, 'POST', RepFromUsersObject, false).done(function (data) {
         localStorage.setItem("UsersChat", JSON.stringify(data));
         usersChat = data;
@@ -168,19 +180,6 @@ function SetNameUser(userCode) {
 
 
 
-function getCompanyName() {
-    var LockNumbersObject = {
-        LockNumber: lockNumber,
-        IP: ipw,
-        CallProg: 'Web'
-    }
-    ajaxFunction(LockNumbersUri, 'POST', LockNumbersObject, false).done(function (dataLock) {
-        if (dataLock.length > 0) {
-            companyName = dataLock[0].CompanyName.split("-")[0];
-            localStorage.setItem("CompanyNameChat", companyName);
-        }
-    });
-}
 
 
 function getDataChat() {
@@ -191,7 +190,7 @@ function getDataChat() {
     ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
         localStorage.removeItem("idChat");
         if (data.length > 0) {
-            var id = data[0].Status == 1 ? 0 : data[0].SerialNumber
+            var id = data[0].Status == 1 ? 0 : data[0].SerialNumber;
             localStorage.setItem("idChat", id);
         }
     })
@@ -668,6 +667,7 @@ function getIP() {
     sessionStorage.IPW = "Error Get IP";
     ipw = "Error Get IP";
 
+    /*
     ajaxFunctionAccount('http://ip-api.com/json/', 'GET', true).done(function (data) {
         //a = sessionStorage.MacAddress;
         //b = sessionStorage.IP4Address;
@@ -681,6 +681,7 @@ function getIP() {
         //sessionStorage.CountryLogin = data.country
         //sessionStorage.CityLogin = data.city
     });
+    */
 }
 
 
@@ -732,9 +733,14 @@ function getCustomerFiles() {
             var newList = data.where(c => c.LockNumber == lockNumber && c.CountDownload == 0);
             var countFiles = newList.length;
             if (countFiles > 0) {
+                var newLogin = localStorage.getItem("NewLogin");
+                localStorage.removeItem("NewLogin");
+                if (newLogin == "1") {
+                    $("#modal-NewFile").modal("show");
+                }
+
                 $("#t_CustomerFiles").show();
                 $("#t_CustomerFiles").text(countFiles + " فایل جدید");
-                $("#modal-NewFile").modal("show");
                 $("#FileNote").text(countFiles + " فایل بروزرسانی نرم افزار برای شما ارسال شده است . لطفا از بخش دریافت فایل دانلود کنید");
                 blink(true);
             }
@@ -744,6 +750,7 @@ function getCustomerFiles() {
         }
     });
 }
+
 
 function blink(flag) {
     $("#t_CustomerFiles").fadeOut(500, function () {
@@ -763,7 +770,50 @@ $("#SeeFile").click(function () {
     //localStorage.setItem("SeeFileKarbord_Support", "Ok");
 });
 
-    /*if (SeeFile == null || SeeFile == '') {
-        $("#modal-NewFile").modal("show");
-        $("#InformationNote").text("امکان چت به سایت اضافه شد.لطفا برای چت بر روی آیکن چت در پایین صفحه سمت راست کلیک کنید");
-    }*/
+/*if (SeeFile == null || SeeFile == '') {
+    $("#modal-NewFile").modal("show");
+    $("#InformationNote").text("امکان چت به سایت اضافه شد.لطفا برای چت بر روی آیکن چت در پایین صفحه سمت راست کلیک کنید");
+}*/
+
+// start Notification
+
+async function EnableNotification() {
+    var registration = await navigator.serviceWorker.ready;
+    var subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+        subscription =
+            await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array()
+            });
+    }
+    var json = subscription.toJSON();
+    var SaveUserObject = {
+        LockNumber: lockNumber,
+        SystemName: MachineIdNoti,
+        EndPoint: json.endpoint,
+        P256dh: json.keys.p256dh,
+        Auth: json.keys.auth
+    };
+    var saveUserUri = server + '/api/Notification/SaveUser/';
+    ajaxFunction(saveUserUri, 'POST', SaveUserObject, false).done(function (data) {
+        showNotification("سرویس نوتیفیکشن ثبت شد", 1);
+    });
+}
+
+
+function urlBase64ToUint8Array() {
+    var base64String = "BHNDaQBxGBkfn9WbgdtLn10dlmrLLFELikTy7be9d6w4ba_K5IOjawY3ShacgRM9E3Bmjo_35HSGolB89-_OYJI";
+    var padding = "=".repeat((4 - base64String.length % 4) % 4);
+    var base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+    var rawData = window.atob(base64);
+    var outputArray = new Uint8Array(rawData.length);
+    for (var i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
+

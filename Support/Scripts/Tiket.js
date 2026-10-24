@@ -21,10 +21,11 @@
     }
     else if (LockInput != '') {
         loginLink = true;
+        localStorage.setItem("NewLogin", '1');
+        getCustomerFiles();
         getIP();
         localStorage.removeItem("lockNumber");
         lockNumber = LockInput;
-
         LockNumbersUri = server + '/api/Data/LockNumbers/';
 
         var LockNumbersObject = {

@@ -59,6 +59,7 @@
                             localStorage.setItem("ForceToChangePass", '1');
                             window.location.href = localStorage.getItem("urlChangePassword");
                         } else {
+                            localStorage.setItem("NewLogin", '1');
                             window.location.href = localStorage.getItem("urlIndex");
                         }
                     }

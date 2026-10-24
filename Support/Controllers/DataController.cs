@@ -1083,7 +1083,6 @@ namespace Support.Controllers
         {
             prog = prog.ToString().ToUpper() == "NULL" ? "" : prog;
             progFeature = progFeature.ToString().ToUpper() == "NULL" ? "" : progFeature;
-
             return Ok(UnitPublic.HasContract(lockNo, prog, progFeature));
         }
 
@@ -1461,6 +1460,12 @@ namespace Support.Controllers
                 var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
                 access = results.Count() > 0;
             }
+            else if (VideoName == "Karbord-FastReport")
+            {
+                ounVideo = "VIDEO_FASTREPORT";
+                var results = Array.FindAll(trsList, s => s.Equals(ounVideo) || s.Equals(allVideo));
+                access = results.Count() > 0;
+            }
 
             if (access)
             {
@@ -1697,6 +1702,23 @@ namespace Support.Controllers
                 c.Body);
             var idChat = db.Database.SqlQuery<string>(sql).Single();
             db.SaveChanges();
+
+            ChatHub.NotifyNewMessage(
+                (c.Mode == 0 ? c.LockNumber.ToString() : "10000"),
+                c.SerialNumber,
+                new
+                {
+                    ModeNoti = "Chat_Data",
+                    Id = idChat,
+                    LockNumber = c.LockNumber,
+                    SerialNumber = c.SerialNumber,
+                    Mode = c.Mode,
+                    Status = c.Status,
+                    ReadSt = c.ReadSt,
+                    UserCode = c.UserCode,
+                    Body = c.Body,
+                    TimeSend = DateTime.Now.ToString("HH:mm")
+                });
             return Ok(idChat);
         }
 
@@ -1717,7 +1739,7 @@ namespace Support.Controllers
         [Route("api/Data/LastIdChat/")]
         public async Task<IHttpActionResult> PostLastIdChat(ChatObject c)
         {
-            string sql = string.Format(@" SELECT top(1) SerialNumber,Status FROM Chat where SerialNumber = (select isnull(max(SerialNumber),0) FROM Chat  where LockNumber = {0}) order by id desc", c.LockNumber);
+            string sql = string.Format(@" SELECT SerialNumber, max(Status) as Status FROM Chat where SerialNumber = (select isnull(max(SerialNumber),0) FROM Chat  where LockNumber = {0}) group by SerialNumber", c.LockNumber);
             var list = db.Database.SqlQuery<LastIdChat>(sql).ToList();
             return Ok(list);
         }
@@ -2054,8 +2076,8 @@ namespace Support.Controllers
                 {
 
 
-                var value = db.Database.SqlQuery<Int32>(sql).Single();
-                res = value.ToString();
+                    var value = db.Database.SqlQuery<Int32>(sql).Single();
+                    res = value.ToString();
                 }
                 catch (Exception e)
                 {

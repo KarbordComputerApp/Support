@@ -1,4 +1,7 @@
-﻿var server = 'http://localhost:52798';
+﻿//var server = 'http://localhost:52798';
+//var server = 'https://support.karbordcomputerapp.in';
+
+var server = 'http://185.208.174.64:8001';
 
 function ajaxFunction(uri, method, data, sync, error) {
     return $.ajax({

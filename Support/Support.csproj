@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.1.3\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
@@ -54,16 +57,34 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1004\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="Spire.Doc, Version=11.6.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
       <HintPath>..\packages\FreeSpire.Doc.11.6.0\lib\net40\Spire.Doc.dll</HintPath>
@@ -163,6 +184,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebPush, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebPush.1.0.12\lib\net46\WebPush.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -173,6 +197,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Connected Services\SorenaSms\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -182,8 +207,10 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KarbordDataController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\SmobController.cs" />
     <Compile Include="Controllers\SmobViewController.cs" />
+    <Compile Include="Controllers\Unit\ChatHub.cs" />
     <Compile Include="Controllers\Unit\CustomPersianCalendar.cs" />
     <Compile Include="Controllers\Unit\IniFile.cs" />
     <Compile Include="Controllers\Unit\UnitDatabase.cs" />
@@ -747,6 +774,7 @@
     <Content Include="Content\img\user.png" />
     <Content Include="Content\js\admin.js" />
     <Content Include="Content\js\advanced-form-elements.js" />
+    <Content Include="Content\js\app.js" />
     <Content Include="Content\js\app.min.js" />
     <Content Include="Content\js\basic.js" />
     <Content Include="Content\js\bootstrap-colorpicker.js" />
@@ -769,15 +797,19 @@
     <Content Include="Content\js\jquery.md.bootstrap.datetimepicker.style.css" />
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.multi-select.js" />
+    <Content Include="Content\js\jquery.signalR-2.4.3.js" />
+    <Content Include="Content\js\jquery.signalR-2.4.3.min.js" />
     <Content Include="Content\js\jszip.min.js" />
     <Content Include="Content\js\knob.js" />
     <Content Include="Content\js\knockout-3.5.0.js" />
     <Content Include="Content\js\materialize.min.js" />
     <Content Include="Content\js\notifications.js" />
+    <Content Include="Content\js\npm.js" />
     <Content Include="Content\js\num2persian-min.js" />
     <Content Include="Content\js\pages.js" />
     <Content Include="Content\js\persian-date.min.js" />
     <Content Include="Content\js\require.js" />
+    <Content Include="Content\js\shamsi.js" />
     <Content Include="Content\js\sortable-nestable.js" />
     <Content Include="Content\js\sparkline-data.js" />
     <Content Include="Content\js\stimulsoft.designer.js" />
@@ -792,9 +824,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="readme.txt" />
-    <Content Include="Scripts\app.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Download.js" />
     <Content Include="Scripts\Chat.js" />
     <Content Include="Scripts\ProgVersions.js" />
@@ -804,7 +833,6 @@
     <Content Include="Scripts\Videos.js" />
     <Content Include="Scripts\MailBox.js" />
     <Content Include="Scripts\ChangePassword.js" />
-    <Content Include="Scripts\shamsi.js" />
     <Content Include="Scripts\CustAccount.js" />
     <Content Include="Scripts\User.js" />
     <Content Include="Scripts\RecoveryPassword.js" />
@@ -813,11 +841,10 @@
     <Content Include="Scripts\FAQ.js" />
     <Content Include="Scripts\UploadFiles.js" />
     <Content Include="Scripts\Index.js" />
-    <Content Include="Scripts\ko-datatable.js" />
     <Content Include="Scripts\FinancialDocuments.js" />
     <Content Include="Scripts\Login.js" />
-    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\PublicAFI.js" />
+    <Content Include="sw.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -838,6 +865,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\database_access\" />
+    <Folder Include="Views\Chat\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

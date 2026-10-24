@@ -141,11 +141,17 @@
 
 
 
-            <div id="chat-bell">
+            <div id="chat-bell" title="چت">
                 <a id="chat-bell-image-wrapper">
                     <img id="chat-bell-image" src="~/Content/img/icon_White/chat.png" />
                 </a>
             </div>
+
+            <!--<div id="noti-bell" title="تنظیمات نوتیقیکشن">
+                <a id="noti-bell-image-wrapper">
+                    <img id="noti-bell-image" src="~/Content/img/Icon_White/Alarm.png" />
+                </a>
+            </div>-->
         </div>
     </div>
 
@@ -441,8 +447,12 @@
     <script src="~/Content/js/admin.js"></script>
     <script src="~/Content/js/knockout-3.5.0.js"></script>
     <script src="~/Content/js/sweet2.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
-    <script src="~/Scripts/app.js"></script>
+    <script src="~/Content/js/app.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
     <script src="~/Content/js/persian-date.min.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
+    
+    <script src="~/Content/js/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
     <script src="~/Scripts/PublicAFI.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
     <script src="~/Scripts/Chat.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
     <script src="~/Content/js/jalaali.js"></script>
@@ -450,8 +460,7 @@
     <script src="~/Content/js/stimulsoft.viewer.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
     <script src="~/Content/js/stimulsoft.designer.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
     <script src="~/Content/js/num2persian-min.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
-    <script src="~/Scripts/shamsi.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
-
+    <script src="~/Content/js/shamsi.js?dt=@(Support.Controllers.Unit.UnitPublic.titleVerNumber)"></script>
 
     @RenderSection("scripts", false)
 

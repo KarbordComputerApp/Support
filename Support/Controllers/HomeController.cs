@@ -195,11 +195,7 @@ namespace Support.Controllers
 
                 ViewBag.Link = "";
                 ViewBag.LockNumber = "";
-
-
-
 #if (DEBUG)
-
                 if (UnitPublic.ValidationLockNo(lockNumber))
                 {
                     string contract = UnitPublic.HasContract(lockNumber, "", "");
@@ -247,7 +243,8 @@ if (elapsedSpan.TotalMinutes <= 1)
         }
 
 
-        // http://localhost:52798/Home/ChatUser?UserCode=ehsanif&&ChatId=16&&Token=4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=
+        // http://localhost:52798/Home/ChatUser?UserCode=ehsanif&&ChatId=16&&Token=4OClgAD-oIzeawIDNx86MvzfUjUlCURKy-4gjG1r3pI=            10000
+        //http://localhost:52798/Home/ChatUser?UserCode=ehsanif&&ChatId=108&&Token=4P;3ZHuK6E26c1a2DeMNzol2;9hGQWQLG9P2GtSd5RU=            10002
         public ActionResult ChatUser(string UserCode, long ChatId, string Token)
         {
             long currentDate = DateTime.Now.Ticks;
@@ -261,10 +258,12 @@ if (elapsedSpan.TotalMinutes <= 1)
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 #if (DEBUG)
-
-                ViewBag.ChatId = ChatId;
-                ViewBag.LockNumber = lockNumber;
-                ViewBag.UserCode = UserCode;
+                if (elapsedSpan.TotalMinutes <= 1)
+                {
+                    ViewBag.ChatId = ChatId;
+                    ViewBag.LockNumber = lockNumber;
+                    ViewBag.UserCode = UserCode;
+                }
 #else
                 if (elapsedSpan.TotalMinutes <= 1)
                 {
