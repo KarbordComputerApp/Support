@@ -258,12 +258,10 @@ if (elapsedSpan.TotalMinutes <= 1)
                 long elapsedTicks = currentDate - tik;
                 TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 #if (DEBUG)
-                if (elapsedSpan.TotalMinutes <= 1)
-                {
+
                     ViewBag.ChatId = ChatId;
                     ViewBag.LockNumber = lockNumber;
                     ViewBag.UserCode = UserCode;
-                }
 #else
                 if (elapsedSpan.TotalMinutes <= 1)
                 {

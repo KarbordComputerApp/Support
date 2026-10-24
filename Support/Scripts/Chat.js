@@ -60,7 +60,7 @@ function ActiveSignalR(lockNumber, idChat) {
     function AddMessageToChat(message) {
         //console.log(message.Body);
         if (message.ModeNoti == "Chat_Data") {
-            showNotificationChat(message.UserCode,message.Body);
+            showNotificationChat(message.UserCode, message.Body);
             AppendChatRow(message);
         }
         else if (message.ModeNoti == "Chat_ActiveUpload") {
@@ -366,7 +366,7 @@ function SetUpdateChatDownload(value) {
         ChatDownload: value
     }
     ajaxFunction(UpdateChatDownloadUri, 'POST', UpdateChatDownload_Object).done(function (data) {
-         $('#ActiveAttachChat').is(':checked');
+        $('#ActiveAttachChat').is(':checked');
         // goto signalr
     });
 }
@@ -952,11 +952,15 @@ function SendAttach(file) {
         Status: 0,
         ReadSt: 0,
         UserCode: userCodeChat,
-        Body: "!!AttachFile!!," + name,
-        SystemName: MachineIdNoti,
+        Body: "!!AttachFile!!," + name
     }
     ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
         serialNumber = data;
+        var now = new Date();
+        var time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+        AddChatObject.Id = data;
+        AddChatObject.TimeSend = time;
+        AppendChatRow(AddChatObject);
     });
 
     var formData = new FormData();
@@ -1054,6 +1058,12 @@ $("#btn-end-chat").click(function () {
                 ajaxFunction(AddChatUri, 'POST', AddChatObject).done(function (data) {
                     serialNumber = data;
 
+                    var now = new Date();
+                    var time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                    AddChatObject.Id = data;
+                    AddChatObject.TimeSend = time;
+                    AppendChatRow(AddChatObject);
+
                     var EndChatObject = {
                         LockNumber: lockNumber,
                         SerialNumber: idChat,
@@ -1063,6 +1073,8 @@ $("#btn-end-chat").click(function () {
                     });
 
                     isLast = false;
+
+
                     //refresh(idChat, isLast);
                 });
             }
