@@ -28,7 +28,7 @@ namespace Support.Controllers.Unit
         public static string Appddress; //ادرس نرم افزار
         public static IniFile MyIniServer;
         public static string apiAddress;
-        public static char[] afiAccess;
+        public static char[] afiAccess; 
 
 
         static string IniPath = HttpContext.Current.Server.MapPath("~/Content/ini/ServerConfig.Ini");
