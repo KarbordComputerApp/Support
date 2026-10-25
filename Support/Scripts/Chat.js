@@ -24,7 +24,6 @@ var otherUserChat = null;
 var orgTitle = document.title;
 var animatedTitle = "پیام جدید " + orgTitle;
 var idChat = localStorage.getItem("idChat");
-var isLast = false;
 //var timerNotifation = null;
 //var timerNotifationPage = null;
 idChat = idChat == "0" ? null : idChat;
@@ -64,10 +63,14 @@ function ActiveSignalR(lockNumber, idChat) {
             AppendChatRow(message);
         }
         else if (message.ModeNoti == "Chat_ActiveUpload") {
-            if (message.ChatDownload)
-                $("#P_AttachChat").show();
-            else
-                $("#P_AttachChat").hide();
+            if (isAdminChat)
+                $("#ActiveAttachChat").prop('checked', message.ChatDownload);
+            else {
+                if (message.ChatDownload)
+                    $("#P_AttachChat").show();
+                else
+                    $("#P_AttachChat").hide();
+            }
         }
     }
 }
@@ -363,7 +366,8 @@ function SetUpdateChatDownload(value) {
     var UpdateChatDownload_Object = {
         SerialNumber: idChat,
         LockNumber: lockNumber,
-        ChatDownload: value
+        ChatDownload: value,
+        Mode: isAdminChat ? 0 : 1
     }
     ajaxFunction(UpdateChatDownloadUri, 'POST', UpdateChatDownload_Object).done(function (data) {
         $('#ActiveAttachChat').is(':checked');
@@ -970,9 +974,9 @@ function SendAttach(file) {
     formData.append('Atch', file);
 
     ajaxFunctionUploadTiket(UploadChatFileUri, formData, false).done(function (response) {
-        isLast = false;
         if (isAdminChat == false) {
             SetUpdateChatDownload(false);
+            $("#P_AttachChat").hide();
         }
         //refresh(idChat, isLast);
 
@@ -1072,7 +1076,6 @@ $("#btn-end-chat").click(function () {
 
                     });
 
-                    isLast = false;
 
 
                     //refresh(idChat, isLast);
