@@ -667,20 +667,61 @@ function getIP() {
     sessionStorage.IPW = "Error Get IP";
     ipw = "Error Get IP";
 
-    
-    ajaxFunctionAccount('https://api.ipmyp.ir/json', 'GET', true).done(function (data) {
-        localStorage.setItem("IPW", data.query);
-        localStorage.setItem("CountryLogin", data.country);
-        localStorage.setItem("CityLogin", data.city);
+    fetch("https://api.ipify.org?format=json")
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem("IPW", data.ip);
+            //localStorage.setItem("CountryLogin", data.country);
+            //localStorage.setItem("CityLogin", data.city);
 
-        sessionStorage.IPW = data.query;
-        ipw = data.query;
+            sessionStorage.IPW = data.ip;
+            ipw = data.ip;
+        })
+        .catch (
+    error => console.error("خطا:", error)
+    );
 
-        //sessionStorage.CountryLogin = data.country
-        //sessionStorage.CityLogin = data.city
-    });
-    
+    /* ajaxFunctionAccount('https://api.ipmyp.ir/json', 'GET', true).done(function (data) {
+         localStorage.setItem("IPW", data.query);
+         localStorage.setItem("CountryLogin", data.country);
+         localStorage.setItem("CityLogin", data.city);
+ 
+         sessionStorage.IPW = data.query;
+         ipw = data.query;
+ 
+         //sessionStorage.CountryLogin = data.country
+         //sessionStorage.CityLogin = data.city
+     });*/
+
 }
+/*
+async function GetUserIP() {
+    try {
+        const response = await fetch("https://api.ipmyp.ir/json",
+            {
+                method: "GET",
+                cache: "no-store"
+            });
+        if (!response.ok) {
+            throw new
+                Error("خطای HTTP: " + response.status);
+        }
+        const data = await response.json();
+        console.log("IP:", data.query);
+        console.log("کشور:", data.country);
+        return data.query;
+    } catch (error) {
+        console.error("خطا در دریافت IP:", error);
+        return null;
+    }
+}
+GetUserIP().then(
+    ip => {
+        if (ip) {
+            console.log("IP کاربر دریافت شد:", ip);
+        }
+    });
+*/
 
 
 var testFile = false;
