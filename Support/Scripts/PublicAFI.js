@@ -667,13 +667,11 @@ function getIP() {
     sessionStorage.IPW = "Error Get IP";
     ipw = "Error Get IP";
 
-    /*
-    ajaxFunctionAccount('http://ip-api.com/json/', 'GET', true).done(function (data) {
-        //a = sessionStorage.MacAddress;
-        //b = sessionStorage.IP4Address;
+    
+    ajaxFunctionAccount('https://api.ipmyp.ir/json', 'GET', true).done(function (data) {
         localStorage.setItem("IPW", data.query);
-        //localStorage.setItem("CountryLogin", data.country);
-        //localStorage.setItem("CityLogin", data.city);
+        localStorage.setItem("CountryLogin", data.country);
+        localStorage.setItem("CityLogin", data.city);
 
         sessionStorage.IPW = data.query;
         ipw = data.query;
@@ -681,7 +679,7 @@ function getIP() {
         //sessionStorage.CountryLogin = data.country
         //sessionStorage.CityLogin = data.city
     });
-    */
+    
 }
 
 
