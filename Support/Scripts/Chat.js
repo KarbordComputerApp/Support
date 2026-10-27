@@ -495,7 +495,9 @@ $("#btn-max-chat").click(function () {
 
 
 $("#chat-bell").click(async function () {
-    ActiveSignalR(lockNumber, idChat);
+    if (idChat != null) {
+        ActiveSignalR(lockNumber, idChat);
+    }
 })
 
 
@@ -887,6 +889,10 @@ function NewChat() {
             idChat = data;
             idChat = idChat == "0" ? null : idChat;
             localStorage.setItem("idChat", idChat);
+
+            if (idChat != null) {
+                ActiveSignalR(lockNumber, idChat);
+            }
             // $("#motaghaziChat").hide();
             //$("#Captcha").hide()
             //CalcHeight();
