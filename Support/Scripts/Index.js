@@ -93,12 +93,12 @@
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js")
             .then(function (registration) {
-                showNotification("Service Worker ثبت شد.",1);
+                //showNotification("Service Worker ثبت شد.",1);
                 console.log("Service Worker ثبت شد.");
                 console.log(registration);
             })
             .catch(function (error) {
-                showNotification("Service Worker Error:" + error, 0);
+                console.log("Service Worker Error:" + error);
             });
     }
 
@@ -109,7 +109,7 @@
 
         var per = Notification.permission;
         if (per == "granted") {
-            showNotification("سرویس نوتیفیکشن در حال اجرا",1);
+            //showNotification("سرویس نوتیفیکشن در حال اجرا",1);
         }
         else {
             if (per == "default") {
