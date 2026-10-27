@@ -17,6 +17,7 @@ var motaghaziChatTiket = "";
 //getDataChat();
 var dataChat;
 var dataTiket;
+var activeChatQueue = null;
 
 var focusPage;
 var motaghaziChat;
@@ -182,8 +183,6 @@ async function Load() {
             }
             await GetRepFromUsers();
             await getCompanyName();
-            //await GetChat(idChat);
-            //await GetTiket(idChat);
             AppendChat();
 
             $("#L_MotaghaziChat").text(localStorage.getItem("CompanyNameChat") + " - " + motaghaziChat);
@@ -214,7 +213,11 @@ async function Load() {
         UserPanel();
     }
 }
-function UserPanel() {
+async function UserPanel() {
+    if (idChat != null) {
+        await GetTiket(idChat)
+    }
+
     $("#ActiveAttach").hide();
     $("#chat-bell").show();
     $("#btn-end-chat").hide();
@@ -286,7 +289,7 @@ function AppendChatRow(item) {
     $("#chatbox").scrollTop(100000000);
 }
 
-var activeChatQueue = null;
+
 async function AppendChat(item) {
     idChat = idChat == "0" ? null : idChat;
     if (isAdminChat == true && idChat == null) {
@@ -419,6 +422,8 @@ $("#chat-bell").click(function () {
                     $("#modal-NewChat").modal("show");
                     $("#chatbox").empty();
                 } else if (otherUserChat) {
+                    return showNotification("در حال حاضر چت با " + motaghaziChatTiket + " در حال انجام است ", 2);
+                    /*
                     Swal.fire({
                         title: "",
                         text: "در حال حاضر چت با " + motaghaziChatTiket + " در حال انجام است " + "آیا به چت اضافه می شوید ؟",
@@ -437,7 +442,9 @@ $("#chat-bell").click(function () {
                             $("#CaptchaVal").val("");
                             $("#modal-NewChat").modal("show");
                         }
-                    })
+                        })
+
+*/
                 }
                 else {
                     $("#box-chat").show();
