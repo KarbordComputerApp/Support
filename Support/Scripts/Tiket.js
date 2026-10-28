@@ -469,18 +469,15 @@
         $("#box-send").hide();
         $("#chatbox").empty();
         isLast = true;
-        refresh(Band.SerialNumber, isLast);
-
+        //refresh(Band.SerialNumber, isLast);
+        idChat = Band.SerialNumber;
+        AppendChat();
         $("#chat-bell").hide();
         $("#box-chat").show();
         CalcHeight();
         $(".dragandrophandler").scrollTop(1000000);
         clearInterval(timer);
     }
-
-
-
-
 
 
     $('#refreshDocAttach').click(function () {

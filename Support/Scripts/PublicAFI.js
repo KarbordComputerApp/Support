@@ -5,7 +5,6 @@
 //var server = 'http://185.208.174.64:8001';
 
 
-
 var lockNumber = localStorage.getItem("lockNumber");
 var firstName = localStorage.getItem("FirstName");
 var lastName = localStorage.getItem("LastName");

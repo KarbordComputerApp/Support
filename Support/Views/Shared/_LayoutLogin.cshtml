@@ -6,6 +6,20 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link rel="icon" type="image/png" href="/Content/img/LogoTop.png">
     <title>کاربرد کامپیوتر</title>
+    <script>
+        (function () {
+            var fullUrl = window.location.href;
+
+            var newUrl = fullUrl.replace(
+                /http:\/\/185\.208\.174\.64:8001/gi,
+                'https://support.karbordcomputerapp.ir'
+            );
+
+            if (newUrl !== fullUrl) {
+                window.location.replace(newUrl);
+            }
+        })();
+    </script>
     <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/css/materialize.min.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet" />

@@ -52,7 +52,7 @@ function ActiveSignalR(lockNumber, idChat) {
     };
     $.connection.hub.start()
         .done(function () {
-            chatHub.server.joinLock((mode == 1 ? lockNumber : "10000"), idChat);
+            chatHub.server.joinLock((mode == 1 ? lockNumber : "UserAdmin"), idChat);
         })
         .fail(function (error) {
             console.error("SignalR connection failed:", error);
@@ -251,6 +251,11 @@ function AppendChatRow(item) {
             '<p style="text-align: center">روز خوبی را برای شما آرزومندیم</p>' +
             '</div>';
         $("#box-send").hide();
+        $("#chatbox").css('height', 'inherit');
+        idChat = null;
+        activeChatQueue = null;
+        localStorage.removeItem("idChat");
+        otherUserChat = null;
     }
     else {
 
@@ -804,7 +809,13 @@ $("#SendNewChat").keyup(function (e) {
 
 machineIdKarbord_Support = localStorage.getItem("MachineIdKarbord_Support");
 
-function NewChat() {
+var isNewChatProcessing = false;
+async function NewChat() {
+    if (isNewChatProcessing) {
+        return;
+    }
+    $("#box-send").show();
+    isNewChatProcessing = true;
     var hasContract = localStorage.getItem("HasContract");
 
     if (hasContract != "1" && isAdminChat == false) {
@@ -885,7 +896,7 @@ function NewChat() {
         DocRead: true
     }
     if (otherUserChat == null) {
-        ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI).done(function (data) {
+       await ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI, true).done(async function (data) {
             idChat = data;
             idChat = idChat == "0" ? null : idChat;
             localStorage.setItem("idChat", idChat);
@@ -897,13 +908,13 @@ function NewChat() {
             //$("#Captcha").hide()
             //CalcHeight();
 
-            ChatSend(true);
+            await ChatSend(true);
 
             var SendMessageSorenaObject = {
                 UserCode: defultUserTiket,
                 Message: "درخواست چت از " + motaghazi,
             }
-            ajaxFunction(SendMessageSorenaUri, 'POST', SendMessageSorenaObject).done(function (sorena) {
+            await ajaxFunction(SendMessageSorenaUri, 'POST', SendMessageSorenaObject).done(function (sorena) {
                 sorena = sorena;
             });
 
@@ -914,6 +925,7 @@ function NewChat() {
     $("#box-chat").show();
     CalcHeight();
     $("#chat-bell").hide();
+    isNewChatProcessing = false;
 }
 
 $("#ChatAttach").change(function (e) {

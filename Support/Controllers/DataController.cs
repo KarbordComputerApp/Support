@@ -1704,7 +1704,7 @@ namespace Support.Controllers
             db.SaveChanges();
 
             ChatHub.NotifyNewMessage(
-                (c.Mode == 0 ? c.LockNumber.ToString() : "10000"),
+                (c.Mode == 0 ? c.LockNumber.ToString() : "UserAdmin"),
                 c.SerialNumber,
                 new
                 {

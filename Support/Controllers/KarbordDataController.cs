@@ -858,7 +858,7 @@ namespace Support.Controllers
             var res = db.Database.SqlQuery<int>(sql);
 
             ChatHub.NotifyNewMessage(
-                (c.Mode == 0 ? c.LockNumber.ToString() : "10000"), 
+                (c.Mode == 0 ? c.LockNumber.ToString() : "UserAdmin"), 
                 c.SerialNumber,
                 new
                 {
