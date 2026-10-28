@@ -59,7 +59,7 @@ function ActiveSignalR(lockNumber, idChat) {
         });
     function AddMessageToChat(message) {
         //console.log(message.Body);
-        if (message.ModeNoti == "Chat_Data") {
+        if (message.ModeNoti == "Chat_Data" && otherUserChat != true ) {
             showNotificationChat(message.UserCode, message.Body);
             AppendChatRow(message);
         }
@@ -251,7 +251,7 @@ function AppendChatRow(item) {
             '<p style="text-align: center">روز خوبی را برای شما آرزومندیم</p>' +
             '</div>';
         $("#box-send").hide();
-        $("#chatbox").css('height', 'inherit');
+        $("#chatbox").css('height', '440px');
         idChat = null;
         activeChatQueue = null;
         localStorage.removeItem("idChat");
@@ -405,13 +405,16 @@ $("#RefreshCaptcha").click(function () {
 
 
 
-$("#chat-bell").click(function () {
+$("#chat-bell").click(async function () {
     if (idChat == null) {
-        getDataChat();
+        await getDataChat();
     }
-
     idChat = localStorage.getItem("idChat");
     idChat = idChat == "0" ? null : idChat;
+
+    if (otherUserChat == null) {
+        await GetTiket(idChat);
+    }
     $("#P_NewChatInfo").show();
 
     if (isAdminChat) {
@@ -895,7 +898,7 @@ async function NewChat() {
         //SendSms: true,
         DocRead: true
     }
-    if (otherUserChat == null) {
+    if (otherUserChat == null ||  otherUserChat == false) {
        await ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI, true).done(async function (data) {
             idChat = data;
             idChat = idChat == "0" ? null : idChat;
