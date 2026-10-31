@@ -214,10 +214,6 @@ async function Load() {
     }
 }
 async function UserPanel() {
-    if (idChat != null) {
-        await GetTiket(idChat)
-    }
-
     $("#ActiveAttach").hide();
     $("#chat-bell").show();
     $("#btn-end-chat").hide();
@@ -406,15 +402,17 @@ $("#RefreshCaptcha").click(function () {
 
 
 $("#chat-bell").click(async function () {
-    if (idChat == null) {
-        await getDataChat();
-    }
+    await getDataChat();
+
     idChat = localStorage.getItem("idChat");
     idChat = idChat == "0" ? null : idChat;
 
-    if (otherUserChat == null) {
-        await GetTiket(idChat);
+    if (idChat != null) {
+        await GetTiket(idChat)
     }
+
+
+
     $("#P_NewChatInfo").show();
 
     if (isAdminChat) {
@@ -465,17 +463,10 @@ $("#chat-bell").click(async function () {
 
     }
 
-
-    /*if (isLast == true) {
-        $("#chatbox").empty();
-        isLast = false;
-        maxIdMessage = 0;
-    }*/
-    AppendChat();
-
-    //refresh(idChat, isLast);
-    //timer = setInterval(() => { refresh(idChat, false) }, 5000);
-    CalcHeight();
+    if (otherUserChat != true) {
+        AppendChat();
+        CalcHeight();
+    }
 });
 
 $("#btn-max-chat").click(function () {
@@ -898,7 +889,7 @@ async function NewChat() {
         //SendSms: true,
         DocRead: true
     }
-    if (otherUserChat == null ||  otherUserChat == false) {
+    //if (otherUserChat == null) {
        await ajaxFunction(ErjSaveTicketUri, 'POST', ErjSaveTicket_HI, true).done(async function (data) {
             idChat = data;
             idChat = idChat == "0" ? null : idChat;
@@ -922,7 +913,7 @@ async function NewChat() {
             });
 
         });
-    }
+    //}
 
     $("#modal-NewChat").modal("hide");
     $("#box-chat").show();

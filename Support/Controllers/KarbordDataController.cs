@@ -312,7 +312,6 @@ namespace Support.Controllers
                  resSend = UnitPublic.Send_SorenaSms(ErjSaveTicket_HI.UserCode, "null", mess);
              }*/
             UnitPublic.SaveLog(Int32.Parse(ErjSaveTicket_HI.LockNo), mode_Tiket, ErjSaveTicket_HI.LoginLink == true ? act_NewTiketByLink : act_New, 0, ErjSaveTicket_HI.IP, ErjSaveTicket_HI.CallProg, "");
-
             return Ok(list);
         }
 

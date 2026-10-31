@@ -181,12 +181,12 @@ function SetNameUser(userCode) {
 
 
 
-function getDataChat() {
+async function getDataChat() {
     var LastIdChatUri = server + '/api/Data/LastIdChat/'; // آخرین شماره چت
     var LastIdChatObject = {
         LockNumber: lockNumber
     }
-    ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
+    await ajaxFunction(LastIdChatUri, 'POST', LastIdChatObject).done(function (data) {
         localStorage.removeItem("idChat");
         if (data.length > 0) {
             var id = data[0].Status == 1 ? 0 : data[0].SerialNumber;
